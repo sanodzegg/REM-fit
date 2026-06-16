@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+
+
+
+    <script>
+      (function () { function asyncLoad() { var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://s3.eu-west-1.amazonaws.com/production-klarna-il-shopify-osm/44241829bcc56116e10834fcdc3b3f3426feef24/rem-fit-uk.myshopify.com-1677062087312.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (window.attachEvent) { window.attachEvent('onload', asyncLoad); } else { window.addEventListener('load', asyncLoad, false); } })();
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0"
+    >
+    <meta name="referrer" content="origin">
+    {%- if settings.favicon -%}
+      <link
+        rel="shortcut icon"
+        href="{{ settings.favicon | img_url: 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/favicon_32x32_crop_center.jpg?v=1648544014' }}"
+        type="image/png"
+      >
+    {%- endif -%}
+    <title>{{ page_title }}</title>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    {{ checkout_scripts }}
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-864944454"></script>
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NFT2J24"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    {{ skip_to_content_link }}
+
+    <header class="banner" data-header role="banner">
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </header>
+
+    {% assign Prod_title = false %}
+    {% for item in checkout.line_items %}
+      {% if item.product.handle contains 'protector' and item.product.price > 0 %}
+      {% elsif item.product.handle contains 'mattress' and item.product.price > 0 %}
+        {% assign Prod_title = item.product.title %}
+        {% assign Prod_Image = item.product.featured_image %}
+      {% endif %}
+    {% endfor %}
+
+    {% if Prod_title %}
+      <div class="widget block block-static-block">
+        <div class="cart_checkout_bar_block">
+          <div class="checkout_bar">
+            <div class="checkout_bar_info">
+              <div class="checkout_bar_title" style="">Remy+ Mattress</div>
+              <span>You Made The Right Choice</span>
+              <ul class="feature_grid">
+                <li>Premium Pocket Springs</li>
+                <li>Advanced temperature regulation</li>
+                <li>Weightless Pressure Relief</li>
+                <li>Motion isolation</li>
+              </ul>
+            </div>
+            <div class="checkout_bar_media">
+              <img src="" alt="">
+            </div>
+            <div class="checkout_bar_content">
+              <ul class="feature_grid">
+                <li>Premium Pocket Springs</li>
+                <li>Advanced temperature regulation</li>
+                <li>Weightless Pressure Relief</li>
+                <li>Motion isolation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-notification-mobile cart_checkout_bar_block ">
+          <div class="checkout_bar">
+            <div class="checkout_bar_media_1 ">
+              <img src="" alt="">
+            </div>
+            <div class="checkout_bar_info">
+              <span>You Made The Right Choice</span>
+              <ul class="feature_grid">
+                <li>Premium Pocket Springs</li>
+                <li>Advanced temperature regulation</li>
+                <li>Weightless Pressure Relief</li>
+                <li>Motion isolation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <script>
+                  jQuery(document).ready(function () {
+
+                    // Check if the current device is a mobile device
+          var isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+          // Add the code snippet after the button with class 'order-summary-toggle' on mobile devices only in the first step
+          if (isMobileDevice ) {
+              console.log("Code block executed");
+
+            var orderSummaryToggle = document.querySelector('.order-summary-toggle');
+            if (orderSummaryToggle) {
+              var cartCheckoutBarBlock = document.querySelector('.cart-notification-mobile');
+              if (cartCheckoutBarBlock) {
+                orderSummaryToggle.parentNode.insertBefore(cartCheckoutBarBlock, orderSummaryToggle.nextSibling);
+              }
+            }
+          }
+
+
+                      let initbar = function () {
+
+                          jQuery('.product__description__name').each(function () {
+                              if (jQuery(this).text().search('Mattress') > 0 && jQuery(this).text().search('Protector') < 0) {
+
+                                  jQuery('body').addClass('has_matt');
+                                  jQuery('.checkout_bar_title').text(jQuery(this).text());
+                                  //jQuery('.checkout_bar_title').text(jQuery(this).text()).show();
+                                  var itemTitle = jQuery('.checkout_bar_title').text();
+                                  var newItemTitle = itemTitle.replace('REM-Fit® ', '').replace('Rejuvenated ', '');
+                                  jQuery('.checkout_bar_title').text(newItemTitle).show();
+                                  console.log(newItemTitle);
+
+                                  return false;
+                              }
+                          });
+
+                           if (jQuery('.checkout_bar_title').text().trim() == '400 Hybrid Mattress') {
+                        jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/400_Hybrid_Mattress_non_900x_604e59cf-f67b-45fc-9652-898c8ef46ca9.webp?v=1690020867');
+                             jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/400_Hybrid_Mattress_non_900x_604e59cf-f67b-45fc-9652-898c8ef46ca9.webp?v=1690020867');
+                           }
+                           else if (jQuery('.checkout_bar_title').text().trim() == '500 Ortho Hybrid Mattress') {
+                            jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/500_Ortho_Hybrid_Mattressv3_900x_5d0ca02c-3d71-4132-9c2c-b0fe90b23646.webp?v=1690020916');
+                             jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/500_Ortho_Hybrid_Mattressv3_900x_5d0ca02c-3d71-4132-9c2c-b0fe90b23646.webp?v=1690020916');
+                           }
+                           else if (jQuery('.checkout_bar_title').text().trim() == 'REM-Fit 600® Lux Hybrid Mattress') {
+                             jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/600_lux_hybrid_mattress_900x_ad340cad-61d3-4090-b678-1464ecf35ed9.webp?v=1690020953');
+                             jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/600_lux_hybrid_mattress_900x_ad340cad-61d3-4090-b678-1464ecf35ed9.webp?v=1690020953');
+                           }
+                           else if (jQuery('.checkout_bar_title').text().trim() == 'Eco Premium Hybrid Mattress') {
+                            jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/EcoHybrid_1_900x_dc67a111-0597-49a4-95e5-2a0998ab35b7.webp?v=1690020993');
+                             jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/EcoHybrid_1_900x_dc67a111-0597-49a4-95e5-2a0998ab35b7.webp?v=1690020993');
+                           }
+                           else if (jQuery('.checkout_bar_title').text().trim() == 'Remy+ Eco Mattress') {
+                           jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Remy_900x_0bb0b0f5-51b0-4e8c-98c0-a0c02460ef81.webp?v=1690021032');
+                             jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Remy_900x_0bb0b0f5-51b0-4e8c-98c0-a0c02460ef81.webp?v=1690021032');
+                           }
+                           else if (jQuery('.checkout_bar_title').text().trim() == 'Remy Kidz Eco Mattress') {
+                            jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/RemyKidz_900x_2acb7d2f-79ca-41ee-b4f1-236ff279ac77.webp?v=1690021083');
+                             jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/RemyKidz_900x_2acb7d2f-79ca-41ee-b4f1-236ff279ac77.webp?v=1690021083');
+                           }
+                          else if (jQuery('.checkout_bar_title').text().trim() == 'Pocket 1000 Memory Foam Hybrid Mattress') {
+                        jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Hybrid1000_900x_73092498-7c25-448b-a8a2-1d874a5d886a.webp?v=1690021114');
+                        jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Hybrid1000_900x_73092498-7c25-448b-a8a2-1d874a5d886a.webp?v=1690021114');
+                           }
+                         else if (jQuery('.checkout_bar_title').text().trim() == 'Hybrid Pocket 1000 Mattress') {
+                        jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/rem-fitSleep1000medium-firmTensionmattress_900x_8ff927d5-7cf8-4e7c-9da8-a221508453fd.webp?v=1714723155');
+                        jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/rem-fitSleep1000medium-firmTensionmattress_900x_8ff927d5-7cf8-4e7c-9da8-a221508453fd.webp?v=1714723155');
+                           }
+                          else if (jQuery('.checkout_bar_title').text().trim() == '400 Elite Hybrid Mattress') {
+                        jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit400EliteHybridMattress.webp?v=1714722479');
+                        jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit400EliteHybridMattress.webp?v=1714722479');
+                           }
+                         else if (jQuery('.checkout_bar_title').text().trim() == '500 Ortho Elite Hybrid Mattress') {
+                        jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit500OrthoEliteHybridMattressfinal_900x_05230dca-37e3-42aa-a88d-9cd85b87d0bd.webp?v=1714722773');
+                        jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit500OrthoEliteHybridMattressfinal_900x_05230dca-37e3-42aa-a88d-9cd85b87d0bd.webp?v=1714722773');
+                           }
+                         else if (jQuery('.checkout_bar_title').text().trim() == 'REM-Fit 600® Lux Elite Hybrid Mattress') {
+                        jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit600EliteHybridMattress_700x700_ebadbb1c-0e57-463d-a36f-d8bfc372333d.webp?v=1714722700');
+                        jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit600EliteHybridMattress_700x700_ebadbb1c-0e57-463d-a36f-d8bfc372333d.webp?v=1714722700');
+                           }
+                         else if (jQuery('.checkout_bar_title').text().trim() == "Remy+ Hybrid Mattress") {
+                        jQuery('.checkout_bar_media_1 img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Remy-Mattress-White-Background-Shadow_6355aa19-0986-42d8-8d6e-805b2f26ba90.jpg?v=1714979611');
+                        jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Remy-Mattress-White-Background-Shadow_6355aa19-0986-42d8-8d6e-805b2f26ba90.jpg?v=1714979611');
+                           }
+                      };
+
+                          initbar();
+
+
+                  });
+        </script>
+       
+      </div>
+    {% endif %}
+
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main">
+          <header class="main__header" role="banner">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </header>
+          <main class="main__content" role="main">
+            {{ content_for_layout }}
+          </main>
+          <footer class="main__footer" role="contentinfo">
+            {{ content_for_footer }}
+          </footer>
+        </div>
+        <aside class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    {{ tracking_code }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+
+      if (Shopify.Checkout.step == 'payment_method'){
+
+        // create the new div with the text
+        var newDiv = $('<div/>').html('<p>When you purchase from us, You automatically agree to our <a target="_blank" href="https://www.rem-fit.co.uk/pages/terms-and-conditions">Terms and Conditions</a>');
+
+        // add CSS styling to the new div
+        newDiv.css('margin-top', '20px');
+
+        // insert the new div before the existing div
+        $('.step__footer').before(newDiv);
+      }
+
+      });
+    </script>
+
+    <script type="text/javascript">
+      var cc_config = {
+        _cp_access_token : '2536d-1f38b-25409-0330f',
+        _cp_hide_fields : false,
+        _cp_button_below_postcode : false,
+        _cp_button_text : 'Find Address',
+        _cp_button_class : '',
+        _cp_busy_img_url : '',
+        _enable_phone_validation: false
+      };
+    </script>
+    <script src="{{ 'shopify_crafty_clicks.js' | asset_url }}" type="text/javascript"></script>
+
+    <script>
+      $( document ).ready(function() {
+
+         window.Shopify.shop = '{{ shop.domain }}'
+        // .datepicker--cell.datepicker--cell-day:not(.-disabled-)
+        if($('.step[data-step="shipping_method"]').length == 1){
+
+        //  $('.input-radio').on('change', function(e) {
+        $(document).on("change", ".input-radio", function() {
+          if($(this).closest('.radio-wrapper').find('.radio__label').find('.radio__label__primary').attr('data-shipping-method-label-title') == '1-Person Delivery (FREE ) 2 - 5 Day Lead Time'){
+            $('#csShippingAppCode').slideDown()
+            $('.datepicker--cell').removeClass('-selected-');
+            $('.step[data-step="shipping_method"] #continue_button').attr('disabled',true).removeClass('active');
+          }else{
+            $('#csShippingAppCode').slideUp()
+            $('.datepicker--cell').removeClass('-selected-');
+            $('#deliverydate').val('')
+            $('.step[data-step="shipping_method"] #continue_button').attr('disabled',false).addClass('active');
+
+          }
+        });
+
+          if($('[data-shipping-methods] .input-radio').length == 1) {
+            $('.step[data-step="shipping_method"] #continue_button').attr('disabled',false).addClass('active');
+          }
+
+         {% if  checkout.attributes['Shipping Delivery Date'] != blank %}
+          $.ajax({
+            type: 'POST',
+            url: '/cart/update.js',
+            data: 'attributes[Shipping Delivery Date]=',
+            dataType: 'json'
+          });
+          {% endif %}
+        $('.step[data-step="shipping_method"] #continue_button').attr('disabled',true).removeClass('active')
+      var sbzwidget = setInterval( function() {
+        $('.radio__label[for="checkout_shipping_rate_id_custom_zip_code_base_shipping-free_day_of_choice_delivery_e28093_1-person_delivery_-"]').append('<div class="csLoader"><img src="' + csShippingAppBaseUrl + 'assets/images/loading.gif"></div>');
+
+        {% comment %}
+         if($('#method1').length == 0){
+          {% if settings.ship1 != blank %}
+            $('.radio__label[for="checkout_shipping_rate_id_shopify-free20next20day20delivery20e28093201-person20delivery_-0_00"]').append('<div id=method1 class=method_ship>{{ settings.ship1 }}</div>')
+            //$('.radio__label[for="checkout_shipping_rate_id_shopify-free20day20of20choice20delivery20e28093201-person20delivery_-0_00"]').append('<div id=method1 class=method_ship>{{ settings.ship1 }}</div>')
+          {% endif %}
+         }
+          if($('#method2').length == 0){
+          {% if settings.ship2 != blank %}
+            //$('.radio__label[for="checkout_shipping_rate_id_shopify-guaranteed20am20next20day20delivery20-20120person20delivery_-10_00"]').append('<div id=method2 class=method_ship>{{ settings.ship2 }}</div>')
+            $('.radio__label[for="checkout_shipping_rate_id_shopify-free20day20of20choice20delivery20e28093201-person20delivery_-0_00"]').append('<div id=method1 class=method_ship>{{ settings.ship2 }}</div>')
+          {% endif %}
+         }
+
+          if($('#method3').length == 0){
+          {% if settings.ship3 != blank %}
+            $('.radio__label[for="checkout_shipping_rate_id_shopify-premium202-person20delivery-20_00"]').append('<div id=method3 class=method_ship>{{ settings.ship3 }}</div>')
+          {% endif %}
+         }
+
+          if($('#method4').length == 0){
+          {% if settings.ship4 != blank %}
+            $('.radio__label[for="checkout_shipping_rate_id_shopify-premium202-person20delivery-50_00"]').append('<div id=method4 class=method_ship>{{ settings.ship4 }}</div>')
+          {% endif %}
+         }
+
+        if($('#method5').length == 0){
+          {% if settings.ship5 != blank %}
+            $('.radio__label[for="checkout_shipping_rate_id_shopify-guaranteed20am20next20day20delivery20-20120person20delivery_-10_00"]').append('<div id=method4 class=method_ship>{{ settings.ship5 }}</div>')
+          {% endif %}
+         }
+         {% endcomment %}
+         var hasfree = false;
+        if($('#csShippingAppCode').length == 0 || $('.content-box[data-shipping-methods] .content-box__row').length == 0){
+        console.log('enter')
+          if($('.content-box[data-shipping-methods] .content-box__row').length != 0 ){
+            if($('.radio__label[for="checkout_shipping_rate_id_custom_zip_code_base_shipping-1-person20delivery20free2020220-20520day20lead20time_20-0_00"]').length == 0){
+              hasfree = true;
+            }
+          }
+          $('.radio__label[for="checkout_shipping_rate_id_custom_zip_code_base_shipping-1-person20delivery20free2020220-20520day20lead20time_20-0_00"]').append('<div id="csShippingAppCode" style="display: flex;" class="lds-dual-ring"></div>');
+        }
+
+          if(hasfree == true){
+            clearInterval(sbzwidget);
+            $('.step[data-step="shipping_method"] #continue_button').attr('disabled',false).addClass('active');
+        }
+        if($('#csShippingAppCode').length ==1){
+                if(typeof MainCode != "undefined") {
+                  if ($) {
+                    csJq = $;
+                  }
+                  console.log('dddd');
+                  MainCode(csJq)
+                  csLoadScript("https://sbz.cirkleinc.com/assets/js/datepicker/datepicker.js", function() {
+                      langJs(csJq);
+                  });
+                }
+          $('.radio__label[for="checkout_shipping_rate_id_custom_zip_code_base_shipping-1-person20delivery20free2020220-20520day20lead20time_20-0_00"]').append('<input type="radio" name="checkout[attributes][Shipping Delivery Date]" id="deliverydate"  value=" ">');
+          // $('.radio__label[for="checkout_shipping_rate_id_custom_zip_code_base_shipping-free20shipping20remote20method-0_00"]').append('<input type="radio" name="checkout[attributes][Shipping Delivery Date]" id="deliverydate"  value=" ">');
+
+            clearInterval(sbzwidget);
+        }
+
+      },800);
+            }
+      });
+        function csOuterfunction(){
+
+          csJq('#csShippingAppCode .csIgnoreCngEvent[type="hidden"]').remove()
+                          $('#csShippingAppCode').removeClass('lds-dual-ring');
+        }
+
+        function sbzDateUpdate(dateText){
+          $('.step[data-step="shipping_method"] #continue_button').attr('disabled',false).addClass('active');
+          console.log('dateText', dateText);
+          $('#deliverydate').val(dateText);
+          document.getElementById("deliverydate").checked = true;
+      }
+
+        var crt = '{{ checkout.attributes['Shipping Delivery Date'] }}';
+        if($('[data-review-section="shipping-cost"]').length) {
+          if($('[data-review-section="shipping-cost"]').text().indexOf('Free Day Of Choice Delivery') == -1 && crt != '') {
+            //console.log('sssssssssssssssss')
+             $.ajax({
+              type: 'POST',
+              url: '/cart/update.js',
+              data: 'attributes[Shipping Delivery Date]=',
+              dataType: 'json'
+            });
+          }
+        }
+    </script>
+
+    <script>
+       jQuery(document).ready(function($) {
+         var scriptExecuted = false;
+
+         $('.product__description__name').each(function() {
+           var productTitle = $(this).text();
+           if (productTitle.includes('Mattress') && !productTitle.includes('Protector')) {
+             if (!scriptExecuted) {
+               var div = $('<div>').addClass('pdp-badges-sectext');
+               var ul = $('<ul>');
+               var li1 = $('<li>').text('Up to 200 Night Risk-Free Sleep Trial');
+                var li2 = $('<li>').text('Free Next Day Delivery');
+               var li3 = $('<li>').text('Up to 15-Year Full Replacement Guarantee');
+      var li4 = $('<li>').text('We donate our mattresses to the British Heart Foundation.');
+               if (!productTitle.includes('Rejuvenated')) {
+               ul.append(li1, li3 , li4);
+               }else{
+                 ul.append(li3 , li4);
+               }
+               div.append(ul);
+
+               $('.pdp-got-que-sec').after(div);
+               div.css('marginTop', '40px');
+
+               var stepFooterPreviousLink = $('.step__footer__previous-link');
+               if (window.innerWidth < 768 && stepFooterPreviousLink.length > 0) {
+                 div.insertBefore(stepFooterPreviousLink);
+               }
+
+               scriptExecuted = true;
+             }
+           }
+         });
+       });
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // Function to create and append elements
+          function appendHelpSection() {
+              // Create the main container div
+              var helpSection = document.createElement('div');
+              helpSection.className = 'pdp-got-que-sec mobile_only';
+
+              // Create the title div
+              var titleDiv = document.createElement('div');
+              titleDiv.className = 'pdp-got-title';
+              titleDiv.textContent = "Got questions? We're here to help!";
+              helpSection.appendChild(titleDiv);
+
+              // Create the FAQ div
+              var faqDiv = document.createElement('div');
+              faqDiv.className = 'pdp-got-faq';
+              faqDiv.textContent = "We already have answers to most of the questions. Use this page to find needed info ";
+
+              // Create the FAQ link
+              var faqLink = document.createElement('a');
+              faqLink.href = 'https://rem-fit-uk.myshopify.com/pages/faq';
+              faqLink.target = '_blank';
+              faqLink.textContent = 'Open FAQ page';
+              faqDiv.appendChild(faqLink);
+
+              helpSection.appendChild(faqDiv);
+
+              // Create the Chat div
+              var chatDiv = document.createElement('div');
+              chatDiv.className = 'pdp-got-chat';
+              chatDiv.textContent = "Chat with our customer service specialists right now. We are ready to help you at any time, 24/7! ";
+
+              // Create the Chat link
+              var chatLink = document.createElement('a');
+              chatLink.href = 'javascript:void(0);';
+              chatLink.className = 'pdp-link-chat';
+              chatLink.textContent = 'Start a chat';
+              chatLink.onclick = function() {
+                  LC_API.open_chat_window();
+                  return false;
+              };
+
+              chatDiv.appendChild(chatLink);
+              helpSection.appendChild(chatDiv);
+
+              // Check viewport width and append the section accordingly
+              var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+              var appendAfterElement;
+
+              if (viewportWidth < 1000) {
+                  // If viewport width is below 1000px, append after the element with id 'continue_button'
+                  appendAfterElement = document.querySelector('#continue_button');
+              } else {
+                  // If viewport width is 1000px or more, append after the table with class 'total-line-table'
+                  appendAfterElement = document.querySelector('table.total-line-table');
+              }
+
+              // Append the entire section
+              if (appendAfterElement) {
+                  appendAfterElement.parentNode.insertBefore(helpSection, appendAfterElement.nextSibling);
+              }
+          }
+
+          // Call the function to append the help section
+          appendHelpSection();
+      });
+    </script>
+
+    <script src="https://sbz.cirkleinc.com/assets/js/front/csShippingApp.js"></script>
+    
+  </body>
+</html>

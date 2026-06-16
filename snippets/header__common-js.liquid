@@ -1,0 +1,49 @@
+<script >
+{% if section.settings.sticky %}
+  document.addEventListener("DOMContentLoaded", function(){
+
+(()=>{
+function debounce(func, timeout = 300){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+const headers = document.querySelectorAll('.page__header');
+ const cheaders =  document.querySelectorAll('.quicknav-top-mat') ;
+ const myButton = document.querySelector("div.pdp-got-que-sec").offsetTop;
+const scrollval = myButton + 1650 ;
+
+
+const checkHs = ()=>{
+    headers.forEach(h=>{
+        if(window.scrollY > 120){
+            {% if section.settings.transparent and template == "index" %}h.classList.remove('page__header--transparent'){% endif %}
+            if(h.clientHeight) h.parentElement.style.height = h.clientHeight + 'px'
+            return h.classList.add('page__header--sticky')
+        }
+        h.parentElement.style.height = null
+        h.classList.remove('page__header--sticky')
+        {% if section.settings.transparent and template == "index" %}h.classList.add('page__header--transparent'){% endif %}
+    })
+
+  cheaders.forEach(h=>{
+        if(window.scrollY > scrollval){
+            {% if section.settings.transparent and template == "index" %}h.classList.remove('page__header--transparent'){% endif %}
+            if(h.clientHeight) h.parentElement.style.height = h.clientHeight + 'px'
+            return h.classList.add('page__header--sticky')
+        }
+        h.parentElement.style.height = null
+        h.classList.remove('page__header--sticky')
+        {% if section.settings.transparent and template == "index" %}h.classList.add('page__header--transparent'){% endif %}
+    })
+  
+}
+window.addEventListener('scroll', debounce(checkHs, 75))
+window.addEventListener('resize', debounce(checkHs, 150))
+})()
+  });
+
+{% endif %}
+</script> 

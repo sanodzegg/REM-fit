@@ -1,0 +1,382 @@
+<div class="card--default {% unless product.available %} card--soldout{% endunless %}{% if template.name != 'collection' %}card--{{settings.cardStyle}} {% endif %} customcard-innerlayout">
+  <a class="card__img--container" href="{{ product.url | within: collection }}">
+    <div class="card__img--ratio">
+      <div
+        class="card__img"
+        {% if settings.cardShowGallery %}
+          data-booster-slider data-current-slide="0" data-total-slides="{{product.images.size}}"
+        {% endif %}
+      >
+        {% if settings.tagEnabled %}
+          <div class="card__tags">
+            {% if product.available == false and settings.tagSoldOut %}
+              <span class="tag tag--soldout">{{ 'general.buttons.sold_out' | t }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% unless settings.cardShowGallery %}
+          {% render 'card-image', image: product.featured_image.src, alt: product.featured_image.alt, desktop: dsize %}
+          {% unless product.images.size < 2 or settings.cardShowSecondary == false %}
+            {% assign secondaryImage = product.images[1] %}
+            {% render 'card-image',
+              image: secondaryImage.src,
+              alt: secondaryImage.alt,
+              desktop: dsize,
+              class: 'card__img--secondary'
+            %}
+          {% endunless %}
+        {% else %}
+          <div class="card__slider__parent" data-bstr-slider="product-card-{{product.id}}">
+            <div
+              class="card__slider"
+              data-bstr-slider-orientation="horizontal"
+              data-bstr-slide-holder="1"
+              data-bstr-slider-current="1"
+              data-bstr-slider-id="product-card-{{product.id}}"
+            >
+              {% for image in product.images %}
+                <div data-bstr-slide class="card__img--gallery">
+                  {% render 'card-image', image: image.src, alt: image.alt, desktop: dsize %}
+                </div>
+              {% endfor %}
+            </div>
+            {% if product.images.size > 1 %}
+              <button data-bstr-slider-button="-" class="slider__button hide-mobile">
+                <i class="uil uil-angle-left-b"></i>
+              </button>
+              <button data-bstr-slider-button="+" class="slider__button slider__button--next hide-mobile">
+                <i class="uil uil-angle-right-b"></i>
+              </button>
+            {% endif %}
+          </div>
+        {% endunless %}
+        {% if product.compare_at_price_min > 0 and settings.countdownCard and settings.countdown %}
+          <div data-countdown data-ct-key="{{product.id}}" class="countdown">
+            <span class="countdown__holder"
+              ><span class="days">00</span><br>
+              DAYS</span
+            >
+            <span class="countdown__holder"
+              ><span class="hours">00</span><br>
+              HRS</span
+            >
+            <span class="countdown__holder"
+              ><span class="minutes">00</span><br>
+              MIN</span
+            >
+            <span class="countdown__holder"
+              ><span class="seconds">00</span><br>
+              SEC</span
+            >
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </a>
+
+  {% unless settings.cardStyle == 'catalog' %}
+    <div class="card__info">
+      {% if settings.cardShowBrand %}
+        <a class="card__brand" href="{{ product.vendor | url_for_vendor }}">
+          {{ product.vendor }}
+        </a>
+      {% endif %}
+      {% if settings.cardShowRating %}
+        {% render 'product-card__review-stars' with product as product %}
+      {% endif %}
+      <a class="card__title" href="{{ product.url | within: collection }}">
+        {% unless settings.cardNameLimit != 'none' %}
+          {{ product.title }}
+        {% else %}
+          {% if settings.cardNameLimit == 'words' %}
+            {{ product.title | truncatewords: settings.cardNameLimitAmount }}
+          {% else %}
+            {{ product.title | truncate: settings.cardNameLimitAmount }}
+          {% endif %}
+        {% endunless %}
+      </a>
+      {% if collection.handle == 'rem-fit-hybrid-mattresses'
+        or collection.handle == 'elite-hybrid-mattresses'
+        or collection.handle == 'rem-fit-remy-kidz-mattress'
+        or collection.handle == 'all-mattresses'
+      %}
+        {% render 'free-gift-bundle-badge' with product as product %}
+      {% endif %}
+      {% if product.compare_at_price_min > 0 %}
+        {% assign sale = true %}
+      {% endif %}
+      {% assign prod_desc_class = '' %}
+      {%- if product.template_suffix == blank -%}
+        {% assign prod_desc_class = 'mattress_content_desc' %}
+      {% endif %}
+      <div class="card__description {{ prod_desc_class }}">
+        <div class="read-more-wrapper">
+          <div class="read-more-content">{{ product.description }}</div>
+          <div class="read-more-fade"></div>
+          <button type="button" class="read-more-btn" aria-expanded="false">Read more</button>
+        </div>
+      </div>
+
+      {% if product.template_suffix == 'pillows-template'
+        or product.template_suffix == 'protectors'
+        or product.template_suffix == '500-cool-pillow-template'
+      %}
+      {% else %}
+        {% if product.metafields.custom.display_free_gift_section %}
+          {% render 'free-gift-pdp-coll' with product as product %}
+        {% endif %}
+      {% endif %}
+      {% comment %}
+          {% if collection.template_suffix == 'bed-frames' %}
+          <div class="discount-section" style="margin-top: 24px;
+            font-size: 18px;
+            box-shadow: #00b67a 0 0.0625rem 0.375rem, #00b67a 0 0.0625rem 0.375rem;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #00b67a;
+            font-weight: 600;
+            margin-bottom: 24px;">
+            <a href="#wisepops-unlock-popup" style="text-decoration: none; font-size:16px;"><p style="margin:0px;font-size:16px;font-weight:bold;"><span style="font-weight:bold;color:#00b67a;font-size:16px;">Get an additional £150 OFF</span> when buying a bed frame with a mattress. Discount will be auto-applied at the Checkout</p></a>
+          </div>
+        {% endif %}
+      {% endcomment %}
+      {% render 'block__product-page--totalvalue', product: product %}
+
+      {% if settings.enable_discount_widget %}
+        {% if collection.handle == 'rem-fit-hybrid-mattresses'
+          or collection.handle == 'elite-hybrid-mattresses'
+          or collection.handle == 'rem-fit-remy-kidz-mattress'
+          or collection.handle == 'all-mattresses'
+        %}
+          <div class="coupon-discount-price" bis_skin_checked="1">
+            <span class="coupon-discount-price-div">
+              {% assign min_price = product.price_min | times: 0.01 %}
+              {% assign discount_rate = settings.percentage_discount | times: 0.01 %}
+              {% assign disc_price = product.price_min | times: discount_rate | times: 0.01 %}
+              {% assign net_price = min_price | minus: disc_price %}
+
+              <span class="cdp-price">from £{{ net_price | round: 2 }}</span> with code
+              <span class="cdp-coupon-code">{{ settings.discount_code }}</span>
+              <span class="cdp-off-percentage">{{ settings.discount_button_text }}</span>
+            </span>
+          </div>
+        {% endif %}
+      {% endif %}
+
+      {% if settings.enable_savings_widget %}
+                {% if collection.handle == 'rem-fit-hybrid-mattresses'
+                  or collection.handle == 'elite-hybrid-mattresses'
+                  or collection.handle == 'rem-fit-remy-kidz-mattress'
+                  or collection.handle == 'all-mattresses'
+                %}
+                  {% assign discount_rate = settings.percentage_discount | times: 0.01 %}
+                  {% assign dynamic_discount = product.price_min | times: discount_rate %}
+
+                  {% assign fixed_amount = settings.savings_amount | times: 100 | default: 0 %}
+                  {% if settings.enable_discount_widget %}
+                    {% assign total_saving = dynamic_discount | plus: fixed_amount %}
+                  {% else %}
+                    {% assign total_saving = fixed_amount %}
+                  {% endif %}
+
+                  {% comment %} <span class="saving-badge">
+                    <a href="javascript:void(0);" class="saving_badge_tooltip_open">
+                      Total savings up to £{{ total_saving | divided_by: 100 | round }}
+                      <img
+                        src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/information.png?v=1744364942"
+                        alt=""
+                      >
+                    </a>
+                  </span> {% endcomment %}
+                  <div class="saving_badge_tooltip_text saving_badge_tooltip">
+                    {{ settings.savings_popup_text }}
+                  </div>
+                {% endif %}
+              {% endif %}
+
+      <div class="collectioncard-price">
+        <span class="card__price {% if sale == true %}card__price--sale{% endif %}" style="margin-bottom: 5px;">
+          {% if product.price_varies %}
+            {% comment %}{{'product_page.card.from'|t}} {% endcomment %}
+            <span class="jsPrice">
+              {% if collection.handle == 'rem-fit-hybrid-mattresses'
+                or collection.handle == 'elite-hybrid-mattresses'
+                or collection.handle == 'rem-fit-remy-kidz-mattress'
+                or collection.handle == 'all-mattresses'
+              %}
+                from
+              {% endif %}
+              {{ product.price_min | money | strip_html -}}
+            </span>
+           <span data-product-price-sale="{{product.id}}" class="product__price--old jsPrice" id="comp-prod-price">
+              {{ product.compare_at_price | money | strip_html }}
+            </span>
+          {% else %}
+            <span class="jsPrice">from {{ product.price | money | strip_html }}</span>
+          {% endif %}
+          {% comment %}
+            {% if sale == true %}
+            <span class="card__price--old jsPrice">
+            {{product.compare_at_price | money | strip_html}}
+            </span>
+            {% endif %}
+          {% endcomment %}
+          {% if settings.tagEnabled %}
+            <div class="card__tags ">
+              {% if product.compare_at_price_min > 0 and settings.tagSale %}
+                {% if product.price_varies %}
+                  {% comment %}
+                    <span class="tag tag--sale">{{'general.tags.sale' | t}}</span>
+                  {% endcomment %}
+
+                  <span class="tag tag--sale save_tag"
+                    >Save
+                    {{
+                      product.compare_at_price
+                      | minus: product.price
+                      | times: 100.0
+                      | divided_by: product.compare_at_price
+                      | round
+                    -}}
+                    %</span
+                  >
+                {% else %}
+                  {% comment %}
+                    <span class="tag tag--sale">{{ product.price | minus: product.compare_at_price_max | times: 100 | divided_by: product.compare_at_price_max  }}%  {{'general.tags.sale' | t}}</span>
+                  {% endcomment %}
+                  <span class="tag tag--sale"
+                    >Save
+                    {{
+                      product.compare_at_price_max
+                      | minus: product.price
+                      | times: 100
+                      | divided_by: product.compare_at_price_max
+                    -}}
+                    %</span
+                  >
+                {% endif %}
+              {% endif %}
+              {% for tag in product.tags %}
+                {% if tag contains 'bstr-tag-' %}
+                  {% comment %} this needs to be an if not unless  {% endcomment %}
+                  <span class="tag tag--custom">{{ tag | remove_first: 'bstr-tag-' | replace: '-', ' ' }} </span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </span>
+        {% if product.template_suffix == 'pillows-template'
+          or product.template_suffix == 'protectors'
+          or product.template_suffix == '500-cool-pillow-template'
+          or product.template_suffix == 'snow-pillow-with-video'
+           or product.template_suffix == 'pillow-protector'
+        %}
+          <style>
+            @media only screen and (min-width: 767px) {
+              .collection-card .collectioncard-price span.card__price {
+                   padding-bottom: 5px;
+               }
+            }
+          </style>
+
+          <div id="top-svg " class="installment-dicoprice ">
+            {% assign installment = 3 %}
+            <span class="dicoprice-aslow"
+              >or
+              <span class="dicoprice">
+                £{{ product.price | money_without_currency | divided_by: installment | round -}}
+              </span>
+              / m ({{ installment }} months) with
+            </span>
+            {% render 'klarna', icon-name: icon-name -%}
+            {% comment %}<span class="logo-or">or</span> {% render 'paypal-logo', icon-name: icon-name %}{% endcomment %}
+          </div>
+
+        {% else %}
+          <div class="installment-dicoprice" style="margin-top: 5px;margin-bottom: 10px;">
+            {% if product.price <= 5000 %}
+              {% assign installment = 3 %}
+            {% elsif product.price >= 5000 and product.price <= 25000 %}
+              {% assign installment = 6 %}
+            {% elsif product.price >= 25000 and product.price <= 45000 %}
+              {% assign installment = 9 %}
+            {% else %}
+              {% assign installment = 12 %}
+            {% endif %}
+            {% assign installment_1 = installment | times: 1.00 %}
+
+            <span id="mattress-aslow" class="dicoprice-aslow"
+              >or
+              <span class="dicoprice">
+                £{{ product.price | divided_by: 100.00 | divided_by: installment_1 | round -}}
+              </span>
+              / m ({{ installment }} months) with
+              <img
+                src="https://cdn.shopify.com/s/files/1/0198/4944/5438/files/logobanner.svg?v=1583496118"
+                style="height:20px; vertical-align:middle"
+            ></span>
+          </div>
+          {% if product.template_suffix == 'pillow-protector' %}
+            <style>
+              @media only screen and (min-width: 767px) {
+                .collection-card .collectioncard-price span.card__price {
+                     padding-bottom: 5px;
+                 }
+              }
+            </style>
+
+            <div id="top-svg " class="installment-dicoprice ">
+              {% assign installment = 3 %}
+              <span class="dicoprice-aslow"
+                >or
+                <span class="dicoprice">
+                  £{{ product.price | money_without_currency | divided_by: installment | round -}}
+                </span>
+                / m ({{ installment }} months) with
+              </span>
+              {% render 'klarna', icon-name: icon-name -%}
+              {% comment %}<span class="logo-or">or</span> {% render 'paypal-logo', icon-name: icon-name %}{% endcomment %}
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% if product.title contains 'Pillow' or product.title contains 'Protector' %}
+        <style>
+          body.template--collection #my-button{
+          display:none;
+          }
+        </style>
+      {% endif %}
+      {% unless product.title contains 'Pillow' or product.title contains 'Pillows' %}
+        <p id="available-in">Available in {{ product.variants.size }} sizes</p>
+      {% endunless %}
+
+      {% unless settings.cardStyle == 'noButton' %}
+        <div class="card__buttons">
+          {% assign var = product.first_available_variant %}
+
+          {% if product.available %}
+            {% if product.has_only_default_variant %}
+              <!-- https://app.clickup.com/t/862kbc0u7 -->
+              {% comment %}
+                  {% form 'product', product %}
+                  <input id="atc-hide" name="id" type="hidden" value="{{var.id}}">
+                  {% render 'add-to-cart-button', variant: var.id, quantity: 1, price: product.price %}
+                {% endform %}
+              {% endcomment %}
+
+              {% assign href = product.url | within: collection %}
+              {% render 'quick-buy-button', href: href, price: product.price %}
+
+            {% else %}
+              {% assign href = product.url | within: collection %}
+              {% render 'quick-buy-button', href: href, price: product.price %}
+            {% endif %}
+          {% else %}
+            {% render 'sold-out-button', disabled: 'disabled' %}
+          {% endif %}
+        </div>
+      {% endunless %}
+    </div>
+  {% endunless %}
+</div>

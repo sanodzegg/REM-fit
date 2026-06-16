@@ -1,0 +1,186 @@
+<script>
+  const shopPermanentDomain = "{{ shop.permanent_domain }}";
+  const customerEmail = "{{ customer.email }}";
+  const customerHasAccount = "{{ customer != nil and customer.has_account }}";
+  const customerId = "{{ customer.id }}";
+  const customerName = "{{ customer.name }}";
+  const pageUrl = "{{ page.url }}";
+  const liquidTemplate = "{{ template }}";
+  const canonicalUrl = "{{ canonical_url }}";
+
+
+const injectJsAfterScrollOrClick = () => {
+  const SCRIPT_LIST = [
+    // {
+    //   name: 'Rebuy',
+    //   htmlTagForInject: 'head',
+    //   src: "https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}",
+    //   srcAttr: [['async', 'true']],
+    // },
+    // {
+    //  name: 'EasyGift',
+    //  htmlTagForInject: 'head',
+    //  src: `https://cdn.506.io/eg/script.js?shop=${shopPermanentDomain}`,
+    //  srcAttr: [['async', 'true']],
+    // },
+    {
+      name: 'GTM',
+      htmlTagForInject: 'head',
+      src: 'https://www.googletagmanager.com/gtag/js?id=AW-864944454',
+      srcAttr: [['async', 'true']],
+    },
+    {
+      name: 'GTM-settings',
+      htmlTagForInject: 'head',
+      inlineSettings: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'AW-864944454', {'allow_enhanced_conversions': true});
+      `,
+    },
+    {
+      name: 'GTM-2',
+      htmlTagForInject: 'head',
+      src: 'https://www.googletagmanager.com/gtm.js?id=GTM-NFT2J24',
+      srcAttr: [['async', 'true']],
+    },
+    {
+      name: 'GTM-settings-2',
+      htmlTagForInject: 'head',
+      inlineSettings: `
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NFT2J24');
+      `,
+    },
+    {
+      name: 'webgains',
+      htmlTagForInject: 'head',
+      inlineSettings: `
+      (function(w,e,b,g,a,i,n,s){w['ITCLKOBJ']=a;w[a]=w[a]||function(){(w[a].q=w[a].q||[]).push(arguments)},w[a].l=1*new Date();i=e.createElement(b),n=e.getElementsByTagName(b)[0];i.async=1;i.src=g;n.parentNode.insertBefore(i,n)})(window,document,'script','https://analytics.webgains.io/clk.min.js','ITCLKQ');
+        ITCLKQ('set', 'internal.cookie', true);
+        ITCLKQ('set', 'internal.api', true);
+        ITCLKQ('click');
+      `,
+    },
+    {
+      name: 'Trustpilot',
+      htmlTagForInject: 'head',
+      src: 'https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js',
+      srcAttr: [['async', 'true']],
+    },
+    //{
+      //name: 'Klaviyo',
+      //htmlTagForInject: 'head',
+      //src: 'https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=Tk5uDL',
+      //srcAttr: [['async', 'true']],
+    //},
+    //{
+      //name: 'Klaviyo settings',
+      //htmlTagForInject: 'head',
+      //inlineSettings: `
+        //!function(){if(!window.klaviyo){window._klOnsite=window._klOnsite||[];try{window.klaviyo=new Proxy({},{get:function(n,i){return"push"===i?function(){var n;(n=window._klOnsite).push.apply(n,arguments)}:function(){for(var n=arguments.length,o=new Array(n),w=0;w<n;w++)o[w]=arguments[w];var t="function"==typeof o[o.length-1]?o.pop():void 0,e=new Promise((function(n){window._klOnsite.push([i].concat(o,[function(i){t&&t(i),n(i)}]))}));return e}}})}catch(n){window.klaviyo=window.klaviyo||[],window.klaviyo.push=function(){var n;(n=window._klOnsite).push.apply(n,arguments)}}}}();
+      //`,
+    //},
+    {
+      name: 'Klarna',
+      htmlTagForInject: 'head',
+      src: 'https://s3.eu-west-1.amazonaws.com/production-klarna-il-shopify-osm/a6c5e37d3b587ca7438f15aa90b429b47085a035/rem-fit-uk.myshopify.com-1708626902082.js?shop=rem-fit-uk.myshopify.com',
+      srcAttr: [['async', 'true']],
+    },
+    {
+      name: 'csShipping',
+      htmlTagForInject: 'head',
+      src: "https://sbz.cirkleinc.com/assets/js/front/csShippingApp.js",
+      srcAttr: [['async', 'true']],
+    },
+  ];
+
+  let needInjected = true;
+  const injectScripts = (scriptList) => {
+    scriptList.forEach((item) => {
+      if (
+        (item.excludeTemplates && item.excludeTemplates.some((template) => template === liquidTemplate)) ||
+        (item.excludeCanonicalUrls && item.excludeCanonicalUrls.some((url) => canonicalUrl.includes(url)))
+      ) {
+        return;
+      }
+      if (item.css) {
+        item.css.forEach((cssPath) => {
+          const css = document.createElement('link');
+          css.type = 'text/css';
+          css.rel = 'stylesheet';
+          css.href = cssPath;
+          document.querySelector('head').appendChild(css);
+        });
+      }
+      const injectionElement = document.querySelector(item.htmlTagForInject);
+      if (item.src) {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = item.src;
+        if (item.srcAttr) {
+          item.srcAttr.forEach((attr) => script.setAttribute(attr[0], attr[1]));
+        }
+        injectionElement.appendChild(script);
+      }
+      if (item.inlineSettings) {
+        const scriptSettings = document.createElement('script');
+        if (item.inlineSettingsAttr) {
+          item.inlineSettingsAttr.forEach((attr) => scriptSettings.setAttribute(attr.name, attr.value));
+        }
+        scriptSettings.innerHTML = item.inlineSettings;
+        injectionElement.appendChild(scriptSettings);
+      }
+    });
+  };
+
+  const forcedInjectScriptsList = [];
+  const afterClickOrScrollScriptsList = [];
+
+  const forcedInjectScripts = () => {
+    SCRIPT_LIST.forEach((script) => {
+      if (
+        (script.forcedPageUrls && script.forcedPageUrls.some((item) => item === pageUrl)) ||
+        (script.forcedCanonicalUrls && script.forcedCanonicalUrls.some((item) => canonicalUrl.includes(item))) ||
+        (script.forcedLiquidTemplates && script.forcedLiquidTemplates.some((item) => item === liquidTemplate))
+      ) {
+        forcedInjectScriptsList.push(script);
+      } else {
+        if (!script.onlyUrlContains || script.onlyUrlContains.some((item) => canonicalUrl.includes(item))) {
+          afterClickOrScrollScriptsList.push(script);
+        }
+      }
+    });
+    if (forcedInjectScriptsList.length) {
+      injectScripts(forcedInjectScriptsList);
+    }
+  };
+
+  const injectScriptsAfterScrollOrClick = () => {
+    if (needInjected) {
+      if (afterClickOrScrollScriptsList.length) {
+        injectScripts(afterClickOrScrollScriptsList);
+      }
+      const bodyClassList = document.querySelector('body').classList;
+      if (!bodyClassList.contains('init-scroll-or-click')) {
+        bodyClassList.add('init-scroll-or-click');
+      }
+      needInjected = false;
+      document.removeEventListener('click', injectScriptsAfterScrollOrClick);
+      document.removeEventListener('scroll', injectScriptsAfterScrollOrClick);
+    }
+  };
+
+  forcedInjectScripts();
+  document.addEventListener('click', injectScriptsAfterScrollOrClick);
+  document.addEventListener('scroll', injectScriptsAfterScrollOrClick);
+};
+
+injectJsAfterScrollOrClick();
+</script>

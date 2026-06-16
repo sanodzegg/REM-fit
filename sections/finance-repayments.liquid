@@ -1,0 +1,212 @@
+<div class="finance-repayments">
+  <div class="container">
+    <h2>Work Out Your Monthly Payments</h2>
+    <p>Use our finance calculator to explore the payment plan that fits your budget best.</p>
+    <div class="finance-repayments-div">
+      <div class="fr-left">
+        <div class="finance-input-group">
+          <label for="cash-price">Cash Price</label>
+          <div class="finance-input-box">
+            <span>£</span> <input type="number" id="cash-price" min="150" max="5000" value="1200">
+          </div>
+        </div>
+
+        <div class="finance-input-group">
+          <input type="range" id="cash-slider" class="range-slider" min="150" max="5000" step="50" value="1200">
+          <div class="slider-value">
+            <span>£150</span>
+            <span>£5000</span>
+          </div>
+        </div>
+
+        <div class="finance-input-group">
+          <div class="custom-select-wrapper">
+            <label>Select Term (months)</label>
+            <div class="custom-select" id="term-select-wrapper">
+              <div class="custom-select-trigger" id="term-trigger">
+                <span id="term-label">12 months (0% APR)</span>
+              </div>
+              <div class="custom-options" id="term-options"></div>
+            </div>
+          </div>
+          <input type="hidden" id="term-select" value="12">
+        </div>
+        <p>
+          <small>
+            REPRESENTATIVE EXAMPLE: Purchase amount: £999.99. Deposit £0.00 | 48 monthly repayments of £22.89 | Total
+            amount of credit: £999.99 | Total charge for credit: £99 | Total amount payable: £1098.99 | Duration: 48
+            Months | 9.9% APR Representative (Fixed)</small
+          >
+        </p>
+      </div>
+
+      <div class="fr-devider"></div>
+
+      <div class="fr-right">
+        <div class="payment-display">
+          <h3>You’ll pay: <span class="payment-value" id="monthly-payment">£100 p/m</span></h3>
+          <div class="payment-details" id="payment-details"></div>
+          <p>
+            <small
+              >Please be aware that the finance figures provided are for example purposes only. Exact figures will be
+              confirmed during the finance application process.
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const terms = [
+    { value: 3, label: '3 months (0% APR)', apr: 0 },
+    { value: 6, label: '6 months (0% APR)', apr: 0 },
+    { value: 12, label: '12 months (0% APR)', apr: 0 },
+    { value: 18, label: '18 months (9.9% APR)', apr: 9.9 },
+    { value: 24, label: '24 months (9.9% APR)', apr: 9.9 },
+    { value: 36, label: '36 months (9.9% APR)', apr: 9.9 },
+    { value: 48, label: '48 months (9.9% APR)', apr: 9.9 }
+  ];
+
+  const priceInput = document.getElementById('cash-price');
+  const slider = document.getElementById('cash-slider');
+  const termWrapper = document.getElementById('term-select-wrapper');
+  const termOptions = document.getElementById('term-options');
+  const termTrigger = document.getElementById('term-trigger');
+  const termLabel = document.getElementById('term-label');
+  const termHidden = document.getElementById('term-select');
+  const monthlyPaymentEl = document.getElementById('monthly-payment');
+  const paymentDetailsEl = document.getElementById('payment-details');
+
+  let correctionTimer = null;
+
+  function formatNumber(num) {
+    return num % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
+  }
+
+ function updateTermsDropdown(price) {
+  termOptions.innerHTML = '';
+  const filtered = price >= 400 ? terms : terms.filter(t => t.apr === 0);
+  
+  filtered.forEach(term => {
+    const option = document.createElement('div');
+    option.className = 'custom-option';
+    option.innerHTML = `
+      <span>${term.label}</span>
+      <img src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/dividebuy-logo.png?v=1748599464" class="term-logo" />
+    `;
+
+    // New condition: hide options containing "9.9% APR" if price < 1200
+    if (price < 400 && term.apr === 9.9) {
+      option.style.display = 'none';
+    }
+
+    option.addEventListener('click', () => {
+      termLabel.textContent = term.label;
+      termHidden.value = term.value;
+      termOptions.style.display = 'none';
+      calculate();
+    });
+
+    termOptions.appendChild(option);
+  });
+
+  const defaultTerm = filtered.find(t => t.value === 12) || filtered[0];
+  termLabel.textContent = defaultTerm.label;
+  termHidden.value = defaultTerm.value;
+}
+
+  function calculate() {
+    let price = parseFloat(priceInput.value);
+    if (isNaN(price)) price = 0;
+    price = Math.min(price, 5000);
+    priceInput.value = price;
+    slider.value = price;
+
+    const selectedTermValue = parseInt(termHidden.value);
+    const selectedTerm = terms.find(t => t.value === selectedTermValue);
+    const months = selectedTerm.value;
+    const apr = selectedTerm.apr;
+
+    let monthly, total, interest, first, final;
+
+    if (apr === 0) {
+      monthly = price / months;
+      total = price;
+      interest = 0;
+      first = final = monthly;
+    } else {
+      interest = price * (apr / 100);
+      total = price + interest;
+      monthly = total / months;
+      first = final = monthly;
+    }
+
+    const credit = total - first;
+
+    monthlyPaymentEl.textContent = `£${formatNumber(monthly)} p/m`;
+    paymentDetailsEl.innerHTML = `
+    Cash price of goods: £${formatNumber(price)}<br>
+    Amount of Finance: £${formatNumber(price)}<br>
+    Interest Rate: ${apr}% APR (Fixed)<br>
+    Monthly payment: £${formatNumber(monthly)}<br>
+    Duration: ${months} months<br>
+    Total cost of credit: £${formatNumber(interest)}<br>
+    Total Amount payable: £${formatNumber(total)}
+  `;
+  }
+
+  priceInput.addEventListener('input', () => {
+    clearTimeout(correctionTimer); // Cancel previous timer if any
+
+    let val = parseFloat(priceInput.value) || 0;
+
+    if (val < 150) {
+      correctionTimer = setTimeout(() => {
+        let currentVal = parseFloat(priceInput.value) || 0;
+        if (currentVal < 150) {
+          priceInput.value = 150;
+          slider.value = 150;
+          updateTermsDropdown(150);
+          calculate();
+        }
+      }, 2000); // Wait 2 seconds before correcting
+    } else {
+      slider.value = val;
+      updateTermsDropdown(val);
+      calculate();
+    }
+  });
+
+  slider.addEventListener('input', () => {
+    const val = parseFloat(slider.value) || 0;
+    clearTimeout(correctionTimer);
+    priceInput.value = val;
+    updateTermsDropdown(val);
+    calculate();
+  });
+
+  termTrigger.addEventListener('click', () => {
+    const isOpen = termOptions.style.display === 'block';
+    termOptions.style.display = isOpen ? 'none' : 'block';
+    termTrigger.classList.toggle('expand', !isOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!termWrapper.contains(e.target)) {
+      termOptions.style.display = 'none';
+    }
+  });
+
+  // Initialize
+  updateTermsDropdown(parseFloat(priceInput.value) || 0);
+  calculate();
+</script>
+
+{% schema %}
+{
+  "name": "Finance Repayments",
+  "settings": []
+}
+{% endschema %}

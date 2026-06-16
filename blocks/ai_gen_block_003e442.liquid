@@ -1,0 +1,338 @@
+{% doc %}
+  @prompt
+    In the product description section of the product page template, wrap the description content in a collapsible with a 'Read more' / 'Read less' toggle that works on all screen sizes (both mobile and desktop). Specifically: show the first ~3 lines (around 120px height) of the description by default, with the rest hidden via max-height and overflow: hidden. Add a "Read more" button/link below that expands to full height on click and changes label to "Read less". Use a CSS max-height transition for a smooth expand/collapse animation. The relevant template file is sections/main-product.liquid where the description is rendered with {{ product.description }}.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collapsible-description-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-collapsible-description__content-{{ ai_gen_id }} {
+    max-height: {{ block.settings.collapsed_height }}px;
+    overflow: hidden;
+    transition: max-height {{ block.settings.transition_speed }}s ease;
+    position: relative;
+  }
+
+  .ai-collapsible-description__content-{{ ai_gen_id }}.expanded {
+    max-height: 5000px;
+  }
+
+  .ai-collapsible-description__gradient-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: {{ block.settings.gradient_height }}px;
+    background: linear-gradient(to bottom, transparent, {{ block.settings.gradient_color }});
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity {{ block.settings.transition_speed }}s ease;
+  }
+
+  .ai-collapsible-description__content-{{ ai_gen_id }}.expanded .ai-collapsible-description__gradient-{{ ai_gen_id }} {
+    opacity: 0;
+  }
+
+  .ai-collapsible-description__toggle-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.button_spacing }}px;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_border_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    cursor: pointer;
+    font-size: {{ block.settings.button_font_size }}px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-collapsible-description__toggle-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+  }
+
+  .ai-collapsible-description__toggle-icon-{{ ai_gen_id }} {
+    width: 16px;
+    height: 16px;
+    transition: transform {{ block.settings.transition_speed }}s ease;
+  }
+
+  .ai-collapsible-description__toggle-{{ ai_gen_id }}.expanded .ai-collapsible-description__toggle-icon-{{ ai_gen_id }} {
+    transform: rotate(180deg);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collapsible-description-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<collapsible-description-{{ ai_gen_id }}
+  class="ai-collapsible-description-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-collapsible-description__content-{{ ai_gen_id }}">
+    {{ product.description }}
+    {% if block.settings.show_gradient %}
+      <div class="ai-collapsible-description__gradient-{{ ai_gen_id }}"></div>
+    {% endif %}
+  </div>
+  
+  <button
+    type="button"
+    class="ai-collapsible-description__toggle-{{ ai_gen_id }}"
+    aria-expanded="false"
+  >
+    <span class="ai-collapsible-description__toggle-text-{{ ai_gen_id }}">{{ block.settings.read_more_text }}</span>
+    <svg
+      class="ai-collapsible-description__toggle-icon-{{ ai_gen_id }}"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+</collapsible-description-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CollapsibleDescription{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.content = this.querySelector('.ai-collapsible-description__content-{{ ai_gen_id }}');
+        this.button = this.querySelector('.ai-collapsible-description__toggle-{{ ai_gen_id }}');
+        this.buttonText = this.querySelector('.ai-collapsible-description__toggle-text-{{ ai_gen_id }}');
+        this.isExpanded = false;
+        this.readMoreText = '{{ block.settings.read_more_text }}';
+        this.readLessText = '{{ block.settings.read_less_text }}';
+      }
+
+      connectedCallback() {
+        this.checkIfCollapsible();
+        this.button.addEventListener('click', this.toggle.bind(this));
+        window.addEventListener('resize', this.checkIfCollapsible.bind(this));
+      }
+
+      checkIfCollapsible() {
+        const collapsedHeight = {{ block.settings.collapsed_height }};
+        const actualHeight = this.content.scrollHeight;
+        
+        if (actualHeight <= collapsedHeight) {
+          this.button.style.display = 'none';
+        } else {
+          this.button.style.display = 'inline-flex';
+        }
+      }
+
+      toggle() {
+        this.isExpanded = !this.isExpanded;
+        
+        if (this.isExpanded) {
+          this.content.classList.add('expanded');
+          this.button.classList.add('expanded');
+          this.buttonText.textContent = this.readLessText;
+          this.button.setAttribute('aria-expanded', 'true');
+        } else {
+          this.content.classList.remove('expanded');
+          this.button.classList.remove('expanded');
+          this.buttonText.textContent = this.readMoreText;
+          this.button.setAttribute('aria-expanded', 'false');
+        }
+      }
+    }
+
+    customElements.define('collapsible-description-{{ ai_gen_id }}', CollapsibleDescription{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collapsible description",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "range",
+      "id": "collapsed_height",
+      "label": "Collapsed height",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gradient",
+      "label": "Show fade gradient",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "gradient_height",
+      "label": "Gradient height",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "gradient_color",
+      "label": "Gradient color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "transition_speed",
+      "label": "Animation speed",
+      "min": 0.1,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.3
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "read_more_text",
+      "label": "Read more text",
+      "default": "Read more"
+    },
+    {
+      "type": "text",
+      "id": "read_less_text",
+      "label": "Read less text",
+      "default": "Read less"
+    },
+    {
+      "type": "range",
+      "id": "button_spacing",
+      "label": "Button spacing",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Border color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collapsible description"
+    }
+  ]
+}
+{% endschema %}

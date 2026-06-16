@@ -1,0 +1,435 @@
+{% doc %}
+  @prompt
+    Add a "Read More / Read Less" toggle to the product description in the product page content section. The description should be truncated to a set height (e.g. 150px) by default, with a "Read more" button below it. When clicked, it expands to show the full description and the button text changes to "Read less". Clicking again collapses it back. The toggle should animate smoothly, and the button should be styled to match the theme's existing link or button style.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-description-{{ ai_gen_id }} {
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    display: block;
+  }
+
+  .ai-product-description__wrapper-{{ ai_gen_id }} {
+    position: relative;
+  }
+
+  .ai-product-description__content-{{ ai_gen_id }} {
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    position: relative;
+  }
+
+  .ai-product-description__content-{{ ai_gen_id }}.collapsed {
+    max-height: {{ block.settings.collapsed_height }}px;
+  }
+
+  .ai-product-description__content-{{ ai_gen_id }}.expanded {
+    max-height: 5000px;
+  }
+
+  .ai-product-description__fade-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, {{ block.settings.background_color }});
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-product-description__fade-{{ ai_gen_id }}.hidden {
+    opacity: 0;
+  }
+
+  .ai-product-description__text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.text_size }}px;
+    line-height: 1.6;
+  }
+
+  .ai-product-description__toggle-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.button_spacing }}px;
+    text-align: {{ block.settings.button_alignment }};
+  }
+
+  .ai-product-description__button-{{ ai_gen_id }} {
+    background: none;
+    border: none;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    cursor: pointer;
+    font-size: {{ block.settings.button_text_size }}px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    {% if block.settings.button_style == 'filled' %}
+      background-color: {{ block.settings.button_background }};
+      color: {{ block.settings.button_text_color }};
+      border-radius: {{ block.settings.button_border_radius }}px;
+    {% elsif block.settings.button_style == 'outlined' %}
+      background-color: transparent;
+      color: {{ block.settings.button_text_color }};
+      border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_text_color }};
+      border-radius: {{ block.settings.button_border_radius }}px;
+    {% elsif block.settings.button_style == 'underlined' %}
+      background-color: transparent;
+      color: {{ block.settings.button_text_color }};
+      text-decoration: underline;
+    {% else %}
+      background-color: transparent;
+      color: {{ block.settings.button_text_color }};
+    {% endif %}
+  }
+
+  .ai-product-description__button-{{ ai_gen_id }}:hover {
+    {% if block.settings.button_style == 'filled' %}
+      background-color: {{ block.settings.button_hover_background }};
+      color: {{ block.settings.button_hover_text_color }};
+    {% elsif block.settings.button_style == 'outlined' %}
+      background-color: {{ block.settings.button_text_color }};
+      color: {{ block.settings.button_background }};
+    {% else %}
+      opacity: 0.7;
+    {% endif %}
+  }
+
+  .ai-product-description__icon-{{ ai_gen_id }} {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-product-description__icon-{{ ai_gen_id }}.rotated {
+    transform: rotate(180deg);
+  }
+{% endstyle %}
+
+<product-description-toggle-{{ ai_gen_id }}
+  class="ai-product-description-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+  data-collapsed-height="{{ block.settings.collapsed_height }}"
+>
+  <div class="ai-product-description__wrapper-{{ ai_gen_id }}">
+    <div class="ai-product-description__content-{{ ai_gen_id }} collapsed">
+      <div class="ai-product-description__text-{{ ai_gen_id }}">
+        {{ product.description }}
+      </div>
+    </div>
+    <div class="ai-product-description__fade-{{ ai_gen_id }}"></div>
+  </div>
+
+  <div class="ai-product-description__toggle-{{ ai_gen_id }}">
+    <button
+      class="ai-product-description__button-{{ ai_gen_id }}"
+      aria-expanded="false"
+      aria-label="Toggle product description"
+    >
+      <span class="ai-product-description__button-text-{{ ai_gen_id }}">
+        {{ block.settings.read_more_text }}
+      </span>
+      {% if block.settings.show_icon %}
+        <svg
+          class="ai-product-description__icon-{{ ai_gen_id }}"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      {% endif %}
+    </button>
+  </div>
+</product-description-toggle-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductDescriptionToggle{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.isExpanded = false;
+        this.collapsedHeight = parseInt(this.dataset.collapsedHeight) || 150;
+      }
+
+      connectedCallback() {
+        this.content = this.querySelector('.ai-product-description__content-{{ ai_gen_id }}');
+        this.fade = this.querySelector('.ai-product-description__fade-{{ ai_gen_id }}');
+        this.button = this.querySelector('.ai-product-description__button-{{ ai_gen_id }}');
+        this.buttonText = this.querySelector('.ai-product-description__button-text-{{ ai_gen_id }}');
+        this.icon = this.querySelector('.ai-product-description__icon-{{ ai_gen_id }}');
+        this.toggleWrapper = this.querySelector('.ai-product-description__toggle-{{ ai_gen_id }}');
+
+        this.readMoreText = '{{ block.settings.read_more_text }}';
+        this.readLessText = '{{ block.settings.read_less_text }}';
+
+        this.checkIfToggleNeeded();
+        this.setupEventListeners();
+      }
+
+      checkIfToggleNeeded() {
+        const contentHeight = this.content.scrollHeight;
+        
+        if (contentHeight <= this.collapsedHeight) {
+          this.toggleWrapper.style.display = 'none';
+          this.fade.style.display = 'none';
+          this.content.classList.remove('collapsed');
+          this.content.style.maxHeight = 'none';
+        }
+      }
+
+      setupEventListeners() {
+        this.button.addEventListener('click', () => this.toggle());
+      }
+
+      toggle() {
+        this.isExpanded = !this.isExpanded;
+
+        if (this.isExpanded) {
+          this.content.classList.remove('collapsed');
+          this.content.classList.add('expanded');
+          this.fade.classList.add('hidden');
+          this.buttonText.textContent = this.readLessText;
+          this.button.setAttribute('aria-expanded', 'true');
+          if (this.icon) {
+            this.icon.classList.add('rotated');
+          }
+        } else {
+          this.content.classList.remove('expanded');
+          this.content.classList.add('collapsed');
+          this.fade.classList.remove('hidden');
+          this.buttonText.textContent = this.readMoreText;
+          this.button.setAttribute('aria-expanded', 'false');
+          if (this.icon) {
+            this.icon.classList.remove('rotated');
+          }
+        }
+      }
+    }
+
+    customElements.define('product-description-toggle-{{ ai_gen_id }}', ProductDescriptionToggle{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Description toggle",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "range",
+      "id": "collapsed_height",
+      "label": "Collapsed height",
+      "min": 50,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#191d21"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "read_more_text",
+      "label": "Read more text",
+      "default": "Read more"
+    },
+    {
+      "type": "text",
+      "id": "read_less_text",
+      "label": "Read less text",
+      "default": "Read less"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        {
+          "value": "text",
+          "label": "Text only"
+        },
+        {
+          "value": "underlined",
+          "label": "Underlined"
+        },
+        {
+          "value": "outlined",
+          "label": "Outlined"
+        },
+        {
+          "value": "filled",
+          "label": "Filled"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "select",
+      "id": "button_alignment",
+      "label": "Button alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "button_spacing",
+      "label": "Space above button",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Button text size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show arrow icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Button colors"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Button dimensions"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border width",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    }
+  ],
+  "presets": [
+    {
+      "name": "Description toggle"
+    }
+  ]
+}
+{% endschema %}

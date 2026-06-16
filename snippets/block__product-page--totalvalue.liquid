@@ -1,0 +1,106 @@
+{% if product.compare_at_price %}
+  {% comment %} <a href="javascript:void(0);" class="totalvalue_tooltip_open" data-id="{{product.id}}"> {% endcomment %}
+    {% if template.name == 'product' %}
+      <span data-product-price-sale="{{product.id}}" class="product__price--old jsPrice" id="comp-prod-price">
+        {{ product.compare_at_price | money | strip_html }}
+      </span> 
+    {% endif %}
+    {% comment %} Total value <span class="tooltip-icon">i</span>
+  </a> {% endcomment %}
+
+  <div class="totalvalue_overlay" id="{{ product.id }}">
+    <div data-total-value-tooltip-content-inner="" class="total-value-tooltip-inner">
+      <div class="total-value-tooltip">
+        <div class="total-value-tooltip-header">
+          <h2>What is Total Value?</h2>
+
+          <div class="rte">
+            <p>
+              We identify three comparable products and track their actual selling prices, not the inflated prices they
+              claim. Our Total Value is set at or below the average of these products. To see how Total Value is
+              calculated, you can 
+              <a
+                href="https://www.rem-fit.co.uk/pages/how-is-total-value-calculated"
+                target="_blank"
+                title="Total Value"
+                >learn more here.</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <div class="table-area">
+          <table>
+            <thead>
+              <tr>
+                <td colspan="999"></td>
+                <td class="text-center highlight-red">Others Total Value</td>
+                <td class="text-center">
+                  <a href="/" class="rem-fit-logo" style="width:fit-content;">
+                  <span>REM-Fit</span>
+                  </a>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {% if product.metafields.custom.total_value_pricing.value.size > 0 %}
+                {% for row in product.metafields.custom.total_value_pricing.value %}
+                  <tr>
+                    {% if row.Name %}
+                      <th colspan="999">{{ row.Name }}</th>
+                    {% endif %}
+                    {% if row.Total %}
+                      <th class="row-total">{{ row.Total }}</th>
+                    {% endif %}
+                    {% if row.Price %}
+                      <th class="row-price">{{ row.Price }}</th>
+                    {% endif %}
+                  </tr>
+                {% endfor %}
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rte footer-rte text-center">
+          <p>*Pricing as of&nbsp;11/02/2025.</p>
+        </div>
+
+        <div data-total-value-tooltip-close="" class="total-value-tooltip__close">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+            role="presentation"
+            class="icon icon-close"
+            fill="none"
+            viewBox="0 0 18 17"
+          >
+            <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
+            </path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% if template == 'product' %}
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".totalvalue_tooltip_open").forEach(el =>
+        el.addEventListener("click", () => document.body.classList.add("totalvalue_popup_open"))
+      );
+      document.querySelectorAll(".totalvalue_overlay").forEach(el =>
+        el.addEventListener("click", (event) => {
+          if (!event.target.closest(".total-value-tooltip-inner")) {
+            document.body.classList.remove("totalvalue_popup_open");
+          }
+        })
+      );
+      // Close button inside tooltip
+      document.querySelectorAll(".total-value-tooltip__close").forEach(el =>
+        el.addEventListener("click", () => document.body.classList.remove("totalvalue_popup_open"))
+      );
+    });
+  </script>
+{% endif %}

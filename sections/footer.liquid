@@ -1,0 +1,700 @@
+{% if section.blocks.size > 0 %}
+ <style>
+    .footer {
+        background-color: {{section.settings.fillColor}};
+        color: {% unless section.settings.contentColor contains 'rgba(0,0,0,0)' %}{{section.settings.contentColor}}{% else %}initial{% endunless %};
+        font-size: 15px;
+        padding: 32px 0px;
+    }
+
+    .footer__block {
+        padding: {{section.settings.spacing}}px {{section.settings.spacing}}px;
+    }
+ </style>
+  {% if template.name == 'index' %}
+    <div class="carve-footer">
+      <div class="carve-innerfooter">
+        {{ 'carve-shape.png' | asset_url | img_tag }}
+      </div>
+    </div>
+  {% endif %}
+  {% capture layoutConfig %}{% render 'common-layout' with section as section %}{% endcapture %}
+
+  <div class="inherit footer layout__{{-layoutConfig}}">
+    <div class="klaviyo-form-SWwMvG"></div>
+    <div class="layout__content row">
+      {% for block in section.blocks %}
+        <div class="col-12 col-md col-md-{{-block.settings.width}} footer__block {{block.settings.horizontalAlignment}} {{block.settings.verticalAlignment-}}">
+          {% render 'get-block' with block as block %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% render 'mobile-bottom-navigation' %}
+
+<script>
+  const triggers = document.querySelectorAll('.saving_badge_tooltip_open');
+  const tooltips = document.querySelectorAll('.saving_badge_tooltip_text');
+
+  triggers.forEach((trigger, index) => {
+    const tooltip = tooltips[index];
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      // Toggle visibility
+      const isVisible = tooltip.style.display === 'block';
+      tooltips.forEach(t => t.style.display = 'none'); // Hide all
+      tooltip.style.display = isVisible ? 'none' : 'block';
+    });
+  });
+
+  // Close all tooltips if clicking outside
+  document.addEventListener('click', (e) => {
+    tooltips.forEach(tooltip => {
+      if (!tooltip.contains(e.target)) {
+        tooltip.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+<!-- <script>
+  $(window).on('load', function () {
+    $('#gocertify-footer-popup').click();
+  });
+</script> -->
+{% comment %}
+  <div class="thiredparty-helptochoose  hideform">
+      <button id="close"><i class="uil  uil-plus"></i></button>
+  	<iframe src="https://rem-fit.typeform.com/to/FVRbF3" width="100%" height="100%" frameborder="0"></iframe>
+  </div>
+{% endcomment %}
+<!-- injec after engagement -->
+{% comment %}
+  <script>
+  (function(w,e,b,g,a,i,n,s){w['ITCLKOBJ']=a;w[a]=w[a]||function(){(w[a].q=w[a].q||[]).push(arguments)},w[a].l=1*new Date();i=e.createElement(b),n=e.getElementsByTagName(b)[0];i.async=1;i.src=g;n.parentNode.insertBefore(i,n)})(window,document,'script','https://analytics.webgains.io/clk.min.js','ITCLKQ');
+  ITCLKQ('set', 'internal.cookie', true);
+  ITCLKQ('set', 'internal.api', true);
+  ITCLKQ('click');
+  </script>
+{% endcomment %}
+
+{% schema %}
+{
+    "name": "Footer",
+    "settings": [
+        {
+      "type": "header",
+      "content": "Help"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Click here to follow an interactive Tutorial](https://vimeo.com/458178944)"
+    },
+        {
+            "type": "header",
+            "content": "Section layout"
+        },
+        {
+        "type": "select",
+        "id": "layout",
+        "label": "Section layout",
+        "options": [
+            {"value": "default", "label": "Global default"},
+            {"value": "boxed", "label": "Boxed"},
+            {"value": "stretchBg", "label": "Full width background"},
+            {"value": "stretchContent", "label": "Full width"}
+        ],
+        "default": "default"
+        },
+        {
+            "type": "color",
+            "label": "Background color",
+            "default": "#000",
+            "id": "fillColor"
+        },
+        {
+            "type": "color",
+            "label": "Content color",
+            "default": "#FFF",
+            "id": "contentColor"
+        },
+        {
+            "id": "spacing",
+            "label": "Spacing",
+            "type": "range",
+            "unit": "px",
+            "default": 4,
+            "min": 0,
+            "max": 50,
+            "step": 1
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Links",
+            "type": "footerLinks",
+            "settings": [
+                {
+                    "id": "width",
+                    "label": "Width",
+                    "type": "select",
+                    "options": [
+                        {"value": "auto", "label": "Auto"},
+                        {"value": "12", "label": "100%"},
+                        {"value": "9", "label": "75%"},
+                        {"value": "8", "label": "66%"},
+                        {"value": "6", "label": "50%"},
+                        {"value": "4", "label": "33%"},
+                        {"value": "3", "label": "25%"},
+                        {"value": "1-5", "label": "20%"}
+                    ],
+                    "default": "auto"
+                },
+                {
+                    "type": "select",
+                    "id": "horizontalAlignment",
+                    "label": "Content alignment (left to right)",
+                    "options": [
+                        {"value": "start", "label": "Left"},
+                        {"value": "center", "label": "Center"},
+                        {"value": "end", "label": "Right"}
+                    ],
+                    "default": "center"
+                },
+                {
+                    "type": "select",
+                    "id": "verticalAlignment",
+                    "label": "Content alignment (top to bottom)",
+                    "options": [
+                        {"value": "top", "label": "Top"},
+                        {"value": "middle", "label": "Middle"},
+                        {"value": "bottom", "label": "Bottom"}
+                    ],
+                    "default": "middle"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Title",
+                    "default": "TITLE"
+                },
+                {
+                    "id": "links",
+                    "label": "Links",
+                    "type": "link_list"
+                }
+            ]
+        },
+        {
+            "name": "Text",
+            "type": "footerText",
+            "settings": [
+                {
+                    "id": "width",
+                    "label": "Width",
+                    "type": "select",
+                    "options": [
+                        {"value": "auto", "label": "Auto"},
+                        {"value": "12", "label": "100%"},
+                        {"value": "9", "label": "75%"},
+                        {"value": "8", "label": "66%"},
+                        {"value": "6", "label": "50%"},
+                        {"value": "4", "label": "33%"},
+                        {"value": "3", "label": "25%"},
+                        {"value": "1-5", "label": "20%"}
+                    ],
+                    "default": "auto"
+                },
+                {
+                    "type": "select",
+                    "id": "horizontalAlignment",
+                    "label": "Content alignment (left to right)",
+                    "options": [
+                        {"value": "start", "label": "Left"},
+                        {"value": "center", "label": "Center"},
+                        {"value": "end", "label": "Right"}
+                    ],
+                    "default": "center"
+                },
+                {
+                    "type": "select",
+                    "id": "verticalAlignment",
+                    "label": "Content alignment (top to bottom)",
+                    "options": [
+                        {"value": "top", "label": "Top"},
+                        {"value": "middle", "label": "Middle"},
+                        {"value": "bottom", "label": "Bottom"}
+                    ],
+                    "default": "middle"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Title",
+                    "default": "TITLE"
+                },
+                {
+                    "id": "text",
+                    "label": "Text",
+                    "type": "richtext",
+                    "default": "<p>Enjoy unlimited amount of characters in this field. Just go at it.</p>"
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "type": "footerImage",
+            "settings": [
+                {
+                    "id": "width",
+                    "label": "Width",
+                    "type": "select",
+                    "options": [
+                        {"value": "auto", "label": "Auto"},
+                        {"value": "12", "label": "100%"},
+                        {"value": "9", "label": "75%"},
+                        {"value": "8", "label": "66%"},
+                        {"value": "6", "label": "50%"},
+                        {"value": "4", "label": "33%"},
+                        {"value": "3", "label": "25%"},
+                        {"value": "1-5", "label": "20%"}
+                    ],
+                    "default": "auto"
+                },
+                {
+                    "type": "select",
+                    "id": "horizontalAlignment",
+                    "label": "Content alignment (left to right)",
+                    "options": [
+                        {"value": "start", "label": "Left"},
+                        {"value": "center", "label": "Center"},
+                        {"value": "end", "label": "Right"}
+                    ],
+                    "default": "center"
+                },
+                {
+                    "type": "select",
+                    "id": "verticalAlignment",
+                    "label": "Content alignment (top to bottom)",
+                    "options": [
+                        {"value": "top", "label": "Top"},
+                        {"value": "middle", "label": "Middle"},
+                        {"value": "bottom", "label": "Bottom"}
+                    ],
+                    "default": "middle"
+                },
+                {
+                    "type": "image_picker",
+                    "label": "Image",
+                    "id": "image"
+                },
+                {
+                    "type": "range",
+                    "label": "Image width",
+                    "unit": "%",
+                    "id": "imageWidth",
+                    "default": 100,
+                    "min": 5,
+                    "max": 100,
+                    "step": 5
+                },
+                {
+                    "type": "url",
+                    "label": "Image link",
+                    "id": "url"
+                }
+            ]
+        },
+        {
+            "name": "Contact",
+            "type": "footerContact",
+            "settings": [
+                {
+                    "id": "width",
+                    "label": "Width",
+                    "type": "select",
+                    "options": [
+                        {"value": "auto", "label": "Auto"},
+                        {"value": "12", "label": "100%"},
+                        {"value": "9", "label": "75%"},
+                        {"value": "8", "label": "66%"},
+                        {"value": "6", "label": "50%"},
+                        {"value": "4", "label": "33%"},
+                        {"value": "3", "label": "25%"},
+                        {"value": "1-5", "label": "20%"}
+                    ],
+                    "default": "auto"
+                },
+                {
+                    "type": "select",
+                    "id": "horizontalAlignment",
+                    "label": "Content alignment (left to right)",
+                    "options": [
+                        {"value": "start", "label": "Left"},
+                        {"value": "center", "label": "Center"},
+                        {"value": "end", "label": "Right"}
+                    ],
+                    "default": "center"
+                },
+                {
+                    "type": "select",
+                    "id": "verticalAlignment",
+                    "label": "Content alignment (top to bottom)",
+                    "options": [
+                        {"value": "top", "label": "Top"},
+                        {"value": "middle", "label": "Middle"},
+                        {"value": "bottom", "label": "Bottom"}
+                    ],
+                    "default": "middle"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Title",
+                    "default": "TITLE"
+                },
+                {
+                    "type": "text",
+                    "id": "phoneText",
+                    "label": "Phone text"
+                },
+                {
+                    "type": "text",
+                    "id": "emailText",
+                    "label": "Email text"
+                }
+            ]
+        },
+        {
+            "name": "Payment Icons",
+            "type": "footerPayment",
+            "settings": [
+                {
+                    "id": "width",
+                    "label": "Width",
+                    "type": "select",
+                    "options": [
+                        {"value": "auto", "label": "Auto"},
+                        {"value": "12", "label": "100%"},
+                        {"value": "9", "label": "75%"},
+                        {"value": "8", "label": "66%"},
+                        {"value": "6", "label": "50%"},
+                        {"value": "4", "label": "33%"},
+                        {"value": "3", "label": "25%"},
+                        {"value": "1-5", "label": "20%"}
+                    ],
+                    "default": "auto"
+                },
+                {
+                    "type": "select",
+                    "id": "horizontalAlignment",
+                    "label": "Content alignment (left to right)",
+                    "options": [
+                        {"value": "start", "label": "Left"},
+                        {"value": "center", "label": "Center"},
+                        {"value": "end", "label": "Right"}
+                    ],
+                    "default": "center"
+                },
+                {
+                    "type": "select",
+                    "id": "verticalAlignment",
+                    "label": "Content alignment (top to bottom)",
+                    "options": [
+                        {"value": "top", "label": "Top"},
+                        {"value": "middle", "label": "Middle"},
+                        {"value": "bottom", "label": "Bottom"}
+                    ],
+                    "default": "middle"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Title"
+                },
+                {
+                    "type": "checkbox",
+                    "label": "Use a custom list of icons",
+                    "id": "customIcons",
+                    "default": false
+                },
+                {
+                    "type": "textarea",
+                    "label": "Custom list of icons",
+                    "id": "icons"
+                },
+                {
+                    "type": "header",
+                    "content": "List of available icons"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "afterpay, american_express, apple_pay, bitcoin, dankort, diners_club, discover, dogecoin, dwolla, forbrugsforeningen, google_pay, ideal, jcb, klarna, klarna-pay-later, litecoin, maestro, master, paypal, shopify_pay, sofort, visa"
+                },
+                {
+                    "type": "checkbox",
+                    "label": "Show Delivered By,Order Security and Approved By Section",
+                    "id": "deliveredBy",
+                    "default": false
+                },
+                {
+                    "type": "text",
+                    "id": "deliveredByHeading",
+                    "label": "Title",
+                    "default": "Delivered By:"
+                },
+                {
+                  "type": "image_picker",
+                  "label": "Delivered BY Logo1",
+                  "id" : "deliverBYImage1"
+                },
+              {
+                  "type": "image_picker",
+                  "label": "Delivered BY Logo2",
+                  "id" : "deliverBYImage2"
+              },
+              {
+                    "type": "text",
+                    "id": "orderSecurityHeading",
+                    "label": "Title",
+                    "default": "Order security:"
+                },
+                {
+                  "type": "image_picker",
+                  "label": "Order security Logo1",
+                  "id" : "orderSecurityImage1"
+                },
+              {
+                  "type": "image_picker",
+                  "label": "Order security Logo2",
+                  "id" : "orderSecurityImage2"
+              },
+              {
+                  "type": "image_picker",
+                  "label": "Order security Logo3",
+                  "id" : "orderSecurityImage3"
+              },
+              {
+                    "type": "text",
+                    "id": "approvedByHeading",
+                    "label": "Title",
+                    "default": "Approved By:"
+                },
+                {
+                  "type": "image_picker",
+                  "label": "Approved By Logo1",
+                  "id" : "approvedByImage1"
+                },
+              {
+                  "type": "image_picker",
+                  "label": "Approved By Logo2",
+                  "id" : "approvedByImage2"
+              },
+              {
+                  "type": "image_picker",
+                  "label": "Approved By Logo3",
+                  "id" : "approvedByImage3"
+              }
+            ]
+        },
+        {
+            "name": "Social media",
+            "type": "footerSocial",
+            "settings": [
+                {
+                    "id": "width",
+                    "label": "Width",
+                    "type": "select",
+                    "options": [
+                        {"value": "auto", "label": "Auto"},
+                        {"value": "12", "label": "100%"},
+                        {"value": "9", "label": "75%"},
+                        {"value": "8", "label": "66%"},
+                        {"value": "6", "label": "50%"},
+                        {"value": "4", "label": "33%"},
+                        {"value": "3", "label": "25%"},
+                        {"value": "1-5", "label": "20%"}
+                    ],
+                    "default": "auto"
+                },
+                {
+                    "type": "select",
+                    "id": "horizontalAlignment",
+                    "label": "Content alignment (left to right)",
+                    "options": [
+                        {"value": "start", "label": "Left"},
+                        {"value": "center", "label": "Center"},
+                        {"value": "end", "label": "Right"}
+                    ],
+                    "default": "center"
+                },
+                {
+                    "type": "select",
+                    "id": "verticalAlignment",
+                    "label": "Content alignment (top to bottom)",
+                    "options": [
+                        {"value": "top", "label": "Top"},
+                        {"value": "middle", "label": "Middle"},
+                        {"value": "bottom", "label": "Bottom"}
+                    ],
+                    "default": "middle"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Title",
+                    "default": "TITLE"
+                }
+            ]
+        },
+        {
+    "type": "blockNewsletter",
+    "name": "Newsletter",
+    "settings": [
+        {
+                    "id": "width",
+                    "label": "Width",
+                    "type": "select",
+                    "options": [
+                        {"value": "auto", "label": "Auto"},
+                        {"value": "12", "label": "100%"},
+                        {"value": "9", "label": "75%"},
+                        {"value": "8", "label": "66%"},
+                        {"value": "6", "label": "50%"},
+                        {"value": "4", "label": "33%"},
+                        {"value": "3", "label": "25%"},
+                        {"value": "1-5", "label": "20%"}
+                    ],
+                    "default": "auto"
+                },
+                {
+                    "type": "select",
+                    "id": "horizontalAlignment",
+                    "label": "Content alignment (left to right)",
+                    "options": [
+                        {"value": "start", "label": "Left"},
+                        {"value": "center", "label": "Center"},
+                        {"value": "end", "label": "Right"}
+                    ],
+                    "default": "center"
+                },
+                {
+                    "type": "select",
+                    "id": "verticalAlignment",
+                    "label": "Content alignment (top to bottom)",
+                    "options": [
+                        {"value": "top", "label": "Top"},
+                        {"value": "middle", "label": "Middle"},
+                        {"value": "bottom", "label": "Bottom"}
+                    ],
+                    "default": "middle"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Title"
+                },
+        {
+            "type": "select",
+            "label": "Newsletter provider",
+            "options": [
+                {"value": "shopify", "label": "Shopify"},
+                {"value": "mailchimp", "label": "Mailchimp"}
+            ],
+            "default": "shopify",
+            "id": "newsletter"
+        },
+        {
+            "type": "header",
+            "content": "Input"
+        },
+        {
+            "type": "range",
+            "min": 0,
+            "max": 1000,
+            "step": 10,
+            "unit": "px",
+            "id": "inputMaxWidth",
+            "label": "Maximum input width",
+            "default": 500
+        },
+        {
+            "id": "inputText",
+            "label": "Input text color",
+            "default": "rgba(0,0,0,0)",
+            "type": "color"
+        },
+        {
+            "id": "inputBackground",
+            "label": "Input background color",
+            "default": "rgba(0,0,0,0)",
+            "type": "color"
+        },
+        {
+            "type": "text",
+            "label": "Placeholder text",
+            "default": "Your e-mail goes here",
+            "id": "email"
+        },
+        {
+            "type": "header",
+            "content": "Button"
+        },
+        {
+            "type": "radio",
+            "default": "primary",
+            "label": "Button type",
+            "options": [
+                {"value": "primary", "label": "Primary combination"},
+                {"value": "secondary", "label": "Secondary combination"}
+            ],
+            "id": "buttonType"
+        },
+        {
+            "type": "text",
+            "label": "Submit text",
+            "default": "Subscribe",
+            "id": "submit"
+        }
+    ]
+},
+        {
+            "name": "Spacer",
+            "type": "footerSpacer",
+            "settings": [
+                {
+                    "id": "width",
+                    "label": "Width",
+                    "type": "select",
+                    "options": [
+                        {"value": "auto", "label": "Auto"},
+                        {"value": "12", "label": "100%"},
+                        {"value": "9", "label": "75%"},
+                        {"value": "8", "label": "66%"},
+                        {"value": "6", "label": "50%"},
+                        {"value": "4", "label": "33%"},
+                        {"value": "3", "label": "25%"},
+                        {"value": "1-5", "label": "20%"}
+                    ],
+                    "default": "auto"
+                },
+                {
+                    "type": "select",
+                    "id": "horizontalAlignment",
+                    "label": "Content alignment (left to right)",
+                    "options": [
+                        {"value": "start", "label": "Left"},
+                        {"value": "center", "label": "Center"},
+                        {"value": "end", "label": "Right"}
+                    ],
+                    "default": "center"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,39 @@
+{%- if block.settings.color != "rgba(0,0,0,0)" -%}
+<style>
+.product__title--{{block.id}} {
+    color: {{block.settings.color}};
+}
+
+</style>
+{%- endif -%}
+<h1 
+class="h-reset product__title product__title--{{block.id}} 
+font__family--{{-block.settings.fontFamily}} font__size--{{-block.settings.fontSize}} 
+ {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{%endif-%}" {{block.shopify_attributes}}>{{ product.title }}</h1>
+
+     <div class="trustpilot-widget-block">
+      <a href="https://www.trustpilot.com/review/shop.rem-fit.co.uk" target="_blank">
+        <span class="trustpilot-rating-summary">{{settings.rating-summary}}</span>
+        <img class="trustpilot-rating-stars" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot_ratings_img.png?v=1741608082" alt="" />
+        <span class="trustpilot-rating-numbers">{{settings.rating-value}}</span>
+        <span class="trustpilot-rating-reviews-number">({{settings.review-text}})</span>
+        <img class="trustpilot-logo tp-desktop-logo" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot_brand_logo.png?v=1741608082" alt="" />
+        <img class="trustpilot-logo tp-mobile-logo" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot-white-logo.png?v=1741768075" alt="" />
+      </a>
+    </div>
+   
+   
+ {% comment %}  
+<div class="delivery-section">
+  {% if product.metafields.custom.delivery_for_product %}
+    <div class="delivery-info hide-on-mobile">
+    • {{ product.metafields.custom.delivery_for_product.value }}
+    </div>
+  {% endif %}  
+</div>
+{% endcomment %}
+{% comment %}
+{% blockdef %}
+
+{% endblockdef %}
+{% endcomment %}

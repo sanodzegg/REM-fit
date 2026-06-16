@@ -1,0 +1,293 @@
+{% comment %} current bed frames {% endcomment %}
+{% if product.template_suffix == 'bed-frame' %}
+  <div id="upsell-toggle" class="upsell-container">
+    <div class="upsell-title">Choose your Bed Frame:</div>
+    <div class="product-grid-firm">
+      <a
+        class="product-card-firm"
+        title="Original"
+        href="https://www.rem-fit.co.uk/products/rem-fit-essence-unity-bed-frame"
+      >
+        <div class="card-border-firm {% if product.id == 8373530034422 %}select{% endif %}">
+          <div class="card-content-firm">
+            <div class="card-header-top">
+              <div class="card-header-firm">
+                <div class="product-name-firm">Essence</div>
+                <input
+                  id="select-Original-firm"
+                  type="radio"
+                  value="Original"
+                  name="firmness-toggle-product"
+                  onclick="window.location.href='https://www.rem-fit.co.uk/products/rem-fit-essence-unity-bed-frame';"
+                  {% if product.id == 8373530034422 %}
+                    checked
+                  {% endif %}
+                >
+                <div class="radio-indicator"></div>
+              </div>
+              {% comment %}
+                <div class="product-price-firm">
+                  {% assign first_product = all_products['rem-fit-essence-unity-bed-frame'] %}
+                  From <span>£{{ first_product.price_min | money_without_currency }}</span>
+                </div>
+              {% endcomment %}
+            </div>
+            <div class="firmness-img">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-FitEssenceBedFrame.jpg?v=1744730324"
+                alt="Original Mattress"
+                class="product-image-firm"
+              >
+            </div>
+            <div class="card-features-firm">
+              <div class="feature-firm">
+                <ul>
+                  <li>Traditional Chesterfield design</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a
+        class="product-card-firm"
+        title="Firm"
+        href="https://www.rem-fit.co.uk/products/rem-fit-luxe-unity-bed-frame"
+      >
+        <div class="card-border-firm {% if product.id == 8373528592630 %}select{% endif %}">
+          <div class="card-content-firm">
+            <div class="card-header-top">
+              <div class="card-header-firm">
+                <div class="product-name-firm">Lux</div>
+                <input
+                  id="select-Firm-firm"
+                  type="radio"
+                  value="Firm"
+                  name="firmness-toggle-product"
+                  onclick="window.location.href='https://www.rem-fit.co.uk/products/rem-fit-luxe-unity-bed-frame';"
+                  {% if product.id == 8373528592630 %}
+                    checked
+                  {% endif %}
+                >
+                <div class="radio-indicator"></div>
+              </div>
+              {% comment %}
+                <div class="product-price-firm">
+                  {% assign second_product = all_products['rem-fit-luxe-unity-bed-frame'] %}
+                  From <span>£{{ second_product.price_min | money_without_currency }}</span>
+                </div>
+              {% endcomment %}
+            </div>
+            <div class="firmness-img">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-FitLuxeBedFrame.jpg?v=1744730945"
+                alt="Firm Mattress"
+                class="product-image-firm"
+              >
+            </div>
+            <div class="card-features-firm">
+              <div class="feature-firm">
+                <ul>
+                  <li>Modern, buttoned curved design</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a
+        class="product-card-firm"
+        title="Ultra Firm"
+        href="https://www.rem-fit.co.uk/products/rem-fit-signature-unity-bed-frame"
+      >
+        <div class="card-border-firm {% if product.id == 8373524562166 %}select{% endif %}">
+          <div class="card-content-firm">
+            <div class="card-header-top">
+              <div class="card-header-firm">
+                <div class="product-name-firm">Signature</div>
+                <input
+                  id="select-Ultra-Firm-firm"
+                  type="radio"
+                  value="Ultra Firm"
+                  name="firmness-toggle-product"
+                  onclick="window.location.href='https://www.rem-fit.co.uk/products/rem-fit-signature-unity-bed-frame';"
+                  {% if product.id == 8373524562166 %}
+                    checked
+                  {% endif %}
+                >
+                <div class="radio-indicator"></div>
+              </div>
+              {% comment %}
+                <div class="product-price-firm">
+                  {% assign third_product = all_products['rem-fit-signature-unity-bed-frame'] %}
+                  From <span>£{{ third_product.price_min | money_without_currency }}</span>
+                </div>
+              {% endcomment %}
+            </div>
+            <div class="firmness-img">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-FitSignatureBedFrame.jpg?v=1744730349"
+                alt="Ultra Firm Mattress"
+                class="product-image-firm"
+              >
+            </div>
+            <div class="card-features-firm">
+              <div class="feature-firm">
+                <ul>
+                  <li>Modern, elegant design</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+{% endif %}
+
+{% comment %} new bed frames {% endcomment %}
+{% if product.template_suffix == 'divan-bed' %}
+  <div id="upsell-toggle" class="upsell-container">
+    <div class="upsell-title">Choose your Bed Frame:</div>
+    <div class="product-grid-firm">
+      <a
+        class="product-card-firm"
+        title="Original"
+        href="https://www.rem-fit.co.uk/products/padded-luxury-divan-bed-chesterfield-headboard-copy"
+      >
+        <div class="card-border-firm {% if product.id == 15329367818620 %}select{% endif %}">
+          <div class="card-content-firm">
+            <div class="card-header-top">
+              <div class="card-header-firm">
+                <div class="product-name-firm">Modern</div>
+                <input
+                  id="select-Original-firm"
+                  type="radio"
+                  value="Original"
+                  name="firmness-toggle-product"
+                  onclick="window.location.href='https://www.rem-fit.co.uk/products/padded-luxury-divan-bed-chesterfield-headboard-copy';"
+                  {% if product.id == 15329367818620 %}
+                    checked
+                  {% endif %}
+                >
+                <div class="radio-indicator"></div>
+              </div>
+              {% comment %}
+                <div class="product-price-firm">
+                  {% assign first_product = all_products['rem-fit-modern-divan-bed-headboard'] %}
+                  From <span>£{{ first_product.price_min | money_without_currency }}</span>
+                </div>
+              {% endcomment %}
+            </div>
+            <div class="firmness-img">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Modern_Divan.jpg?v=1748518334"
+                alt="Original Mattress"
+                class="product-image-firm"
+              >
+            </div>
+            <div class="card-features-firm">
+              <div class="feature-firm">
+                <ul>
+                  <li>Modern design</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a
+        class="product-card-firm"
+        title="Firm"
+        href="https://www.rem-fit.co.uk/products/padded-luxury-divan-bed-cube-headboard-copy"
+      >
+        <div class="card-border-firm {% if product.id == 15329325449596 %}select{% endif %}">
+          <div class="card-content-firm">
+            <div class="card-header-top">
+              <div class="card-header-firm">
+                <div class="product-name-firm">Chesterfield</div>
+                <input
+                  id="select-Firm-firm"
+                  type="radio"
+                  value="Firm"
+                  name="firmness-toggle-product"
+                  onclick="window.location.href='https://www.rem-fit.co.uk/products/padded-luxury-divan-bed-cube-headboard-copy';"
+                  {% if product.id == 15329325449596 %}
+                    checked
+                  {% endif %}
+                >
+                <div class="radio-indicator"></div>
+              </div>
+              {% comment %}
+                <div class="product-price-firm">
+                  {% assign second_product = all_products['rem-fit-chesterfield-divan-bed-headboard'] %}
+                  From <span>£{{ second_product.price_min | money_without_currency }}</span>
+                </div>
+              {% endcomment %}
+            </div>
+            <div class="firmness-img">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Chesterfield_Divan.jpg?v=1748518334"
+                alt="Firm Mattress"
+                class="product-image-firm"
+              >
+            </div>
+            <div class="card-features-firm">
+              <div class="feature-firm">
+                <ul>
+                  <li>Chesterfield design</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a
+        class="product-card-firm"
+        title="Ultra Firm"
+        href="https://www.rem-fit.co.uk/products/rem-fit-divan-base"
+      >
+        <div class="card-border-firm {% if product.id == 15245914734972 %}select{% endif %}">
+          <div class="card-content-firm">
+            <div class="card-header-top">
+              <div class="card-header-firm">
+                <div class="product-name-firm">Cube</div>
+                <input
+                  id="select-Ultra-Firm-firm"
+                  type="radio"
+                  value="Ultra Firm"
+                  name="firmness-toggle-product"
+                  onclick="window.location.href='https://www.rem-fit.co.uk/products/rem-fit-divan-base';"
+                  {% if product.id == 15245914734972 %}
+                    checked
+                  {% endif %}
+                >
+                <div class="radio-indicator"></div>
+              </div>
+              {% comment %}
+                <div class="product-price-firm">
+                  {% assign third_product = all_products['rem-fit-divan-base'] %}
+                  From <span>£{{ third_product.price_min | money_without_currency }}</span>
+                </div>
+              {% endcomment %}
+            </div>
+            <div class="firmness-img">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Cube_Divan.jpg?v=1748518335"
+                alt="Ultra Firm Mattress"
+                class="product-image-firm"
+              >
+            </div>
+            <div class="card-features-firm">
+              <div class="feature-firm">
+                <ul>
+                  <li>Cube design</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+{% endif %}

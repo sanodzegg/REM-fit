@@ -1,0 +1,18 @@
+{% if product.metafields.custom.details_size_and_weight.value.size > 0 %}
+    <table class="table table-size-pdp table-bordered" >
+        {% for row in product.metafields.custom.details_size_and_weight.value %}
+            <tr>
+                {% if row.size == 1 %}
+                    {% for col in row %}
+                        <th colspan="999">{{ col | last }}</th>
+                    {% endfor %}
+                {% else %}
+                    {% for col in row %}
+                        <td>{{ col | last }}</td>
+                    {% endfor %}
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+

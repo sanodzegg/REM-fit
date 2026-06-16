@@ -1,0 +1,12 @@
+{% if product.template_suffix == ''
+  or product.template_suffix == 'remy-plus'
+%}
+<div class="sleeptrail-content">
+  <span class="flashing-dot" data-color="blue"></span>{{ block.settings.sleeptrail_content }}
+</div>
+  {% endif %}
+{% comment %}
+<div class="sleeptrail-content" style="display: {% if block.settings.sleeptrailhideshow == 'hide' %}none{% else %}flex{% endif %};">
+  <span class="flashing-dot" data-color="blue"></span>{{ block.settings.sleeptrail_content }}
+</div>
+{% endcomment %}

@@ -1,0 +1,211 @@
+<div class="card--default {% unless product.available %}card--soldout{% endunless %}">
+  <a class="card__img--container" href="{{ product.url | within: collection }}">
+    <div class="card__img--ratio">
+      <div class="card__img">
+        {% if settings.tagEnabled %}
+          <div class="card__tags">
+            {% if product.available == false and settings.tagSoldOut %}
+              <span class="tag tag--soldout">{{ 'general.buttons.sold_out' | t }}</span>
+            {% endif %}
+            {% if product.compare_at_price_min > 0 and settings.tagSale %}
+              {% if product.price_varies %}
+                {% comment %}
+                  <span class="tag tag--sale">{{'general.tags.sale' | t}}</span>
+                {% endcomment %}
+                <span class="tag tag--sale"
+                  >Save
+                  {{
+                    product.compare_at_price
+                    | minus: product.price
+                    | times: 100.0
+                    | divided_by: product.compare_at_price
+                    |   round          
+                  -}}
+                  %</span
+                >
+              {% else %}
+                {% comment %}
+                  <span class="tag tag--sale">{{ product.price | minus: product.compare_at_price_max | times: 100 | divided_by: product.compare_at_price_max }}%  {{'general.tags.sale' | t}}</span>
+                {% endcomment %}
+                <span class="tag tag--sale"
+                  >Save
+                  {{
+                    product.compare_at_price_max
+                    | minus: product.price
+                    | times: 100
+                    | divided_by: product.compare_at_price_max
+                  -}}
+                  %</span
+                >
+              {% endif %}
+            {% endif %}
+            {% for tag in product.tags %}
+              {% if tag contains 'bstr-tag-' %}
+                {% comment %} this needs to be an if not unless  {% endcomment %}
+                <span class="tag tag--custom">{{ tag | remove_first: 'bstr-tag-' | replace: '-', ' ' }} </span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% comment %} {% render 'card-image', image: product.featured_image.src, alt: product.featured_image.alt, desktop: dsize %} {% endcomment %}
+        <img src="{{product.featured_image | img_url: '576x576' }}" width="576" height="576" alt="{{product.featured_image.alt}}" >
+        {% unless product.images.size < 2 or settings.cardShowSecondary == false %}
+          {% assign secondaryImage = product.images[1] %}
+          {% render 'card-image',
+            image: secondaryImage.src,
+            alt: secondaryImage.alt,
+            desktop: dsize,
+            class: 'card__img--secondary'
+          %}
+        {% endunless %}
+        {% comment %} {% if product.compare_at_price_min > 0 and settings.countdownCard and settings.countdown %}
+          <div data-countdown data-ct-key="{{product.id}}" class="countdown">
+            <span class="countdown__holder"
+              ><span class="days">00</span><br>
+              DAYS</span
+            >
+            <span class="countdown__holder"
+              ><span class="hours">00</span><br>
+              HRS</span
+            >
+            <span class="countdown__holder"
+              ><span class="minutes">00</span><br>
+              MIN</span
+            >
+            <span class="countdown__holder"
+              ><span class="seconds">00</span><br>
+              SEC</span
+            >
+          </div>
+        {% endif %} {% endcomment %}
+      </div>
+    </div>
+  </a>
+
+  {% unless settings.cardStyle == 'catalog' %}
+    <div class="card__info">
+      {% if settings.cardShowBrand %}
+        <a class="card__brand" href="{{ product.vendor | url_for_vendor }}">
+          {{ product.vendor }}
+        </a>
+      {% endif %}
+      {% if settings.cardShowRating %}
+        {% render 'product-card__review-stars' with product as product %}
+      {% endif %}
+
+      {% comment %}
+        prd_title is coming from the Header--link-submenu.liquid
+      {% endcomment %}
+      {% if prod_title == blank or prod_title == '' %}
+        {% assign prd_title = product.title %}
+      {% else %}
+        {% assign prd_title = prod_title %}
+      {% endif %}
+
+      <a class="card__title" href="{{ product.url | within: collection }}">
+    <style>
+    .card__title{
+    color:#58327a;
+    font-weight:bold;
+    line-height:120%;
+    }
+    </style>
+        {% unless settings.cardNameLimit != 'none' %}
+          {{ prd_title }}
+        {% else %}
+          {% if settings.cardNameLimit == 'words' %}
+            {{ product.title | truncatewords: settings.cardNameLimitAmount }}
+          {% else %}
+            {{ product.title | truncate: settings.cardNameLimitAmount }}
+          {% endif %}
+        {% endunless %}
+      </a>
+
+      <a class="card_description" href="{{ product.url | within: collection }}"> 
+    {% if product.metafields.custom.desktopsubmenutitle.value  %}
+       {{ product.metafields.custom.desktopsubmenutitle.value }}   
+      <style>
+      .page__header--desktop .nav__link__holder .nav__submenu span.nav__link__holder--mega .card--default a.card_description {
+      font-size:16px;
+      font-weight:600;
+      }
+      
+      </style>
+      {% endif %}
+    </a>
+
+      {% render 'header-free-gift-bundle-badge' with product as product %}
+      
+      {% if product.compare_at_price_min > 0 %}
+        {% assign sale = true %}
+      {% endif %}
+      <span class="card__price {% if sale == true %}card__price--sale{% endif %}">
+        {% if product.price_varies %}
+          {{ 'product_page.card.from' | t }}
+          <span class="jsPrice">{{ product.price_min | money | strip_html }}</span>
+        {% else %}
+           {{ 'product_page.card.from' | t }}
+          <span class="jsPrice">{{ product.price | money | strip_html }}</span>
+        {% endif %}
+        {% comment %}
+        {% if sale == true %}
+          <span class="card__price--old jsPrice">
+            {{ product.compare_at_price | money | strip_html }}
+          </span>
+        {% endif %}
+        {% endcomment %}
+      </span>
+      <style>
+    .card__price{
+    padding-top:12px;
+    }
+    </style>
+
+      {% comment %} DivideBuy Calculation Price for Mattress & Bed Frame {% endcomment %}
+      {% if product.title contains 'Mattress' or product.title contains 'Bed Frame' or product.title contains 'Divan Bed' %}
+        {%  unless product.title contains 'Protector'  %}
+      <div class="installment-dicoprice" style="margin-bottom: 10px;display:inline;">
+        {% if product.price <= 5000 %}
+          {% assign installment = 3 %}
+        {% elsif product.price >= 5000 and product.price <= 25000 %}
+          {% assign installment = 6 %}
+        {% elsif product.price >= 25000 and product.price <= 45000 %}
+          {% assign installment = 9 %}
+        {% else %}
+          {% assign installment = 12 %}
+        {% endif %}
+        <span class="dicoprice-aslow divideBuy"
+              >or
+             <span class="header-dicoprice no_button">
+                {% assign prod_ins_price = product.price %}
+                 {% assign prod_ins_price = prod_ins_price | money_without_currency   %}
+                {% if prod_ins_price contains ',' %}
+                  {% assign prod_ins_price = prod_ins_price  | replace: ',', '' %}
+                  £{{ prod_ins_price | divided_by: installment | round -}}
+                {% else %}
+                 £{{- prod_ins_price | divided_by: installment | round -}}
+                {% endif %}
+              </span>
+              / m ({{ installment }} months)
+            </span>
+          </div>
+        {% endunless %}
+      {% endif %}
+      
+      {% comment %} Klarna Calculation Price for Pillow & Protector {% endcomment %}
+      {% if product.title contains 'Pillow' or product.title contains 'Protector' %}
+        <div id="top-svg" class="installment-dicoprice" >
+          {% assign installment = 3 %}
+          <span class="dicoprice-aslow">
+            or
+            <span class="header-dicoprice">
+               £{{ product.price_min | money_without_currency | divided_by: installment | round -}}
+            </span>
+            / m ({{installment}} months)
+          </span>
+        </div>
+      {% endif %}
+      
+    </div>
+  {% endunless %}
+</div>

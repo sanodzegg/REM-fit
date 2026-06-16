@@ -1,0 +1,90 @@
+<div class="gallery__thumbnails hidden-scroll">
+    {% for image in product.images %}
+        <span class="gallery__thumbnail {% if forloop.first %}bstrSlider__thumb--active{%endif%}" data-media-type="image" data-bstr-slider-for="{{section.id}}" data-bstr-slider-thumb="{{forloop.index0}}"
+        {% if section.settings.autoChange %}data-bstr-slider-thumb-hover{% endif %}
+            >
+            <img height="{{image.height}}" width="{{image.width}}" src="{{image.src|img_url: '100x'}}" alt="Thumbnail for {{image.alt}}">
+        </span>
+        {% assign currentIndex = forloop.index0 | plus: 1 %}
+    {% endfor %}
+    {% for media in product.media %}
+        {% case media.media_type %}
+            {% when 'image' %}
+                {% continue %}
+            {% when 'external_video' %}
+                <span data-media-type="{{media.id}}" class="gallery__thumbnail" data-bstr-slider-for="{{section.id}}" data-bstr-slider-thumb="{{currentIndex}}"
+                {% if section.settings.autoChange %}data-bstr-slider-thumb-hover{% endif %}>
+                    {% render 'image', size: '100x', src: media, alt: media.alt %}
+                </span>
+                {% assign currentIndex = currentIndex | plus: 1 %}
+            {% when 'video' %}
+                <span data-media-type="{{media.id}}" class="gallery__thumbnail" data-bstr-slider-for="{{section.id}}" data-bstr-slider-thumb="{{currentIndex}}"
+                {% if section.settings.autoChange %}data-bstr-slider-thumb-hover{% endif %}>
+                    {% render 'image', size: '100x', src: media, alt: media.alt %}
+                </span>
+                {% assign currentIndex = currentIndex | plus: 1 %}
+            {% when 'model' %}
+                <span data-media-type="{{media.id}}" class="gallery__thumbnail" data-bstr-slider-for="{{section.id}}" data-bstr-slider-thumb="{{currentIndex}}"
+                {% if section.settings.autoChange %}data-bstr-slider-thumb-hover{% endif %}>
+                    {% render 'image', size: '100x', src: media, alt: media.alt %}
+                </span>
+                {% assign currentIndex = currentIndex | plus: 1 %}
+    {% endcase %}
+    {% endfor %}
+</div>
+
+<div class="custombutton slider--product__holder" data-bstr-ppslider="{{section.id}}">
+<div class="slider--product" data-bstr-slider-height="auto" data-bstr-slider-orientation="horizontal" data-bstr-slide-holder="1" data-bstr-slider-current="0">
+    {% for image in product.images %}
+        <div data-variants="|{% for var in image.variants %}{{var.options| join: '#' | escape}}|{% endfor %}" class="slide--product" data-bstr-slide>
+            <img height="{{image.height}}" width="{{image.width}}" {% unless forloop.first %}loading="lazy"  class="lazyload"{% endunless %} alt="{{image.alt | escape}}" src="{{ image.src | img_url: '900x' }}">
+        </div>
+    {% endfor %}
+    {% for media in product.media %}
+        {% case media.media_type %}
+            {% when 'image' %}
+                {% continue %}
+            {% when 'external_video' %}
+                <div class="external__holder slide--product" data-bstr-slide data-media-holder="{{media.id}}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100}}%;">
+                    {% capture med %}{{ media | external_video_tag: class: 'gallery__external lazyload' }}{% endcapture %}
+                    {{med | replace_first: 'src', 'data-src'}}
+                </div>
+            {% when 'video' %}
+                <div class="video__holder erwerewrew slide--product" data-bstr-slide data-media-holder="{{media.id}}">
+                    {% comment %} {% capture med %}{{ media | video_tag: class: 'gallery__video lazyload' }}{% endcapture %}
+                    {{ med  | replace_first: 'poster=', 'autoplay="autoplay" loop="loop" muted defaultMuted playsinline  oncontextmenu="return false;"  preload="auto" poster=' }} {% endcomment %}
+                </div>
+                <script>
+                  if (window.innerWidth < 768) {
+                    const media = {{ media | json }};
+                    const videoHtml = `
+                      <video class="gallery__video" data-video-src="${ media.sources[0].url }" poster="${ media.preview_image.src }" playsinline="playsinline" preload="metadata" aria-label="" autoplay="autoplay" loop="loop" muted="" defaultmuted="" oncontextmenu="return false;">
+                        <img src="${ media.preview_image.src }">
+                      </video>`;
+                    const videoContainer = document.querySelector(`[data-media-holder="${media.id}"`);
+                    videoContainer.innerHTML = videoHtml;
+                  }
+                </script>
+            {% when 'model' %}
+                <div class="video__holder model__holder slide--product" data-bstr-slide data-media-holder="{{media.id}}">
+                    {{ media | model_viewer_tag }}
+                </div>
+        {% endcase %}
+    {% endfor %}
+ </div>
+  <button data-bstr-slider-button="-" class="slider__button customarrow-btn" data-bstr-slider-for="{{section.id}}"><i class="uil uil-angle-left-b"></i></button>
+  <button data-bstr-slider-button="+" class="slider__button slider__button--next customarrow-btn" data-bstr-slider-for="{{section.id}}"><i class="uil uil-angle-right-b"></i></button>
+{% comment %}
+{% if product.compare_at_price_min > 0 and settings.tagSale %}
+    {% if product.price_varies %}
+              <span class="tag tag--sale">{{'general.tags.sale' | t}}</span>
+              <span class="tag tag--sale">Save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+            {% else %}
+              <span class="tag tag--sale">{{ product.price | minus: product.compare_at_price_max | times: 100 | divided_by: product.compare_at_price_max }}%  {{'general.tags.sale' | t}}</span>
+          
+              <span class="tag tag--sale">Save {{ product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max }}%</span>
+    {% endif %}
+{% endif %}
+  {% endcomment %}
+
+</div>

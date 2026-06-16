@@ -1,0 +1,34 @@
+{% if product.template_suffix == '' or product.template_suffix == 'rejuvenated-mattress' %}
+  <div class="rebuy-accordians {% if product.template_suffix == 'rejuvenated-mattress' %} accordions-top {% endif %}">
+    <div class="rebuy-acc rebuy1">
+      <input type="checkbox" name="accordion-2" id="myAcc1">
+      <label for="myAcc1">Pillow bundle: save an extra 10%</label>
+      <div data-rebuy-id="190564" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+    </div>
+    <div class="rebuy-acc rebuy5">
+      <input type="checkbox" name="accordion-2" id="myAcc5">
+      <label for="myAcc5">Divan bed bundle: save an extra £200</label>
+      {% comment %}
+        <div data-rebuy-id="188112" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+      {% endcomment %}
+      <div data-rebuy-id="220969" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+    </div>
+    <div class="rebuy-acc rebuy2">
+      <input type="checkbox" name="accordion-2" id="myAcc2">
+      <label for="myAcc2">Bed frame bundle: save an extra £150</label>
+      <div data-rebuy-id="190572" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+    </div>
+    <div class="rebuy-acc rebuy3">
+      <input type="checkbox" name="accordion-2" id="myAcc3">
+      <label for="myAcc3">Halo topper bundle: save an extra 30%</label>
+      <div data-rebuy-id="188112" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+    </div>
+    {% comment %}
+        <div class="rebuy-acc rebuy4">
+        <input type="checkbox" name="accordion-2" id="myAcc4">
+        <label for="myAcc4">Pillow protector bundle: save 20%</label>
+        <div data-rebuy-id="190621" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+      </div>
+    {% endcomment %}
+  </div>
+{% endif %}

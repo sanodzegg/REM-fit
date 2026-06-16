@@ -1,0 +1,64 @@
+<div class="mobile-menu-bottom">
+  <ul class="menu-list-bottom">
+    <li class="menu-item-bottom">
+      <label class="mobile-submenu-label" for="open-mobile-nav">
+        <i class="uil uil-bars"></i>
+        <span class="span-text">Menu</span>
+      </label>
+    </li>
+    <li class="menu-item-bottom">
+      <a href="https://www.rem-fit.co.uk/collections/rem-fit-hybrid-mattresses"> 
+        <div class="btmenu-img">{{ 'mattress-icon.png' | asset_url | img_tag: 'Mattress', 'bt-mattress' }}</div>
+        <span class="span-text">Mattresses</span>
+      </a>
+    </li>
+    <li class="menu-item-bottom">
+      <a href="https://rem-fit-uk.myshopify.com/collections/rem-fit-pillows">
+        <div class="btmenu-img">{{ 'pillow-icon.png' | asset_url | img_tag: 'Pillow', 'bt-pillow' }}</div>
+        <span class="span-text">Pillows</span>
+      </a>
+    </li>
+      <li class="menu-item-bottom">
+      <a href="javascript:void(0)" id="gocertify-footer-popup" onclick="gocertify.popup(); return false;">
+        <div class="btmenu-img discount-btmenu-img">{{ 'discount-tagv2.webp' | asset_url | img_tag: 'Discounts', 'discounts' }}</div> 
+        <span class="span-text">8% off</span>
+      </a>
+    </li>
+    <li class="menu-item-bottom" style="display: block;">
+      <a href="https://rem-fit-uk.myshopify.com/cart">
+        <div class="btmenu-img">{{ 'basket-gray.png' | asset_url | img_tag: 'Basket', 'bt-basket' }}</div>
+        <span class="span-text">Cart</span>
+      </a>
+
+      <div class="bt-mincart minicart__button minicart__button--{{section.settings.cartIcon}}">
+        <a
+          href="{{routes.cart_url}}"
+          class="minicart__label"
+          for="minicart__button--{{section.id}}"
+          data-cart-settings="count"
+          data-cart-container
+        >
+          {% comment %}
+            {% render 'get-icon', icon: section.settings.cartIcon %}
+          {% endcomment %}
+          {% if cart.item_count > 0 %}
+            <span class="item__count" data-count></span>
+          {% endif %}
+        </a>
+      </div>
+    </li>
+    <li class="menu-item-bottom">
+      <a href="#" onclick="GorgiasChat.open();">
+        <div class="btmenu-img">{{ 'help-icon-1.png' | asset_url | img_tag: 'Help', 'bt-help' }}</div>
+        <span class="span-text">Chat</span>
+      </a>
+
+      {% comment %}
+                 <a href="#" onclick="/* LiveChatWidget.call('maximize');*/ return false;">
+        	<div class="btmenu-img">{{ 'help-icon-1.png' | asset_url | img_tag: 'Help', 'bt-help' }}</div>
+        	<span class="span-text">Chat</span>
+        </a>
+      {% endcomment %}
+    </li>
+  </ul>
+</div>

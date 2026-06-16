@@ -1,0 +1,53 @@
+{% if block.settings.customCSS != blank %}
+<style>
+{% assign scoped = '#block__' | append: section.id | append: '-' | append: block.id %}
+{{block.settings.customCSS | replace: '##scoped', scoped}}
+</style>
+{% endif %}
+
+{% comment %}
+{% if template contains 'section__image-picture-text' %}
+  <div class="trustpilot-widget-block">
+    <a href="https://www.trustpilot.com/review/shop.rem-fit.co.uk" target="_blank">
+      <span class="trustpilot-rating-summary">{{ settings.rating-summary }}</span>
+      <img class="trustpilot-rating-stars" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot_ratings_img.png?v=1741608082" alt="" />
+      <span class="trustpilot-rating-numbers">{{ settings.rating-value }}</span>
+      <span class="trustpilot-rating-reviews-number">({{ settings.review-text }})</span>
+      <img class="trustpilot-logo tp-desktop-logo" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot_brand_logo.png?v=1741608082" alt="" />
+      <img class="trustpilot-logo tp-mobile-logo" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot-white-logo.png?v=1741768075" alt="" />
+    </a>
+  </div>
+{% endif %}
+{% endcomment %}
+
+<div id="block__{{section.id}}-{{block.id}} " class="block__html">
+{{block.settings.html}}
+</div>
+
+{% comment %}
+{% blockdef %}
+{
+    "type": "html",
+    "name": "HTML",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "fullWidth",
+            "default": true,
+            "label": "Single in row"
+        },
+        {
+            "type": "textarea",
+            "id": "html",
+            "label": "HTML content"
+        },
+        {
+            "type": "textarea",
+            "id": "customCSS",
+            "label": "Block scoped CSS",
+            "info": "##scoped will be replaced by this block's id, making all CSS under this rule block-scoped."
+        }
+    ]
+}
+{% endblockdef %}
+{% endcomment %}

@@ -1,0 +1,51 @@
+<div class="seo_content">
+  {{ section.settings.seo-title }}
+  {{ section.settings.short-desc }}
+  {% if section.settings.read-more-content != blank %}
+  <a href="" id="read_more_button"> Read More </a>
+  <div id="read_more_content" style="display:none;" >
+    {{ section.settings.read-more-content }}
+  </div>
+  <a href="" id="read_less_button" style="display:none;"> Read less </a>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Seo Content",
+    "settings": [
+		{
+            "type": "html",
+            "id": "seo-title",
+            "label": "SEO Title",
+			"info": "Mention seo title here"
+		},
+        {
+            "type": "richtext",
+            "id": "short-desc",
+            "label": "Short Desc",
+			"info": "Put all short desc content here"
+		}, 
+		{
+            "type": "richtext",
+            "id": "read-more-content",
+            "label": "Read More Content",
+			"info": "Put all Read More content here"
+		}
+	],
+    "presets": [
+      {
+        "name": "Seo Content",
+        "settings": {
+
+        }
+      }
+    ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

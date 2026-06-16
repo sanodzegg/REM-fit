@@ -1,0 +1,555 @@
+<!doctype html>
+<html>
+  <head>
+    <script>
+var head = document.head;
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = "https://211074.t.hyros.com/v1/lst/universal-script?ph=2c888a2db60febf2ddb0973b61c57bdab606464ce824d38392d27509619a18bc&tag=!clicked&origin=SHOPIFY&ref_url=" + encodeURI(document.URL) ;
+head.appendChild(script);
+</script>
+    <!-- Global site tag (gtag.js) - Google Ads: 864944454 -->
+
+    <!--
+      888888b.                              888                88888888888 888
+      888  "88b                             888                    888     888
+      888  .88P                             888                    888     888
+      8888888K.   .d88b.   .d88b.  .d8888b  888888 .d88b.  888d888 888     88888b.   .d88b.  88888b.d88b.   .d88b.
+      888  "Y88b d88""88b d88""88b 88K      888   d8P  Y8b 888P"   888     888 "88b d8P  Y8b 888 "888 "88b d8P  Y8b
+      888    888 888  888 888  888 "Y8888b. 888   88888888 888     888     888  888 88888888 888  888  888 88888888
+      888   d88P Y88..88P Y88..88P      X88 Y88b. Y8b.     888     888     888  888 Y8b.     888  888  888 Y8b.
+      8888888P"   "Y88P"   "Y88P"   88888P'  "Y888 "Y8888  888     888     888  888  "Y8888  888  888  888  "Y8888
+    -->
+    <title>
+      {{ page_title }}
+      {% if current_tags %}
+        &ndash; tagged "{{ current_tags | join: ', ' }}"
+      {%- endif %}
+      {% if current_page != 1 %}
+        &ndash; Page {{ current_page -}}
+      {%- endif %}
+      {% unless page_title contains shop.name %}
+        &ndash; {{ shop.name -}}
+      {%- endunless %}
+    </title>
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link href="https://static.boostertheme.co" rel="preconnect" crossorigin>
+    <link rel="dns-prefetch" href="//static.boostertheme.co">
+    <link href="https://theme.boostertheme.com" rel="preconnect" crossorigin>
+    <link rel="dns-prefetch" href="//theme.boostertheme.com">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+    {% render 'layout__favicon' %}
+
+    {% capture h_content %}
+      {{ content_for_header }}
+    {% endcapture %}
+    {{
+      h_content
+      | remove: 'https:\/\/s3.eu-west-1.amazonaws.com\/production-klarna-il-shopify-osm\/a6c5e37d3b587ca7438f15aa90b429b47085a035\/rem-fit-uk.myshopify.com-1708626902082.js?shop=rem-fit-uk.myshopify.com'
+    }}
+    {{ 'rem-fit.css' | asset_url | stylesheet_tag }}
+    {{ 'unicons.css' | asset_url | stylesheet_tag }}
+    <style>
+      {% render 'global-scss' %}
+      {% render 'custom__unicons-css' %}
+    </style>
+    {% unless settings.headHTML == blank %}
+      {{ settings.headHTML }}
+    {% endunless %}
+    {% unless settings.headJS == blank %}
+      <script>
+        {{settings.headJS}}
+      </script>
+    {% endunless %}
+    {% render 'layout__custom-code--head' %}
+    <!-- injec after engagement -->
+
+    <script type="text/javascript">
+      var _conv_page_type = "{{ request.page_type }}";
+      var _conv_category_id = "{{ collection.id }}";
+      var _conv_category_name = "{{ collection.title }}";
+      var _conv_product_sku = "{{ product.selected_or_first_available_variant.sku }}";
+      var _conv_product_name = '{{ product.title }}';
+      var _conv_product_price = "{{ product.price_min | money_without_currency }}";
+      var _conv_customer_id = "{{ customer.id }}";
+      var _conv_custom_v1 = "{{ product.tags.first }}";
+      var _conv_custom_v2 = "{{ collection.current_type }}";
+      var _conv_custom_v3 = "{{ cart.item_count }}";
+      var _conv_custom_v4 = "{{ cart.total_price | money_without_currency }}";
+    </script>
+
+    {% if template.name == 'product' %}
+      {% for image in product.images %}
+        {% if forloop.first %}
+          <link rel="preload" as="image" href="{{ image.src | img_url: '900x' }}">
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </head>
+
+  {% if template.name == 'collection' %}
+    {% assign coll-temp = 'collection-card' %}
+  {% else %}
+    {% assign coll-temp = '' %}
+  {% endif %}
+
+  {% if template.suffix %}
+    {% assign body_temp = template.suffix %}
+  {% else %}
+    {% assign body_temp = 'default' %}
+  {% endif %}
+
+  <body class="template--{{template.name}} {{coll-temp}} {% if product %} product-{{ body_temp }} {% endif %}">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NFT2J24"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!--
+      888888b.                              888                88888888888 888
+      888  "88b                             888                    888     888
+      888  .88P                             888                    888     888
+      8888888K.   .d88b.   .d88b.  .d8888b  888888 .d88b.  888d888 888     88888b.   .d88b.  88888b.d88b.   .d88b.
+      888  "Y88b d88""88b d88""88b 88K      888   d8P  Y8b 888P"   888     888 "88b d8P  Y8b 888 "888 "88b d8P  Y8b
+      888    888 888  888 888  888 "Y8888b. 888   88888888 888     888     888  888 88888888 888  888  888 88888888
+      888   d88P Y88..88P Y88..88P      X88 Y88b. Y8b.     888     888     888  888 Y8b.     888  888  888 Y8b.
+      8888888P"   "Y88P"   "Y88P"   88888P'  "Y888 "Y8888  888     888     888  888  "Y8888  888  888  888  "Y8888
+    -->
+    <div class="container">
+      <div class="container__top-part">
+        {% section 'bottom-info-bar' %}
+        {% section 'top-info-bar' %}
+
+        <div id="booster__popup--holder" class="booster__popup--holder"></div>
+
+        {% if template.suffix == 'no-header' or template.suffix == 'landing-no-header' %}
+        {% elsif template.suffix == 'landing-alt-header' %}
+          {% section 'header-alt' %}
+        {% else %}
+          {% case settings.headerType %}
+            {% when 'default' %}
+              {% section 'header--default' %}
+            {% when 'inline-search' %}
+              {% section 'header--inline-search' %}
+            {% when 'logo-top' %}
+              {% section 'header--logo-top' %}
+          {% endcase %}
+        {% endif %}
+
+        {% comment %} {% section 'bottom-info-bar' %}  {% endcomment %}
+      </div>
+
+      <div id="quickbuy__modal" class="modal">
+        <div onclick="closeModal(event)" class="overlay"></div>
+        <div class="content"></div>
+      </div>
+
+      {% if settings.recentlyBought %}
+        <a
+          id="recently-bought--holder"
+          class="recently-bought--holder {% unless settings.recentlyBoughtMobile -%}hide-mobile{%-endunless-%}"
+        >
+          <div class="recently-bought--img-ratio">
+            <div class="recently-bought--img"><img src=""></div>
+          </div>
+          <div class="recently-bought--info">
+            <div class="recently-bought--who"></div>
+            <div class="recently-bought--what"></div>
+            <div class="recently-bought--price"><span class="current-price"></span><span class="old-price"></span></div>
+            <div class="recently-bought--when"></div>
+          </div>
+        </a>
+        <script>
+          const recentlyBoughtConfig = { useNames: {{settings.recentlyBoughtNames}}, nameFormat: '{{settings.recentlyBoughtNameFormat}}', allProductsUrl: '{{routes.all_products_collection_url}}' }
+        </script>
+      {% endif %}
+
+      <div class="add-to-cart__success--holder modal">
+        {% unless settings.cartAction == 'message' -%}
+          <div onclick="closeModal(event)" class="overlay add-to-cart__success--overlay"></div>
+        {%- endunless %}
+        <div class="add-to-cart__success" id="checkout--success">
+          {% render 'add-to-cart__template--success' %}
+        </div>
+      </div>
+
+      {% render 'layout__template--specific' %}
+      <div id="submenu_display"></div>
+      <main role="main">
+        {{ content_for_layout }}
+
+        <div class="wrapper--bottom">
+          {% section 'info-badges' %}
+          {% section 'footer' %}
+          {% section 'subfooter' %}
+        </div>
+      </main>
+    </div>
+
+    {% render 'layout__app--code' %}
+    {% render 'layout__bstr--constants' %}
+
+    {{ '/services/javascripts/currencies.js' | script_tag }}
+    {{ 'booster.js' | asset_url | script_tag }}
+
+    {% unless settings.bodyHTML == blank %}
+      {{ settings.bodyHTML }}
+    {% endunless %}
+    {% unless settings.bodyCSS == blank %}
+      <style>
+        {{settings.bodyCSS}}
+      </style>
+    {% endunless %}
+    {% unless settings.bodyJS == blank %}
+      <script>
+        {{settings.bodyJS}}
+      </script>
+    {% endunless %}
+    {% if settings.reviewApp == 'alireviews' or settings.jQuery %}
+      <script
+        src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"
+      ></script>
+
+      <script>
+        $('.mobile__navigation span.nav__link__holder:first-child input').prop('checked', true);
+
+        jQuery(document).ready(function () {
+            // Redirect .helptochoose to a new URL
+            jQuery('.helptochoose').on('click', function (event) {
+                event.preventDefault();
+                window.open('https://form.typeform.com/to/ABP9gLq0', '_blank');
+            });
+
+            // Redirect other specified elements to the original URL
+            jQuery('.main__navigation span a:last, #button--1656513682948fd975-2, #button--1656507533ce968947-2, #button--1650989771f9d89dc4-2, .navmob-Help a').on('click', function (event) {
+                event.preventDefault();
+                window.open('https://form.typeform.com/to/ABP9gLq0?typeform-source=www.rem-fit.co.uk', '_blank');
+            });
+
+            // Close button functionality
+            jQuery('#close').on('click', function () {
+                jQuery('.thiredparty-helptochoose').hide();
+            });
+        });
+      </script>
+    {% endif %}
+
+    <script>
+                $(document).ready(function() {
+
+           $('select#size_dropdown').change(function() {
+            setTimeout(function() {
+              const url = window.location.href;
+              const variantIndex = url.indexOf('variant=');
+
+              if (variantIndex !== -1) {
+                const variantValue = url.substring(variantIndex + 'variant='.length);
+                const matchedElement = $('#' + variantValue);
+
+                   const liContent = matchedElement.text();
+                   var propertiesNoteInput = document.getElementById('properties_note');
+                if (matchedElement.length > 0) {
+                    propertiesNoteInput.value  = liContent; // Set the value of the input element
+                } else {
+                   propertiesNoteInput.value  = ''; // Set the value of the input element
+                }
+              }
+                          var productPrice = $('#prod-price').text().replace('£', ''); // Remove pound sign
+      productPrice = parseFloat(productPrice.replace(/[^0-9.]/g, '')); // Remove non-numeric characters
+
+      if (isNaN(productPrice)) {
+          return;
+      }
+
+      // Divide the product price by 3
+      var dividedPrice = productPrice / 3;
+      var clearpayPrice = Math.round(productPrice / 4);
+
+      // Empty the .dicoprice div and update it with the new price
+        $('.dicoprice').empty().text('£' + Math.round(dividedPrice));
+        $('.clearpay-price').empty().text('£' + clearpayPrice);
+            }, 250); // 1000 milliseconds = 1 second
+          });
+          });
+    </script>
+    {% if template == 'product' %}
+      <style>
+        .page__header.page__header--sticky{
+        margin-top: 0px !important;
+        }
+      </style>
+      <script>
+         <!-- This code is written to add quick navigation event -->
+            jQuery(function() {
+            var hh = $('.page__header.page__header--sticky').outerHeight();
+                var qn = $('.quicknav-top-mat.page__header--sticky').outerHeight();
+                var totalH = hh + qn;
+                $(".product_quick_navigation_block a").on('click', function(event) {
+                    if (this.hash !== "") {
+                        event.preventDefault();
+                        var hash = this.hash;
+                        $('html, body').animate({
+                            scrollTop:$(hash).offset().top - 150 + 'px'
+                        }, 800);
+                    }
+                });
+            });
+
+            jQuery(document).ready(navmobscroll);
+            jQuery(window).scroll(navmobscroll);
+            jQuery(window).resize(navmobscroll);
+            function navmobscroll() {
+             var hhh = $('header.page__header.page__header--desktop.page__header--sticky').height();
+            if (jQuery(window).scrollTop() > hhh) {
+              jQuery(".quicknav-top-mat.page__header--sticky").css('top', hhh +'px');
+              }
+            }
+             jQuery(window).scroll(function(e){
+            if ($(window).width() < 767) {
+                 var hhh = $('header.page__header.page__header--mobile.page__header--sticky').height();
+              jQuery(".quicknav-top-mat.page__header--sticky").css('top',hhh +'px');
+              }
+            });
+
+             <!-- This code is written to  select size quick nav -->
+            $(window).scroll(function () {
+              var atc = $('#slectsize-show').offset().top;
+              if ($(window).scrollTop() > atc) {
+                  $(".quicksize-tab").css("display", "block");
+              } else {
+                  $(".quicksize-tab").css("display", "none");
+              }
+          });
+            jQuery(document).ready(function($) {
+          $(".quick-size-slec").click(function(event) {
+          event.preventDefault();
+          $('html,body').animate( { scrollTop:$('.quicksize-tab-goup').offset().top} , 1000);
+          } );
+        } );
+      </script>
+    {% endif %}
+
+    {% render 'layout__custom-code--body' %}
+    <!-- This code is written to make mobile menu check and uncheck -->
+    <script type="application/javascript">
+      $(".mobile-menu").click(function(){
+        var checkboxId = '';
+        // Holds the product ID of the clicked element
+        var checkboxId = $(this).attr('id');
+        $('.mobile-menu').each(function () {
+          if(checkboxId !== this.id) {
+            $(this).prop('checked', false); // Unchecks it
+          }
+        });
+      });
+    </script>
+
+    <!-- This code is written for read more and read less on Seo Content of Home page -->
+    {% if template.name == 'index' %}
+      <script type="application/javascript">
+        $("#read_more_button").click(function(){
+          $("#read_more_content").css("display", "block")
+          $("#read_less_button").css("display", "block")
+          $("#read_more_button").css("display", "none")
+          event.preventDefault();
+        });
+        $("#read_less_button").click(function(){
+          $("#read_more_content").css("display", "none")
+          $("#read_less_button").css("display", "none")
+          $("#read_more_button").css("display", "block")
+          event.preventDefault();
+        });
+      </script>
+    {% endif %}
+    <!-- Below file is included to zoom library on PDP -->
+    {% if template contains 'product' %}
+      {% assign discount_rate = settings.percentage_discount | times: 0.01 %}
+      <script
+        type="text/javascript"
+      >
+               $(document).ready(function() {
+    function updateDiscountedPrice() {
+        var productPrice = $('#prod-price').text().replace('£', '').replace(/[^0-9.]/g, '');
+        productPrice = parseFloat(productPrice);
+    
+        if (isNaN(productPrice)) {
+            console.log("Invalid product price");
+            return;
+        }
+    
+        // Define dynamic divisor values
+        const divisorUnder50 = 3;
+        const divisor50To250 = 6;
+        const divisor250To450 = 9;
+        const divisorAbove450 = 12;
+    
+        let divideByPrice;
+        let appliedDivisor;
+    
+        // Determine the divisor and calculate the divided price
+        if (productPrice < 50) {
+            appliedDivisor = divisorUnder50;
+        } else if (productPrice >= 50 && productPrice < 250) {
+            appliedDivisor = divisor50To250;
+        } else if (productPrice >= 250 && productPrice < 450) {
+            appliedDivisor = divisor250To450;
+        } else {
+            appliedDivisor = divisorAbove450;
+        }
+    
+        divideByPrice = Math.round(productPrice / appliedDivisor);
+        appliedDivisor = Math.round(appliedDivisor); // Ensure divisor is an integer
+    
+        var curr = "£";
+        var amountText = `${curr}${divideByPrice} `;
+        var monthsText = `/ m (${appliedDivisor} months)`;
+    
+        // Update the content of the respective elements
+        $(".divideByPrice").text(amountText);
+        $(".installmentMonths").text(monthsText);
+    
+        console.log(`Divided by: ${appliedDivisor}, Result: ${divideByPrice}`);
+         // ✅ New code: Handle multiple .cdp-price spans
+        var cdpPriceSpans = $(".cdp-price");
+        var dynamicDiscountRate = {{ discount_rate }};
+
+         if (cdpPriceSpans.length > 0) {
+          var discountedPrice = productPrice * (1 - dynamicDiscountRate);
+          discountedPrice = discountedPrice.toFixed(2);
+      
+          cdpPriceSpans.each(function() {
+          $(this).text(`£${discountedPrice}`);
+            });
+          }
+
+    }
+    
+    $('select').on('change', function() {
+        setTimeout(updateDiscountedPrice, 500);
+    });
+    
+    updateDiscountedPrice();
+});
+      </script>
+      {{ 'fslightbox.js' | asset_url | script_tag }}
+      <script type="application/javascript">
+        fsLightboxInstances['gallery'].props.showThumbsOnMount = true;
+      </script>
+    {% endif %}
+
+    <!-- Gorgias Chat Widget Start -->
+    <script>
+    var initGorgiasChatPromise = (window.GorgiasChat) ? window.GorgiasChat.init() : new Promise(function (resolve) { window.addEventListener('gorgias-widget-loaded', function () { resolve(); })});
+
+    initGorgiasChatPromise.then(function () {
+        var timer = setInterval(function () {
+            var chatButtonHead = document.querySelector('#gorgias-chat-container')?.querySelector('#chat-button')?.contentWindow.document.querySelector('head');
+            if (!chatButtonHead || ![...chatButtonHead?.children].some(x => x.getAttribute("data-emotion"))) {
+                return;
+            }
+            clearInterval(timer);
+
+            var buttonStyle = document.createElement('style');
+            var mediaQuery = window.matchMedia("(max-width: 768px)"); // Adjust this value for your tablet breakpoint if needed
+            // var scale = mediaQuery.matches ? 1.2 : 0.7; // 1.2X increase for mobile, 0.8X reduction for desktop and tablet
+             var scale = mediaQuery.matches ? 0.75 : 0.75; // 1.2X increase for mobile, 0.75X reduction for desktop and tablet
+            var paddingStyles = 'padding-right: 0px; padding-bottom: 0px; position: relative;left: 15px;top: 11px;'; // Apply padding styles for all devices
+            buttonStyle.textContent = `#mountHere{ transform: scale(${scale}); transition: transform 200ms ease; ${paddingStyles} }`; // the custom CSS for the chat button
+            chatButtonHead.appendChild(buttonStyle);
+        }, 50);
+    });
+    </script>
+    <!-- Gorgias Chat Widget End -->
+    <!-- injec after engagement -->
+    {% comment %}
+          <script src="https://sbz.cirkleinc.com/assets/js/front/csShippingApp.js"></script>
+
+      <div data-rebuy-id="60406"></div>
+        {% render 'rebuy-smartcart-extensions' %}
+    {% endcomment %}
+
+    <div data-rebuy-id="109133"></div>
+
+    {% render 'inject-js-after-scroll-or-click' %}
+
+    <div data-rebuy-id="109109"></div>
+
+    <script>
+      $(window).scroll(function() {
+        if ($(this).scrollTop() >= 120) {
+          $('header').addClass("page__header--sticky");
+          $('#shopify-section-header--default').css('position', 'fixed');
+        } else {
+          $('header').removeClass("page__header--sticky");
+          $('#shopify-section-header--default').css('position', '');
+        }
+      });
+                     // Get the iframe element by its ID
+           setTimeout(function() {
+          var iframe = document.getElementById('chat-button');
+          if (window.innerWidth <= 768) {
+              iframe.style.display = 'none';
+          }
+      }, 2000);
+    </script>
+
+    {% if product.template_suffix == blank %}
+      <script>
+        $(document).ready(function() {
+          $(".cdp-off-percentage").click(function() {
+            var $this = $(this);
+            $this.text("Applying...");
+
+            $.ajax({
+              url: 'https://www.rem-fit.co.uk/discount/{{ settings.discount_code }}',
+              success: function(data) {
+                $this.text("{{ settings.discount_success_text }}");
+              },
+              error: function(xhr, status, error) {
+                console.error("Error:", error);
+                $this.text("{{ settings.discount_success_text }}"); // revert if error
+              }
+            });
+          });
+        });
+      </script>
+    {% endif %}
+
+    {% if template == 'collection' %}
+      {{ 'pdp-and-plp.js' | asset_url | script_tag }}
+    {% endif %}
+
+    {{ 'video-lazy-load.js' | asset_url | script_tag }}
+
+    <script>
+      // Code Provided By laurie 
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.read-more-toggle').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var content = this.previousElementSibling;
+          if (content && content.classList.contains('collection-expandable')) {
+            content.classList.toggle('is-open');
+            this.textContent = content.classList.contains('is-open') ? 'Read less' : 'Read more';
+            }
+          });
+        });
+      });
+   </script>
+   
+  </body>
+</html>

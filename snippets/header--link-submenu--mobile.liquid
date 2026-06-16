@@ -1,0 +1,144 @@
+<div class="nav__submenu--mobile mobsubmenu-custom">
+  {% for sub_link in link.links %}
+    {% if forloop.index == 1 %}
+      {% if sub_link.object.title contains 'Lux Elite'
+        or sub_link.object.title contains 'Hybrid Pocket 1000 Mattress'
+      %}
+        {% render 'free-gift-bundle-badge-mobile-nav' with product as product %}
+        <div class="mobile-free-gift-promo">
+          <h5>
+            <span>FREE Luxury Pillows & Bedding (worth £247).</span>
+          </h5>
+        </div>
+        {% break %}
+        <!-- Stops further iteration once the condition is met -->
+      {% elsif sub_link.object.title contains 'Divan' %}
+        <div class="mobile-free-gift-promo">
+          <h5>
+            <span>Save £200 when buying a divan bed with a mattress</span>
+          </h5>
+        </div>
+        {% break %}
+      {% elsif sub_link.object.title contains 'Bed' %}
+        <div class="mobile-free-gift-promo">
+          <h5>
+            <span>Save £150 when buying a bed frame with a mattress</span>
+          </h5>
+        </div>
+        {% break %}
+        <!-- Stops further iteration once the condition is met -->
+      {% elsif sub_link.object.title contains 'Protector' %}
+        <div class="mobile-free-gift-promo">
+          <h5>
+            <span>Buy 2 Protectors, Save Extra 10% | 3 - 15% | 4 - 20%</span>
+          </h5>
+        </div>
+        {% break %}
+      {% elsif sub_link.object.title contains 'Pillow' %}
+        <div class="mobile-free-gift-promo">
+          <h5>
+            <span style="color: #00b67a;">Buy 2 Pillows, Save Extra 10% | 3 - 15% | 4 - 20%</span>
+          </h5>
+        </div>
+        {% break %}
+
+      {% else %}
+        {% render 'free-gift-bundle-badge-mobile-nav' with product as product %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  {% if link.title == 'Bed Frames' %}
+    <p style="font-size:16px;line-height:20px;font-weight:600;font-style:normal;color:#00b67a; display: none;">
+      Get an additional £75 OFF when buying a bed frame with a mattress
+    </p>
+  {% endif -%}
+
+  <div class="submenu-mob-collection">
+    {% for sub_link in link.links %}
+      <!-- Code start to display the Linked image son collection -->
+      {%- assign link_url = link.url | remove: '/collections/' -%}
+      {% for collection in collections %}
+        {% if link_url == collection.handle %}
+          {% for i in (1..7) %}
+            {% assign product-name = 'product-name' | append: i %}
+            {% assign product-handle = 'product-handle' | append: i %}
+            {% assign product-image = 'product-image' | append: i %}
+            {% assign slider_product = collection.metafields.mobile[product-handle].value %}
+            {% if slider_product.url == sub_link.url
+              and collection.metafields.mobile[product-name].value != blank
+              and collection.metafields.mobile[product-handle].value != blank
+              and collection.metafields.mobile[product-image].value != blank
+            %}
+              <div class="nav-mob-collection">
+                <a class="nav-mob-thumbimg" href="/products/{{  slider_product.handle }}">
+                  {% if slider_product.compare_at_price_min > 0 and settings.tagSale %}
+                    <span class="tag tag--sale"
+                      >Save
+                      {{
+                        slider_product.compare_at_price
+                        | minus: slider_product.price
+                        | times: 100
+                        | divided_by: slider_product.compare_at_price
+                      -}}
+                      %</span
+                    >
+                  {% else %}
+                    <span class="sale-empty"></span>
+                  {% endif %}
+
+                  <div class="mobi-coll-thumbimg">
+                    <img
+                      class="lazyload"
+                      loading="lazy"
+                      data-src="{{ collection.metafields.mobile[product-image].value | img_url }}"
+                    >
+                  </div>
+                  <div class="navmob-coll-text">{{ collection.metafields.mobile[product-name].value }}</div>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      <!-- Code ends to display the Linked image son collection -->
+    {% endfor %}
+  </div>
+
+  <a class="mobnav-coll-link" href="{{link.url}}">shop all {{ link.title }}</a>
+  {% for sub_link in link.links %}
+    {% if sub_link.object.title contains 'Lux Elite' or sub_link.object.title contains 'Hybrid Pocket' %}
+      {% if forloop.index == 1 %}
+        <div class="mobile-menu-btn-div">
+          <a
+            class="
+              button button--primary
+              button--filled button--primary__filled
+              font__family--base
+              button__animation--none mobile-menu-btn
+            "
+            href="https://form.typeform.com/to/ABP9gLq0"
+          >
+            <span>Help Me Choose The Best Mattress</span>
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% comment %}
+    <span class="nav__link__holder">
+        <a href="{{sub_link.url}}" class="nav__link {% if sub_link.active or sub_link.child_active %}nav__link--active{% endif %}">
+            {% render 'header--link-elements', text: sub_link.title, textOnly: true %}
+        </a><!--
+        {% if sub_link.links.size > 0 %}
+        {% assign ix = ix | append: '-' | append: forloop.index0 %}
+            --><input type="checkbox" style="display: none" id="mobile-submenu-{{ix}}"><!--
+            --><label class="mobile__submenu__toggle" for="mobile-submenu-{{ix}}"><i class="uil uil-plus"></i><i class="uil uil-minus"></i></label>
+        {% render 'header--link-submenu--mobile', link: sub_link, ix: ix %}
+        {% else %}
+        -->
+        {% endif %}
+    </span>
+  {% endcomment %}
+</div>

@@ -1,0 +1,281 @@
+{% liquid
+    comment 
+        Snippet Options
+    endcomment
+    assign heading_title        = 'Enhance The Comfort & Save' 
+    assign heading_size         = 'h3'
+    assign item_width           = '33%'
+    assign limit                = 3
+    assign text_align           = 'center'
+    assign img_width            = 360
+    assign img_height           = 360
+    assign upsell_tag           = 'upsell:'
+    assign text_add_this        = 'ADD'
+    assign text_total_price     = 'Total Price'
+    assign text_add_selected    = 'Add selected to cart'
+%}
+
+{% liquid
+    assign product_handles = product.handle | append: ','
+    for tag in product.tags
+        if tag contains upsell_tag
+            assign handle = tag | split: ':' | last
+            assign product_handles = product_handles | append: handle | append: ','
+        endif
+    endfor
+    assign product_handles = product_handles | split: ','
+%}
+
+{% if product_handles.size > 1 %}
+  
+  
+<script>
+window.addEventListener('DOMContentLoaded', (event) => { 
+    window.money_format = '{{ shop.money_format }}'
+    window.cart_route = '{{ routes.cart_url }}'
+
+    class FrequentlyBoughtTogether extends HTMLElement {
+        constructor () {
+            super()
+
+            this.querySelectorAll('.fbt-variant-select').forEach((select) => {
+                select.addEventListener('change', () => {
+                    this.onSelectChange(select)
+                })
+            })
+
+            this.querySelectorAll('.fbt-add-checkbox').forEach((checkbox) => {
+                checkbox.addEventListener('change', () => {
+                    this.onCheckboxChange(checkbox)
+                })
+            })
+
+            this.querySelector('.fbt-btn-atc').addEventListener('click', this.addSelectedToCart.bind(this))
+        }
+
+        onSelectChange (select) {
+            const { image, comparePrice, price } = select.options[select.selectedIndex].dataset
+
+            const productItem = select.closest('.fbt-product-item')
+            const imgEl = productItem.querySelector('.fbt-product-img')
+            const comparePriceEl = productItem.querySelector('.fbt-product-price-compare')
+            const priceEl = productItem.querySelector('.fbt-product-price-final')
+
+            if (image) {
+                imgEl.setAttribute('src', image)
+            }
+
+            if (comparePrice) {
+                comparePriceEl.style.display = 'inline-block'
+                comparePriceEl.querySelector('s').textContent = this.moneyFormat(comparePrice)
+            } else {
+                comparePriceEl.style.display = 'none'
+                comparePriceEl.querySelector('s').textContent = ''
+            }
+            
+            priceEl.textContent = this.moneyFormat(price)
+
+            this.calcTotalPrice()
+        }
+
+        onCheckboxChange (checkbox) {
+            const productItem = checkbox.closest('.fbt-product-item')
+            const imgEl = productItem.querySelector('.fbt-product-img')
+
+            if (checkbox.checked) {
+                imgEl.style.opacity = '1'
+            } else {
+                imgEl.style.opacity = '0.2'
+            }
+            
+            this.calcTotalPrice()
+        }
+
+        calcTotalPrice () {
+            let totalPrice = 0
+            
+            this.querySelectorAll('.fbt-variant-select').forEach((select) => {
+                if (select.closest('.fbt-product-item').querySelector('.fbt-add-checkbox').checked) {
+                    totalPrice += Number(select.options[select.selectedIndex].dataset.price)
+                }
+            })
+            
+            this.querySelector('.fbt-total-price').textContent = this.moneyFormat(totalPrice)
+
+            if (totalPrice === 0) {
+                this.querySelector('.fbt-btn-atc').disabled = true
+            } else {
+                this.querySelector('.fbt-btn-atc').disabled = false
+            }
+        }
+
+        async addSelectedToCart () {
+            const btn = this.querySelector('.fbt-btn-atc')
+            btn.style.width = `${btn.clientWidth}px`
+
+            btn.innerHTML = `
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            `
+
+            const items = []
+
+            this.querySelectorAll('.fbt-variant-select').forEach((select) => {
+                if (select.closest('.fbt-product-item').querySelector('.fbt-add-checkbox').checked) {
+                    items.push({
+                        id: Number(select.value),
+                        quantity: 1
+                    })
+                }
+            })
+
+            await fetch('/cart/add.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items })
+            })
+
+            if (document.querySelector('#cart-drawer')) {
+                btn.innerHTML = btn.dataset.textAddSelected
+                loadEgCartDrawer(true)
+            } else {
+                location.href = window.cart_route
+            }
+        }
+
+        // Shopify format money (helper function)
+        // https://gist.github.com/stewartknapman/8d8733ea58d2314c373e94114472d44c
+        moneyFormat (cents, format) {
+            if (typeof cents === 'string') {
+                cents = cents.replace('.', '');
+            }
+            let value = '';
+            const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+            const formatString = (format || window.money_format);
+
+            function defaultOption(opt, def) {
+                return (typeof opt === 'undefined' ? def : opt);
+            }
+
+            function formatWithDelimiters(number, precision, thousands, decimal) {
+                precision = defaultOption(precision, 2);
+                thousands = defaultOption(thousands, ',');
+                decimal = defaultOption(decimal, '.');
+
+                if (Number.isNaN(number) || number == null) { return 0; }
+
+                number = (number / 100.0).toFixed(precision);
+
+                const parts = number.split('.');
+                const dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands);
+                cents = parts[1] ? (decimal + parts[1]) : '';
+
+                return dollars + cents;
+            }
+
+            switch (formatString.match(placeholderRegex)[1]) {
+                case 'amount': value = formatWithDelimiters(cents, 2); break;
+                case 'amount_no_decimals': value = formatWithDelimiters(cents, 0); break;
+                case 'amount_with_comma_separator': value = formatWithDelimiters(cents, 2, '.', ','); break;
+                case 'amount_no_decimals_with_comma_separator': value = formatWithDelimiters(cents, 0, '.', ','); break;
+            }
+
+            return formatString.replace(placeholderRegex, value);
+        }
+    }
+    customElements.define('frequently-bought-together', FrequentlyBoughtTogether)
+})
+</script>
+<div class="pdp-upsell-items">    
+<frequently-bought-together>
+    <h2 class="fbt-heading-title {{ heading_size }}">
+        {{ heading_title }}
+    </h2>
+   <ul class="fbt-product-list">
+        {% for handle in product_handles limit: limit %}
+            {% assign product = all_products[handle] %}
+            {% assign total_price = total_price | plus: product.selected_or_first_available_variant.price %}
+            <li class="fbt-product-item pdpupsell-cont">
+                
+           <div class="pdpupsell-imgcont">
+              <div class="pdpupsell-img">
+                <a class="" href="{{ product.url }}">
+                    <img 
+                        class="fbt-product-img img-fluid {{ section.settings.fbt_product_img_border }}"
+                       {% comment %} src="{{ product.featured_image.src | image_url: width: img_width, height: img_height, crop: 'center' }}" {% endcomment %} 
+                        src="{{ product.featured_image.src | image_url }}" 
+                        alt="{{ product.featured_image.alt | escape }}"
+                        width="{{ img_width }}"
+                        height="{{ img_height }}"
+                        loading="lazy">
+                </a>
+              </div>
+          <div class="pdpupsell-titledec">
+                    <a class="" href="{{ product.url }}">
+                        {{ product.title }}
+                    </a>
+                <p> {{ product.metafields.prod.frequentyBuyTogetherDesc.value }}</p>
+               <span>
+                <select class="fbt-variant-select" name="id" aria-label="Select variant" style="{% if product.has_only_default_variant %}display: none;{% endif %}">
+                    {% for variant in product.variants %}
+                        {% liquid
+                            assign variant_image = nil
+                            if variant.image
+                                assign variant_image = variant.image | image_url: width: img_width, height: img_height, crop: 'center'
+                            endif
+                        %}    
+                        <option value="{{ variant.id }}" data-image="{{ variant_image }}" data-compare-price="{{ variant.compare_at_price }}" data-price="{{ variant.price }}" {% unless variant.available %}disabled{% endunless %}>
+                            {{ variant.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+               </span>
+          </div>
+           </div>
+               <div class="pdpupsell-pricecheckbox">
+           <div class="pdpupsell-pricecheckboxinner">
+              <div class="fbt-product-price pdpupsell-price">
+                 <span class="fbt-product-price-final product__price">
+                        {{ product.price | money }}
+                    </span>
+                    <span class="fbt-product-price-compare product__price--old" style="{% unless product.first_available_variant.compare_at_price > product.first_available_variant.price %}display: none;{% endunless %}">
+                        {% comment %}
+                        <span class="visually-hidden">
+                            Regular price
+                        </span>
+                      {% endcomment %}
+                        <s>
+                            {{ product.first_available_variant.compare_at_price | money }}
+                        </s>
+                    </span>
+                </div>
+          
+                <div class="fbt-add-checkbox-wrapper pdpupsell-checkboxadd">
+                    <input id="fbt-add-checkbox-{{ product.id }}" class="fbt-add-checkbox upsell_checkbox" type="checkbox" checked>
+                    <span class="" for="fbt-add-checkbox-{{ product.id }}">
+                        {{ text_add_this }}
+                    </span>
+                </div>
+                </div>
+               </div>
+                  
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="fbt-total-addbox">
+      <div class="fbt-total-price-wrapper">
+        <span class="">
+            {{ text_total_price }}:
+        </span>
+        <b class="fbt-total-price">
+            {{ total_price | money }}
+        </b>
+    </div>
+    <button class="fbt-btn-atc button button--primary btn btn-primary" type="button" data-text-add-selected="{{ text_add_selected }}">
+        {{ text_add_selected }}
+    </button>
+    </div>
+</frequently-bought-together>
+</div>
+{% endif %}

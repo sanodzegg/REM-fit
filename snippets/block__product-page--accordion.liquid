@@ -1,0 +1,93 @@
+{% unless block.settings.content == 'metafield' %}
+<div class="col-12 accordion1 info-accordion accordion product__accordion {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{%endif-%}" id="{{ block.settings.accCustomID }}">
+    <label class="accordion__item" {{block.shopify__attrbutes}} >
+        <span class="accordion__item--title">{{block.settings.heading}}
+          <label class="collapse" ></label></span>
+    </label>
+    <div class="accordion__item--content inherit {% if block.settings.content == 'description' or block.settings.content contains 'page' %}{% endif %}">
+        {%- case block.settings.content %}
+            {% when 'description' %}
+                {{product.description}}
+            {% when 'reviews' %}
+                {% if settings.reviewApp == "loox" %}
+                    <div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>
+                {% elsif settings.reviewApp == "shopifyReviews" %}
+                    <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+                {% elsif settings.reviewApp == "alireviews" %}
+                    <div id="shopify-ali-review" product-id="{{ product.id }}"> {{ shop.metafields.review_collector.review_code }} </div>
+                {% endif %}
+            {% when 'custom' %}
+                {{block.settings.customContent}}
+            {% when 'page' %}
+                {% assign page = pages[block.settings.page] %}
+                {{page.content}}
+            {% when 'productPage' %}
+                {% assign page = pages[product.handle] %}
+                {{page.content}}
+        {% endcase %}
+    </div>
+</div>
+{% else %}
+{% unless block.settings.metafieldNS == blank or block.settings.metafieldKey == blank %}
+    {% assign metafield = product.metafields[block.settings.metafieldNS][block.settings.metafieldKey].value %}
+    {% unless metafield == blank %}
+         {% if block.settings.metafieldKey contains 'accordion_dimensions_weight_description' %}
+                <div class="col-12 accordion2 info-accordion accordion product__accordion {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{% endif %}" id="{{ block.settings.accCustomID }}">
+                  <label class="accordion__item" {{block.shopify__attrbutes}} >
+                      <span class="accordion__item--title" >{{block.settings.heading}}
+                        <label class="collapse" ></label></span>
+                  </label>
+                  <div class="accordion__item--content inherit {% if block.settings.content == 'description' or block.settings.content contains 'page' %}{% endif %}">
+                      {% render 'spec-table-pdpaccordion' %}
+                  </div>
+                </div>
+               {% else %}
+           
+        {% assign metafield_json = metafield | parse_json %}
+
+        
+        {% assign text_value = metafield_json.children[0].children[0].value %}
+        
+
+        <div class="col-12 accordion3 info-accordion accordion product__accordion {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{% endif %}" id="{{ block.settings.accCustomID }}">
+            <label class="accordion__item" {{block.shopify__attrbutes}} >
+                <span class="accordion__item--title" >{{block.settings.heading}}
+                  <label class="collapse" ></label></span>
+            </label>
+            <div class="accordion__item--content inherit">
+                {{ text_value }}
+            </div>
+        </div>
+           {% endif %}
+    {% endunless %}
+{% endunless %}
+{% endunless %}
+
+
+  
+  {% comment %}
+<script>
+  document.querySelectorAll('.accordion__item--title').forEach(function (title) {
+    title.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent default behavior (scrolling)
+        // Add your accordion opening logic here
+    });
+});
+
+</script>
+<script>
+   setTimeout(() => {
+  document.querySelectorAll('.accordion__item input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.checked) {
+        document.querySelectorAll('.accordion__item input[type="radio"]').forEach(otherRadio => {
+          if (otherRadio !== radio) {
+            otherRadio.checked = false;
+          }
+        });
+      }
+    });
+  });
+}, 2000);
+</script>
+  {% endcomment %}

@@ -1,0 +1,131 @@
+{% assign free_products_image_urls = product.metafields.custom.free_gift_Image_url | split: ',' %}
+{% assign free_products_titles = product.metafields.custom.free_gift_product_title | split: ',' %}
+{% assign free_products_compare_prices = product.metafields.custom.free_gift_products_compare_at_price | split: ',' %}
+{% unless free_products_titles.size == 0  %}
+
+ <div class ="free-gift-pdp" >
+<div class="widget-type-product-addon is-visible widget-layout-line">
+  <div class="free-gift-pdp-container">
+    <div class="free-gift-pdp-content">
+     <h3 class="primary-title">Your FREE items with this mattress</h3>
+      <div class="description">{{ block.settings.subtitle_free_gift }}</div>
+      <div class="free-gift-pdp-addon">
+        <div class="free-gift-pdp__item1s">
+        
+          {% for index in (0..free_products_titles.size) %}
+            {% assign free_product_image_url = free_products_image_urls[index] %}
+            {% assign free_product_title = free_products_titles[index] %}
+            {% assign free_product_compare_price = free_products_compare_prices[index] %}
+            {%  assign first_value = free_products_compare_prices[index] | remove_first: "£" %}
+         
+            {% if free_product_title and free_product_image_url %}
+              <div class="free-gift-pdp__item1">
+                <div class="free-gift-pdp__item1-image">
+                  <img src="{{ free_product_image_url }}" alt="free product image">
+                </div>
+                <div class="free-gift-pdp__item1-info">
+                  <div class="free-gift-pdp__item1-product-title">
+                    {% if free_product_title contains 'Pillow' %}
+                      <p id="bold" class="bold" style="display: inline;">2</p> X 
+                    {% endif %}{{ free_product_title }}
+                  </div>
+                  <div class="free-gift-pdp__item1-product-price free-gift-pdp-product-price">
+                    <div>
+                      <span class="free-gift-pdp-money1 sale" style="margin-right: 10px;">
+                        <span class="sr-only">Sale price</span> <span style="font-weight:600; color: #58327a;">FREE</span>
+                      </span> 
+                      <span class="free-gift-pdp-money1 compare-at1">
+                        <span class="sr-only">Original price</span>
+                        
+                        <span id="compare_price" > {% if free_product_title contains 'Pillow' %} £{{ free_product_compare_price | remove_first: "£" | times: 2 }} {% else %} {{ free_product_compare_price }} {% endif %}</span>
+                       
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+<script>
+var previousOption = '';
+var initialMultiplication = false;
+var shouldDivide = false;
+
+$(document).ready(function() {
+  const items = $('.free-gift-pdp__item1');
+  const selectedOption = $('select#size_dropdown1').find('option:selected').val();
+
+  items.each(function() {
+    const boldTag = $(this).find('.bold');
+    const comparePriceElement = $(this).find('.free-gift-pdp-money1.compare-at1');
+    const comparePrice = parseFloat(comparePriceElement.text().replace(/[^0-9.-]+/g, ""));
+
+    if (boldTag.length > 0 && !isNaN(comparePrice)) {
+      if (selectedOption.includes('Double') || selectedOption.includes('King')) {
+        boldTag.text('2');
+        comparePriceElement.text('£' + (comparePrice * 2).toFixed(2));
+        initialMultiplication = true;
+      } else {
+        boldTag.text('1');
+        comparePriceElement.text('£' + comparePrice.toFixed(2));
+      }
+    }
+  });
+
+  previousOption = selectedOption;
+});
+
+$('select#size_dropdown1').change(function() {
+  const selectedOption = $(this).find('option:selected').val();
+  const items = $('.free-gift-pdp__item1');
+
+  items.each(function() {
+    const boldTag = $(this).find('.bold');
+    const comparePriceElement = $(this).find('.free-gift-pdp-money1.compare-at1');
+    const comparePrice = parseFloat(comparePriceElement.text().replace(/[^0-9.-]+/g, ""));
+
+    if (boldTag.length > 0 && !isNaN(comparePrice)) {
+      if (previousOption.includes('Double') || previousOption.includes('King')) {
+        if (!selectedOption.includes('Double') && !selectedOption.includes('King') && initialMultiplication) {
+          comparePriceElement.text('£' + (comparePrice / 2).toFixed(2));
+          shouldDivide = true;
+        }
+      }
+
+      if (selectedOption.includes('Double') || selectedOption.includes('King')) {
+        if (!(previousOption.includes('Double') || previousOption.includes('King'))) {
+          boldTag.text('2');
+          comparePriceElement.text('£' + (comparePrice * 2).toFixed(2));
+          initialMultiplication = true;
+          shouldDivide = false;
+        }
+      } else {
+        boldTag.text('1');
+        if (shouldDivide) {
+          comparePriceElement.text('£' + (comparePrice / 2).toFixed(2));
+          shouldDivide = false;
+        } else {
+          comparePriceElement.text('£' + comparePrice.toFixed(2));
+        }
+        initialMultiplication = false;
+      }
+    }
+  });
+
+  previousOption = selectedOption;
+});
+</script>
+
+
+ </div>
+  {% endunless %}

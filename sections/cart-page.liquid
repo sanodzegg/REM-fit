@@ -1,0 +1,725 @@
+
+{% assign Prod_title = false %}
+{% for item in cart.items %}
+  {% if item.product.handle contains 'protector' and item.product.price > 0 %}
+  {% elsif item.product.handle contains 'mattress' and item.product.price > 0 %}
+    {% assign Prod_title = item.product.title %}
+    {% assign Prod_Image = item.product.featured_image %}
+  {% endif %}
+{% endfor %}
+
+{% if Prod_title %}
+  <div class="widget block block-static-block cart-noft-sec">
+    <div class="cart_checkout_bar_block">
+      <div class="checkout_bar">
+        <div class="checkout_bar_info">
+          <div class="checkout_bar_title" style=""></div>
+          <span>You Made The Right Choice</span>
+          <ul class="feature_grid">
+            <li>Premium Pocket Springs</li>
+            <li>Advanced temperature regulation</li>
+            <li>Weightless Pressure Relief</li>
+            <li>Motion isolation</li>
+          </ul>
+        </div>
+        <div class="checkout_bar_media">
+          <img src="" alt="">
+        </div>
+        <div class="checkout_bar_content">
+          <ul class="feature_grid">
+            <li>Premium Pocket Springs</li>
+            <li>Advanced temperature regulation</li>
+            <li>Weightless Pressure Relief</li>
+            <li>Motion isolation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-notification-mobile cart_checkout_bar_block ">
+      <div class="checkout_bar">
+        <div class="checkout_bar_media_1 checkout_bar_media">
+          <img src="" alt="">
+        </div>
+        <div class="checkout_bar_info">
+          <span>You Made The Right Choice</span>
+          <ul class="feature_grid">
+            <li>Premium Pocket Springs</li>
+            <li>Advanced temperature regulation</li>
+            <li>Weightless Pressure Relief</li>
+            <li>Motion isolation</li>
+          </ul>
+        </div>
+
+        <div class="checkout_bar_content"></div>
+      </div>
+    </div>
+
+    <script>
+      jQuery(document).ready(function () {
+
+               let initbar = function () {
+
+                   jQuery('.product-item-name').each(function () {
+                       if (jQuery(this).text().search('Mattress') > 0 && jQuery(this).text().search('Protector') < 0) {
+
+                           jQuery('body').addClass('has_matt');
+                           jQuery('.checkout_bar_title').text(jQuery(this).text());
+                           //jQuery('.checkout_bar_title').text(jQuery(this).text()).show();
+
+                           var itemTitle = jQuery('.checkout_bar_title').text();
+
+                           var newItemTitle = itemTitle.replace('REM-Fit® ', '').replace('Rejuvenated ', '');
+                           jQuery('.checkout_bar_title').text(newItemTitle).show();
+
+
+                           return false;
+                       }
+                     else{
+
+                     }
+                   });
+
+                   if (jQuery('.checkout_bar_title').text().trim() == '400 Hybrid Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/400_Hybrid_Mattress_non_900x_604e59cf-f67b-45fc-9652-898c8ef46ca9.webp?v=1690020867');
+                   }
+                   else if (jQuery('.checkout_bar_title').text().trim() == '500 Ortho Hybrid Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/500_Ortho_Hybrid_Mattressv3_900x_5d0ca02c-3d71-4132-9c2c-b0fe90b23646.webp?v=1690020916');
+                   }
+                   else if (jQuery('.checkout_bar_title').text().trim() == 'REM-Fit 600® Lux Hybrid Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/600_lux_hybrid_mattress_900x_ad340cad-61d3-4090-b678-1464ecf35ed9.webp?v=1690020953');
+                   }
+                   else if (jQuery('.checkout_bar_title').text().trim() == 'Eco Premium Hybrid Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/EcoHybrid_1_900x_dc67a111-0597-49a4-95e5-2a0998ab35b7.webp?v=1690020993');
+                   }
+                   else if (jQuery('.checkout_bar_title').text().trim() == 'Remy+ Eco Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Remy_900x_0bb0b0f5-51b0-4e8c-98c0-a0c02460ef81.webp?v=1690021032');
+                   }
+                   else if (jQuery('.checkout_bar_title').text().trim() == 'Remy Kidz Eco Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/RemyKidz_900x_2acb7d2f-79ca-41ee-b4f1-236ff279ac77.webp?v=1690021083');
+                   }
+                  else if (jQuery('.checkout_bar_title').text().trim() == 'Pocket 1000 Memory Foam Hybrid Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Hybrid1000_900x_73092498-7c25-448b-a8a2-1d874a5d886a.webp?v=1690021114');
+                   }
+                 else if (jQuery('.checkout_bar_title').text().trim() == '400 Elite Hybrid Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit400EliteHybridMattress.webp?v=1714722479');
+                   }
+                 else if (jQuery('.checkout_bar_title').text().trim() == '500 Ortho Elite Hybrid Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit500OrthoEliteHybridMattressfinal_900x_05230dca-37e3-42aa-a88d-9cd85b87d0bd.webp?v=1714722773');
+                   }
+                 else if (jQuery('.checkout_bar_title').text().trim() == 'REM-Fit 600® Lux Elite Hybrid Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit600EliteHybridMattress_700x700_ebadbb1c-0e57-463d-a36f-d8bfc372333d.webp?v=1714722700');
+                   }
+                  else if (jQuery('.checkout_bar_title').text().trim() == 'Hybrid Pocket 1000 Mattress') {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/rem-fitSleep1000medium-firmTensionmattress_900x_8ff927d5-7cf8-4e7c-9da8-a221508453fd.webp?v=1714723155');
+                   }
+                 else if (jQuery('.checkout_bar_title').text().trim() == "Remy+ Hybrid Mattress") {
+                       jQuery('.checkout_bar_media img').prop('src', 'https://cdn.shopify.com/s/files/1/0635/4432/8438/files/Remy-Mattress-White-Background-Shadow_6355aa19-0986-42d8-8d6e-805b2f26ba90.jpg?v=1714979611');
+                   }
+
+               };
+                   initbar();
+           });
+    </script>
+  </div>
+{% endif %}
+
+{% unless cart.items.size == 0 %}
+  {% assign tran_checkout = 'general.buttons.checkout' | t %}
+  {% assign tran_update = 'general.buttons.update_cart' | t %}
+  <form class="col-12 cart__form cartpg-form" action="/cart" method="post" novalidate>
+    {% assign prod = false %}
+
+    {% for item in cart.items %}
+      {{ item.properties['save-10'] }}
+      {% if item.product.handle == 'rem-fit-500-cool-gel-pillow' and item.quantity == 2 %}
+        {% assign prod = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if prod %}
+      <input type="hidden" name="discount" value="pillows">
+    {% endif %}
+
+    <div class="col-12 middle cart__header pad-rl-o">
+      <h1 class="h-reset col-12 col-md middle pad-rl-o">{{ 'cart.page.title' | t }}</h1>
+      {% if settings.cartTimer %}
+        <div
+          style="margin-bottom: 0; padding: 0.5rem"
+          class="minicart__timer unflex col-12 col-md"
+          data-countdown
+          data-ct-key="cart-ct-timer"
+          data-duration="{{settings.cartTimerDuration}}"
+          data-duration-format="minutes"
+        >
+          <span>{{ 'cart.page.expires' | t }}</span> <span class="minutes">00</span>:<span class="seconds">00</span>
+        </div>
+      {% endif %}
+
+      <div class="col-12 col-md start end-md checkout__button unflex">
+        {% if settings.ajaxType == 'disabled' %}
+          {% render 'button__submit',
+            text: tran_update,
+            name: 'update',
+            type: 'secondary',
+            class: 'button--cart__update'
+          %}
+        {% endif %}
+        {% if cart.total_price > 0 %}
+          {% render 'button__submit', text: tran_checkout, name: 'checkout' %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="cart-pg-tworow">
+      <div class="cart-pg-tablerow">
+        {% assign totalAmount = 0 %}
+        {% for item in cart.items %}
+          {% assign product = item.variant %}
+          <div class="col-12 cart__item">
+            <div class="col-11 col-md-4 cart__info">
+              <a class="card__img--container minicart__image" href="{{ item.url | within: collections.all }}">
+                <div class="card__img--ratio">
+                  <div class="card__img">
+                    {% render 'image', src: item, alt: item.title | escape , size: 'medium' %}
+                  </div>
+                </div>
+              </a>
+              <div class="cart__info--text">
+                <a class="product-item-name" href="{{ item.url }}">{{ item.product.title }}</a>
+                <span
+                  class="cart__info--variant"
+                >
+                  {%- unless item.product.has_only_default_variant %}{{ item.variant.title }}{% endunless -%}
+                </span>
+
+                <!--  -->
+
+                <div class="col-12 no-gap hide-desktop cart__qtyTotal--holder">
+                  <div class="col-12 no-gap cart__quantity start">
+                    {% if item.title contains 'Free Gift' %}
+                      <p>{{ item.quantity }}</p>
+                    {% else %}
+                      <div class="quantity--input">
+                        <button
+                          class="quantity--input__button quantity--input__incr"
+                          onclick="cartPage.quantityHandler(event, false)"
+                        >
+                          -
+                        </button>
+                        <!--  -->
+                        <input
+                          class="quantity--input__input"
+                          value="{{item.quantity}}"
+                          data-qty-input
+                          data-qty-int-input
+                          data-variant-id="{{item.key}}"
+                          onchange="cartPage.updateQuantity(event)"
+                          type="number"
+                          min="0"
+                          {% if item.variant.inventory_management %}
+                            max="{{ item.variant.inventory_quantity}}"
+                          {% endif %}
+                        >
+                        <!--  -->
+                        <button
+                          class="quantity--input__button quantity--input__decr"
+                          onclick="cartPage.quantityHandler(event, true)"
+                        >
+                          +
+                        </button>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="col-12 no-gap cart__ptotal start unflex">
+                    {% comment %}
+                      {%- if item.original_line_price != item.line_price -%}{{ item.original_line_price | money | strip_html }}{%- endif -%}
+                    {% endcomment %}
+                    <span class="jsPrice">{{- item.line_price | money | strip_html -}}</span>
+                    {% if product.compare_at_price > 0 %}
+                      <span
+                        id="compare_price"
+                        class="cart__compare-price only_for_percentage jsPrice"
+                      >
+                        {{- product.compare_at_price | times: item.quantity | money | strip_html -}}
+                      </span>
+                    {% endif %}
+                    {% if item.title contains 'Free' %}
+                      <span data-tag-product="{{ item.id }}" data-tag-type="percent" class="tag tag--sale">-100%</span>
+                    {% else %}
+                      <span data-tag-product="{{ item.id }}" data-tag-type="percent" class="tag tag--sale"> </span>
+                    {% endif %}
+                    <style>
+                          .tag--sale{
+                                font-size:14px;
+                          background-color:#58327a;
+                          padding:1px 5px;
+                          border-radius:5px;
+                          margin-left:5px;
+                          }
+                        @media (max-width: 767px){
+                        .tag--sale{display: inline-block !important;}
+                        }
+                      .tag--sale{display:none;}
+                    </style>
+                    <script>
+                                  // Get all cart items
+                            var cartItems = document.querySelectorAll('.cart__item');
+
+                            // Loop through each cart item
+                            cartItems.forEach(function(item) {
+                              // Get the discounted price for 1 item
+                            var discountedPrice = parseFloat(item.querySelector('.jsPrice').textContent.replace(/[^0-9.-]+/g, ""));
+
+                              // Get the compare at price for 1 item
+                      var compareAtPrice = parseFloat(item.querySelector('.cart__compare-price').textContent.replace(/[^0-9.-]+/g, ""));
+
+                            console.log(compareAtPrice);
+                              // Get the quantity for the current item
+                              var qtyInput = item.querySelector('.quantity--input__input');
+
+                              if (!qtyInput) {
+                                // If quantity input is not found, skip this item and check the next one
+                                return;
+                              }
+
+                              // Calculate the original price for all items
+                              var originalPrice = compareAtPrice * parseInt(qtyInput.value);
+
+                              // Calculate the total discounted price for all items
+                              var totalDiscountedPrice = discountedPrice * parseInt(qtyInput.value);
+
+                              // Calculate the percentage discount
+                              var percentageDiscount = ((originalPrice - totalDiscountedPrice) / originalPrice) * 100;
+
+                              // Add the percentage discount to the sale tag
+                              var saleTag = item.querySelector('.tag--sale');
+                              var saleTagempty = item.querySelector('.tag--sale').value;
+
+
+                              if (saleTag) {
+                                saleTag.textContent = '-' +Math.round(percentageDiscount) + '%';
+                              } else {
+
+                              }
+                            });
+                    </script>
+
+                    <span class="cart-pillo-disc-per">
+                      {%- for discount in item.discounts -%}
+                        {{- discount.title -}}
+                      {%- endfor -%}
+                    </span>
+                  </div>
+                  <div onclick="cartPage.removeItem(this, '{{item.key}}')" class="col middle center cart__trash">
+                    {% render 'get-icon', icon: 'trash' %}
+                  </div>
+                </div>
+
+                {% if item.variant.inventory_quantity <= 0 %}
+                  {% if item.product.metafields.sleep.trial != blank %}
+                    <div class="trial-cart">{{ item.product.metafields.sleep.trial }}</div>
+                  {% endif %}
+
+                  {% if item.variant.metafields.varia.delayed_delivery != blank %}
+                    <div class="trial-cartimg">{{ item.variant.metafields.varia.delayed_delivery }}</div>
+                    <input
+                      id="delayed-delivery"
+                      type="hidden"
+                      name="attributes[delayed-delivery]"
+                      value="{{ item.variant.metafields.varia.delayed_delivery }}"
+                    >
+                  {% endif %}
+                {% endif %}
+              </div>
+            </div>
+
+            {% comment %}
+              <div onclick="cartPage.removeItem(this, '{{item.key}}')" class="col middle center cart__trash hide-desktop">
+                  {% render 'get-icon', icon: 'trash' %}
+              </div>
+            {% endcomment %}
+            <!--
+              <div class="col-md-2 cart__punit hide-mobile">
+                  <span class="jsPrice">{{ item.price | money | strip_html }}</span>
+                  {% if product.compare_at_price > 0 %}
+                  <span class="cart__compare-price cart__compare-price--punit jsPrice">{{product.compare_at_price | money | strip_html}}</span>
+                  {% endif %}
+              </div>
+            -->
+            <div class="col-5 col-md-5 cart__qtyTotal--holder hide-mobile">
+              <div class="col-12 col-md-7 cart__quantity center">
+                {% if item.title contains 'Free Gift' %}
+                  <p>{{ item.quantity }}</p>
+                {% else %}
+                  <div class="quantity--input">
+                    <button
+                      class="quantity--input__button quantity--input__incr"
+                      onclick="cartPage.quantityHandler(event, false)"
+                    >
+                      -
+                    </button>
+                    <!--  -->
+                    <input
+                      class="quantity--input__input"
+                      value="{{item.quantity}}"
+                      data-qty-input
+                      data-variant-id="{{item.key}}"
+                      name="updates[]"
+                      id="updates_{{item.key}}"
+                      data-qty-int-input
+                      onchange="cartPage.updateQuantity(event)"
+                      type="number"
+                      min="0"
+                      {% if item.variant.inventory_management %}
+                        max="{{ item.variant.inventory_quantity}}"
+                      {% endif %}
+                    >
+                    <!--  -->
+                    <button
+                      class="quantity--input__button quantity--input__decr"
+                      onclick="cartPage.quantityHandler(event, true)"
+                    >
+                      +
+                    </button>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="col-12 col-md-5 cart__ptotal center unflex">
+                {%- if item.original_line_price != item.line_price -%}
+                  <span class="jsPrice">{{- item.line_price | money | strip_html -}}</span>
+                {% else %}
+                  <span class="jsPrice">{{ item.original_line_price | money | strip_html }}</span>
+                {%- endif -%}
+
+                {% assign totalOriginal = 0 %}
+                {% if product.compare_at_price > 0 %}
+                  {% assign totalOriginal = product.compare_at_price | times: item.quantity %}
+                  <span class="cart__compare-price jsPrice">
+                    {{- product.compare_at_price | times: item.quantity | money | strip_html -}}
+                  </span>
+                  {% assign totalAmount = totalAmount | plus: totalOriginal %}
+                {% else %}
+                  {% assign totalAmount = totalAmount | plus: item.line_price %}
+                {% endif %}
+                <span class="cart-pillo-disc-per">
+                  {%- for discount in item.discounts -%}
+                    {{- discount.title -}}
+                  {%- endfor -%}
+                </span>
+              </div>
+            </div>
+            <div class="col-md-1 cart__trash hide-mobile">
+              <span onclick="cartPage.removeItem(this, '{{item.key}}')">{% render 'get-icon', icon: 'trash' %}</span>
+            </div>
+          </div>
+        {% endfor %}
+
+        <div data-rebuy-id="81245"></div>
+        <div data-rebuy-id="60607"></div>
+      </div>
+      {% if settings.shopCurrency == 'convert' %}
+        <div class="col-12 unflex cart__currency">
+          {{
+            'cart.page.currency_notice'
+            | t
+            | replace: '%curr_symbol%', cart.currency.symbol
+            | replace: '%curr_code%', cart.currency.iso_code
+          }}
+        </div>
+      {% endif %}
+
+      <div class="row cart__additional cart-pg-amount">
+        <div class="cart-right-total">
+          <div class="col-12 col-md-4 cart__additional--left">
+            <a
+              class="cart__continue"
+              href="{{routes.all_products_collection_url}}"
+            >
+              {%- render 'get-icon', icon: 'arrow-left' %}
+              <span>{{ 'general.buttons.continue' | t }}</span></a
+            >
+          </div>
+          <div class="col-12 col-md end cart__additional--right">
+            <div class="cart__notes col">
+              <span>{{ 'cart.page.additional_notes' | t }}</span>
+              <textarea
+                class="cart__notes--note"
+                name="note"
+                placeholder="{{'cart.page.additional_notes' | t}}"
+                rows="6"
+              ></textarea>
+            </div>
+            <div class="cart__total">
+              {% if section.settings.discount != 'none' %}
+                <span class="cart__total">
+                  {{- 'cart.page.total' | t }}:
+                  <span class="jsPrice">{{ totalAmount | money | strip_html }}</span></span
+                >
+                <span class="cart__discount">
+                  {{- 'cart.page.discount' | t }}:
+                  <span class="cart__discount--amount {% if section.settings.discount == 'money' %}jsPrice{% endif %}">
+                    {% if section.settings.discount == 'money' %}
+                      -{{ totalAmount | minus: cart.total_price | money | strip_html }}
+                    {% else %}
+                      {{ cart.total_price | minus: totalAmount | times: 100 | divided_by: totalAmount }}%
+                    {% endif %}
+                  </span>
+                </span>
+                <span class="cart__total">Shipping <span class="jsPrice">Free</span></span>
+              {% endif %}
+              {% assign installment = 12 %}
+              {% assign installment = installment | times: 1.0 %}
+              <span class="cart__grandtotal">
+                {{- 'cart.page.grand_total' | t }}:
+                <span class="jsPrice">{{ cart.total_price | money | strip_html }}</span></span
+              >
+              {% if cart.total_price <= 15000 %}
+                <style>
+                   .dicoprice {
+                      font-weight: 700;
+                      color: #58327a;
+                  }
+                </style>
+                <div id="top-svg" class="installment-dicoprice" style="margin-top: -5px;margin-bottom: 10px;">
+                  {% assign installment = 3 %}
+                  {% assign installment = installment | times: 1.0 %}
+                  <span class="dicoprice-aslow"
+                    >or
+                    <span class="dicoprice">
+                      {{ cart.total_price | divided_by: installment | round: 2 | money | strip_html -}}
+                    </span>
+                    / m with
+                  </span>
+                  {% render 'klarna', icon-name: icon-name %}
+                </div>
+              {% endif %}
+              <div class="promo-text-cart">Got a promo code? Apply it at Checkout</div>
+              {% if cart.total_price > 0 %}
+                {% render 'button__submit', text: tran_checkout, name: 'checkout', class: 'button--full-width' %}
+              {% endif %}
+              <div class="cart-payment-img" style="text-align:center;">
+                {% comment %}
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/cart-payment-logos.png?v=1679300839"
+                    style="width:100%;"
+                  >
+                {% endcomment %}
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/rf-payment-2023_1.png?v=1694525771"
+                  style="width:90%;margin-left:auto;margin-right:auto;"
+                >
+              </div>
+
+              <div class="pdp-badges-sectext">
+                {% for item in cart.items %}
+                  {% if item.title contains 'Mattress' %}
+                    {% unless item.title contains 'Protector' %}
+                      <ul>
+                        {% if item.product.metafields.custom.pp_guarantee_1.value %}
+                          {% unless item.title contains 'Rejuvenated' %}
+                            <li>{{ item.product.metafields.custom.pp_guarantee_1.value }}</li>
+                          {% endunless %}
+                        {% endif %}
+                        {% if item.product.metafields.custom.pp_guarantee_2.value %}
+                          {% comment %}
+                            <li>
+                              {{ item.product.metafields.custom.pp_guarantee_2 }}
+                            </li>
+                          {% endcomment %}
+                        {% endif %}
+                        {% if item.product.metafields.custom.pp_guarantee_3.value %}
+                          <li>
+                            {{ item.product.metafields.custom.pp_guarantee_3 }}
+                          </li>
+                        {% endif %}
+                        <li>We donate our mattresses to the British Heart Foundation.</li>
+                      </ul>
+                      {% break %}
+                    {% endunless %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              <div class="cart-awards-img" style="text-align:center;">
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/ghi2024_awardsv2_1.png?v=1717162855"
+                  style="width:75%;"
+                >
+              </div>
+
+              <div style="clear:both"></div>
+
+              {% comment %}
+                {% if additional_checkout_buttons %}
+                <div class="additional-checkout-buttons additional-checkout-buttons--vertical">
+                  {{ content_for_additional_checkout_buttons }}
+                </div>
+                {% endif %}
+              {% endcomment %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+{% else %}
+  <div class="col-12 no-gap cart__header">
+    <h1 class="h-reset col middle center">{{ 'cart.page.empty_title' | t }}</h1>
+  </div>
+
+  <div class="row col-12">
+    <h3 class="h-reset col-12 center">{{ 'cart.page.empty_text' | t }}</h3>
+    {% if section.settings.featured != blank %}
+      <h3 class="h-reset col-12 center cart__suggestion">{{ 'cart.page.empty_suggestion' | t }}</h3>
+      <div class="col-12 cart__page--suggestions" style="overflow: auto;">
+        {% assign coll = collections[section.settings.featured] %}
+        {% for item in coll.products limit: 4 %}
+          <div class="col-12 col-md-3">
+            {% render 'product-card-default', product: item, dsize: '3' %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="col-12 center cart__suggestion--button">
+      {% assign btext = 'cart.page.empty_button' | t %}
+      {% render 'button', type: 'primary', text: btext, url: routes.root_url %}
+    </div>
+  </div>
+{% endunless %}
+
+<script
+  id="cartJavascript"
+>
+  
+  
+  
+  
+  let cartPage = {};
+  cartPage.removeItem = async (t, id)=>{
+    let res = await BoosterTheme.cart.removeFromCart(false, id);
+    window.location.reload();
+  }
+
+  cartPage.updateCart = async ()=>{
+    let time = new Date().getTime();
+    let cartData = await fetch('/?section_id=cart-page', {headers: { 'Pragma': 'no-cache', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Expires': 0 }}).then((data)=> data.text());
+    let div = document.createElement('div');
+    let currentCart = document.querySelector('.shopify-section.section--cart-page');
+    if(currentCart.dataset.lastUpdate > time){
+      return;
+    }
+    let p = document.createElement('div')
+    p.innerHTML = cartData
+    p.querySelector('[id="cartJavascript"]').remove()
+    currentCart.innerHTML = p.querySelector('.shopify-section.section--cart-page').innerHTML;
+    currentCart.dataset.lastUpdate = time;
+    BoosterTheme.events.trigger('booster:content:update', {trigger: 'cart-page'})
+  }
+
+{% unless settings.ajaxType == "disabled" %}
+  cartPage.quantityHandler = (event, req)=>{
+    let res = BoosterTheme.cart.quantityHandler(event, req);
+  }
+
+  cartPage.updateQuantity = async (event)=>{
+    await BoosterTheme.cart.updateQuantity(event);
+    setTimeout(() => {window.location.reload()},10)
+  }
+{% else %}
+  cartPage.quantityHandler = (event, req)=>{
+    event.preventDefault();
+    let {target} = event;
+    let input = target.closest('.quantity--input').querySelector('.quantity--input__input');
+    let value = parseInt(input.value);
+    if(!req && value){
+      input.value = --value;
+    } else {
+      input.value = ++value;
+    }
+    cartPage.updateQuantity({target: input});
+  }
+
+  cartPage.updateQuantity = async (event)=>{
+    let {target} = event;
+    let key = target.dataset.variantId;
+    let inputs = target.closest('form').querySelectorAll(`[data-variant-id="${key}"]`);
+    for(let input of inputs){
+      input.value = target.value;
+    }
+  }
+{% endunless %}
+document.addEventListener('booster:cart:update', (e)=>{
+    
+})
+</script>
+<!-- This code enable to trigger the Chat button on Cart Page -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+     $("#column--57752646-338a-4232-98bd-34dcde34f4cb a").click(function(event) {
+         GorgiasChat.open(); return false;
+         event.preventDefault();
+     });
+  });
+</script>
+
+
+{% schema %}
+{
+"name": "Cart page",
+"class": "col-12 row max-width section--cart-page",
+"settings": [
+    {
+            "type": "header",
+            "content": "Help"
+        },
+        {
+        "type": "paragraph",
+        "content": "[Click here to follow an interactive Tutorial](https://vimeo.com/58187608)"
+        },
+{
+"type": "radio",
+"label": "Show discount in",
+"options": [
+{"value": "money", "label": "Money amount ($)"},
+{"value": "percent", "label": "Percent (%)"},
+{"value": "none", "label": "Don't show saved amount"}
+],
+"default": "money",
+"id": "discount"
+},
+{
+    "type": "header",
+    "content": "Featured products"
+},
+{
+    "type": "collection",
+    "label": "Featured collection",
+    "info": "This collection will be shown if there are no products in the cart",
+    "id": "featured"
+}
+],
+"blocks": [
+{
+"type": "cartField",
+"name": "Text field",
+"settings": [
+{
+"id": "required",
+"label": "This field is required",
+"type": "checkbox",
+"default": false
+},
+{
+"id": "label",
+"label": "Label",
+"default": "Additional field",
+"type": "text"
+}
+]
+}
+]
+}
+{% endschema %}

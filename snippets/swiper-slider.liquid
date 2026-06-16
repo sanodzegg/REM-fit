@@ -1,0 +1,162 @@
+{% comment %}<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>{% endcomment %}
+
+{% comment %}
+  <div class="swiper mySwiper customthumb-imhtpslider">
+    <div class="swiper-wrapper">
+      {% for i in (1..10) %}
+
+        {% assign product-name =  "product-name" | append: i  %}
+        {% assign product-handle ="product-handle" | append: i %}
+        {% assign product-image = 'product-image' | append: i %}
+        {% assign slider_product =  [template_name].metafields.slider[product-handle].value %}
+      {% if [template_name].metafields.slider[product-name].value != blank and  [template_name].metafields.slider[product-handle].value != blank and [template_name].metafields.slider[product-image].value != blank %}
+      <div class="swiper-slide">
+      <a class="tp-thumbimg" href="/products/{{  slider_product.handle }}">
+  		<div class="prod-thumbimg">{{ [template_name].metafields.slider[product-image].value | img_tag }} </div>
+
+        	{% if slider_product.compare_at_price_min > 0 and settings.tagSale %}
+            <span class="tag tag--sale">Save {{ slider_product.compare_at_price | minus: slider_product.price | times: 100 | divided_by: slider_product.compare_at_price }}%</span>
+          {% else %}
+        		<span class="sale-empty"></span>
+        	{% endif %}
+
+        <p>{{ [template_name].metafields.slider[product-name].value  }} </p>
+
+        </a>
+      </div>
+      	{% endif %}
+  {% endfor %}
+    </div>
+    <div class="swiper-scrollbar"></div>
+  </div>
+{% endcomment %}
+<div class="goods-container">
+<div class="goods">
+  <ul class="goods-list">
+    {% for i in (1..10) %}
+      {% assign product-name = 'product-name' | append: i %}
+      {% assign product-handle = 'product-handle' | append: i %}
+      {% assign product-image = 'product-image' | append: i %}
+      {% assign slider_product = [template_name].metafields.slider[product-handle].value %}
+      {% if [template_name].metafields.slider[product-name].value != blank
+        and [template_name].metafields.slider[product-handle].value != blank
+        and [template_name].metafields.slider[product-image].value != blank
+      %}
+        <li class="goods-item">
+          <a class="goods-link" href="/products/{{  slider_product.handle }}">
+            <div class="goods-imagewrap">
+              {{ [template_name].metafields.slider[product-image].value | img_url: 'grande' | img_tag }}
+            </div>
+            {% if slider_product.compare_at_price_min > 0 and settings.tagSale %}
+              <span class="tag tag--sale discount-label">
+                 {{ 'Save' | append: ' ' }}
+                {{-
+                  slider_product.compare_at_price
+                  | minus: slider_product.price
+                  | times: 100
+                  | divided_by: slider_product.compare_at_price
+                -}}
+                %</span
+              >
+            {% else %}
+              <span class="sale-empty"></span>
+            {% endif %}
+            <h3 class="goods-title">{{ [template_name].metafields.slider[product-name].value }}</h3>
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+</div>
+{% comment %}
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 4,
+      spaceBetween: 0,
+      loopFillGroupWithBlank: false,
+      scrollbar: {
+        el: ".swiper-scrollbar",
+        hide: true,
+      },
+        breakpoints: {
+         540: {
+        width: 540,
+        slidesPerView: 4,
+      },
+             300: {
+        width: 300,
+        slidesPerView: 3,
+      },
+        },
+    });
+  </script>
+{% endcomment %}
+
+<div class="goods desktop-view">
+  <ul class="goods-list">
+    {% for i in (1..10) %}
+      {% assign product-name = 'product-name' | append: i %}
+      {% assign product-handle = 'product-handle' | append: i %}
+      {% assign product-image = 'product-image' | append: i %}
+      {% assign product-desc = 'product-desc' | append: i %}
+      {% assign header_product = [template_name].metafields.header[product-handle].value %}
+      {% if [template_name].metafields.header[product-name].value != blank
+        and [template_name].metafields.header[product-handle].value != blank
+        and [template_name].metafields.header[product-image].value != blank
+      %}
+        <li class="goods-item">
+          <a class="goods-link" href="/products/{{  header_product.handle }}">
+            <div class="goods-imagewrap">
+              {{
+                [template_name].metafields.header[product-image].value
+                | img_url: 'grande'
+                | img_tag: 'Product Image', width: 1200, height: 800
+              }}
+            </div>
+          </a>
+          <div class="desktop-contitem">
+            <a class="desk-prod-title" href="/products/{{  header_product.handle }}">
+              {{ [template_name].metafields.header[product-name].value }}
+            </a>
+            <h4 class="desk-prod-metaf">{{ [template_name].metafields.header[product-desc].value }}</h4>
+            {% if header_product.compare_at_price %}
+              <span class="sale-tag-discount"
+                >From £{{ header_product.price | divided_by: 100.00 }} (
+                {{-
+                  header_product.compare_at_price
+                  | minus: header_product.price
+                  | times: 100
+                  | divided_by: header_product.compare_at_price
+                -}}
+                % OFF)</span
+              >
+            {% else %}
+              <span class="sale-tag-discount">From £{{ header_product.price | divided_by: 100.00 }} </span>
+            {% endif %}
+          </div>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% comment %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const goodsContainer = document.querySelector(".goods-container");
+  const stickyOffset = 100;
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > stickyOffset) {
+      goodsContainer.classList.add("sticky");
+    } else {
+      goodsContainer.classList.remove("sticky");
+    }
+  });
+});
+</script>
+{% endcomment %}

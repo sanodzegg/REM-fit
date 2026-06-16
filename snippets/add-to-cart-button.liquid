@@ -1,0 +1,173 @@
+{% assign button = button | default: 'addToCart' %}
+{% assign color = button | append: 'Color' %}
+{% assign color = settings[color] %}
+{% assign type = button | append: 'Type' %}
+{% assign type = settings[type] %}
+{%- assign icon = button | append: 'Icon' -%}
+{%- assign icon = settings[icon] -%}
+
+{% if price == 0 and settings.freeShipping %}
+  {% assign text = settings.freeShippingText %}
+{% else %}
+  {% if text == blank %}
+    {% assign text = 'general.buttons.add_to_cart' | t %}
+  {% endif %}
+{% endif %}
+
+{% if variant %}
+  {% unless quantity %}
+    {% assign quantity = 1 %}
+  {% endunless %}
+{% endif %}
+<script>
+  function removeSpan() {
+   document.querySelector('span[data-button-text]').style.color = 'transparent';
+  }
+</script>
+
+{% if template contains 'product' %}
+  {% assign current_day = 'now' | date: '%A' %}
+  {% assign current_datetime = 'now' | date: '%s' | plus: 0 %}
+  {% assign current_cutoff_datetime = 'now' | date: '%Y-%m-%d 12:00:00' | date: '%s' | plus: 0 %}
+  {% assign next_day_cutoff_datetime = current_cutoff_datetime | plus: 86400 %}
+  {% assign next_2day_cutoff_datetime = current_cutoff_datetime | plus: 172800 %}
+
+  {% case current_day %}
+    {% when 'Monday' %}
+      {% if current_datetime < current_cutoff_datetime %}
+        {% assign delivery_date_start = 1 %}
+        {% assign delivery_date_end = 3 %}
+        {% assign cutoff_datetime = current_cutoff_datetime %}
+      {% else %}
+        {% assign delivery_date_start = 2 %}
+        {% assign delivery_date_end = 4 %}
+        {% assign cutoff_datetime = next_day_cutoff_datetime %}
+      {% endif %}
+    {% when 'Tuesday' %}
+      {% if current_datetime < current_cutoff_datetime %}
+        {% assign delivery_date_start = 1 %}
+        {% assign delivery_date_end = 3 %}
+        {% assign cutoff_datetime = current_cutoff_datetime %}
+      {% else %}
+        {% assign delivery_date_start = 2 %}
+        {% assign delivery_date_end = 6 %}
+        {% assign cutoff_datetime = next_day_cutoff_datetime %}
+      {% endif %}
+    {% when 'Wednesday' %}
+      {% if current_datetime < current_cutoff_datetime %}
+        {% assign delivery_date_start = 1 %}
+        {% assign delivery_date_end = 5 %}
+        {% assign cutoff_datetime = current_cutoff_datetime %}
+      {% else %}
+        {% assign delivery_date_start = 2 %}
+        {% assign delivery_date_end = 6 %}
+        {% assign cutoff_datetime = next_day_cutoff_datetime %}
+      {% endif %}
+    {% when 'Thursday' %}
+      {% if current_datetime < current_cutoff_datetime %}
+        {% assign delivery_date_start = 1 %}
+        {% assign delivery_date_end = 5 %}
+        {% assign cutoff_datetime = current_cutoff_datetime %}
+      {% else %}
+        {% assign delivery_date_start = 4 %}
+        {% assign delivery_date_end = 6 %}
+        {% assign cutoff_datetime = next_day_cutoff_datetime %}
+      {% endif %}
+    {% when 'Friday' %}
+      {% if current_datetime < current_cutoff_datetime %}
+        {% assign delivery_date_start = 3 %}
+        {% assign delivery_date_end = 5 %}
+        {% assign cutoff_datetime = current_cutoff_datetime %}
+      {% else %}
+        {% assign delivery_date_start = 4 %}
+        {% assign delivery_date_end = 6 %}
+        {% assign cutoff_datetime = next_2day_cutoff_datetime %}
+      {% endif %}
+    {% when 'Saturday' %}
+      {% assign delivery_date_start = 3 %}
+      {% assign delivery_date_end = 5 %}
+      {% assign cutoff_datetime = next_2day_cutoff_datetime %}
+    {% when 'Sunday' %}
+      {% assign delivery_date_start = 2 %}
+      {% assign delivery_date_end = 4 %}
+      {% assign cutoff_datetime = next_day_cutoff_datetime %}
+  {% endcase %}
+
+  {% comment %} Calculate the time difference in seconds {% endcomment %}
+  {% assign time_difference_seconds = cutoff_datetime | minus: current_datetime %}
+
+  {% comment %} Convert seconds to hours and minutes {% endcomment %}
+  {% assign hours = time_difference_seconds | divided_by: 3600 %}
+  {% assign minutes_remainder = time_difference_seconds | modulo: 3600 %}
+  {% assign minutes = minutes_remainder | divided_by: 60 %}
+  {% assign seconds = minutes_remainder | modulo: 60 %}
+
+  {% assign start_add_day = delivery_date_start | times: 24 | times: 60 | times: 60 %}
+  {% assign delivery_date_start = current_datetime | plus: start_add_day | date: '%Y-%m-%d' %}
+
+  {% assign end_add_day = delivery_date_end | times: 24 | times: 60 | times: 60 %}
+  {% assign delivery_date_end = current_datetime | plus: end_add_day | date: '%Y-%m-%d' %}
+
+  <div class="base_style">
+    <div class="btn_circle_green"></div>
+    <p class="text_color_change">
+      Order in {{ hours }}h {{ minutes }}min
+      <span style="color:#167716;">
+        for <span class="text_bold">FREE*</span> Delivery from as soon as
+        {{ delivery_date_start | date: '%a, %b %d' }} -
+        {{ delivery_date_end | date: '%a, %b %d' }}
+      </span>
+    </p>
+  </div>
+{% endif %}
+<!-- Template contains Product -->
+<button
+  id="my-button"
+  data-buy-button="{{product.id}}"
+  data-original-text="{{-text-}}"
+  {{ disabled }}
+  class="
+    button button--{{-button}} button--{{-color}} {% if template.name == 'product'%} {% endif %}{% unless icon == 'none' %}button--icon{% endunless %}
+    {% unless type == 'default' -%}
+    button--{{-type}} button--{{-color-}}__{{-type}}
+    {%- else -%}
+    {% assign style = color | append: 'ButtonStyle' %}
+    button--{{-settings[style]}} button--{{-color-}}__{{-settings[style]}}
+    {%- endunless %} {{class-}}
+  "
+
+  {% unless disabled %}
+    {% if settings.ajaxType == 'disabled' %}
+      type="submit"
+    {% else %}
+      type="button"
+      {% if variant %}
+        onclick="document.querySelector('#my-button > span').style.fontSize = '0';BoosterTheme.cart.addToCartJSON(event, {items: [{id: {{variant}}, quantity: {{quantity}}}]}); this.classList.add('lds-dual-ring'); "
+      {% else %}
+        {% comment %}
+          onclick="document.querySelector('#my-button > span').style.fontSize = '0';BoosterTheme.cart.addToCart(event); this.classList.add('lds-dual-ring');"
+        {% endcomment %}
+        onclick="
+          document.querySelector('#my-button > span').style.fontSize = '0'; BoosterTheme.cart.addToCart(event); this.classList.add('lds-dual-ring');
+          setTimeout(function() {
+          this.classList.remove('lds-dual-ring');
+          document.querySelector('#my-button > span[data-button-text]').style.fontSize = '18px';
+          }.bind(this), 1000);
+        "
+      {% endif %}
+    {% endif %}
+  {% endunless -%}
+>
+  {% unless icon == 'none' %}
+    {% render 'get-icon' with icon as icon %}
+  {% endunless %}
+  <span class="add_cart" data-button-text>{{- text -}}</span>
+  
+  {% if product.metafields.custom.atc_button_text_for_desktop  %}
+    <span class="subtext desktop_text">{{ product.metafields.custom.atc_button_text_for_desktop }} </span>
+    {% endif %}
+  
+    {% if product.metafields.custom.atc_button_text_for_mobile  %}
+      <span class="subtext mobile_text">{{ product.metafields.custom.atc_button_text_for_mobile }}</span>
+      {% endif %}
+</button>

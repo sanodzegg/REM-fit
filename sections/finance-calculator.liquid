@@ -1,0 +1,245 @@
+<div class="finance-calculator">
+  <div class="container">
+    <h2>Try our Finance Calculator</h2>
+    <div class="fc-row">
+      <div class="fc-col-first">
+        <div class="fc-col-img">
+          <img
+            src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/REM-Fit_400_Curved.png?v=1748615370"
+            alt=""
+          >
+        </div>
+        <div class="fc-col-option calc_content_func">
+          <h3>REM-Fit 400 Hybrid Mattress</h3>
+          <form>
+            <span class="type">Size Name</span>
+            <p class="fc-price total_price">£0.0</p>
+            <label>Select Your Mattress Size:</label>
+            <select class="select_size" id="select_size">
+              <option disabled="" selected="">Select Size</option>
+              <option
+                data-title="Single"
+                data-id="43875550167286"
+                data-handle="premier-hybrid-mattress"
+                data-variant="Single"
+                class="js-calc__price"
+              >
+                Single - <br>
+                £399.99<br>
+              </option>
+              <option
+                data-title="Double"
+                data-id="43875549970678"
+                data-handle="premier-hybrid-mattress"
+                data-variant="Double"
+                class="js-calc__price"
+              >
+                Double - <br>
+                £549.99<br>
+              </option>
+              <option
+                data-title="King"
+                data-id="43875550003446"
+                data-handle="premier-hybrid-mattress"
+                data-variant="King"
+                class="js-calc__price"
+              >
+                King - <br>
+                £599.99<br>
+              </option>
+              <option
+                data-title="Super King"
+                data-id="43875550068982"
+                data-handle="premier-hybrid-mattress"
+                data-variant="Super King"
+                class="js-calc__price"
+              >
+                Super King - <br>
+                £699.99<br>
+              </option>
+            </select>
+            <label>Payment Plan Options Calculations:</label>
+            <div class="payment_option_content">
+              <div class="payment_option_item three_months" style="display: flex;">
+                <span>3</span>
+                <p>months</p>
+                <b>£199.67</b>
+              </div>
+              <div class="payment_option_item six_months" style="display: flex;">
+                <span>6</span>
+                <p>months</p>
+                <b>£99.83</b>
+              </div>
+              <div class="payment_option_item twelve_months" style="display: flex;">
+                <span>12</span>
+                <p>months</p>
+                <b>£49.92</b>
+              </div>
+              <div class="payment_option_item eighteen_months" style="display: none;">
+                <span>18</span>
+                <p>months</p>
+                <b>£33.28</b>
+              </div>
+              <div class="payment_option_item twentyfour_months" style="display: none;">
+                <span>24</span>
+                <p>months</p>
+                <b>£24.96</b>
+              </div>
+              <div class="payment_option_item thirtysix_months" style="display: none;">
+                <span>36</span>
+                <p>months</p>
+                <b>£16.64</b>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="fc-col-second">
+        <div class="example">
+          <h3>Finance Example</h3>
+          <div class="text_item purch_price">
+            <p>Purchase Price:</p>
+            <span>£0</span>
+          </div>
+          <div class="text_item credit">
+            <p>Amount of Credit:</p>
+            <span>£0</span>
+          </div>
+          <div class="text_item duration">
+            <p>Agreement Duration:</p>
+            <span>36 months</span>
+          </div>
+          <div class="text_item monthly">
+            <p>Monthly Payment:</p>
+            <span>£0.0</span>
+          </div>
+          <div class="text_item">
+            <p>Rate of Interest:</p>
+            <span>0% per annum</span>
+          </div>
+          <div class="text_item">
+            <p>Representative:</p>
+            <span>0% APR</span>
+          </div>
+
+          <ajax-cart-product-form>
+            <form
+              method="post"
+              action="/cart/add"
+              id="product_form_6824894726190"
+              accept-charset="UTF-8"
+              class="shopify-product-form"
+              enctype="multipart/form-data"
+            >
+              <input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓">
+              <input type="hidden" name="id" value="43875550167286">
+              <button type="submit" name="add" class="mattress_link">Buy now</button>
+              <input type="hidden" name="product-id" value="6824894726190"
+              ><input type="hidden" name="section-id" value="template--25310287200640__main">
+            </form>
+          </ajax-cart-product-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const calculatorWrap = document.querySelector('.calculator-box');
+    if (document.querySelector('.calculator-wrap .shg-box-content') && calculatorWrap) {
+      document.querySelector('.calculator-wrap .shg-box-content').innerHTML = calculatorWrap.innerHTML;
+      calculatorWrap.remove();
+    }
+
+    document.querySelectorAll('#select_size option:not(:disabled)').forEach(option => {
+      option.innerText = `${option.getAttribute('data-title')} - ${option.innerText}`
+    })
+
+    document.querySelector('#select_size').addEventListener('change', function () {
+        let selectedOption = this.options[this.selectedIndex];
+        let title = selectedOption.getAttribute('data-title');
+        let id = selectedOption.getAttribute('data-id');
+        let priceText = selectedOption.textContent;
+        let price = Number(priceText.substr(priceText.indexOf('£') + 1));  // Extract price from text
+
+        let threeMonth = price / 3
+        let sixMonth = price / 6
+        let twelveMonth = price / 12
+        let eighteenMonth = price / 18
+        let twentyfourMonth = price / 24
+        let thirtysixMonth = price / 36
+
+        // Handle the visibility based on price thresholds
+        document.querySelector('.three_months').style.display = price >= 150 ? 'flex' : 'none';
+        document.querySelector('.six_months').style.display = price >= 150 ? 'flex' : 'none';
+        document.querySelector('.twelve_months').style.display = price >= 150 ? 'flex' : 'none';
+        document.querySelector('.eighteen_months').style.display = price >= 600 ? 'flex' : 'none';
+        document.querySelector('.twentyfour_months').style.display = price >= 800 ? 'flex' : 'none';
+        document.querySelector('.thirtysix_months').style.display = price >= 1000 ? 'flex' : 'none';
+
+        let funcBlock = document.querySelector('.calc_content_func');
+        let exampleBlock = document.querySelector('.example');
+
+        funcBlock.querySelector('.type').textContent = title;
+        funcBlock.querySelector('.total_price').textContent = `£${price.toFixed(2)}`;
+        funcBlock.querySelector('.three_months').querySelector('b').textContent = `£${threeMonth.toFixed(2)}`;
+        funcBlock.querySelector('.six_months').querySelector('b').textContent = `£${sixMonth.toFixed(2)}`;
+        funcBlock.querySelector('.twelve_months').querySelector('b').textContent = `£${twelveMonth.toFixed(2)}`;
+        funcBlock.querySelector('.eighteen_months').querySelector('b').textContent = `£${eighteenMonth.toFixed(2)}`;
+        funcBlock.querySelector('.twentyfour_months').querySelector('b').textContent = `£${twentyfourMonth.toFixed(2)}`;
+        funcBlock.querySelector('.thirtysix_months').querySelector('b').textContent = `£${thirtysixMonth.toFixed(2)}`;
+
+        exampleBlock.querySelector('.purch_price').querySelector('span').textContent = `£${price.toFixed(2)}`;
+        exampleBlock.querySelector('.credit').querySelector('span').textContent = `£${price.toFixed(2)}`;
+
+        let formInput = exampleBlock.querySelector('.shopify-product-form input[name="id"]')
+        let formBtn = exampleBlock.querySelector('.shopify-product-form button.mattress_link')
+
+        if(formInput && id) {
+          formInput.value = id
+          formBtn.classList.remove('disabled')
+        } else {
+          formBtn.classList.add('disabled')
+        }
+
+        // Determine the maximum available finance option
+        let maxAvailableMonths = 0;
+        if (price >= 1000) {
+            maxAvailableMonths = 36;
+        } else if (price >= 800) {
+            maxAvailableMonths = 24;
+        } else if (price >= 600) {
+            maxAvailableMonths = 18;
+        } else if (price >= 150) {
+            maxAvailableMonths = 12;
+        } else {
+            maxAvailableMonths = 0; // No financing available
+        }
+
+        let monthlyPayment = maxAvailableMonths ? (price / maxAvailableMonths).toFixed(2) : '0.0';
+
+        exampleBlock.querySelector('.purch_price').querySelector('span').textContent = `£${price.toFixed(2)}`;
+        exampleBlock.querySelector('.monthly').querySelector('span').textContent = `£${monthlyPayment}`;
+        exampleBlock.querySelector('.example .duration').querySelector('span:nth-child(2)').textContent = `${maxAvailableMonths} months`;
+
+    })
+
+    document.querySelector('.splitit-example .shg-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('#splitit-example-wrapper').classList.add('shown');
+    });
+
+    document.querySelector('#splitit-example-wrapper').addEventListener('click', function(e) {
+        if (e.target.classList.contains('splitit-example-image')) return;
+        this.classList.remove('shown');
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Finance Calculator",
+  "settings": []
+}
+{% endschema %}

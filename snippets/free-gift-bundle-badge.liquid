@@ -1,0 +1,11 @@
+{% if settings.enable_freegift_banner_collection %}
+  <div
+    class="free-gift-bundle-badge"
+    bis_skin_checked="1"
+  >
+    {{ settings.text_freegift_banner_collection }}
+    {% comment %}
+      <b>🎁 Free items</b> included worth up to £247
+    {% endcomment %}
+  </div>
+{% endif %}

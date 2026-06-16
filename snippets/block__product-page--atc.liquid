@@ -1,0 +1,397 @@
+{% assign first_variant = '' %}
+{% for variant in product.variants %}
+  <div class="variant-metafields" style="display:none;">
+    {% if forloop.index == 1 %}
+      {% assign first_variant = variant.metafields.varia.delayed_delivery %}
+    {% endif %}
+    {% if variant.metafields.varia.delayed_delivery %}
+      <li id="{{ variant.id }}">{{ variant.metafields.varia.delayed_delivery }}</li>
+    {% endif %}
+  </div>
+{% endfor %}
+<input class="properties_note" id="properties_note" name="properties[Note]" type="hidden" value="{{ first_variant }}">
+
+<style>
+  .template--product .product__row--default .product__page--info .product__countdown--compact.gallery-countdown {display: none;}
+  @media screen and (max-width: 767px){
+  .template--product .product__row--default .product__page--info .product__countdown--compact.gallery-countdown {display: block;}
+  }
+</style>
+{% assign product_title = product.title | downcase %}
+{% unless product_title contains 'free gift' %}
+  <div
+    class="product__atc {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{%endif-%}"
+    {{ block.shopify_attributes }}
+  >
+    {% if template.suffix == 'pillows-template'
+      or template.suffix == '500-cool-pillow-template'
+      or template.suffix == 'protectors'
+      or template.suffix == 'snow-pillow-with-video'
+    %}
+      <div class="save-buy2">
+        {% assign discount_price = product.price | money_without_currency | times: 0.1 %}
+        <input
+          type="checkbox"
+          id="save-10"
+          name="save-10"
+          onchange="toggleQuantity()"
+          value="{{  product.variants.first.id }}"
+        >
+        <label for="save-10">Buy 2, Save Extra 10%, 3 - 15%, 4 - 20%</label>
+      </div>
+      <div class="buy-text">Quantity: Buy More, Save More</div>
+    {% endif %}
+
+    {% if product.available %}
+      <input
+        style="display: none;"
+        name="id"
+        data-bstr-variant-input="{{product.id}}"
+        value="{{product.selected_or_first_available_variant.id}}"
+      >
+      {% if template.suffix == 'pillows-template'
+        or template.suffix == '500-cool-pillow-template'
+        or template.suffix == 'protectors'
+      %}
+        <div class="pillow-quant">
+          <div class="quantity--input">
+            <button
+              class="quantity--input__button quantity--input__incr"
+              onclick="BoosterTheme.cart.quantityHandler(event, false, false)"
+            >
+              -
+            </button>
+            <!--  -->
+            <input class="quantity--input__input" value="1" data-qty-input type="number" name="quantity" min="1">
+            <!--  -->
+            <button
+              class="quantity--input__button quantity--input__decr"
+              onclick="BoosterTheme.cart.quantityHandler(event, true, false)"
+            >
+              +
+            </button>
+          </div>
+        </div>
+      {% endif %}
+      {% if template.suffix == '500-cool-pillow-template'
+        or template.suffix == 'pillows-template'
+        or template.suffix == 'snow-pillow-with-video'
+        or template.suffix == 'protectors'
+      %}
+        <div id="id_work_days">
+          <div class="qty-details">
+            <input type="radio" name="quantity" value="1" id="quantity-value1" checked>
+            <label for="quantity-value1">
+              <div class="qty-img">
+                <img src="{{ product.metafields.custom.pillow_quantity_1 | image_url }}" alt="Product Image">
+              </div>
+              <span class="qty-text"></span>
+            </label>
+          </div>
+          <div class="qty-details">
+            <input type="radio" name="quantity" value="2" id="quantity-value2">
+            <label for="quantity-value2">
+              <div class="qty-img">
+                <img src="{{ product.metafields.custom.pillow_quantity_2 | image_url }}" alt="Product Image">
+              </div>
+              <span class="qty-text"> Save 10% </span><span class="value-tag popular-tag">Most Popular</span>
+            </label>
+          </div>
+          <div class="qty-details">
+            <input type="radio" name="quantity" value="3" id="quantity-value3">
+            <label for="quantity-value3">
+              <div class="qty-img">
+                <img src="{{ product.metafields.custom.pillow_quantity_3 | image_url }}" alt="Product Image">
+              </div>
+              <span class="qty-text">Save 15%</span>
+            </label>
+          </div>
+          <div class="qty-details">
+            <input type="radio" name="quantity" value="4" id="quantity-value4">
+            <label for="quantity-value4">
+              <div class="qty-img">
+                <img src="{{ product.metafields.custom.pillow_quantity_4 | image_url }}" alt="Product Image">
+              </div>
+              <span class="qty-text">Save 20% </span><span class="value-tag bestvalue-tag">Best Value</span>
+            </label>
+          </div>
+        </div>
+        <span class="text-qty">Extra discount will be auto-applied at the cart</span>
+      {% endif %}
+
+      <div class="pdp-addtocart-but" id="slectsize-show">
+        {% render 'add-to-cart-button', type: 'secondary', price: product.price, product: product %}
+      </div>
+
+      {% if settings.dynamicCheckout %}
+        <div data-dynamic-button="{{product.id}}" class="col-12 no-gap checkout--dynamic">
+          {{ form | payment_button }}
+          {% comment %}
+            {% if additional_checkout_buttons %}
+                {{ content_for_additional_checkout_buttons }}
+            {% endif %}
+          {% endcomment %}
+        </div>
+      {% endif %}
+    {% else %}
+      {% render 'sold-out-button', disabled: 'disabled' %}
+    {% endif %}
+
+    {% if product.template_suffix == 'pillows-template'
+      or product.template_suffix == 'protectors'
+      or product.template_suffix == '500-cool-pillow-template'
+      or product.template_suffix == 'bed-frames'
+    %}
+      {% if product.metafields.custom.almost_sold_display_hide1 == true %}
+        <div class="next-delivery-block" style="margin:15px 0 0 0;">
+          <h3>New Stock Arriving – Be First in Line!</h3>
+          <div class="current-progress-date progress-date">
+            <label for="file"
+              ><span>{{ 'now' | date: '%b %d' }}, Today</span></label
+            >
+            <div class="progress">
+              <div class="bar" style="width:{{ product.metafields.custom.almost_sold_percentage_sold }}%"></div>
+              <div class="percent-container">
+                <p class="percent">{{ product.metafields.custom.almost_sold_percentage_sold }}% Sold</p>
+              </div>
+            </div>
+          </div>
+          <div class="next-progress-date progress-date">
+            <label for="file">
+              {% if product.metafields.custom.almost_sold_date_of_shipment %}
+                {{ product.metafields.custom.almost_sold_date_of_shipment }}
+              {% endif -%}
+            </label>
+            <div class="progress">
+              <div
+                class="stock-bar"
+                style="width: 0%;"
+                data-width="{{ product.metafields.custom.almost_new_stock_percentage_ }}"
+              ></div>
+              <div class="percent-container">
+                <p class="percent">{{ product.metafields.custom.almost_new_stock_percentage_ }}% New stock sold</p>
+              </div>
+              <!-- <div class="upcoming-progress">Upcoming</div> -->
+            </div>
+          </div>
+      {% endif %}
+    {% endif %}
+
+    {% if product.template_suffix == '' or product.template_suffix == 'natural-mattress' %}
+      <a
+        class="helptochoose"
+        href="javascript:void(0)"
+      >
+        Help Me Choose My Mattress
+      </a>
+    {% endif %}
+
+    <div class="qualify-section">
+      <a href="javascript:void(0)" onclick="gocertify.popup(); return false;">
+        <img
+          src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/discounts-icon.svg?v=1741678021"
+          alt=""
+          class="discount-img"
+        >
+        <span>Qualify for an EXTRA 8% off?</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          class="discount-arrow"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="h-6 w-6 absolute right-3 top-1/2 transform -translate-y-1/2 gc-icon"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
+        </svg>
+      </a>
+    </div>
+
+    {% if product.template_suffix == '' %}
+      {% if product.metafields.custom.almost_sold_display_hide1 == true %}
+        <div class="next-delivery-block">
+          <h3>New Stock Arriving – Be First in Line!</h3>
+          <div class="current-progress-date progress-date">
+            <label for="file"
+              ><span>{{ 'now' | date: '%b %d' }}</span></label
+            >
+            <div class="progress">
+              <div
+                class="bar"
+                style="width: 0%;"
+                data-width="{{ product.metafields.custom.almost_sold_percentage_sold }}"
+              ></div>
+              <div class="percent-container">
+                <p class="percent">{{ product.metafields.custom.almost_sold_percentage_sold }}% Sold</p>
+              </div>
+            </div>
+          </div>
+          <div class="next-progress-date progress-date">
+            <label for="file">
+              {% if product.metafields.custom.almost_sold_date_of_shipment %}
+                {{ product.metafields.custom.almost_sold_date_of_shipment }}
+              {% endif %}
+            </label>
+            <div class="progress">
+              <div
+                class="stock-bar"
+                style="width: 0%;"
+                data-width="{{ product.metafields.custom.almost_new_stock_percentage_ }}"
+              ></div>
+              <div class="percent-container">
+                <p class="percent">{{ product.metafields.custom.almost_new_stock_percentage_ }}% New stock sold</p>
+              </div>
+              <!-- <div class="upcoming-progress">New Stock</div> -->
+            </div>
+          </div>
+      {% endif %}
+    {% endif %}
+
+    {% comment %}
+      {% if template == 'product' %}
+            {% comment %}{% render 'frequently-buy-together' %}  {% endcomment %}
+
+          {% comment %}
+            {% render 'upsell-products', collection: section.settings.upsellCollection' %}
+          {% endcomment %}
+
+       {% endif %}
+    {% endcomment %}
+
+    {% comment %}
+      <div class="pdp-got-que-sec">
+           <div class="pdp-got-title">Got questions? We're here to help!</div>
+       		<div class="pdp-got-faq">
+               We already have answers to the majority of questions. Use this page to find needed information
+      		<a href="https://rem-fit-uk.myshopify.com/pages/faq" target="_blank">Open FAQ page</a>
+           </div>
+           <div class="pdp-got-chat">
+           Chat with our customer service specialists right now. We are ready to help you at anytime, 24/7!
+             <a href="javascript:void(0);" class="pdp-link-chat" onclick="LC_API.open_chat_window();return false;">Start a chat</a>
+           </div>
+       	</div>
+    {% endcomment %}
+  </div>
+{% endunless %}
+
+{% if block.settings.stickyATC == 'scroll' %}
+  <script>
+    document.addEventListener('booster:initialized', (e)=>{
+        let bt = event.detail.BoosterTheme
+        let sticky = document.querySelector('.sticky--mobile:not([data-bstr-initd])')
+        if(!sticky) return
+        sticky.dataset.bstrInitd = "true"
+        document.addEventListener('scroll', debounce(()=>{
+            if(window.innerWidth > 768) return
+            let patc = document.querySelector('.product__atc')
+            if(!patc) return
+            if(patc.offsetTop + patc.clientHeight < window.scrollY){
+                sticky.classList.remove('hide')
+            } else {
+                sticky.classList.add('hide')
+                sticky.classList.add('sticky--closed')
+            }
+        }, 150))
+    })
+  </script>
+{% elsif block.settings.stickyATC == 'always' %}
+  <style>
+    @media screen and (max-width: 767px){
+        .sticky--mobile {
+            display: block !important;
+        }
+    }
+  </style>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const bars = document.querySelectorAll('.bar, .stock-bar');
+
+      bars.forEach(bar => {
+          const percentage = bar.getAttribute('data-width');
+          setTimeout(() => {
+              bar.style.width = percentage + '%';
+          }, 2000); // 2000ms = 2 seconds delay
+      });
+  });
+</script>
+<script>
+  document.getElementById("id_work_days").addEventListener("click", function(event) {
+      // Check if the clicked element is an option
+      if (event.target.tagName === 'OPTION') {
+          let options = this.options;
+
+          // Remove the class 'selected' from all options
+          for (let i = 0; i < options.length; i++) {
+              options[i].classList.remove('selected');
+          }
+
+          // Add the 'selected' class to the clicked option
+          event.target.classList.add('selected');
+      }
+  });
+</script>
+<script>
+  let dicopriceElement = document.querySelector('#top-svg .dicoprice-aslow .dicoprice');
+
+  // Parse the price value by removing the £ symbol
+  let dicoprice = parseFloat(dicopriceElement.textContent.replace('£', ''));
+
+
+const radios = document.querySelectorAll('input[name="quantity"]');
+
+// Add event listener to each radio button
+radios.forEach(radio => {
+  radio.addEventListener('change', (event) => {
+    if (event.target.checked) {
+      const selectedValue = parseInt(event.target.value);
+
+      // Find the closest .qty-text span to the selected radio button
+      const qtyTextElement = event.target.closest('.qty-details').querySelector('.qty-text');
+      let discountPercent = 0;
+
+      // Check if qtyTextElement has content, extract discount percentage if available
+      if (qtyTextElement && qtyTextElement.textContent.includes("Save")) {
+        const qtyText = qtyTextElement.textContent;
+        discountPercent = parseInt(qtyText.replace('Save ', '').replace('%', '')) || 0;
+      }
+
+      // Calculate the discount amount per item as a fraction
+      const discountAmount = discountPercent / 100;
+
+      // Get the product price and remove the £ symbol
+      const prodPrice = '{{ product.selected_or_first_available_variant.price  }}';
+      const productPrice = prodPrice / 100;
+
+      // Calculate total discount amount and total price after discount
+      const totalDiscountAmount = productPrice * discountAmount;
+      const totalPrice = (productPrice - totalDiscountAmount).toFixed(2);
+
+      const totalDicoDiscountAmount = dicoprice * discountAmount;
+      const totalDicoPrice = Math.round(dicoprice - totalDicoDiscountAmount);
+
+      // Update the total price in all elements with the specified classes
+      const priceElements = document.querySelectorAll('.product__price.product__price--sale.jsPrice');
+      priceElements.forEach(priceElement => {
+        priceElement.textContent = `£${totalPrice}`;
+      });
+      const dicoPriceElements = document.querySelectorAll('#top-svg .dicoprice-aslow .dicoprice');
+      dicoPriceElements.forEach(dicoPriceElement => {
+        dicoPriceElement.textContent = `£${totalDicoPrice}`;
+      });
+
+     // dicopriceElement.textContent = `£${totalDicoPrice}`;
+
+      // console.log("Selected Quantity Value:", selectedValue);
+      // console.log("dicoprice Value:", dicoprice);
+      // console.log("Product Price per Item:", productPrice);
+      // console.log("Discount Percentage:", discountPercent + "%");
+      // console.log("Total Discount Amount:", totalDiscountAmount);
+      // console.log("Total Price after Discount:", totalPrice);
+      // console.log("Total Price after totalDicoPrice Discount:", totalDicoPrice);
+    }
+  });
+});
+</script>

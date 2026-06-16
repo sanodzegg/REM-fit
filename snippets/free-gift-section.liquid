@@ -1,0 +1,238 @@
+{% assign product_title = product.title | downcase %}
+{% unless product.tags contains 'clearance' %}
+{% if settings.enable_freegift_widget and product.id != 15990166520188%}
+  <div class="free-gift-sect">
+    <div class="free-gift-heading">
+      <p>{{ settings.gift_bundle_section_title }}</p>
+      <h4>Total Value: £<span id="gift_bundle_total"></span></h4>
+    </div>
+    <div class="free-gift-product">
+      <ul>
+        {% if settings.gift_bundle_product1_title != blank %}
+          <li>
+            <div class="free-gift-prod-img">
+              <img src="{{ settings.gift_bundle_product1_image | img_url: 'medium' }}" alt="Free Product">
+            </div>
+            <div class="free-gift-prod-title">
+              <div class="fgp-title">
+                <span class="bundle_gift_qty"> 2</span>
+                <span>x {{ settings.gift_bundle_product1_title }}</span>
+              </div>
+              <div class="fgp-price">
+                <span>Free </span>
+                <span class="fgp-currency">
+                  £<span class="memory_foam_pillow_price"
+                    ><del>{{ settings.gift_bundle_product1_price }}</del></span
+                  >
+                </span>
+              </div>
+            </div>
+          </li>
+        {% endif %}
+        {% if settings.gift_bundle_product2_title != blank %}
+          <li>
+            <div class="free-gift-prod-img">
+              <img src="{{ settings.gift_bundle_product2_image | img_url: 'medium' }}" alt="Free Product">
+            </div>
+            <div class="free-gift-prod-title">
+              <div class="fgp-title">
+                <span class="bundle_gift_qty"> 2</span>
+                <span>x {{ settings.gift_bundle_product2_title }}</span>
+              </div>
+              <div class="fgp-price">
+                <span>Free </span>
+                <span class="fgp-currency"
+                  >£<span class="cotton_pillow_protector_price"
+                    ><del>{{ settings.gift_bundle_product2_price }}</del></span
+                  >
+                </span>
+              </div>
+            </div>
+          </li>
+        {% endif %}
+        <li>
+          <div data-rebuy-id="205022" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+{% endif %}
+<script>
+  // Hide blank rebuy widget after 1 second delay
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      document.querySelectorAll('div[data-rebuy-id]').forEach(function(div) {
+        if (div.innerHTML.trim() === '') {
+          div.closest('li').style.display = 'none';
+        }
+      });
+    }, 5000); // 1000 milliseconds = 1 second
+  });
+</script>
+
+<script>
+// Function to insert HTML before the target element
+function insertHTMLBefore(targetElement) {
+    if (!targetElement) return;
+
+    const newElement = document.createElement("div");
+    newElement.className = "gift-bundle-mattress-protector-description";
+    newElement.innerHTML = `
+        <p class="gift-bundle-mattress-protector-description-line-1">
+            ✅ Extended sleep trial: 200 nights!
+        </p>
+        <p class="gift-bundle-mattress-protector-description-line-2">
+            <b>Important - Choose protector size</b>
+        </p>`;
+
+    targetElement.parentNode.insertBefore(newElement, targetElement);
+}
+
+// Function to replace £0.00 with "Free"
+function replaceZeroPrice() {
+    const zeroPriceEl = document.querySelector(".rebuy-addon__item-product-price .rebuy-money.sale span:last-child");
+    if (zeroPriceEl && zeroPriceEl.textContent.trim() === "£0.00") {
+        zeroPriceEl.textContent = "Free";
+    }
+}
+
+// Mutation Observer to watch for changes in the DOM
+const observer = new MutationObserver((mutations, obs) => {
+    const targetElement = document.querySelector(".rebuy-addon__item-product-options");
+
+    if (targetElement) {
+        insertHTMLBefore(targetElement);
+        replaceZeroPrice();
+        console.log("HTML inserted and price replaced. Stopping observer.");
+        obs.disconnect(); // Stop observing after the tasks are done
+    }
+});
+
+// Start observing the document for added nodes
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include jQuery if not already present -->
+{% assign min_price = product.selected_or_first_available_variant.price | times: 0.01 %}
+{% assign discount_rate = settings.percentage_discount | times: 0.01 %}
+{% assign disc_price = product.selected_or_first_available_variant.price | times: discount_rate | times: 0.01 %}
+{% assign net_price = min_price | minus: disc_price %}
+{% assign net_price =  net_price | round: 2 %}
+{% assign gift_bundle_product1_title = settings.gift_bundle_product1_title | default: '' | escape %}
+{% assign gift_bundle_product2_title = settings.gift_bundle_product2_title | default: '' | escape %}
+
+<script>
+{% if gift_bundle_product1_title %}
+    var gift_bundle_product1_title = {{ gift_bundle_product1_title | json }};
+  {% else %}
+    var gift_bundle_product1_title = "";
+  {% endif %}
+
+  {% if gift_bundle_product2_title %}
+    var gift_bundle_product2_title = {{ gift_bundle_product2_title | json }};
+  {% else %}
+    var gift_bundle_product2_title = "";
+  {% endif %}
+
+  $(document).ready(function () {
+
+  function updateTotalPrice(updateQuantity = true) {
+    let quantity = 2; // Default fallback
+   let dynamicDiscountRate = {{ discount_rate }};
+
+    if (updateQuantity) {
+      let selectedValue = $('select#size_dropdown').val()?.trim() || "";
+      quantity = selectedValue.includes("Single") ? 1 : 2;
+      $(".bundle_gift_qty").data("quantity", quantity);
+      $(".bundle_gift_qty").text(quantity);
+    } else {
+      quantity = $(".bundle_gift_qty").data("quantity") || 2;
+    }
+
+    let totalMemoryFoam = 0;
+    if (gift_bundle_product1_title) {
+      var memoryFoamUnitPrice = {{ settings.gift_bundle_product1_price | default: 0 }};
+      totalMemoryFoam = quantity * memoryFoamUnitPrice;
+      $(".memory_foam_pillow_price").text(totalMemoryFoam.toFixed(2));
+    }
+
+    let totalCottonProtector = 0;
+    if (gift_bundle_product2_title) {
+      var cottonProtectorUnitPrice = {{ settings.gift_bundle_product2_price | default: 0 }};
+      totalCottonProtector = quantity * cottonProtectorUnitPrice;
+      $(".cotton_pillow_protector_price").text(totalCottonProtector.toFixed(2));
+    }
+
+    let additionalPrice = 0;
+    const rebuyPriceEl = $(".rebuy-addon__item-product-price .rebuy-money.compare-at span:last-child");
+    if (rebuyPriceEl.length) {
+      const priceText = rebuyPriceEl.text().trim();
+      additionalPrice = parseFloat(priceText.replace(/[^\d.-]+/g, "")) || 0;
+    }
+
+    const totalPrice = totalMemoryFoam + totalCottonProtector + additionalPrice;
+
+    $("#gift_bundle_total").text(totalPrice.toFixed(2));
+    let productPrice = $('#prod-price').text().replace('£', '').replace(/[^0-9.]/g, '');
+    productPrice = parseFloat(productPrice) || 0;
+    
+    let compProdPrice = $('#comp-prod-price').text().replace('£', '').replace(/[^0-9.]/g, '');
+    compProdPrice = parseFloat(compProdPrice) || 0;
+     // console.log('compProdPrice'+compProdPrice);
+
+    let discountedPrice = productPrice * (1 - dynamicDiscountRate);
+     // console.log('discountedPrice'+discountedPrice);
+
+    let discountedTotalPrice;
+    {% if settings.enable_discount_widget %}
+      //let dynamicPercentOfCompProdPrice = compProdPrice * dynamicDiscountRate;
+      let dynamicPercentOfCompProdPrice = compProdPrice - discountedPrice;
+
+      discountedTotalPrice = totalPrice + dynamicPercentOfCompProdPrice;
+
+    {% else %}
+      discountedTotalPrice = totalPrice + compProdPrice - productPrice;
+    {% endif %}
+
+    $(".total_discounted_amount").html('').append(Math.ceil(discountedTotalPrice));
+
+    if ($(".free-gift-product").length) {
+      $(".free-gift-product").find(".bundle-total-price").remove();
+      //$(".free-gift-product").append(`<div class="bundle-total-price">Bundle Total: £${Math.ceil(discountedTotalPrice)}</div>`);
+    }
+  }
+
+  // Utility: wait for multiple elements
+  function waitForAllElements(selectors, callback) {
+    const observer = new MutationObserver(() => {
+      const allExist = selectors.every(sel => $(sel).length > 0);
+      if (allExist) {
+        callback();
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Events
+  $('select#size_dropdown').change(() => updateTotalPrice(true));
+  $(document).on("change", "select.rebuy-select", () => updateTotalPrice(false));
+
+  // 🔄 Wait until ALL required elements are ready before first calculation
+  waitForAllElements(
+    [
+      "#prod-price", // main product price
+      ".rebuy-addon__item-product-price .rebuy-money.compare-at span:last-child", // rebuy price
+      ".free-gift-product" // free gift
+    ],
+    () => updateTotalPrice(false)
+  );
+});
+
+</script>
+  {% endunless %}
