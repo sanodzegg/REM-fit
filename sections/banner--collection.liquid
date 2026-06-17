@@ -35,14 +35,6 @@ endif %}
     z-index: 0;
 }
 {% endif %}
-
-#toggle-{{-section.id}}:checked + .description--collapse {
-  display: block;
-}
-
-#toggle-{{-section.id}}:checked ~ .readMore__toggle::after {
-  content: ' less';
-}
 </style>
 
 {% if template.name == 'product' or template.name == 'collection' %} 
@@ -68,14 +60,23 @@ endif %}
     <div class="col-12 unflex section__row layout__content {{section.settings.horizontalAlignment}}">
       {% if section.settings.showTitle %}<h1 class="h-reset font__size--{{section.settings.fontSize}}">{{ collection.title }} {% if section.settings.showNumber %}(<span class="collection__total-items">{{collection.products_count}}</span>){% endif %}</h1>{% endif %}
       {% if section.settings.showDescription %}
-        <input type="checkbox" style="display: none;" id="toggle-{{-section.id}}">
-        <div class="collection__description {% if section.settings.truncateReadMore %}description--collapse{% endif %} ">
-          {% if section.settings.truncateReadMore == false and section.settings.truncateDesc > 0 %}
-            {{collection.description | truncate: section.settings.truncateDesc, '...'}}
-          {% else %}
-           {{collection.description}}
-          {% endif %}
-        </div>{% if collection.description != blank and section.settings.truncateReadMore %}<label class="readMore__toggle" for="toggle-{{-section.id}}">Read</label>{% endif %}
+        {% if section.settings.truncateReadMore %}
+          <div class="collection__description">
+            <div class="read-more-wrapper">
+              <div class="read-more-content">{{ collection.description }}</div>
+              <div class="read-more-fade"></div>
+              <button type="button" class="read-more-btn" aria-expanded="false">Read more</button>
+            </div>
+          </div>
+        {% else %}
+          <div class="collection__description">
+            {% if section.settings.truncateDesc > 0 %}
+              {{ collection.description | truncate: section.settings.truncateDesc, '...' }}
+            {% else %}
+              {{ collection.description }}
+            {% endif %}
+          </div>
+        {% endif %}
       {% endif %}
     </div>
   </div>
@@ -90,18 +91,93 @@ endif %}
       {% endif %} 
       {% if section.settings.showTitle %}<h1 class="h-reset font__size--{{section.settings.fontSize}}">{{ collection.title }} {% if section.settings.showNumber %}(<span class="collection__total-items">{{collection.products_count}}</span>){% endif %}</h1>{% endif %}
       {% if section.settings.showDescription %}
-        <input type="checkbox" style="display: none;" id="toggle-{{-section.id}}">
-        <div class="collection__description {% if section.settings.truncateReadMore %}description--collapse{% endif %} ">
-          {% if section.settings.truncateReadMore == false and section.settings.truncateDesc > 0 %}
-            {{collection.description | truncate: section.settings.truncateDesc, '...'}}
-          {% else %}
-           {{collection.description}}
-          {% endif %}
-        </div>{% if collection.description != blank and section.settings.truncateReadMore %}<label class="readMore__toggle" for="toggle-{{-section.id}}">Read</label>{% endif %}
-      {% endif %}  
+        {% if section.settings.truncateReadMore %}
+          <div class="collection__description">
+            <div class="read-more-wrapper">
+              <div class="read-more-content">{{ collection.description }}</div>
+              <div class="read-more-fade"></div>
+              <button type="button" class="read-more-btn" aria-expanded="false">Read more</button>
+            </div>
+          </div>
+        {% else %}
+          <div class="collection__description">
+            {% if section.settings.truncateDesc > 0 %}
+              {{ collection.description | truncate: section.settings.truncateDesc, '...' }}
+            {% else %}
+              {{ collection.description }}
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endif %}
     </div>
   </div>
 {% endif %}
+
+<style>
+  #section-{{ section.id }} .read-more-wrapper { position: relative; }
+  #section-{{ section.id }} .read-more-content {
+    max-height: 80px;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  #section-{{ section.id }} .read-more-content.expanded { max-height: 2000px; }
+  #section-{{ section.id }} .read-more-fade {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, {{ section.settings.fillColor }});
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  #section-{{ section.id }} .read-more-fade.hidden { opacity: 0; }
+  #section-{{ section.id }} .read-more-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 0;
+    text-decoration: underline;
+    font-size: inherit;
+  }
+  #section-{{ section.id }} .read-more-btn:hover { opacity: 0.7; }
+</style>
+
+<script>
+  (function () {
+    var MAX = 80;
+    var wrapper = document.querySelector('#section-{{ section.id }} .read-more-wrapper');
+    if (!wrapper || wrapper.dataset.rmReady) return;
+    wrapper.dataset.rmReady = '1';
+
+
+    var content = wrapper.querySelector('.read-more-content');
+    var btn = wrapper.querySelector('.read-more-btn');
+    var fade = wrapper.querySelector('.read-more-fade');
+
+    if (!content || !btn || !fade) return;
+
+    if (content.scrollHeight <= MAX) {
+      btn.style.display = 'none';
+      fade.style.display = 'none';
+      content.style.maxHeight = 'none';
+      return;
+    }
+
+    btn.addEventListener('click', function (e) {
+      // product-list.liquid registers a document-level delegated click
+      // handler on .read-more-btn. Stop the event here so that handler
+      // doesn't re-toggle .expanded and cancel out this click.
+      e.stopPropagation();
+      var expanded = content.classList.toggle('expanded');
+      fade.classList.toggle('hidden', expanded);
+      btn.textContent = expanded ? 'Read less' : 'Read more';
+      btn.setAttribute('aria-expanded', expanded);
+    });
+  })();
+</script>
 
 {% schema %}
 {

@@ -1,1 +1,504 @@
-{"wrapper":"div.row.row--product-list","sections":{"breadcrumbs":{"type":"breadcrumbs","settings":{}},"banner":{"type":"banner--collection","settings":{"layout":"default","height":0,"horizontalAlignment":"center","verticalAlignment":"bottom","showTitle":true,"showNumber":false,"fontSize":"big","showDescription":true,"truncateReadMore":false,"truncateDesc":0,"contentColor":"rgba(0,0,0,0)","fillColor":"#ffffff","useCollectionImage":false,"overlayOpacity":0,"overlayColor":"#000000"}},"ss_featured_collection_17_YjNmJx":{"type":"ss-featured-collection-17","blocks":{"product_JMGWUP":{"type":"product","settings":{"product":"rem-fit-500-cool-gel-pillow","badge":"","title":"500 Cool Gel Pillow","details":"<p>• Good Housekeeping Approved<br\/>• Supports correct spinal alignment<br\/>• Cool gel-infused memory foam<br\/>• Ultra-light, stretchy fabric<br\/>• Removable, washable cover <\/p>","url":"shopify:\/\/products\/rem-fit-500-cool-gel-pillow"}},"product_VndpFB":{"type":"product","settings":{"product":"rem-fit-deluxe-pocket-sprung-pillow","badge":"","title":"Pocket Sprung Pillow","details":"<p>• 60 individual pocket springs<br\/>• Soft white fibre filling<br\/>• Ultra responsive feel <br\/>• Breathable mesh boarder<br\/>• Ideal for side & back sleepers<\/p>","url":"shopify:\/\/products\/rem-fit-deluxe-pocket-sprung-pillow"}},"product_CctJLM":{"type":"product","settings":{"product":"rem-fit-bamboo-charcoal-pillow-choice-of-depths","badge":"","title":"Bamboo Charcoal Pillow","details":"<p>• Bamboo charcoal infused memory foam technology<br\/>• Naturally hypoallergenic<br\/>• Regulates temperature, moisture<br\/>• Dust mite resistant<\/p>","url":"shopify:\/\/products\/rem-fit-bamboo-charcoal-pillow-choice-of-depths"}},"product_PKbRAX":{"type":"product","settings":{"product":"400-memory-foam-crumbed-pillow","badge":"","title":"Memory Foam Pillow","details":"<p>• Aids correct spinal alignment<br\/>• Memory foam crumbs<br\/>• Stay dry and cool with Re-Ax® fibres <br\/>• Absorb excess heat & wick sweat away  <br\/>• Ultra-light, stretchy, durable fabric<br\/><\/p>","url":"shopify:\/\/products\/400-memory-foam-crumbed-pillow"}},"product_yyzi96":{"type":"product","settings":{"product":"rem-fit-snow-pillow","badge":"","title":"Snow Pillow","details":"<p>• Nordic chill fabric<br\/>• Wick away moisture & heat<br\/>• Dissipates heat 10x faster than cotton<br\/>• Cools even through a pillow case <br\/>• Premium Visco memory foam filling<\/p>","url":"shopify:\/\/products\/rem-fit-snow-pillow"}}},"block_order":["product_JMGWUP","product_VndpFB","product_CctJLM","product_PKbRAX","product_yyzi96"],"custom_css":[".custom-featured-collections .free-gift-bundle-badge,.custom-featured-collections .coupon-discount-price,.custom-featured-collections span.saving-badge a,.custom-featured-collections .dicoprice-aslow {display: none;}"],"name":"SS - Featured collection #17","settings":{"heading":"","heading_custom":false,"heading_font":"josefin_sans_n4","heading_size":42,"heading_size_mobile":26,"heading_height":130,"heading_align":"left","heading_align_mobile":"left","arrow_size":36,"arrow_size_mobile":30,"arrow_icon_size":8,"arrow_icon_size_mobile":6,"arrow_border_thickness":1,"arrow_radius":100,"arrow_hover_effect":"color","arrow_show_desktop":true,"arrow_show_mobile":true,"collection":"","collection_show":6,"slider_view":3,"slider_view_mobile":1.2,"slider_mt":8,"slider_mt_mobile":8,"slide_border_thickness":1,"slide_radius":8,"slide_shadow":true,"image_ratio":"square","image_ratio_mobile":"square","show_badge":true,"badge_custom":false,"badge_font":"josefin_sans_n4","badge_size":13,"badge_size_mobile":10,"badge_height":100,"badge_padding_horizontal":12,"badge_padding_horizontal_mobile":12,"badge_padding_vertical":6,"badge_padding_vertical_mobile":6,"badge_radius":100,"badge_border_thickness":0,"content_padding_horizontal":16,"content_padding_horizontal_mobile":24,"content_padding_vertical":16,"content_padding_vertical_mobile":20,"content_align":"left","content_align_mobile":"left","title_custom":false,"title_font":"josefin_sans_n4","title_size":16,"title_size_mobile":14,"title_height":120,"price_custom":false,"price_font":"josefin_sans_n4","price_size":16,"price_size_mobile":18,"price_height":130,"price_mt":12,"price_mt_mobile":12,"price_compare":true,"text_custom":false,"text_font":"josefin_sans_n4","text_size":14,"text_size_mobile":14,"text_height":140,"text_mt":12,"text_mt_mobile":12,"text_max_length":0,"product_button_text":"Shop now","product_button_custom":false,"product_button_font":"josefin_sans_n4","product_button_size":16,"product_button_size_mobile":16,"product_button_height":100,"product_button_padding_horizontal":12,"product_button_padding_horizontal_mobile":12,"product_button_padding_vertical":14,"product_button_padding_vertical_mobile":14,"product_button_radius":8,"product_button_border_thickness":1,"product_button_mt":16,"product_button_mt_mobile":10,"product_button_style":"non_outline","shipping_text":"","shipping_text_custom":false,"shipping_text_font":"josefin_sans_n4","shipping_text_size":12,"shipping_text_size_mobile":9,"shipping_text_height":150,"shipping_text_mt":20,"shipping_text_mt_mobile":14,"shipping_text_align":"center","shipping_text_align_mobile":"center","button":"","button_url":"","button_custom":false,"button_font":"josefin_sans_n4","button_size":13,"button_size_mobile":13,"button_height":100,"button_padding_horizontal":32,"button_padding_horizontal_mobile":32,"button_padding_vertical":14,"button_padding_vertical_mobile":10,"button_radius":6,"button_border_thickness":1,"button_mt":12,"button_mt_mobile":8,"button_style":"outline","arrow_color":"#121212","arrow_hover_color":"#ffffff","arrow_bg_color":"#ffffff","arrow_bg_hover_color":"#121212","arrow_border_color":"#121212","arrow_border_hover_color":"#121212","title_color":"#121212","price_color":"#121212","price_original_color":"#afafaf","text_color":"#121212","shipping_text_color":"#121212","slide_bg_color":"#ffffff","slide_border_color":"#121212","badge_color":"#121212","badge_bg_color":"#ffffff","badge_border_color":"#121212","product_button_color":"#ffffff","product_button_hover_color":"#3f2155","product_button_bg_color":"#3f2155","product_button_bg_hover_color":"#3f2155","product_button_border_color":"#121212","product_button_border_hover_color":"#121212","button_color":"#121212","button_hover_color":"#ffffff","button_bg_color":"#ffffff","button_bg_hover_color":"#121212","button_border_color":"#121212","button_border_hover_color":"#121212","heading_color":"#121212","background_color":"#ffffff","background_gradient":"","border_color":"#121212","margin_top":0,"margin_bottom":0,"margin_horizontal":0,"margin_horizontal_mobile":0,"padding_top":36,"padding_bottom":36,"padding_horizontal":5,"padding_horizontal_mobile":1,"full_width":false,"content_width":1200,"border_thickness":0,"section_radius":0,"lazy":true}},"1650360900d1a1729d":{"type":"section__cta","blocks":{"1650360900e0a3de53-2":{"type":"button","settings":{"fullWidth":true,"text":"Help me choose the right mattress","url":"","icon":"","iconPosition":"icon--left","wideButton":false,"buttonStyle":"primary","buttonType":"default","fontSize":"base","fontFamily":"base","animation":"none","animationDuration":1000,"animationInfinite":true}}},"block_order":["1650360900e0a3de53-2"],"disabled":true,"settings":{"displayFor":"display--both","layout":"default","nomargin":false,"scopedCSS":"","height":0,"padding":0,"lineMargin":0,"backgroundColor":"#ffffff","backgroundPosition":"middle","backgroundFilter":"none","backdropIntensity":50,"parallax":false,"backgroundPattern":false,"overlayOpacity":0,"overlayColor":"#000000","contentColor":"rgba(0,0,0,0)","horizontalAlignment":"center","verticalAlignment":"middle","maxContentWidth":100,"heading":"","headingColor":"rgba(0,0,0,0)","subheading":"","subheadingColor":"rgba(0,0,0,0)","subheadingPosition":"above","headingAlignment":"center"}},"filters":{"type":"product-list__filters","blocks":{"9372ddb8-d07d-4023-be9f-ea4f02c073e5":{"type":"collectionList","settings":{"expanded":true,"name":"Collections","customList":""}}},"block_order":["9372ddb8-d07d-4023-be9f-ea4f02c073e5"],"settings":{"filter":false}},"content":{"type":"product-list","settings":{"cardDesktop":"default","cardsPerPage":15}},"banner-bottom":{"type":"banner--collection__desc","settings":{"enabled":false,"layout":"default","height":180,"horizontalAlignment":"center","verticalAlignment":"middle","showTitle":false,"showNumber":true,"fontSize":"medium","showDescription":true,"truncateReadMore":true,"truncateDesc":0,"contentColor":"rgba(0,0,0,0)","fillColor":"rgba(0,0,0,0)","useCollectionImage":false,"overlayOpacity":0,"overlayColor":"#000000"}},"1650364182a2550802":{"type":"section__columns","blocks":{"29004581-5692-4d34-934c-c81a19be6472":{"type":"columnImage","settings":{"image":"shopify:\/\/shop_images\/Sleep_Back.gif","imageSize":75,"heading":"","content":"","buttonText":"","buttonURL":"","openTab":false,"buttonStyle":"secondary","buttonType":"filled"}},"1d96c511-403f-4b1e-b529-f4e53fb53854":{"type":"columnImage","settings":{"image":"shopify:\/\/shop_images\/Sleep_Front.gif","imageSize":75,"heading":"","content":"","buttonText":"","buttonURL":"","openTab":false,"buttonStyle":"secondary","buttonType":"filled"}},"630c510c-c600-4009-baae-f3f334bfd7d0":{"type":"columnImage","settings":{"image":"shopify:\/\/shop_images\/Sleep_Side.gif","imageSize":75,"heading":"","content":"","buttonText":"","buttonURL":"","openTab":false,"buttonStyle":"secondary","buttonType":"filled"}}},"block_order":["29004581-5692-4d34-934c-c81a19be6472","1d96c511-403f-4b1e-b529-f4e53fb53854","630c510c-c600-4009-baae-f3f334bfd7d0"],"settings":{"displayFor":"display--both","layout":"default","nomargin":false,"scopedCSS":"","customclass":"","customID":"","height":0,"padding":20,"lineMargin":0,"backgroundColor":"rgba(0,0,0,0)","backgroundPosition":"middle","backgroundFilter":"none","backdropIntensity":50,"parallax":false,"backgroundPattern":false,"overlayOpacity":0,"overlayColor":"#000000","contentColor":"rgba(0,0,0,0)","horizontalAlignment":"center","verticalAlignment":"middle","heading":"Perfect for any sleeping position","headingColor":"rgba(0,0,0,0)","subheading":"REM-Fit pillows are designed to give maximum support and comfort in any sleeping position.","subheadingColor":"rgba(0,0,0,0)","subheadingPosition":"below","headingAlignment":"center","colHeight":0,"colGap":0,"textAlign":"center","contentAlign":"top","colCount":"col-md-4"}},"1650364220784a3237":{"type":"section__image-text","blocks":{"1650364220fad79be6-0":{"type":"title","settings":{"fullWidth":true,"content":"Re-ax® Technology - Sleep Cool","textColor":"rgba(0,0,0,0)","fontFamily":"title","fontSize":"big"}},"1650364220fad79be6-1":{"type":"richText","settings":{"fullWidth":true,"maxBWidth":100,"content":"<p>Stay dry and cool with Re-ax® fibres that wick sweat away from the body while you sleep. <\/p><p><\/p><p>The machine-washable outer cover is constructed from ultra-light, stretchy, durable fabric which regulates temperature and encourages the passage of moisture and air. <\/p>","detectLists":true,"textColor":"rgba(0,0,0,0)","fontFamily":"base","fontSize":"base"}}},"block_order":["1650364220fad79be6-0","1650364220fad79be6-1"],"settings":{"displayFor":"display--both","layout":"default","nomargin":true,"scopedCSS":"","customID":"","height":0,"padding":20,"lineMargin":20,"backgroundColor":"#6ecff3","backgroundPosition":"middle","backgroundFilter":"none","backdropIntensity":50,"parallax":false,"backgroundPattern":false,"overlayOpacity":0,"overlayColor":"#000000","contentColor":"#ffffff","horizontalAlignment":"start","verticalAlignment":"middle","imagePosition":"left","imageWidth":"6","image":"shopify:\/\/shop_images\/RE-AX-LOGO-NEW.png","imageOverlayOpacity":0,"imageOverlayColor":"#000000"}}},"order":["breadcrumbs","banner","ss_featured_collection_17_YjNmJx","1650360900d1a1729d","filters","content","banner-bottom","1650364182a2550802","1650364220784a3237"]}
+{
+    "wrapper": "div.row.row--product-list",
+    "sections": {
+        "breadcrumbs": {
+            "type": "breadcrumbs",
+            "settings": {}
+        },
+        "banner": {
+            "type": "banner--collection",
+            "settings": {
+                "layout": "default",
+                "height": 0,
+                "horizontalAlignment": "center",
+                "verticalAlignment": "bottom",
+                "showTitle": true,
+                "showNumber": false,
+                "fontSize": "big",
+                "showDescription": true,
+                "truncateReadMore": true,
+                "truncateDesc": 0,
+                "contentColor": "rgba(0,0,0,0)",
+                "fillColor": "#ffffff",
+                "useCollectionImage": false,
+                "overlayOpacity": 0,
+                "overlayColor": "#000000"
+            }
+        },
+        "ss_featured_collection_17_YjNmJx": {
+            "type": "ss-featured-collection-17",
+            "blocks": {
+                "product_JMGWUP": {
+                    "type": "product",
+                    "settings": {
+                        "product": "rem-fit-500-cool-gel-pillow",
+                        "badge": "",
+                        "title": "500 Cool Gel Pillow",
+                        "details": "<p>• Good Housekeeping Approved<br\/>• Supports correct spinal alignment<br\/>• Cool gel-infused memory foam<br\/>• Ultra-light, stretchy fabric<br\/>• Removable, washable cover <\/p>",
+                        "url": "shopify:\/\/products\/rem-fit-500-cool-gel-pillow"
+                    }
+                },
+                "product_VndpFB": {
+                    "type": "product",
+                    "settings": {
+                        "product": "rem-fit-deluxe-pocket-sprung-pillow",
+                        "badge": "",
+                        "title": "Pocket Sprung Pillow",
+                        "details": "<p>• 60 individual pocket springs<br\/>• Soft white fibre filling<br\/>• Ultra responsive feel <br\/>• Breathable mesh boarder<br\/>• Ideal for side & back sleepers<\/p>",
+                        "url": "shopify:\/\/products\/rem-fit-deluxe-pocket-sprung-pillow"
+                    }
+                },
+                "product_CctJLM": {
+                    "type": "product",
+                    "settings": {
+                        "product": "rem-fit-bamboo-charcoal-pillow-choice-of-depths",
+                        "badge": "",
+                        "title": "Bamboo Charcoal Pillow",
+                        "details": "<p>• Bamboo charcoal infused memory foam technology<br\/>• Naturally hypoallergenic<br\/>• Regulates temperature, moisture<br\/>• Dust mite resistant<\/p>",
+                        "url": "shopify:\/\/products\/rem-fit-bamboo-charcoal-pillow-choice-of-depths"
+                    }
+                },
+                "product_PKbRAX": {
+                    "type": "product",
+                    "settings": {
+                        "product": "400-memory-foam-crumbed-pillow",
+                        "badge": "",
+                        "title": "Memory Foam Pillow",
+                        "details": "<p>• Aids correct spinal alignment<br\/>• Memory foam crumbs<br\/>• Stay dry and cool with Re-Ax® fibres <br\/>• Absorb excess heat & wick sweat away  <br\/>• Ultra-light, stretchy, durable fabric<br\/><\/p>",
+                        "url": "shopify:\/\/products\/400-memory-foam-crumbed-pillow"
+                    }
+                },
+                "product_yyzi96": {
+                    "type": "product",
+                    "settings": {
+                        "product": "rem-fit-snow-pillow",
+                        "badge": "",
+                        "title": "Snow Pillow",
+                        "details": "<p>• Nordic chill fabric<br\/>• Wick away moisture & heat<br\/>• Dissipates heat 10x faster than cotton<br\/>• Cools even through a pillow case <br\/>• Premium Visco memory foam filling<\/p>",
+                        "url": "shopify:\/\/products\/rem-fit-snow-pillow"
+                    }
+                }
+            },
+            "block_order": [
+                "product_JMGWUP",
+                "product_VndpFB",
+                "product_CctJLM",
+                "product_PKbRAX",
+                "product_yyzi96"
+            ],
+            "custom_css": [
+                ".custom-featured-collections .free-gift-bundle-badge,.custom-featured-collections .coupon-discount-price,.custom-featured-collections span.saving-badge a,.custom-featured-collections .dicoprice-aslow {display: none;}"
+            ],
+            "name": "SS - Featured collection #17",
+            "settings": {
+                "heading": "",
+                "heading_custom": false,
+                "heading_font": "josefin_sans_n4",
+                "heading_size": 42,
+                "heading_size_mobile": 26,
+                "heading_height": 130,
+                "heading_align": "left",
+                "heading_align_mobile": "left",
+                "arrow_size": 36,
+                "arrow_size_mobile": 30,
+                "arrow_icon_size": 8,
+                "arrow_icon_size_mobile": 6,
+                "arrow_border_thickness": 1,
+                "arrow_radius": 100,
+                "arrow_hover_effect": "color",
+                "arrow_show_desktop": true,
+                "arrow_show_mobile": true,
+                "collection": "",
+                "collection_show": 6,
+                "slider_view": 3,
+                "slider_view_mobile": 1.2,
+                "slider_mt": 8,
+                "slider_mt_mobile": 8,
+                "slide_border_thickness": 1,
+                "slide_radius": 8,
+                "slide_shadow": true,
+                "image_ratio": "square",
+                "image_ratio_mobile": "square",
+                "show_badge": true,
+                "badge_custom": false,
+                "badge_font": "josefin_sans_n4",
+                "badge_size": 13,
+                "badge_size_mobile": 10,
+                "badge_height": 100,
+                "badge_padding_horizontal": 12,
+                "badge_padding_horizontal_mobile": 12,
+                "badge_padding_vertical": 6,
+                "badge_padding_vertical_mobile": 6,
+                "badge_radius": 100,
+                "badge_border_thickness": 0,
+                "content_padding_horizontal": 16,
+                "content_padding_horizontal_mobile": 24,
+                "content_padding_vertical": 16,
+                "content_padding_vertical_mobile": 20,
+                "content_align": "left",
+                "content_align_mobile": "left",
+                "title_custom": false,
+                "title_font": "josefin_sans_n4",
+                "title_size": 16,
+                "title_size_mobile": 14,
+                "title_height": 120,
+                "price_custom": false,
+                "price_font": "josefin_sans_n4",
+                "price_size": 16,
+                "price_size_mobile": 18,
+                "price_height": 130,
+                "price_mt": 12,
+                "price_mt_mobile": 12,
+                "price_compare": true,
+                "text_custom": false,
+                "text_font": "josefin_sans_n4",
+                "text_size": 14,
+                "text_size_mobile": 14,
+                "text_height": 140,
+                "text_mt": 12,
+                "text_mt_mobile": 12,
+                "text_max_length": 0,
+                "product_button_text": "Shop now",
+                "product_button_custom": false,
+                "product_button_font": "josefin_sans_n4",
+                "product_button_size": 16,
+                "product_button_size_mobile": 16,
+                "product_button_height": 100,
+                "product_button_padding_horizontal": 12,
+                "product_button_padding_horizontal_mobile": 12,
+                "product_button_padding_vertical": 14,
+                "product_button_padding_vertical_mobile": 14,
+                "product_button_radius": 8,
+                "product_button_border_thickness": 1,
+                "product_button_mt": 16,
+                "product_button_mt_mobile": 10,
+                "product_button_style": "non_outline",
+                "shipping_text": "",
+                "shipping_text_custom": false,
+                "shipping_text_font": "josefin_sans_n4",
+                "shipping_text_size": 12,
+                "shipping_text_size_mobile": 9,
+                "shipping_text_height": 150,
+                "shipping_text_mt": 20,
+                "shipping_text_mt_mobile": 14,
+                "shipping_text_align": "center",
+                "shipping_text_align_mobile": "center",
+                "button": "",
+                "button_url": "",
+                "button_custom": false,
+                "button_font": "josefin_sans_n4",
+                "button_size": 13,
+                "button_size_mobile": 13,
+                "button_height": 100,
+                "button_padding_horizontal": 32,
+                "button_padding_horizontal_mobile": 32,
+                "button_padding_vertical": 14,
+                "button_padding_vertical_mobile": 10,
+                "button_radius": 6,
+                "button_border_thickness": 1,
+                "button_mt": 12,
+                "button_mt_mobile": 8,
+                "button_style": "outline",
+                "arrow_color": "#121212",
+                "arrow_hover_color": "#ffffff",
+                "arrow_bg_color": "#ffffff",
+                "arrow_bg_hover_color": "#121212",
+                "arrow_border_color": "#121212",
+                "arrow_border_hover_color": "#121212",
+                "title_color": "#121212",
+                "price_color": "#121212",
+                "price_original_color": "#afafaf",
+                "text_color": "#121212",
+                "shipping_text_color": "#121212",
+                "slide_bg_color": "#ffffff",
+                "slide_border_color": "#121212",
+                "badge_color": "#121212",
+                "badge_bg_color": "#ffffff",
+                "badge_border_color": "#121212",
+                "product_button_color": "#ffffff",
+                "product_button_hover_color": "#3f2155",
+                "product_button_bg_color": "#3f2155",
+                "product_button_bg_hover_color": "#3f2155",
+                "product_button_border_color": "#121212",
+                "product_button_border_hover_color": "#121212",
+                "button_color": "#121212",
+                "button_hover_color": "#ffffff",
+                "button_bg_color": "#ffffff",
+                "button_bg_hover_color": "#121212",
+                "button_border_color": "#121212",
+                "button_border_hover_color": "#121212",
+                "heading_color": "#121212",
+                "background_color": "#ffffff",
+                "background_gradient": "",
+                "border_color": "#121212",
+                "margin_top": 0,
+                "margin_bottom": 0,
+                "margin_horizontal": 0,
+                "margin_horizontal_mobile": 0,
+                "padding_top": 36,
+                "padding_bottom": 36,
+                "padding_horizontal": 5,
+                "padding_horizontal_mobile": 1,
+                "full_width": false,
+                "content_width": 1200,
+                "border_thickness": 0,
+                "section_radius": 0,
+                "lazy": true
+            }
+        },
+        "1650360900d1a1729d": {
+            "type": "section__cta",
+            "blocks": {
+                "1650360900e0a3de53-2": {
+                    "type": "button",
+                    "settings": {
+                        "fullWidth": true,
+                        "text": "Help me choose the right mattress",
+                        "url": "",
+                        "icon": "",
+                        "iconPosition": "icon--left",
+                        "wideButton": false,
+                        "buttonStyle": "primary",
+                        "buttonType": "default",
+                        "fontSize": "base",
+                        "fontFamily": "base",
+                        "animation": "none",
+                        "animationDuration": 1000,
+                        "animationInfinite": true
+                    }
+                }
+            },
+            "block_order": [
+                "1650360900e0a3de53-2"
+            ],
+            "disabled": true,
+            "settings": {
+                "displayFor": "display--both",
+                "layout": "default",
+                "nomargin": false,
+                "scopedCSS": "",
+                "height": 0,
+                "padding": 0,
+                "lineMargin": 0,
+                "backgroundColor": "#ffffff",
+                "backgroundPosition": "middle",
+                "backgroundFilter": "none",
+                "backdropIntensity": 50,
+                "parallax": false,
+                "backgroundPattern": false,
+                "overlayOpacity": 0,
+                "overlayColor": "#000000",
+                "contentColor": "rgba(0,0,0,0)",
+                "horizontalAlignment": "center",
+                "verticalAlignment": "middle",
+                "maxContentWidth": 100,
+                "heading": "",
+                "headingColor": "rgba(0,0,0,0)",
+                "subheading": "",
+                "subheadingColor": "rgba(0,0,0,0)",
+                "subheadingPosition": "above",
+                "headingAlignment": "center"
+            }
+        },
+        "filters": {
+            "type": "product-list__filters",
+            "blocks": {
+                "9372ddb8-d07d-4023-be9f-ea4f02c073e5": {
+                    "type": "collectionList",
+                    "settings": {
+                        "expanded": true,
+                        "name": "Collections",
+                        "customList": ""
+                    }
+                }
+            },
+            "block_order": [
+                "9372ddb8-d07d-4023-be9f-ea4f02c073e5"
+            ],
+            "settings": {
+                "filter": false
+            }
+        },
+        "content": {
+            "type": "product-list",
+            "settings": {
+                "cardDesktop": "default",
+                "cardsPerPage": 15
+            }
+        },
+        "banner-bottom": {
+            "type": "banner--collection__desc",
+            "settings": {
+                "enabled": false,
+                "layout": "default",
+                "height": 180,
+                "horizontalAlignment": "center",
+                "verticalAlignment": "middle",
+                "showTitle": false,
+                "showNumber": true,
+                "fontSize": "medium",
+                "showDescription": true,
+                "truncateReadMore": true,
+                "truncateDesc": 0,
+                "contentColor": "rgba(0,0,0,0)",
+                "fillColor": "rgba(0,0,0,0)",
+                "useCollectionImage": false,
+                "overlayOpacity": 0,
+                "overlayColor": "#000000"
+            }
+        },
+        "1650364182a2550802": {
+            "type": "section__columns",
+            "blocks": {
+                "29004581-5692-4d34-934c-c81a19be6472": {
+                    "type": "columnImage",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/Sleep_Back.gif",
+                        "imageSize": 75,
+                        "heading": "",
+                        "content": "",
+                        "buttonText": "",
+                        "buttonURL": "",
+                        "openTab": false,
+                        "buttonStyle": "secondary",
+                        "buttonType": "filled"
+                    }
+                },
+                "1d96c511-403f-4b1e-b529-f4e53fb53854": {
+                    "type": "columnImage",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/Sleep_Front.gif",
+                        "imageSize": 75,
+                        "heading": "",
+                        "content": "",
+                        "buttonText": "",
+                        "buttonURL": "",
+                        "openTab": false,
+                        "buttonStyle": "secondary",
+                        "buttonType": "filled"
+                    }
+                },
+                "630c510c-c600-4009-baae-f3f334bfd7d0": {
+                    "type": "columnImage",
+                    "settings": {
+                        "image": "shopify:\/\/shop_images\/Sleep_Side.gif",
+                        "imageSize": 75,
+                        "heading": "",
+                        "content": "",
+                        "buttonText": "",
+                        "buttonURL": "",
+                        "openTab": false,
+                        "buttonStyle": "secondary",
+                        "buttonType": "filled"
+                    }
+                }
+            },
+            "block_order": [
+                "29004581-5692-4d34-934c-c81a19be6472",
+                "1d96c511-403f-4b1e-b529-f4e53fb53854",
+                "630c510c-c600-4009-baae-f3f334bfd7d0"
+            ],
+            "settings": {
+                "displayFor": "display--both",
+                "layout": "default",
+                "nomargin": false,
+                "scopedCSS": "",
+                "customclass": "",
+                "customID": "",
+                "height": 0,
+                "padding": 20,
+                "lineMargin": 0,
+                "backgroundColor": "rgba(0,0,0,0)",
+                "backgroundPosition": "middle",
+                "backgroundFilter": "none",
+                "backdropIntensity": 50,
+                "parallax": false,
+                "backgroundPattern": false,
+                "overlayOpacity": 0,
+                "overlayColor": "#000000",
+                "contentColor": "rgba(0,0,0,0)",
+                "horizontalAlignment": "center",
+                "verticalAlignment": "middle",
+                "heading": "Perfect for any sleeping position",
+                "headingColor": "rgba(0,0,0,0)",
+                "subheading": "REM-Fit pillows are designed to give maximum support and comfort in any sleeping position.",
+                "subheadingColor": "rgba(0,0,0,0)",
+                "subheadingPosition": "below",
+                "headingAlignment": "center",
+                "colHeight": 0,
+                "colGap": 0,
+                "textAlign": "center",
+                "contentAlign": "top",
+                "colCount": "col-md-4"
+            }
+        },
+        "1650364220784a3237": {
+            "type": "section__image-text",
+            "blocks": {
+                "1650364220fad79be6-0": {
+                    "type": "title",
+                    "settings": {
+                        "fullWidth": true,
+                        "content": "Re-ax® Technology - Sleep Cool",
+                        "textColor": "rgba(0,0,0,0)",
+                        "fontFamily": "title",
+                        "fontSize": "big"
+                    }
+                },
+                "1650364220fad79be6-1": {
+                    "type": "richText",
+                    "settings": {
+                        "fullWidth": true,
+                        "maxBWidth": 100,
+                        "content": "<p>Stay dry and cool with Re-ax® fibres that wick sweat away from the body while you sleep. <\/p><p><\/p><p>The machine-washable outer cover is constructed from ultra-light, stretchy, durable fabric which regulates temperature and encourages the passage of moisture and air. <\/p>",
+                        "detectLists": true,
+                        "textColor": "rgba(0,0,0,0)",
+                        "fontFamily": "base",
+                        "fontSize": "base"
+                    }
+                }
+            },
+            "block_order": [
+                "1650364220fad79be6-0",
+                "1650364220fad79be6-1"
+            ],
+            "settings": {
+                "displayFor": "display--both",
+                "layout": "default",
+                "nomargin": true,
+                "scopedCSS": "",
+                "customID": "",
+                "height": 0,
+                "padding": 20,
+                "lineMargin": 20,
+                "backgroundColor": "#6ecff3",
+                "backgroundPosition": "middle",
+                "backgroundFilter": "none",
+                "backdropIntensity": 50,
+                "parallax": false,
+                "backgroundPattern": false,
+                "overlayOpacity": 0,
+                "overlayColor": "#000000",
+                "contentColor": "#ffffff",
+                "horizontalAlignment": "start",
+                "verticalAlignment": "middle",
+                "imagePosition": "left",
+                "imageWidth": "6",
+                "image": "shopify:\/\/shop_images\/RE-AX-LOGO-NEW.png",
+                "imageOverlayOpacity": 0,
+                "imageOverlayColor": "#000000"
+            }
+        }
+    },
+    "order": [
+        "breadcrumbs",
+        "banner",
+        "ss_featured_collection_17_YjNmJx",
+        "1650360900d1a1729d",
+        "filters",
+        "content",
+        "banner-bottom",
+        "1650364182a2550802",
+        "1650364220784a3237"
+    ]
+}
