@@ -306,7 +306,7 @@
         "column_padding_top": 16,
         "column_padding_bottom": 24,
         "numbers": false,
-        "autoplay": true,
+        "autoplay": false,
         "autoplay_speed": 10,
         "nav_size": 50,
         "nav_size_mobile": 40,
