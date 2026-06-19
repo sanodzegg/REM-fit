@@ -443,7 +443,7 @@
         --accent: {{section.settings.accentColor}};
         --linkColor: {{section.settings.linkColor}};
         background: {% if section.settings.headerBg contains 'rgba(0,0,0,0)' %}var(--bodyBackgroundColor){% else %}{{section.settings.headerBg}}{% endif %};
-        padding: 1rem 1rem 3rem 1rem;
+        padding: 1rem 1rem 10rem 1rem;
         z-index: 10;
     }
 
@@ -454,6 +454,11 @@
     input[id="open-mobile-nav"]:checked ~ .mobile__navigation {
         transform: translateX(0%);
         top:35px;
+    }
+
+    /* Lock background scroll while the mobile menu is open */
+    body:has(input[id="open-mobile-nav"]:checked) {
+        overflow: hidden;
     }
 
     .nav__link {

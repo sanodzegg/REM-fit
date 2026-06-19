@@ -14957,3 +14957,38 @@ span#monthly-payment {
 }
 
 }
+
+/* Product info parent accordion groups (Product / Delivery / Returns) */
+.product__page--info .product-accordion-group {
+  border-bottom: 1px solid #e5e5e5;
+}
+.product__page--info .product-accordion-group__title {
+  display: block;
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+  padding: 16px 28px 16px 0;
+  font-weight: 700;
+  font-size: 16px;
+}
+.product__page--info .product-accordion-group__title::-webkit-details-marker {
+  display: none;
+}
+.product__page--info .product-accordion-group__title::after {
+  content: "\e983";
+  font-family: unicons-line;
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #3f2155;
+  transition: transform 0.2s ease;
+}
+.product__page--info .product-accordion-group[open] > .product-accordion-group__title::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+.product__page--info .product-accordion-group__body {
+  padding-left: 12px;
+}
+
