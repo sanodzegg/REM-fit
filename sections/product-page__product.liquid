@@ -527,6 +527,20 @@ items.forEach(item => {
   });
 });
 
+// Parent accordion groups: only one open at a time
+const parentGroups = document.querySelectorAll('.product-accordion-group');
+parentGroups.forEach(group => {
+  group.addEventListener('toggle', () => {
+    if (group.open) {
+      parentGroups.forEach(other => {
+        if (other !== group) {
+          other.open = false;
+        }
+      });
+    }
+  });
+});
+
 // Smooth scroll with responsive offset
 const discountLinks = document.querySelectorAll('.discount-section a');
 const nightSleepAccordion = document.querySelector('#nightsleeptrial .accordion__item');
