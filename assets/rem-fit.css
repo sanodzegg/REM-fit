@@ -14951,3 +14951,9 @@ span#monthly-payment {
 }#shopify-section-template--27061840970108__section_content_tXiLjJ {
   overflow-x: clip;
 }
+
+#shopify-section-template--27061840970108__section_content_tXiLjJ > div {
+  overflow-x: clip;
+}
+
+}
