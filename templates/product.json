@@ -2930,25 +2930,18 @@
     "1650400037410d6fbc": {
       "type": "section__faq",
       "blocks": {
-        "67e26df9-71b5-4fba-802f-11ff8e66920a": {
-          "type": "accordion",
-          "settings": {
-            "question": "<p>{{ product.metafields.my_fields.faq_question_1_firmness.value }}</p>",
-            "answer": "<p>{{ product.metafields.my_fields.faq_answer_1_firmness | metafield_tag }}</p>"
-          }
-        },
         "faq_accordion_springs": {
           "type": "accordion",
           "settings": {
             "question": "<p>{{ product.metafields.custom.accordion_springs_heading.value }}</p>",
-            "answer": "<p>{{ product.metafields.custom.accordion_springs_description | metafield_tag }}</p>"
+            "answer": "{{ product.metafields.custom.accordion_springs_description | metafield_tag }}"
           }
         },
         "faq_accordion_backpain": {
           "type": "accordion",
           "settings": {
             "question": "<p>{{ product.metafields.custom.accordion_back_pain_heading.value }}</p>",
-            "answer": "<p>{{ product.metafields.custom.accordion_back_pain_description | metafield_tag }}</p>"
+            "answer": "{{ product.metafields.custom.accordion_back_pain_description | metafield_tag }}"
           }
         },
         "faq_accordion_cooling": {
@@ -3002,7 +2995,6 @@
         }
       },
       "block_order": [
-        "67e26df9-71b5-4fba-802f-11ff8e66920a",
         "faq_accordion_springs",
         "faq_accordion_backpain",
         "faq_accordion_cooling",
