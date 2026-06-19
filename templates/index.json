@@ -2618,7 +2618,7 @@
         "displayFor": "hide-desktop",
         "layout": "default",
         "nomargin": false,
-        "scopedCSS": "/* Contain horizontal scroll to this section only */\n#shopify-section-template--27061840970108__section_content_tXiLjJ {\n  overflow-x: hidden;\n  width: 100%;\n}\n\n/* Ensure the section wrapper doesn't allow overflow */\n#shopify-section-template--27061840970108__section_content_tXiLjJ > * {\n  overflow-x: hidden;\n}\n\n/* Protect the scroll track from affecting page scroll */\n#shopify-section-template--27061840970108__section_content_tXiLjJ [style*=\"overflow-x:scroll\"] {\n  overflow-x: scroll !important;\n  overflow-y: hidden;\n  -webkit-overflow-scrolling: touch;\n}",
+        "scopedCSS": "/* Contain horizontal scroll to this section only */\n#shopify-section-template--27061840970108__section_content_tXiLjJ {\n  overflow-x: hidden;\n  width: 100%;\n}\n\n/* Allow the scroll track to scroll horizontally */\n#shopify-section-template--27061840970108__section_content_tXiLjJ [style*=\"overflow-x:scroll\"] {\n  overflow-x: scroll !important;\n  overflow-y: hidden !important;\n  -webkit-overflow-scrolling: touch;\n  scroll-behavior: smooth;\n}\n\n/* Ensure flex children don't wrap and maintain their width */\n#shopify-section-template--27061840970108__section_content_tXiLjJ [style*=\"overflow-x:scroll\"] > * {\n  flex-shrink: 0;\n  min-width: fit-content;\n}",
         "customID": "",
         "height": 0,
         "padding": 0,
