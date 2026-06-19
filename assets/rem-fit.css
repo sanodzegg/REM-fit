@@ -8008,8 +8008,8 @@ div.free-gift-pdp-addon
 .discount-section {
   margin-top: 32px;
   font-size: 18px;
-  background-color: #f7f5fa;
-  color: #eeeb3fff;
+  background-color: #f7f5fa !important;
+  color: #3f2856 !important;
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #3f2155;
