@@ -440,6 +440,7 @@
         width: calc(100vw - 5rem);
         transition: transform 0.2s;
         height: 100vh;
+        height: 100dvh; /* iOS Safari: account for dynamic bottom toolbar */
         --accent: {{section.settings.accentColor}};
         --linkColor: {{section.settings.linkColor}};
         background: {% if section.settings.headerBg contains 'rgba(0,0,0,0)' %}var(--bodyBackgroundColor){% else %}{{section.settings.headerBg}}{% endif %};
@@ -454,6 +455,8 @@
     input[id="open-mobile-nav"]:checked ~ .mobile__navigation {
         transform: translateX(0%);
         top:35px;
+        height: calc(100vh - 35px);
+        height: calc(100dvh - 35px); /* subtract the 35px top offset so the footer isn't pushed off-screen */
     }
 
     /* Lock background scroll while the mobile menu is open */
