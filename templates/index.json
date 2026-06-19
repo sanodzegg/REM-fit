@@ -2570,11 +2570,10 @@
       "block_order": [
         "html_GF8AkX"
       ],
-      "disabled": true,
       "name": "Custom DESK content",
       "settings": {
         "displayFor": "hide-mobile",
-        "layout": "default",
+        "layout": "stretchBg",
         "nomargin": false,
         "scopedCSS": "",
         "customID": "",
