@@ -8005,13 +8005,19 @@ div.free-gift-pdp-addon
   margin-bottom: 10px;
 }
 
+.discount-section,
+.discount-section * {
+  color: #3f2856 !important;
+}
+
 .discount-section {
   margin-top: 32px;
   font-size: 18px;
-  box-shadow: #00b67a 0 0.0625rem 0.375rem, #00b67a 0 0.0625rem 0.375rem;
+  background-color: #f7f5fa !important;
+  color: #3f2856 !important;
   padding: 8px;
   border-radius: 5px;
-  border: 1px solid #00b67a;
+  border: 1px solid #3f2155;
   font-weight: 600;
   margin-bottom: 32px;
 }
