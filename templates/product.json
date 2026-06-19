@@ -333,58 +333,6 @@
                         "customContent": ""
                     }
                 },
-                "product_page_accordion_springs": {
-                    "type": "productPageAccordion",
-                    "settings": {
-                        "noMargin": false,
-                        "accCustomID": "",
-                        "heading": "{{ product.metafields.custom.accordion_springs_heading.value }}",
-                        "content": "metafield",
-                        "metafieldNS": "custom",
-                        "metafieldKey": "accordion_springs_description",
-                        "page": "",
-                        "customContent": ""
-                    }
-                },
-                "product_page_accordion_backpain": {
-                    "type": "productPageAccordion",
-                    "settings": {
-                        "noMargin": false,
-                        "accCustomID": "",
-                        "heading": "{{ product.metafields.custom.accordion_back_pain_heading.value }}",
-                        "content": "metafield",
-                        "metafieldNS": "custom",
-                        "metafieldKey": "accordion_back_pain_description",
-                        "page": "",
-                        "customContent": ""
-                    }
-                },
-                "product_page_accordion_cooling": {
-                    "type": "productPageAccordion",
-                    "settings": {
-                        "noMargin": false,
-                        "accCustomID": "",
-                        "heading": "{{ product.metafields.custom.accordion_cooling_heading.value }}",
-                        "content": "metafield",
-                        "metafieldNS": "custom",
-                        "metafieldKey": "accordion_cooling_description",
-                        "page": "",
-                        "customContent": ""
-                    }
-                },
-                "product_page_accordion_compare": {
-                    "type": "productPageAccordion",
-                    "settings": {
-                        "noMargin": false,
-                        "accCustomID": "",
-                        "heading": "{{ product.metafields.custom.accordion_compare_heading.value }}",
-                        "content": "metafield",
-                        "metafieldNS": "custom",
-                        "metafieldKey": "accordion_compare_description",
-                        "page": "",
-                        "customContent": ""
-                    }
-                },
                 "product_page_accordion_WKNk8T": {
                     "type": "productPageAccordion",
                     "settings": {
@@ -530,10 +478,6 @@
                 "rebuy_personalization_engine_rebuy_widget_zEckrk",
                 "product_page_tab_wWT4fi",
                 "product_page_accordion_FUPk3U",
-                "product_page_accordion_springs",
-                "product_page_accordion_backpain",
-                "product_page_accordion_cooling",
-                "product_page_accordion_compare",
                 "product_page_accordion_WKNk8T",
                 "product_page_accordion_wDmbQ9",
                 "product_page_accordion_Eg6NWd",
@@ -2984,6 +2928,36 @@
                         "answer": "<p>{{ product.metafields.my_fields.faq_answer_1_firmness | metafield_tag }}<\/p>"
                     }
                 },
+                "faq_accordion_springs": {
+                    "type": "accordion",
+                    "settings": {
+                        "question": "",
+                        "answer": "",
+                        "question_metafield": "accordion_springs_heading",
+                        "answer_metafield": "accordion_springs_description"
+                    }
+                },
+                "faq_accordion_backpain": {
+                    "type": "accordion",
+                    "settings": {
+                        "question": "<p>{{ product.metafields.custom.accordion_back_pain_heading.value }}<\/p>",
+                        "answer": "<p>{{ product.metafields.custom.accordion_back_pain_description | metafield_tag }}<\/p>"
+                    }
+                },
+                "faq_accordion_cooling": {
+                    "type": "accordion",
+                    "settings": {
+                        "question": "<p>{{ product.metafields.custom.accordion_cooling_heading.value }}<\/p>",
+                        "answer": "<p>{{ product.metafields.custom.accordion_cooling_description | metafield_tag }}<\/p>"
+                    }
+                },
+                "faq_accordion_compare": {
+                    "type": "accordion",
+                    "settings": {
+                        "question": "<p>{{ product.metafields.custom.accordion_compare_heading.value }}<\/p>",
+                        "answer": "<p>{{ product.metafields.custom.accordion_compare_description | metafield_tag }}<\/p>"
+                    }
+                },
                 "e295a5c8-ba15-4bd9-9399-ddd3fa1a54ea": {
                     "type": "accordion",
                     "settings": {
@@ -3022,6 +2996,10 @@
             },
             "block_order": [
                 "67e26df9-71b5-4fba-802f-11ff8e66920a",
+                "faq_accordion_springs",
+                "faq_accordion_backpain",
+                "faq_accordion_cooling",
+                "faq_accordion_compare",
                 "e295a5c8-ba15-4bd9-9399-ddd3fa1a54ea",
                 "cd3e7f05-b1cc-4cba-92e7-cdf0d8753331",
                 "1b3add3b-1d0c-496e-8b7c-012119c467c5",

@@ -48,7 +48,7 @@
                   <label class="collapse" ></label></span>
             </label>
             <div class="accordion__item--content inherit">
-                {{ product.metafields[block.settings.metafieldNS][block.settings.metafieldKey] }}
+                {{ product.metafields[block.settings.metafieldNS][block.settings.metafieldKey] | metafield_tag }}
             </div>
         </div>
            {% endif %}
