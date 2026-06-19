@@ -70,6 +70,10 @@
       render 'block__product-page--stock', block: block, product: product
     when 'productPageAccordion'
       render 'block__product-page--accordion', block: block, product: product
+    when 'accordionGroupStart'
+      render 'block__product-page--accordion-group-start', block: block
+    when 'accordionGroupEnd'
+      render 'block__product-page--accordion-group-end', block: block
     when 'productPageTags'
       render 'block__product-page--tags', block: block, product: product
     when 'productPageReviewStars'
