@@ -2359,6 +2359,7 @@
       "block_order": [
         "ai_gen_block_43e586c_G8Ggg7"
       ],
+      "disabled": true,
       "settings": {}
     },
     "178152307793190ca6": {
@@ -2580,7 +2581,7 @@
         "height": 0,
         "padding": 0,
         "lineMargin": 12,
-        "backgroundColor": "rgba(0,0,0,0)",
+        "backgroundColor": "#f8f5fb",
         "backgroundPosition": "middle",
         "backgroundFilter": "none",
         "backdropIntensity": 50,
