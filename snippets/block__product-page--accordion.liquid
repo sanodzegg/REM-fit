@@ -42,20 +42,13 @@
                   </div>
                 </div>
                {% else %}
-           
-        {% assign metafield_json = metafield | parse_json %}
-
-        
-        {% assign text_value = metafield_json.children[0].children[0].value %}
-        
-
         <div class="col-12 accordion3 info-accordion accordion product__accordion {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{% endif %}" id="{{ block.settings.accCustomID }}">
             <label class="accordion__item" {{block.shopify__attrbutes}} >
                 <span class="accordion__item--title" >{{block.settings.heading}}
                   <label class="collapse" ></label></span>
             </label>
             <div class="accordion__item--content inherit">
-                {{ text_value }}
+                {{ product.metafields[block.settings.metafieldNS][block.settings.metafieldKey] }}
             </div>
         </div>
            {% endif %}
