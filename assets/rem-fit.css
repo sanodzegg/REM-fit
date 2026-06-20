@@ -14976,7 +14976,7 @@ span#monthly-payment {
   cursor: pointer;
   background: #f8f5fb;
   padding: 16px 20px;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   color: #3f2155;
 }
@@ -15018,7 +15018,7 @@ span#monthly-payment {
   border-bottom: none;
 }
 .product__page--info .product-accordion-group .accordion__item--title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   color: #1a1a1a;
 }
