@@ -329,6 +329,14 @@
             "customContent": "<p style=\"font-weight:700;\">Product Details</p>"
           }
         },
+        "accordion_group_start_product": {
+          "type": "accordionGroupStart",
+          "settings": {
+            "heading": "Product",
+            "openByDefault": true,
+            "accCustomID": "accordion-group-product"
+          }
+        },
         "product_page_accordion_FUPk3U": {
           "type": "productPageAccordion",
           "settings": {
@@ -394,12 +402,44 @@
             "customContent": ""
           }
         },
-        "accordion_group_start_product": {
-          "type": "accordionGroupStart",
+        "product_page_accordion_y6CVPL": {
+          "type": "productPageAccordion",
           "settings": {
-            "heading": "Product",
-            "openByDefault": true,
-            "accCustomID": "accordion-group-product"
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Dimensions & weight",
+            "content": "metafield",
+            "metafieldNS": "custom",
+            "metafieldKey": "accordion_dimensions_weight_description",
+            "page": "",
+            "customContent": "<p>Add custom content here!</p>"
+          }
+        },
+        "product_page_accordion_GeqcyN": {
+          "type": "productPageAccordion",
+          "disabled": true,
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Mattress tension guide",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<img src=\"https://cdn.shopify.com/s/files/1/0635/4432/8438/files/tmp_7f074b08-1cd2-4f7a-b8ae-75d4686847e0.png?v=1746188502\">"
+          }
+        },
+        "product_page_accordion_hBnRQJ": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Mattress Cover",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Your mattress may arrive in the previous cover design while we transition to our updated cover. As part of our commitment to reducing waste and maintaining efficient production, we are currently using remaining stock of the previous cover before fully switching to the new design.</p><p>\n\nPlease be assured that the mattress inside is the exact model and specification advertised. The internal construction, materials, and comfort level are unchanged and fully consistent with the product description. To provide complete clarity, the outer packaging label will confirm the mattress model and specifications, ensuring you receive the correct product regardless of the cover design used during this transition period.</p>"
           }
         },
         "accordion_group_end_product": {
@@ -412,35 +452,6 @@
             "heading": "Delivery",
             "openByDefault": false,
             "accCustomID": "accordion-group-delivery"
-          }
-        },
-        "accordion_group_end_delivery": {
-          "type": "accordionGroupEnd",
-          "settings": {}
-        },
-        "accordion_group_start_returns": {
-          "type": "accordionGroupStart",
-          "settings": {
-            "heading": "Returns",
-            "openByDefault": false,
-            "accCustomID": "accordion-group-returns"
-          }
-        },
-        "accordion_group_end_returns": {
-          "type": "accordionGroupEnd",
-          "settings": {}
-        },
-        "product_page_accordion_WKNk8T": {
-          "type": "productPageAccordion",
-          "settings": {
-            "noMargin": true,
-            "accCustomID": "nightsleeptrial",
-            "heading": "200-night sleep trial",
-            "content": "custom",
-            "metafieldNS": "global",
-            "metafieldKey": "",
-            "page": "",
-            "customContent": "<p>We provide a risk-free sleep trial on all our mattresses. This allows you to sleep on a REM-Fit for up to 200-nights (100-nights without mattress protector included in the order), in the comfort of your own home, and really put it to the test!</p>\n<p>If the mattress, for whatever reason doesn't live up to your expectations, you can send it back for a full refund without collection charges!</p>\n<p>We request that you give your new REM-Fit mattress 30 nights to bed-in before you raise a return. This will give your body the right amount of time to fully adjust. The sleep trial applies to one mattress per order and address.</p>"
           }
         },
         "product_page_accordion_wDmbQ9": {
@@ -469,6 +480,44 @@
             "customContent": "<p>We can collect and recycle your old mattress when we deliver your new one. A small recycling fee applies, which will be clearly shown during checkout. </p>"
           }
         },
+        "product_page_accordion_rRNCKJ": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Finance you order",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Financing your new mattress is easy with flexible options at the checkout! With <b>DivideBuy</b>, you can spread payments over 12 months with 0% APR interest.  </p><p> Prefer a shorter term? Choose <b>PayPal</b>, <b>Klarna</b> or <b>Clearpay</b> to pay interest free with zero hassle. </p><p> If you decide to return your mattress during the sleep trial, no worries - any payments made will be refunded, and your finance agreement will be cancelled.</p>"
+          }
+        },
+        "accordion_group_end_delivery": {
+          "type": "accordionGroupEnd",
+          "settings": {}
+        },
+        "accordion_group_start_returns": {
+          "type": "accordionGroupStart",
+          "settings": {
+            "heading": "Returns",
+            "openByDefault": false,
+            "accCustomID": "accordion-group-returns"
+          }
+        },
+        "product_page_accordion_WKNk8T": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "nightsleeptrial",
+            "heading": "200-night sleep trial",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>We provide a risk-free sleep trial on all our mattresses. This allows you to sleep on a REM-Fit for up to 200-nights (100-nights without mattress protector included in the order), in the comfort of your own home, and really put it to the test!</p>\n<p>If the mattress, for whatever reason doesn't live up to your expectations, you can send it back for a full refund without collection charges!</p>\n<p>We request that you give your new REM-Fit mattress 30 nights to bed-in before you raise a return. This will give your body the right amount of time to fully adjust. The sleep trial applies to one mattress per order and address.</p>"
+          }
+        },
         "product_page_accordion_KQUpnN": {
           "type": "productPageAccordion",
           "settings": {
@@ -480,19 +529,6 @@
             "metafieldKey": "",
             "page": "",
             "customContent": "Mattress returns are free (excluding any delivery fees, which are typically free). Refunds apply to one trial per address only.<p></p>\n\nCondition Requirements: The mattress must be kept clean and in good condition. A £35 cleaning fee applies for soiled or stained mattresses. Severely soiled returns may be refused.<p></p>\n\nReturn Process: Begin your return via our website and use the chatbot with your order number ready.<p></p>\n\nCollection Info: Collections are handled by the BHF (The British Heart Foundation) or Rhenus Logistics. Your contact info will be shared solely for collection purposes. Be flexible with scheduling to avoid delays or a £5/day late collection fee after 21 working days.<p></p>\n\nRefunds: Issued within 5 working days of mattress collection.<p></p>\n\n\nReturned mattresses are donated or resold as \"rejuvenated\" – they are never sold as new.<p></p>"
-          }
-        },
-        "product_page_accordion_y6CVPL": {
-          "type": "productPageAccordion",
-          "settings": {
-            "noMargin": true,
-            "accCustomID": "",
-            "heading": "Dimensions & weight",
-            "content": "metafield",
-            "metafieldNS": "custom",
-            "metafieldKey": "accordion_dimensions_weight_description",
-            "page": "",
-            "customContent": "<p>Add custom content here!</p>"
           }
         },
         "product_page_accordion_WyYLmH": {
@@ -508,45 +544,111 @@
             "customContent": "<p>We’re confident in our mattress quality, so every new REM-Fit mattress comes with up to a 15-year guarantee (1 year for rejuvenated models) at no extra cost. </p>\n\n<p>Just set it up on a supportive base, and you’re covered! In case of a replacement, your original guarantee period remains, and if it’s an upgrade, simply pay the difference. Note: returns must be unstained and claimed by the original buyer only.</p>\n\n<p>Remember to <a href=\"https://www.rem-fit.co.uk/pages/guarantee-registration\" target=\"_blank\">register your guarantee</a>. Full T&amp;C's on our guarantee are covered in our general <a href=\"https://www.rem-fit.co.uk/pages/terms-and-conditons\" target=\"_blank\">T&amp;C's page.</a> </p>"
           }
         },
-        "product_page_accordion_GeqcyN": {
-          "type": "productPageAccordion",
-          "disabled": true,
-          "settings": {
-            "noMargin": true,
-            "accCustomID": "",
-            "heading": "Mattress tension guide",
-            "content": "custom",
-            "metafieldNS": "global",
-            "metafieldKey": "",
-            "page": "",
-            "customContent": "<img src=\"https://cdn.shopify.com/s/files/1/0635/4432/8438/files/tmp_7f074b08-1cd2-4f7a-b8ae-75d4686847e0.png?v=1746188502\">"
-          }
+        "accordion_group_end_returns": {
+          "type": "accordionGroupEnd",
+          "settings": {}
         },
-        "product_page_accordion_rRNCKJ": {
-          "type": "productPageAccordion",
+        "accordion_group_start_UVNFDA": {
+          "type": "accordionGroupStart",
           "settings": {
-            "noMargin": true,
-            "accCustomID": "",
             "heading": "Finance your order",
-            "content": "custom",
-            "metafieldNS": "global",
-            "metafieldKey": "",
-            "page": "",
-            "customContent": "<p>Financing your new mattress is easy with flexible options at the checkout! With <b>DivideBuy</b>, you can spread payments over 12 months with 0% APR interest.  </p><p> Prefer a shorter term? Choose <b>PayPal</b>, <b>Klarna</b> or <b>Clearpay</b> to pay interest free with zero hassle. </p><p> If you decide to return your mattress during the sleep trial, no worries - any payments made will be refunded, and your finance agreement will be cancelled.</p>"
+            "openByDefault": false,
+            "accCustomID": "accordion-group-finance"
           }
         },
-        "product_page_accordion_hBnRQJ": {
+        "product_page_accordion_Ym8wcV": {
           "type": "productPageAccordion",
           "settings": {
-            "noMargin": true,
+            "noMargin": false,
             "accCustomID": "",
-            "heading": "Mattress Cover",
+            "heading": "DivideBuy",
             "content": "custom",
             "metafieldNS": "global",
             "metafieldKey": "",
             "page": "",
-            "customContent": "<p>Your mattress may arrive in the previous cover design while we transition to our updated cover. As part of our commitment to reducing waste and maintaining efficient production, we are currently using remaining stock of the previous cover before fully switching to the new design.</p><p>\n\nPlease be assured that the mattress inside is the exact model and specification advertised. The internal construction, materials, and comfort level are unchanged and fully consistent with the product description. To provide complete clarity, the outer packaging label will confirm the mattress model and specifications, ensuring you receive the correct product regardless of the cover design used during this transition period.</p>"
+            "customContent": "<p>Financing your new mattress is easy with flexible options at the checkout! With DivideBuy, you can spread payments up to 12 months with 0% APR interest.</p>\n<p>If you decide to return your mattress during the sleep trial, no worries - any payments made will be refunded, and your finance agreement will be cancelled.</p>"
           }
+        },
+        "product_page_accordion_i88eF8": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "Klarna",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Spread the cost of your purchase with Klarna and enjoy greater flexibility at checkout. Choose to pay in 3 interest-free instalments, with payments taken automatically every 30 days, making it easier to manage your budget.</p>"
+          }
+        },
+        "product_page_accordion_mtJqa4": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "Clearpay",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Clearpay lets you divide your order into four interest-free instalments over six weeks. You'll pay the first instalment when you place your order, with the remaining payments collected automatically every two weeks, helping you shop now and pay over time.</p>"
+          }
+        },
+        "product_page_accordion_rTCCcU": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "PayPal",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>With PayPal Pay in 3, you can split your purchase into three interest-free payments. Your first payment is made at the time of purchase, with the remaining two payments taken monthly, giving you a simple and convenient way to spread the cost.</p>"
+          }
+        },
+        "accordion_group_end_DN7nzf": {
+          "type": "accordionGroupEnd",
+          "settings": {}
+        },
+        "accordion_group_start_7qzQ7t": {
+          "type": "accordionGroupStart",
+          "settings": {
+            "heading": "15 year guarantee",
+            "openByDefault": false,
+            "accCustomID": "accordion-group-guarantee"
+          }
+        },
+        "product_page_accordion_trPGTG": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "What the guarantee covers",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>We’re confident in our mattress quality, so every new REM-Fit mattress comes with up to a 15-year guarantee (1 year for rejuvenated models) at no extra cost.</p>\n<p>Just set it up on a supportive base, and you’re covered! In case of a replacement, your original guarantee period remains, and if it’s an upgrade, simply pay the difference. Note: returns must be unstained and claimed by the original buyer only.</p>\n<p>Full T&amp;C's on our guarantee are covered in our general <a href=\"/pages/terms-and-conditons\" target=\"_blank\">T&amp;C's page.</a></p>"
+          }
+        },
+        "product_page_accordion_rFmbPT": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "Register your guarantee",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Remember to register your guarantee <a href=\"/pages/guarantee-registration\" target=\"_blank\">here</a></p>"
+          }
+        },
+        "accordion_group_end_4jqiTd": {
+          "type": "accordionGroupEnd",
+          "settings": {}
         },
         "28ccac8d-ca6d-4b5d-aab0-970ac6e0269d": {
           "type": "productPagequestions",
@@ -594,6 +696,16 @@
         "product_page_accordion_KQUpnN",
         "product_page_accordion_WyYLmH",
         "accordion_group_end_returns",
+        "accordion_group_start_UVNFDA",
+        "product_page_accordion_Ym8wcV",
+        "product_page_accordion_i88eF8",
+        "product_page_accordion_mtJqa4",
+        "product_page_accordion_rTCCcU",
+        "accordion_group_end_DN7nzf",
+        "accordion_group_start_7qzQ7t",
+        "product_page_accordion_trPGTG",
+        "product_page_accordion_rFmbPT",
+        "accordion_group_end_4jqiTd",
         "28ccac8d-ca6d-4b5d-aab0-970ac6e0269d"
       ],
       "custom_css": [],
