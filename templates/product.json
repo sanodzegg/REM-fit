@@ -76,6 +76,7 @@
         "video_mBhjQa",
         "video_eAp4kN"
       ],
+      "disabled": true,
       "settings": {
         "videos_position": "below_buy",
         "heading": "<p><strong>Customer experience videos</strong></p>",
