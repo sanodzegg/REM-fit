@@ -480,19 +480,6 @@
             "customContent": "<p>We can collect and recycle your old mattress when we deliver your new one. A small recycling fee applies, which will be clearly shown during checkout. </p>"
           }
         },
-        "product_page_accordion_rRNCKJ": {
-          "type": "productPageAccordion",
-          "settings": {
-            "noMargin": true,
-            "accCustomID": "",
-            "heading": "Finance your order",
-            "content": "custom",
-            "metafieldNS": "global",
-            "metafieldKey": "",
-            "page": "",
-            "customContent": "<p>Financing your new mattress is easy with flexible options at the checkout! With <b>DivideBuy</b>, you can spread payments over 12 months with 0% APR interest.  </p><p> Prefer a shorter term? Choose <b>PayPal</b>, <b>Klarna</b> or <b>Clearpay</b> to pay interest free with zero hassle. </p><p> If you decide to return your mattress during the sleep trial, no worries - any payments made will be refunded, and your finance agreement will be cancelled.</p>"
-          }
-        },
         "accordion_group_end_delivery": {
           "type": "accordionGroupEnd",
           "settings": {}
@@ -529,19 +516,6 @@
             "metafieldKey": "",
             "page": "",
             "customContent": "Mattress returns are free (excluding any delivery fees, which are typically free). Refunds apply to one trial per address only.<p></p>\n\nCondition Requirements: The mattress must be kept clean and in good condition. A £35 cleaning fee applies for soiled or stained mattresses. Severely soiled returns may be refused.<p></p>\n\nReturn Process: Begin your return via our website and use the chatbot with your order number ready.<p></p>\n\nCollection Info: Collections are handled by the BHF (The British Heart Foundation) or Rhenus Logistics. Your contact info will be shared solely for collection purposes. Be flexible with scheduling to avoid delays or a £5/day late collection fee after 21 working days.<p></p>\n\nRefunds: Issued within 5 working days of mattress collection.<p></p>\n\n\nReturned mattresses are donated or resold as \"rejuvenated\" – they are never sold as new.<p></p>"
-          }
-        },
-        "product_page_accordion_WyYLmH": {
-          "type": "productPageAccordion",
-          "settings": {
-            "noMargin": true,
-            "accCustomID": "",
-            "heading": "15 year guarantee",
-            "content": "custom",
-            "metafieldNS": "global",
-            "metafieldKey": "",
-            "page": "",
-            "customContent": "<p>We’re confident in our mattress quality, so every new REM-Fit mattress comes with up to a 15-year guarantee (1 year for rejuvenated models) at no extra cost. </p>\n\n<p>Just set it up on a supportive base, and you’re covered! In case of a replacement, your original guarantee period remains, and if it’s an upgrade, simply pay the difference. Note: returns must be unstained and claimed by the original buyer only.</p>\n\n<p>Remember to <a href=\"https://www.rem-fit.co.uk/pages/guarantee-registration\" target=\"_blank\">register your guarantee</a>. Full T&amp;C's on our guarantee are covered in our general <a href=\"https://www.rem-fit.co.uk/pages/terms-and-conditons\" target=\"_blank\">T&amp;C's page.</a> </p>"
           }
         },
         "accordion_group_end_returns": {
@@ -689,12 +663,10 @@
         "accordion_group_start_delivery",
         "product_page_accordion_wDmbQ9",
         "product_page_accordion_Eg6NWd",
-        "product_page_accordion_rRNCKJ",
         "accordion_group_end_delivery",
         "accordion_group_start_returns",
         "product_page_accordion_WKNk8T",
         "product_page_accordion_KQUpnN",
-        "product_page_accordion_WyYLmH",
         "accordion_group_end_returns",
         "accordion_group_start_UVNFDA",
         "product_page_accordion_Ym8wcV",
