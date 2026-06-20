@@ -119,49 +119,20 @@
             {{ product.title | truncate: settings.cardNameLimitAmount }}
           {% endif %}
         {% endunless %}
-      <div class="card_description"> 
-  {% if product.metafields.custom.desktopsubmenutitle.value %}
-    {% assign desc = product.metafields.custom.desktopsubmenutitle.value %}
-    {% if desc.size > 150 %}
-      <span class="card-desc-short">{{ desc | truncate: 150 }}</span>
-      <span class="card-desc-full" style="display:none;">{{ desc }}</span>
-      <button type="button" class="card-read-more-btn">Read more</button>
-    {% else %}
-      {{ desc }}
-    {% endif %}
-  {% endif %}
-</div>
+      </a>
 
-<style>
-  .card-read-more-btn {
-    background: none;
-    border: none;
-    color: inherit;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 4px 0;
-    text-decoration: underline;
-    font-size: inherit;
-    display: block;
-  }
-  .card-read-more-btn:hover { opacity: 0.7; }
-</style>
-
-<script>
-  document.querySelectorAll('.card-read-more-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var wrapper = btn.closest('.card_description');
-      var short = wrapper.querySelector('.card-desc-short');
-      var full = wrapper.querySelector('.card-desc-full');
-      var expanded = full.style.display === 'inline';
-      full.style.display = expanded ? 'none' : 'inline';
-      short.style.display = expanded ? 'inline' : 'none';
-      btn.textContent = expanded ? 'Read more' : 'Read less';
-    });
-  });
-</script>
-
+      <a class="card_description" href="{{ product.url | within: collection }}"> 
+    {% if product.metafields.custom.desktopsubmenutitle.value  %}
+       {{ product.metafields.custom.desktopsubmenutitle.value }}   
+      <style>
+      .page__header--desktop .nav__link__holder .nav__submenu span.nav__link__holder--mega .card--default a.card_description {
+      font-size:16px;
+      font-weight:600;
+      }
+      
+      </style>
+      {% endif %}
+    </a>
 
       {% render 'header-free-gift-bundle-badge' with product as product %}
       
