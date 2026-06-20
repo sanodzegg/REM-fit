@@ -123,7 +123,7 @@
 
       <a class="card_description" href="{{ product.url | within: collection }}"> 
     {% if product.metafields.custom.desktopsubmenutitle.value  %}
-       {{ product.metafields.custom.desktopsubmenutitle.value | truncate: 150 }}
+       {{ product.metafields.custom.desktopsubmenutitle.value | truncate: 50 }}
    
       <style>
       .page__header--desktop .nav__link__holder .nav__submenu span.nav__link__holder--mega .card--default a.card_description {
