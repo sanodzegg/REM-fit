@@ -10849,6 +10849,51 @@ table > tbody > tr > td,
 .table-wrapper.comparison > tbody.theadstickey.stickey-thead > tr > td {
   width: 280px;
 }
+#product-comparison {
+  margin-bottom: 0;
+}
+
+.compare-vs-section {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 16px;
+  text-align: center;
+}
+.compare-vs-section__title {
+  margin-bottom: 20px;
+  color: #58327a;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+}
+.compare-vs-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+.compare-vs-links .compare-vs-link {
+  flex: 0 1 360px;
+  text-align: center;
+}
+.compare-page-title-wrapper {
+  align-self: center;
+  margin-bottom: 24px;
+}
+.compare-page-title-wrapper a {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+@media all and (max-width: 767px) {
+  .compare-vs-section__title {
+    font-size: 30px;
+    line-height: 40px;
+  }
+  .compare-vs-links .compare-vs-link {
+    flex-basis: 100%;
+  }
+}
+
 #product-comparison > tbody.theadstickey.stickey-thead > tr > th,
 #product-comparison > tbody.theadstickey.stickey-thead > tr > td {
   width: 280px;
