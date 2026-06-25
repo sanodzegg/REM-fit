@@ -10854,26 +10854,33 @@ table > tbody > tr > td,
 }
 
 .compare-vs-section {
-  max-width: 900px;
-  margin: 0 auto 40px;
-  padding: 0 16px;
+  margin: 0 0 40px;
+  padding: 40px 16px;
+  background: #58327a;
   text-align: center;
 }
 .compare-vs-section__title {
-  margin-bottom: 20px;
-  color: #58327a;
+  margin-bottom: 24px;
+  color: #fff;
   font-family: "Nunito", sans-serif;
   font-weight: 600;
 }
 .compare-vs-links {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
 }
 .compare-vs-links .compare-vs-link {
-  flex: 0 1 360px;
-  text-align: center;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.compare-vs-links .compare-vs-link:hover {
+  text-decoration: none;
 }
 .compare-page-title-wrapper {
   align-self: center;
@@ -10889,8 +10896,8 @@ table > tbody > tr > td,
     font-size: 30px;
     line-height: 40px;
   }
-  .compare-vs-links .compare-vs-link {
-    flex-basis: 100%;
+  .compare-vs-links {
+    grid-template-columns: 1fr;
   }
 }
 
