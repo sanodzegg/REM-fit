@@ -10872,7 +10872,7 @@ table > tbody > tr > td,
   max-width: 900px;
   margin: 0 auto;
 }
-.compare-vs-links .compare-vs-link .compare-vs-link span {
+.compare-vs-links .compare-vs-link, .compare-vs-link span {
   color: #fff;
   font-family: "Nunito", sans-serif;
   font-weight: 600;
