@@ -167,22 +167,22 @@
         "product_aEMytX": {
           "type": "product",
           "settings": {
-            "product": "rem-fit®-3000-supreme-hybrid-mattress",
+            "product": "rem-fit-3000-supreme-hybrid-mattress",
             "badge": "Softer Tension",
             "title": "3000 Supreme Hybrid",
             "details": "<p><strong>- Medium tension (6/10)<br/>- 3000 pocket springs</strong><br/><strong>- High-carbon steel gauge<br/></strong>- Pressure relief comfort layer<br/>- Cool open-cell memory foam<br/>- Encapsulated edge support<br/>- Multi-zoned gentle support<br/>- Removable washable cover</p>",
-            "url": "shopify://products/rem-fit®-3000-supreme-hybrid-mattress"
+            "url": "shopify://products/rem-fit-3000-supreme-hybrid-mattress"
           }
         },
         "product_BPpPbN": {
           "type": "product",
           "disabled": true,
           "settings": {
-            "product": "rem-fit®-natural-lux-mattress",
+            "product": "rem-fit-natural-lux-hybrid-mattress",
             "badge": "Natural Fillings",
             "title": "Natural Lux Hybrid",
             "details": "<p><strong>- Med-firm tension (7/10)</strong><br/>- 1000 pocket springs <br/>- Sumptuous Hampshire wool <br/>- Fine English cotton <br/>- Traditional side-stitching<br/>- Smooth-Tech™ tuft-free</p>",
-            "url": "shopify://products/rem-fit®-natural-lux-mattress"
+            "url": "shopify://products/rem-fit-natural-lux-hybrid-mattress"
           }
         }
       },
