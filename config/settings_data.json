@@ -346,7 +346,7 @@
               "enabled": false,
               "enabledMobile": true,
               "align": "center",
-              "messages": "<p><strong>🏆 Award-Winning World Class Sleep </strong></p><p><strong>Save Up To 20% Off Mattresses</strong></p><p><strong>Free Bedding Worth Up To £200</strong></p><p><strong>25% Off Pillows & Protectors</strong> </p><p><strong>100-Night Risk Free Sleep Trial</strong></p>"
+              "messages": "<p><strong>🏆 Award-Winning World Class Sleep </strong></p><p><strong>Save Up To 20% Off Mattresses</strong> </p><p><strong>100-Night Risk Free Sleep Trial</strong></p>"
             }
           },
           "495b8c28-b68b-42ce-bb28-aa4c191740c8": {
@@ -355,7 +355,7 @@
               "enabled": true,
               "enabledMobile": false,
               "align": "center",
-              "messages": "<p><strong>🏆 Award-Winning World Class Sleep </strong></p><p><strong>Save Up To 20% Off Mattresses</strong></p><p><strong>Free Bedding Worth Up To £200</strong></p><p><strong>25% Off Pillows & Protectors </strong></p><p><strong>100-Night Risk Free Sleep Trial</strong></p>"
+              "messages": "<p><strong>🏆 Award-Winning World Class Sleep </strong></p><p><strong>Save Up To 20% Off Mattresses</strong></p><p><strong>100-Night Risk Free Sleep Trial</strong></p>"
             }
           }
         },
