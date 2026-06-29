@@ -233,8 +233,8 @@
             "button_style": "outline",
             "button_color": "#ffffff",
             "button_hover_color": "#ffffff",
-            "button_bg_color": "#c9a84c",
-            "button_bg_hover_color": "#d5a219",
+            "button_bg_color": "#3F2155",
+            "button_bg_hover_color": "#5B307A",
             "button_border_color": "#000000",
             "button_border_hover_color": "#3f2155"
           }
