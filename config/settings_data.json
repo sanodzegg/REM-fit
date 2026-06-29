@@ -97,7 +97,7 @@
     "percentage_discount": "20",
     "discount_button_text": "Apply 20% Off",
     "discount_success_text": "Extra 20% Off Applied",
-    "enable_savings_widget": true,
+    "enable_savings_widget": false,
     "savings_popup_text": "<p>The total saving amount is calculated against the full value of the free gifts and additional discounts. The total savings value will vary depending on the mattress size you choose.</p>",
     "savings_amount": "99.98",
     "enable_freegift_widget": false,
