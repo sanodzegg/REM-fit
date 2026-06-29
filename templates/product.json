@@ -260,7 +260,6 @@
         "product_page_badge_R9BqHi": {
           "type": "productPageBadge",
           "name": "Mattress protector upsell promo image",
-          "disabled": true,
           "settings": {
             "noMargin": true,
             "badge": "shopify://shop_images/Boost_Banner_10.png",
@@ -270,7 +269,6 @@
         "rebuy_personalization_engine_rebuy_widget_7QXn9E": {
           "type": "shopify://apps/rebuy-personalization-engine/blocks/rebuy-widget/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
           "name": "Mattress protector upsell Rebuy widget",
-          "disabled": true,
           "settings": {
             "enabled": true,
             "id": "196337",
