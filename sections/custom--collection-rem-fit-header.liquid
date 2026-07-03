@@ -1,0 +1,130 @@
+<section class="rem-fit-collection-header-wrapper">
+  <div class="rem-fit-collection-page">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'eyebrow' %}
+          <p class="rem-fit-collection-eyebrow">{{ block.settings.text }}</p>
+        {% when 'heading' %}
+          <h1>{{ block.settings.text }}</h1>
+        {% when 'paragraph' %}
+          <p class="rem-fit-collection-paragraph">{{ block.settings.text }}</p>
+        {% when 'button' %}
+          <a
+            {% if block.settings.url != blank %}
+              href="{{ block.settings.url }}" target="_blank" rel="noopener"
+            {% endif %}
+          >
+            {{- block.settings.text -}}
+          </a>
+      {% endcase %}
+    {% endfor %}
+
+    {% assign logo_blocks = section.blocks | where: 'type', 'logo' %}
+    {% if logo_blocks.size > 0 %}
+        <div class="rem-fit-collections-header-logos">
+            {% for block in logo_blocks %} 
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 300 }}"
+                    alt="{{ block.settings.label | escape }}"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    loading="eager"
+                  >
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "limit": 1,
+      "name": "Mini Title",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "limit": 1,
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "limit": 1,
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "limit": 1,
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "logo",
+      "name": "Award / Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Caption"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection: Header",
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "paragraph" },
+        { "type": "button" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

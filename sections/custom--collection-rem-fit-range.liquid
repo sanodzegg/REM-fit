@@ -1,0 +1,171 @@
+<section class="rem-fit-collection-range-wrapper">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'eyebrow' %}
+        <p class="rem-fit-collection-eyebrow">{{ block.settings.text }}</p>
+      {% when 'heading' %}
+        <h2>{{ block.settings.text }}</h2>
+      {% when 'paragraph' %}
+        <p class="rem-fit-collection-paragraph">{{ block.settings.text }}</p>
+    {% endcase %}
+  {% endfor %}
+
+  {% assign product_blocks = section.blocks | where: "type", "product" %}
+  {% if product_blocks %} 
+    <div class="rem-fit-collection-products-wrapper">
+      {% for block in product_blocks %} 
+        {% assign product = block.settings.product %}
+        <div class="rem-fit-collection-product-wrapper{% if block.settings.featured %} featured{% endif %}">
+          <div class="badge">{{ block.settings.text }}</div>
+          <div class="product-image">
+            <img src="{{ product.featured_image | image_url: width: 500 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="{{ product.featured_image.alt }}">
+          </div>
+          <h3>{{ block.settings.custom_title | default: product.title }}</h3>
+          <p class="description">{{ block.settings.custom_description | default: product.description }}</p>
+          {%- assign firmness = block.settings.firmness | plus: 0 -%}
+          {%- if firmness < 4 -%}
+            {%- assign firmness_label = 'Soft' -%}
+          {%- elsif firmness < 7 -%}
+            {%- assign firmness_label = 'Medium' -%}
+          {%- elsif firmness < 9 -%}
+            {%- assign firmness_label = 'Med-firm' -%}
+          {%- else -%}
+            {%- assign firmness_label = 'Firm' -%}
+          {%- endif -%}
+          <div class="range-wrapper">
+            <div class="range-titles">
+              <span>Soft</span>
+              <span>{{ firmness_label }} {{ firmness }}/10</span>
+              <span>Firm</span>
+            </div>
+
+            {%- assign firmness_percent = firmness | times: 10 -%}
+            <div class="range-meter">
+              <div class="range-filled" style="width: {{ firmness_percent }}%;"></div>
+            </div>
+          </div>
+
+          <div class="rem-fit-collection-price-wrapper">
+            {%- if product.price_varies -%}
+              <span class="price-prefix">from</span>
+            {%- endif -%}
+            <span class="price">{{ product.price_min | money }}</span>
+            {%- if product.compare_at_price_min > product.price_min -%}
+              {%- assign saving_percent = product.compare_at_price_min | minus: product.price_min | times: 100.0 | divided_by: product.compare_at_price_min | round -%}
+              <s class="price-compare">{{ product.compare_at_price_min | money }}</s>
+              <span class="price-badge">Save {{ saving_percent }}%</span>
+            {%- endif -%}
+          </div>
+
+          <div class="rem-fit-collection-product-feats">
+            {{ block.settings.features }}
+          </div>
+
+          <div class="cta-wrapper">
+            <a href="{{ product.url }}" class="rem-fit-collection-product-anchor">Shop Now</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Collection Range",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "limit": 1,
+      "name": "Mini Title",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "limit": 1,
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "limit": 1,
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "limit": 5,
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Featured?",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title"
+        },
+        {
+          "type": "text",
+          "id": "custom_description",
+          "label": "Custom Description"
+        },
+        {
+          "type": "range",
+          "id": "firmness",
+          "label": "Firmness",
+          "min": 1,
+          "max": 10,
+          "step": 0.1,
+          "default": 1
+        },
+        {
+          "type": "richtext",
+          "id": "features",
+          "label": "Features"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection: Range",
+      "blocks": [{ "type": "eyebrow" }, { "type": "heading" }, { "type": "paragraph" }, { "type": "product" }]
+    }
+  ]
+}
+{% endschema %}

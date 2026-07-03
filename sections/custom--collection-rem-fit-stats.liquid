@@ -1,0 +1,147 @@
+<section class="rem-fit-collection-stats-wrapper">
+  <div class="rem-fit-collection-page">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'eyebrow' %}
+          <p class="rem-fit-collection-eyebrow">{{ block.settings.text }}</p>
+        {% when 'heading' %}
+          <h2>{{ block.settings.text }}</h2>
+        {% when 'paragraph' %}
+          <p class="rem-fit-collection-paragraph">{{ block.settings.text }}</p>
+      {% endcase %}
+    {% endfor %}
+
+    {% assign stat_blocks = section.blocks | where: "type", "stat" %}
+    {% if stat_blocks %}
+      <div class="rem-fit-collection-stats-grid">
+        {% for block in stat_blocks %}
+          <div class="rem-fit-collection-stat">
+            <span class="stat-value">{{ block.settings.value }}</span>
+            <p class="stat-text">{{ block.settings.text }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="rem-fit-collection-stats-footer">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'note' %}
+            <p class="rem-fit-collection-stats-note">{{ block.settings.text }}</p>
+          {% when 'link' %}
+            <a href="{{ block.settings.url }}" class="rem-fit-collection-stats-link">{{ block.settings.text }}</a>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Stats",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "limit": 1,
+      "name": "Mini Title",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "limit": 1,
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "limit": 1,
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "limit": 8,
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "77%"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Description"
+        }
+      ]
+    },
+    {
+      "type": "note",
+      "limit": 1,
+      "name": "Footnote",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "limit": 1,
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection: Stats",
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "paragraph" },
+        { "type": "stat" },
+        { "type": "stat" },
+        { "type": "stat" },
+        { "type": "stat" },
+        { "type": "note" },
+        { "type": "link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,113 @@
+<section class="rem-fit-collection-awards-wrapper">
+  <div class="rem-fit-collection-page">
+    {% assign logo_blocks = section.blocks | where: "type", "logo" %}
+    {% if logo_blocks %}
+      <div class="rem-fit-collection-awards-logos">
+        {% for block in logo_blocks %}
+          {% if block.settings.image != blank %}
+            <img
+              src="{{ block.settings.image | image_url: width: 320 }}"
+              alt="{{ block.settings.label | escape }}"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              loading="lazy"
+            >
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="rem-fit-collection-awards-content">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'heading' %}
+            <h2>{{ block.settings.text }}</h2>
+          {% when 'paragraph' %}
+            <p class="rem-fit-collection-paragraph">{{ block.settings.text }}</p>
+          {% when 'link' %}
+            <a href="{{ block.settings.url }}" class="rem-fit-collection-awards-link">{{ block.settings.text }}</a>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Awards",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Award / Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Caption"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "limit": 1,
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "limit": 1,
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "limit": 1,
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection: Awards",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "heading" },
+        { "type": "paragraph" },
+        { "type": "link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

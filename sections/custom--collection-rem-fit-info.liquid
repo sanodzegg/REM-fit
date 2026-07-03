@@ -1,0 +1,166 @@
+<section class="rem-fit-collection-info-wrapper">
+  <div class="rem-fit-collection-page">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'cta' %}
+          <div class="rem-fit-info-cta">
+            <h2>{{ block.settings.heading }}</h2>
+            <p class="rem-fit-collection-paragraph">{{ block.settings.text }}</p>
+            <div class="rem-fit-info-cta-buttons">
+              {% if block.settings.button_1_text != blank %}
+                <a href="{{ block.settings.button_1_url | default: '#' }}" class="rem-fit-info-btn rem-fit-info-btn--primary">{{ block.settings.button_1_text }}</a>
+              {% endif %}
+              {% if block.settings.button_2_text != blank %}
+                <a href="{{ block.settings.button_2_url | default: '#' }}" class="rem-fit-info-btn rem-fit-info-btn--secondary">{{ block.settings.button_2_text }}</a>
+              {% endif %}
+            </div>
+          </div>
+
+        {% when 'editorial' %}
+          <div class="rem-fit-info-editorial">
+            <h2>{{ block.settings.heading }}</h2>
+            <input type="checkbox" id="info-readmore-{{ block.id }}" class="rem-fit-info-readmore-toggle" hidden>
+            <div class="rem-fit-info-editorial-body" style="--collapsed: {{ block.settings.collapsed_height }}px;">
+              {{ block.settings.content }}
+            </div>
+            <label
+              for="info-readmore-{{ block.id }}"
+              class="rem-fit-info-readmore"
+              data-more="{{ block.settings.more_text | escape }}"
+              data-less="{{ block.settings.less_text | escape }}"
+            ></label>
+          </div>
+      {% endcase %}
+    {% endfor %}
+
+    {% assign trust_blocks = section.blocks | where: "type", "trust" %}
+    {% if trust_blocks %}
+      <div class="rem-fit-info-trust-bar">
+        {% for block in trust_blocks %}
+          <div class="rem-fit-info-trust-item">
+            <span class="trust-title">{{ block.settings.title }}</span>
+            <span class="trust-subtitle">{{ block.settings.subtitle }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Info",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "blocks": [
+    {
+      "type": "cta",
+      "limit": 1,
+      "name": "CTA Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "button_1_text",
+          "label": "Button 1 label"
+        },
+        {
+          "type": "url",
+          "id": "button_1_url",
+          "label": "Button 1 link"
+        },
+        {
+          "type": "text",
+          "id": "button_2_text",
+          "label": "Button 2 label"
+        },
+        {
+          "type": "url",
+          "id": "button_2_url",
+          "label": "Button 2 link"
+        }
+      ]
+    },
+    {
+      "type": "editorial",
+      "limit": 1,
+      "name": "Editorial",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "range",
+          "id": "collapsed_height",
+          "label": "Collapsed height",
+          "min": 60,
+          "max": 400,
+          "step": 10,
+          "unit": "px",
+          "default": 100
+        },
+        {
+          "type": "text",
+          "id": "more_text",
+          "label": "Expand label",
+          "default": "Read more"
+        },
+        {
+          "type": "text",
+          "id": "less_text",
+          "label": "Collapse label",
+          "default": "Read less"
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "limit": 6,
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "100-night"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Risk-free sleep trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection: Info",
+      "blocks": [
+        { "type": "cta" },
+        { "type": "editorial" },
+        { "type": "trust" },
+        { "type": "trust" },
+        { "type": "trust" }
+      ]
+    }
+  ]
+}
+{% endschema %}

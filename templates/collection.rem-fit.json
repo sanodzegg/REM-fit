@@ -1,0 +1,357 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_collection_rem_fit_header_9KTxc7": {
+      "type": "custom--collection-rem-fit-header",
+      "blocks": {
+        "eyebrow_hP7grE": {
+          "type": "eyebrow",
+          "settings": {
+            "text": "Hybrid Mattresses"
+          }
+        },
+        "heading_aFh4cg": {
+          "type": "heading",
+          "settings": {
+            "text": "The best of springs and foam, in one mattress"
+          }
+        },
+        "paragraph_qCj8bz": {
+          "type": "paragraph",
+          "settings": {
+            "text": "Responsive pocket springs for support, open-cell memory foam for pressure relief and cooling. Five British-made hybrids, one for every way you sleep."
+          }
+        },
+        "button_4PwgPh": {
+          "type": "button",
+          "settings": {
+            "text": "Help me choose",
+            "url": "https://form.typeform.com/to/ABP9gLq0"
+          }
+        },
+        "logo_cMGXeN": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/download.png",
+            "label": "Sleep Awards 2026"
+          }
+        },
+        "logo_JqFRE4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/download_1.png",
+            "label": "Good Housekeeping Institute Approved 2026"
+          }
+        },
+        "logo_6UBtEm": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/text.svg",
+            "label": "Good Housekeeping Sleep Awards 2026"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow_hP7grE",
+        "heading_aFh4cg",
+        "paragraph_qCj8bz",
+        "button_4PwgPh",
+        "logo_cMGXeN",
+        "logo_JqFRE4",
+        "logo_6UBtEm"
+      ],
+      "name": "Collection: Header",
+      "settings": {}
+    },
+    "custom_collection_rem_fit_range_UdyY8Q": {
+      "type": "custom--collection-rem-fit-range",
+      "blocks": {
+        "eyebrow_tm9dkC": {
+          "type": "eyebrow",
+          "settings": {
+            "text": "The range"
+          }
+        },
+        "heading_QVCrgQ": {
+          "type": "heading",
+          "settings": {
+            "text": "Five hybrids, one for every sleeper"
+          }
+        },
+        "paragraph_RJgpVU": {
+          "type": "paragraph",
+          "settings": {
+            "text": "Every model shares zoned pocket-spring support, a breathable open-cell foam layer, a 100-night trial and a 15-year guarantee. The difference is feel, spring count and materials."
+          }
+        },
+        "product_88nUr3": {
+          "type": "product",
+          "settings": {
+            "product": "rem-fit-pocket-1000-memory-foam-hybrid-mattress",
+            "featured": false,
+            "text": "Best Seller",
+            "custom_title": "1000 Comfort",
+            "custom_description": "Everyday Hybrid",
+            "firmness": 7,
+            "features": "<ul><li>1000 full-height pocket springs</li><li>Good Housekeeping Winner 2026</li><li>Made in the UK</li></ul>"
+          }
+        },
+        "product_TKXYVF": {
+          "type": "product",
+          "settings": {
+            "product": "rem-fit-3000-supreme-hybrid-mattress",
+            "featured": false,
+            "text": "For Side Sleepers",
+            "custom_title": "3000 Supreme",
+            "custom_description": "True Medium Hybrid",
+            "firmness": 6,
+            "features": "<ul><li>3000 dual-layer pocket springs</li><li>Pressure-relieving memory foam</li><li>Made in the UK</li></ul>"
+          }
+        },
+        "product_GNVkiE": {
+          "type": "product",
+          "settings": {
+            "product": "rem-fit-4000-ortho-elite-hybrid-mattress",
+            "featured": false,
+            "text": "Firmest",
+            "custom_title": "4000 Ortho Elite",
+            "custom_description": "Orthopaedic Hybrid",
+            "firmness": 9,
+            "features": "<ul><li>4000 dual-layer pocket springs</li><li>Firm orthopaedic back support</li><li>Made in the UK</li></ul>"
+          }
+        },
+        "product_nJU8Nd": {
+          "type": "product",
+          "settings": {
+            "product": "rem-fit-5000-lux-elite-hybrid-mattress",
+            "featured": true,
+            "text": "Most Springs",
+            "custom_title": "5000 Lux Elite",
+            "custom_description": "Flagship Hybrid",
+            "firmness": 7.5,
+            "features": "<ul><li>5000 dual-layer pocket springs</li><li>Good Housekeeping Approved 2026</li><li>Deep, cooling comfort layer</li></ul>"
+          }
+        },
+        "product_gYALJW": {
+          "type": "product",
+          "settings": {
+            "product": "rem-fit-natural-lux-hybrid-mattress",
+            "featured": false,
+            "text": "Which? Best Buy",
+            "custom_title": "Natural Lux",
+            "custom_description": "Handmade Wool Hybrid",
+            "firmness": 7,
+            "features": "<ul><li>1000 English-steel pocket springs</li><li>Triple-layer Hampshire wool</li><li>Handmade in the UK</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow_tm9dkC",
+        "heading_QVCrgQ",
+        "paragraph_RJgpVU",
+        "product_88nUr3",
+        "product_TKXYVF",
+        "product_GNVkiE",
+        "product_nJU8Nd",
+        "product_gYALJW"
+      ],
+      "name": "Collection: Range",
+      "settings": {}
+    },
+    "custom_collection_rem_fit_stats_cYkQi9": {
+      "type": "custom--collection-rem-fit-stats",
+      "blocks": {
+        "eyebrow_A6wxYp": {
+          "type": "eyebrow",
+          "settings": {
+            "text": "From our mattress finder · 105,165 UK sleepers surveyed"
+          }
+        },
+        "heading_aU633M": {
+          "type": "heading",
+          "settings": {
+            "text": "Built around what UK sleepers actually want"
+          }
+        },
+        "paragraph_TLWA6N": {
+          "type": "paragraph",
+          "settings": {
+            "text": "We analysed the preferences of over 105,000 UK sleepers to design this range. Match a model to your priority — support, temperature, motion or sleep position."
+          }
+        },
+        "stat_JGPcKr": {
+          "type": "stat",
+          "settings": {
+            "value": "77%",
+            "text": "<strong>report back pain when shopping for a mattress</strong>"
+          }
+        },
+        "stat_BNK7yi": {
+          "type": "stat",
+          "settings": {
+            "value": "84%",
+            "text": "<strong>want advanced temperature regulation</strong>"
+          }
+        },
+        "stat_bFFY3C": {
+          "type": "stat",
+          "settings": {
+            "value": "72%",
+            "text": "<strong>want motion isolation from a partner</strong>"
+          }
+        },
+        "stat_xH3mrj": {
+          "type": "stat",
+          "settings": {
+            "value": "65.8%",
+            "text": "<strong>sleep on their side at least some of the night</strong>"
+          }
+        },
+        "note_JQjmWF": {
+          "type": "note",
+          "settings": {
+            "text": "Based on 105,165 UK sleepers in REM-Fit's Mattress Finder data."
+          }
+        },
+        "link_nNmrdw": {
+          "type": "link",
+          "settings": {
+            "text": "Read the full research",
+            "url": "/pages/uk-sleeper-preferences"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow_A6wxYp",
+        "heading_aU633M",
+        "paragraph_TLWA6N",
+        "stat_JGPcKr",
+        "stat_BNK7yi",
+        "stat_bFFY3C",
+        "stat_xH3mrj",
+        "note_JQjmWF",
+        "link_nNmrdw"
+      ],
+      "name": "Collection: Stats",
+      "settings": {}
+    },
+    "custom_collection_rem_fit_awards_8dFQBF": {
+      "type": "custom--collection-rem-fit-awards",
+      "blocks": {
+        "logo_xbJ8ci": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/download.png",
+            "label": "Sleep Awards"
+          }
+        },
+        "logo_NUEzN9": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/download_1.png",
+            "label": "Good Housekeeping Institute"
+          }
+        },
+        "heading_h9fQya": {
+          "type": "heading",
+          "settings": {
+            "text": "Good Housekeeping Sleep Awards 2026 winners"
+          }
+        },
+        "paragraph_BRGzHP": {
+          "type": "paragraph",
+          "settings": {
+            "text": "Our hybrids are independently tested, approved and award-winning — including three wins at this year's Sleep Awards."
+          }
+        },
+        "link_iHA9hP": {
+          "type": "link",
+          "settings": {
+            "text": "See all our awards →",
+            "url": "/pages/rem-fit-awards-page"
+          }
+        }
+      },
+      "block_order": [
+        "logo_xbJ8ci",
+        "logo_NUEzN9",
+        "heading_h9fQya",
+        "paragraph_BRGzHP",
+        "link_iHA9hP"
+      ],
+      "name": "Collection: Awards",
+      "settings": {}
+    },
+    "custom_collection_rem_fit_info_qY3anh": {
+      "type": "custom--collection-rem-fit-info",
+      "blocks": {
+        "cta_TRUJaM": {
+          "type": "cta",
+          "settings": {
+            "heading": "Not sure which is right for you?",
+            "text": "See all five side by side on feel, springs, depth and price — or take the 60-second finder for a personal match and 5% off.",
+            "button_1_text": "Compare mattresses",
+            "button_1_url": "shopify://pages/mattress-comparison-page",
+            "button_2_text": "Help me choose",
+            "button_2_url": "https://form.typeform.com/to/ABP9gLq0"
+          }
+        },
+        "editorial_LQQBJF": {
+          "type": "editorial",
+          "settings": {
+            "heading": "What is a hybrid mattress?",
+            "content": "<p>A hybrid mattress combines the responsive support of individually pocketed springs with the pressure-relieving comfort of memory foam — giving you the best of both technologies in a single mattress.<br/><br/>Every REM-Fit hybrid mattress is built around a core of individually wrapped pocket springs that move independently, so when your partner shifts position, you don't feel a thing. Above the springs sit layers of temperature-regulating memory foam engineered to distribute your weight evenly, easing pressure on your shoulders, hips and lower back.<br/><br/>Our range covers every sleep preference. The Pocket 1000 Hybrid offers an accessible entry point with 1,000 individual pocket springs and a medium-firm feel suited to most sleepers. The 4000 Ortho Elite provides firm orthopaedic support for back and joint pain sufferers, while the 5000 Lux Elite delivers a luxury sleep surface with advanced cooling gel technology for anyone who sleeps hot. For a softer, more enveloping feel, the 3000 Supreme Hybrid balances cushioned comfort with lasting support.<br/><br/>All our hybrid mattresses are available in single, double, king and super king sizes, come with free UK delivery, and are backed by a 100-night risk-free sleep trial and a 15-year guarantee.<br/><br/>Not sure which firmness suits you? Use our mattress comparison tool to find the right match for your sleep position and body type.</p>",
+            "collapsed_height": 140,
+            "more_text": "Read more",
+            "less_text": "Read less"
+          }
+        },
+        "trust_HAXYce": {
+          "type": "trust",
+          "settings": {
+            "title": "100-night",
+            "subtitle": "Risk-free sleep trial"
+          }
+        },
+        "trust_TyQthr": {
+          "type": "trust",
+          "settings": {
+            "title": "Free",
+            "subtitle": "UK delivery & disposal"
+          }
+        },
+        "trust_4VTnjm": {
+          "type": "trust",
+          "settings": {
+            "title": "15-year",
+            "subtitle": "Guarantee"
+          }
+        }
+      },
+      "block_order": [
+        "cta_TRUJaM",
+        "editorial_LQQBJF",
+        "trust_HAXYce",
+        "trust_TyQthr",
+        "trust_4VTnjm"
+      ],
+      "name": "Collection: Info",
+      "settings": {}
+    }
+  },
+  "order": [
+    "custom_collection_rem_fit_header_9KTxc7",
+    "custom_collection_rem_fit_range_UdyY8Q",
+    "custom_collection_rem_fit_stats_cYkQi9",
+    "custom_collection_rem_fit_awards_8dFQBF",
+    "custom_collection_rem_fit_info_qY3anh"
+  ]
+}
