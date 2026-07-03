@@ -109,7 +109,7 @@
     "gift_bundle_product2_price": "24.99",
     "gift_bundle_product2_image": "shopify://shop_images/cotton_protector_angle_1_1_3e8494fb-cc7c-401e-8d2d-67b257bf93b0.png",
     "mattressespromo_enable": true,
-    "mattressespromo": "<p>⚽ World Cup Offer: <strong>Extra 10% Off</strong> While England Are Still In It!</p>",
+    "mattressespromo": "<p><strong>⚽ World Cup Offer: Extra 10% Off While England Are Still In It - Use Code STILLINIT</strong></p>",
     "bedframespromo_enable": true,
     "bedframespromo": "<p><strong>💡</strong>Complete the set: <strong>Save £150</strong> when you bundle this bed with any REM-Fit mattress!</p>",
     "divanbedspromo_enable": true,
@@ -346,7 +346,7 @@
               "enabled": false,
               "enabledMobile": true,
               "align": "center",
-              "messages": "<p><strong>🏆 Award-Winning World Class Sleep </strong></p><p><strong>Save 10% Off Hybrid Mattresses</strong> </p><p><strong>100-Night Risk Free Sleep Trial</strong></p>"
+              "messages": "<p><strong>🏆 Award-Winning World Class Sleep </strong></p><p><strong>⚽ Save 10% Off Hybrid Mattresses</strong> </p><p><strong>While England Are Still In The World Cup</strong></p><p><strong>100-Night Risk Free Sleep Trial</strong></p>"
             }
           },
           "495b8c28-b68b-42ce-bb28-aa4c191740c8": {
@@ -355,7 +355,7 @@
               "enabled": true,
               "enabledMobile": false,
               "align": "center",
-              "messages": "<p><strong>🏆 Award-Winning World Class Sleep </strong></p><p><strong>Save 10% Off Hybrid Mattresses</strong></p><p><strong>100-Night Risk Free Sleep Trial</strong></p>"
+              "messages": "<p><strong>🏆 Award-Winning World Class Sleep </strong></p><p><strong>⚽ Save 10% Off Hybrid Mattresses</strong> </p><p><strong>While England Are Still In The World Cup</strong></p><p><strong>100-Night Risk Free Sleep Trial</strong></p>"
             }
           }
         },
