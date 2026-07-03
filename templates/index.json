@@ -187,7 +187,7 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p>🏆 World-Class Sleep & Award-Winning Products</p>",
+            "heading": "<p>🏆 <strong>World Cup Offer: <br/>Save 10% Off Mattresses!</strong></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 32,
@@ -201,7 +201,7 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<p></p><p>• <strong>10% Off While England Are Still In It<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
+            "text": "<p><br/>• <strong>10% Off While England Are Still In It<br/></strong>• <strong>Save £200 Off Divan Bases<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
@@ -233,8 +233,8 @@
             "button_style": "outline",
             "button_color": "#ffffff",
             "button_hover_color": "#ffffff",
-            "button_bg_color": "#3F2155",
-            "button_bg_hover_color": "#5B307A",
+            "button_bg_color": "#3f2155",
+            "button_bg_hover_color": "#5b307a",
             "button_border_color": "#000000",
             "button_border_hover_color": "#3f2155"
           }
