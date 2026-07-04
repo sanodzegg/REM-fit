@@ -316,6 +316,7 @@
         },
         "trust_HAXYce": {
           "type": "trust",
+          "disabled": true,
           "settings": {
             "title": "100-night",
             "subtitle": "Risk-free sleep trial"
@@ -323,6 +324,7 @@
         },
         "trust_TyQthr": {
           "type": "trust",
+          "disabled": true,
           "settings": {
             "title": "Free",
             "subtitle": "UK delivery & disposal"
@@ -330,6 +332,7 @@
         },
         "trust_4VTnjm": {
           "type": "trust",
+          "disabled": true,
           "settings": {
             "title": "15-year",
             "subtitle": "Guarantee"
