@@ -97,23 +97,23 @@
           "settings": {
             "product": "rem-fit-pocket-1000-memory-foam-hybrid-mattress",
             "featured": false,
-            "text": "Best Seller",
+            "text": "Best Value",
             "custom_title": "1000 Comfort",
-            "custom_description": "Everyday Hybrid",
+            "custom_description": "best value hybrid 2026",
             "firmness": 7,
             "features": "<ul><li>1000 full-height pocket springs</li><li>Good Housekeeping Winner 2026</li><li>Made in the UK</li></ul>"
           }
         },
-        "product_TKXYVF": {
+        "product_nJU8Nd": {
           "type": "product",
           "settings": {
-            "product": "rem-fit-3000-supreme-hybrid-mattress",
-            "featured": false,
-            "text": "For Side Sleepers",
-            "custom_title": "3000 Supreme",
-            "custom_description": "True Medium Hybrid",
-            "firmness": 6,
-            "features": "<ul><li>3000 dual-layer pocket springs</li><li>Pressure-relieving memory foam</li><li>Made in the UK</li></ul>"
+            "product": "rem-fit-5000-lux-elite-hybrid-mattress",
+            "featured": true,
+            "text": "Highest Spec",
+            "custom_title": "5000 Lux Elite",
+            "custom_description": "Flagship Hybrid",
+            "firmness": 7.5,
+            "features": "<ul><li>5000 dual-layer pocket springs</li><li>Good Housekeeping Approved 2026</li><li>Deep, cooling comfort layer</li></ul>"
           }
         },
         "product_GNVkiE": {
@@ -128,16 +128,16 @@
             "features": "<ul><li>4000 dual-layer pocket springs</li><li>Firm orthopaedic back support</li><li>Made in the UK</li></ul>"
           }
         },
-        "product_nJU8Nd": {
+        "product_TKXYVF": {
           "type": "product",
           "settings": {
-            "product": "rem-fit-5000-lux-elite-hybrid-mattress",
-            "featured": true,
-            "text": "Most Springs",
-            "custom_title": "5000 Lux Elite",
-            "custom_description": "Flagship Hybrid",
-            "firmness": 7.5,
-            "features": "<ul><li>5000 dual-layer pocket springs</li><li>Good Housekeeping Approved 2026</li><li>Deep, cooling comfort layer</li></ul>"
+            "product": "rem-fit-3000-supreme-hybrid-mattress",
+            "featured": false,
+            "text": "Softest",
+            "custom_title": "3000 Supreme",
+            "custom_description": "Ideal for side sleepers",
+            "firmness": 6,
+            "features": "<ul><li>3000 dual-layer pocket springs</li><li>Pressure-relieving memory foam</li><li>Made in the UK</li></ul>"
           }
         },
         "product_gYALJW": {
@@ -158,9 +158,9 @@
         "heading_QVCrgQ",
         "paragraph_RJgpVU",
         "product_88nUr3",
-        "product_TKXYVF",
-        "product_GNVkiE",
         "product_nJU8Nd",
+        "product_GNVkiE",
+        "product_TKXYVF",
         "product_gYALJW"
       ],
       "name": "Collection: Range",
