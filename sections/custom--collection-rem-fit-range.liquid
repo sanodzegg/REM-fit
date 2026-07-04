@@ -70,6 +70,38 @@
   {% endif %}
 </section>
 
+{% stylesheet %}
+@media (max-width: 749px) {
+  /* turn the stacked grid into a swipeable rail */
+  .rem-fit-collection-range-wrapper .rem-fit-collection-products-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 0 20px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .rem-fit-collection-range-wrapper .rem-fit-collection-products-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  /* each card ~82% width so the next one peeks in, signalling swipe */
+  .rem-fit-collection-range-wrapper .rem-fit-collection-product-wrapper {
+    flex: 0 0 82%;
+    max-width: 82%;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+  /* stop the featured card scaling/clipping inside the rail */
+  .rem-fit-collection-range-wrapper .rem-fit-collection-product-wrapper.featured {
+    transform: none;
+  }
+}
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Collection Range",
