@@ -206,6 +206,7 @@ body {
 }
 .col-12.col-md-6.gallery__vertical.hide-mobile.desk-gall-full {
   margin-bottom: 20px;
+  height: fit-content;
 }
 
 @media only screen and (min-width: 768px) {

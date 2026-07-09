@@ -53,7 +53,41 @@
     margin-top: {{section.settings.galleryImageGap}}px;
   }
 
-  #colorcode {};
+  #colorcode {}
+
+  #product-videos-vertical {
+    display: flex;
+    flex-wrap: wrap;
+    gap: {{section.settings.galleryImageGap}}px;
+    width: 100%;
+    margin-top: {{section.settings.galleryImageGap}}px;
+  }
+
+  .product-video-item {
+    flex: 1 1 100%;
+  }
+
+  .product-video-item video {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 16px;
+    background-color: #CABBB6;
+  }
+
+  .product-video-item__title {
+    margin: 12px 0 0;
+  }
+
+  .product-video-item__text {
+    margin: 8px 0 0;
+  }
+
+  .product-video-item__link {
+    display: inline-block;
+    margin-top: 12px;
+  }
 </style>
 <div class="sticky--mobile hide-desktop sticky--closed hide">
   <div class="sticky--container">
@@ -184,62 +218,101 @@
       {% endfor %}
     </div>
     {% when 'verticalDouble' %}
-      <div data-gallery-type="vDouble" class="col-12 {{size}} gallery__vertical hide-mobile desk-gall-full">
-    {% assign media_collection = product.images | concat: product.media %}
-    {% assign unique_media_collection = media_collection | uniq %}
-    {% assign sorted_media_collection = unique_media_collection | sort: 'position' %}
+    <div data-gallery-type="vDouble" class="col-12 {{size}} gallery__vertical hide-mobile desk-gall-full">
+      {% assign media_collection = product.images | concat: product.media %}
+      {% assign unique_media_collection = media_collection | uniq %}
+      {% assign sorted_media_collection = unique_media_collection | sort: 'position' %}
 
-    {% for media in sorted_media_collection %}
-      {% if media.media_type == 'image' or media.media_type == blank %}
-        <div
-          data-variants="{% for var in media.variants %}{{var.id}}|{% endfor %}"
-          {% if forloop.first %}
-            class="col-12 col-md-12 fullwidth-gallerybox"
-          {% else %}
-            class="col-12 col-md-6"
-          {% endif %}
-        >
-          <a data-fslightbox="gallery" href="{{ media.src | img_url: '700x700' }}" class="prod-galleryfull">
-            {% render 'image', size: '900x', src: media.src, alt: media.alt %}
-          </a>
-        </div>
-        {% if forloop.index == 1 %}
-              {{ block.settings.title }}
-              <div class="countdown-div col-12 col-md-12">
-                {% render 'block__product-page--countdown', product: product, block: block, view: view %}
-              </div>
-            {% endif %}
-      {% elsif media.media_type == 'external_video' %}
-        <div class="col-12 col-md-6">
+      {% for media in sorted_media_collection %}
+        {% if media.media_type == 'image' or media.media_type == blank %}
           <div
-            class="external__holder"
-            data-media-holder="{{media.id}}"
-            style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100}}%;"
+            data-variants="{% for var in media.variants %}{{var.id}}|{% endfor %}"
+            {% if forloop.first %}
+              class="col-12 col-md-12 fullwidth-gallerybox"
+            {% else %}
+              class="col-12 col-md-6"
+            {% endif %}
           >
-            {% capture med %}{{ media | external_video_tag: class: 'gallery__external lazyload' }}{% endcapture %}
-            {{ med | replace_first: 'src', 'data-src' }}
+            <a data-fslightbox="gallery" href="{{ media.src | img_url: '700x700' }}" class="prod-galleryfull">
+              {% render 'image', size: '900x', src: media.src, alt: media.alt %}
+            </a>
           </div>
-        </div>
-      {% elsif media.media_type == 'video' %}
-        <div class="col-12 col-md-6 video-box">
-          <div class="video_pdp" id="video-{{ media.id }}">
-            {% comment %} {{ media | video_tag | replace_first: 'poster=', 'autoplay="autoplay" loop="loop" muted defaultMuted playsinline oncontextmenu="return false;" preload="auto" poster=' }} {% endcomment %}
+          {% if forloop.index == 1 %}
+                {{ block.settings.title }}
+                <div class="countdown-div col-12 col-md-12">
+                  {% render 'block__product-page--countdown', product: product, block: block, view: view %}
+                </div>
+              {% endif %}
+        {% elsif media.media_type == 'external_video' %}
+          <div class="col-12 col-md-6">
+            <div
+              class="external__holder"
+              data-media-holder="{{media.id}}"
+              style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100}}%;"
+            >
+              {% capture med %}{{ media | external_video_tag: class: 'gallery__external lazyload' }}{% endcapture %}
+              {{ med | replace_first: 'src', 'data-src' }}
+            </div>
           </div>
-           <script>
-             if (window.innerWidth > 767) {
-              const media = {{ media | json }};
-              const videoHtml = `
-                <video data-video-src="${ media.sources[2].url }" poster="${ media.preview_image.src }" playsinline="playsinline" preload="metadata" aria-label="" autoplay="autoplay" loop="loop" muted="" defaultmuted="" oncontextmenu="return false;">
-                  <img src="${ media.preview_image.src }">
-                </video>`;
-              const videoContainer = document.querySelector(`#video-${media.id}`);
-              videoContainer.innerHTML = videoHtml;
-             }
-           </script>
-        </div>
-      {% endif %}
-    {% endfor %}
-  </div>
+        {% elsif media.media_type == 'video' %}
+          <div class="col-12 col-md-6 video-box">
+            <div class="video_pdp" id="video-{{ media.id }}">
+              {% comment %} {{ media | video_tag | replace_first: 'poster=', 'autoplay="autoplay" loop="loop" muted defaultMuted playsinline oncontextmenu="return false;" preload="auto" poster=' }} {% endcomment %}
+            </div>
+            <script>
+              if (window.innerWidth > 767) {
+                const media = {{ media | json }};
+                const videoHtml = `
+                  <video data-video-src="${ media.sources[2].url }" poster="${ media.preview_image.src }" playsinline="playsinline" preload="metadata" aria-label="" autoplay="autoplay" loop="loop" muted="" defaultmuted="" oncontextmenu="return false;">
+                    <img src="${ media.preview_image.src }">
+                  </video>`;
+                const videoContainer = document.querySelector(`#video-${media.id}`);
+                videoContainer.innerHTML = videoHtml;
+              }
+            </script>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <div id="product-videos-vertical">
+        {% for block in section.blocks %}
+          {% if block.type == 'video' %}
+            {% if block.settings.autoplay %}
+              {% assign isMuted = true %}
+            {% else %}
+              {% assign isMuted = false %}
+            {% endif %}
+            <div class="product-video-item" {{ block.shopify_attributes }}>
+              {% if block.settings.video != blank %}
+                <video
+                  src="{{ block.settings.video.sources[1].url }}"
+                  playsinline
+                  preload="metadata"
+                  {% if block.settings.autoplay %}autoplay{% endif %}
+                  {% if block.settings.loop %}loop{% endif %}
+                  {% if block.settings.controls %}controls{% endif %}
+                  {% if isMuted %}muted{% endif %}
+                ></video>
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+              {% endif %}
+
+              {% if block.settings.heading != blank %}
+                <h3 class="product-video-item__title">{{ block.settings.heading }}</h3>
+              {% endif %}
+
+              {% if block.settings.text != blank %}
+                <p class="product-video-item__text">{{ block.settings.text }}</p>
+              {% endif %}
+
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link_url }}" class="product-video-item__link">{{ block.settings.link }}</a>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
   {% endcase %}
   {%- comment -%}
     /Checking for vertical gallery styles
@@ -257,7 +330,8 @@
       {% form 'product', product %}
         {% assign firstTab = true %}
         {% for block in section.blocks %}
-          
+          {% if block.type == 'video' %}{% continue %}{% endif %}
+
           {% if block.type == 'freegiftbundle' %}
             {% if product.metafields.custom.free_gift_bundle_section_enable_disable %}
               {% unless product.title contains 'clearance' %}
@@ -339,6 +413,7 @@
       {% form 'product', product %}
         {% assign firstTab = true %}
         {% for block in section.blocks %}
+          {% if block.type == 'video' %}{% continue %}{% endif %}
           {% if block.type == 'freegiftpdp' %}
             {% render free-gift-pdp %}
           {% endif %}
@@ -540,6 +615,34 @@ parentGroups.forEach(group => {
     }
   });
 });
+
+// Mobile: move the gallery videos above the first accordion group
+(function () {
+  const videos = document.getElementById('product-videos-vertical');
+  if (!videos) return;
+
+  // Remember the original desktop position inside the gallery
+  const anchor = document.createComment('product-videos-anchor');
+  videos.parentNode.insertBefore(anchor, videos);
+
+  const mq = window.matchMedia('(max-width: 768px)');
+
+  function placeVideos() {
+    if (mq.matches) {
+      const firstGroup =
+        document.querySelector('details#accordion-group-product') ||
+        document.querySelector('.product-accordion-group');
+      if (firstGroup && firstGroup.previousElementSibling !== videos) {
+        firstGroup.parentNode.insertBefore(videos, firstGroup);
+      }
+    } else if (anchor.nextSibling !== videos) {
+      anchor.parentNode.insertBefore(videos, anchor.nextSibling);
+    }
+  }
+
+  placeVideos();
+  (mq.addEventListener ? mq.addEventListener('change', placeVideos) : mq.addListener(placeVideos));
+})();
 
 // Smooth scroll with responsive offset
 const discountLinks = document.querySelectorAll('.discount-section a');
@@ -1564,6 +1667,59 @@ document.addEventListener("DOMContentLoaded", function () {
                 "label": "Remove bottom space"
               }
           ]
+      },
+      {
+        "type": "video",
+        "name": "Gallery Video",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Renders inside the vertical gallery"
+          },
+          {
+            "type": "video",
+            "id": "video",
+            "label": "Video"
+          },
+          {
+            "type": "checkbox",
+            "id": "controls",
+            "label": "Show Controls on Video",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Autoplay Video",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "loop",
+            "label": "Loop Video",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "link",
+            "label": "Link Text"
+          },
+          {
+            "type": "url",
+            "id": "link_url",
+            "label": "Link URL"
+          }
+        ]
       }
     ]
 }
