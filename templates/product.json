@@ -731,7 +731,7 @@
         "autoZoom": false,
         "autoChange": false,
         "galleryImageFit": "contain",
-        "galleryImageGap": 5,
+        "galleryImageGap": 12,
         "productNavigation": false
       }
     },
