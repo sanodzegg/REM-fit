@@ -371,7 +371,7 @@
         "accordion_group_start_product": {
           "type": "accordionGroupStart",
           "settings": {
-            "heading": "Product",
+            "heading": "Product FAQ's",
             "openByDefault": false,
             "accCustomID": "accordion-group-product"
           }
