@@ -525,7 +525,7 @@
         "accordion_group_start_returns": {
           "type": "accordionGroupStart",
           "settings": {
-            "heading": "Returns",
+            "heading": "Sleep trial & returns",
             "openByDefault": false,
             "accCustomID": "accordion-group-returns"
           }
