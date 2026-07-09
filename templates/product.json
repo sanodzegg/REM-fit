@@ -372,7 +372,7 @@
           "type": "accordionGroupStart",
           "settings": {
             "heading": "Product",
-            "openByDefault": true,
+            "openByDefault": false,
             "accCustomID": "accordion-group-product"
           }
         },
