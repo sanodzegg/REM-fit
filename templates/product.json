@@ -488,7 +488,7 @@
         "accordion_group_start_delivery": {
           "type": "accordionGroupStart",
           "settings": {
-            "heading": "Delivery",
+            "heading": "Delivery info",
             "openByDefault": false,
             "accCustomID": "accordion-group-delivery"
           }
