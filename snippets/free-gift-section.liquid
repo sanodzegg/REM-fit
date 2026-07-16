@@ -208,9 +208,15 @@ observer.observe(document.body, {
 
   // Utility: wait for multiple elements
   function waitForAllElements(selectors, callback) {
+    const allExist = () => selectors.every(sel => $(sel).length > 0);
+
+    if (allExist()) {
+      callback();
+      return;
+    }
+
     const observer = new MutationObserver(() => {
-      const allExist = selectors.every(sel => $(sel).length > 0);
-      if (allExist) {
+      if (allExist()) {
         callback();
         observer.disconnect();
       }
@@ -223,13 +229,16 @@ observer.observe(document.body, {
   $('select#size_dropdown').change(() => updateTotalPrice(true));
   $(document).on("change", "select.rebuy-select", () => updateTotalPrice(false));
 
-  // 🔄 Wait until ALL required elements are ready before first calculation
   waitForAllElements(
     [
       "#prod-price", // main product price
-      ".rebuy-addon__item-product-price .rebuy-money.compare-at span:last-child", // rebuy price
       ".free-gift-product" // free gift
     ],
+    () => updateTotalPrice(false)
+  );
+
+  waitForAllElements(
+    [".rebuy-addon__item-product-price .rebuy-money.compare-at span:last-child"],
     () => updateTotalPrice(false)
   );
 });
