@@ -187,7 +187,7 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p>🏆 <strong>World Cup Offer Still Live: <br/>Save 10% Off Mattresses!</strong></p>",
+            "heading": "<p>🏆 <strong>Award-Winning Hybrid Mattresses</strong></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 32,
@@ -201,7 +201,7 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<p><br/>• <strong>10% Off While England Are Still In It<br/></strong>• <strong>Save £200 Off Divan Bases<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
+            "text": "<p><br/><strong>• Free Pillows With Mattresses<br/></strong>• <strong>Save £200 Off Divan Bases<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
@@ -215,14 +215,14 @@
         "button_NpMU7b": {
           "type": "button",
           "settings": {
-            "button": "Shop Mattresses",
+            "button": "Hybrid Mattresses",
             "url": "shopify://collections/rem-fit-hybrid-mattresses",
             "button_custom": false,
             "button_font": "josefin_sans_n4",
             "button_size": 18,
             "button_size_mobile": 16,
             "button_height": 140,
-            "button_padding_horizontal": 70,
+            "button_padding_horizontal": 64,
             "button_padding_horizontal_mobile": 74,
             "button_padding_vertical": 16,
             "button_padding_vertical_mobile": 16,
@@ -379,7 +379,7 @@
         "content_align": "left",
         "content_align_mobile": "left",
         "content_vertical_align": "start",
-        "media_type": "video",
+        "media_type": "image",
         "image": "shopify://shop_images/RF-Firm-Hybrid-Mattress-UK_Awards-smaller_4cfff9eb-b3da-4578-b2b8-f5d29395655b.jpg",
         "video": "shopify://files/videos/Animate_this_bedroom_image_int.mp4",
         "video_url": "",
