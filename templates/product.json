@@ -221,6 +221,8 @@
         "dividebuy_spread_the_cost_dividebuyproduct_XiRVhf": {
           "type": "shopify://apps/dividebuy-spread-the-cost/blocks/dividebuyproduct/3ea5bc0e-1a15-490b-b431-d3ea9a2cd3da",
           "settings": {
+            "integration_type": "legacy",
+            "widget_service_api_key": "",
             "finproms_text": "or_from",
             "include_cart_total": false,
             "alignment": "left",
@@ -278,7 +280,6 @@
         },
         "49659766-1623-4eb2-b106-2a8952aaefb1": {
           "type": "productPagebadges",
-          "disabled": true,
           "settings": {
             "badges-html": "<ul>\n{% if product.metafields.custom.pp_guarantee_1.value %}\n<li>{{ product.metafields.custom.pp_guarantee_1.value }}</li>{% endif %}\n{% if product.metafields.custom.pp_guarantee_2.value %}\n<li> \n{{ product.metafields.custom.pp_guarantee_2}}</li> \n{% endif %}\n{% if product.metafields.custom.pp_guarantee_2.value %}\n<li>\n{{ product.metafields.custom.pp_guarantee_3}}</li> \n{% endif %}\n</ul>\n<br/>"
           }
