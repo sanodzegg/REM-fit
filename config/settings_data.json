@@ -721,7 +721,8 @@
     "custom_css": [
       "header.page__header.page__header--desktop .main__navigation.font__size--base > .nav__link__holder > .nav__link {min-height: 40px; padding: 0.1rem 6px; color: #000; margin: 0; margin: 0; font-weight: 600; font-size: 16px !important;}",
       "header.page__header.page__header--desktop .main__navigation.font__size--base {font-size: 16px !important;}",
-      "#section-template--25415197786492__banner > div > div > p.hybrid-hidden {display: none;}"
+      "#section-template--25415197786492__banner > div > div > p.hybrid-hidden {display: none;}",
+      ".article__featured--shadow {display: none !important; }"
     ]
   }
 }
