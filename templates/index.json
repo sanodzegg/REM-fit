@@ -187,11 +187,11 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>Award-Winning Mattresses</strong></p>",
+            "heading": "<p><strong>Award-Winning Mattresses<br/>With Free Sleep Bundle Offer!</strong></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
-            "heading_size": 32,
-            "heading_size_mobile": 24,
+            "heading_size": 30,
+            "heading_size_mobile": 22,
             "heading_height": 100,
             "heading_mt": 24,
             "heading_mt_mobile": 20,
@@ -205,7 +205,7 @@
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
-            "text_size_mobile": 17,
+            "text_size_mobile": 15,
             "text_height": 140,
             "text_mt": 24,
             "text_mt_mobile": 20,
