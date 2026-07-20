@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 28" width="30" height="28">
+  <!-- REM-Fit nav icon: discount tag with "+" bubble ("Extra Off") -->
+  <!-- Tag -->
+  <path fill="#3f2155" d="M23.4 15.6l-9-9A2 2 0 0 0 13 6H6a2 2 0 0 0-2 2v7c0 .5.2 1 .6 1.4l9 9a2 2 0 0 0 2.8 0l7-7a2 2 0 0 0 0-2.8zM9.5 13A1.5 1.5 0 1 1 11 11.5 1.5 1.5 0 0 1 9.5 13z"/>
+  <!-- Plus bubble (white ring so it sits cleanly on any bar background) -->
+  <circle cx="23" cy="7" r="6.5" fill="#ffffff"/>
+  <circle cx="23" cy="7" r="5.5" fill="#3f2155"/>
+  <path stroke="#f7c948" stroke-width="1.8" stroke-linecap="round" d="M23 4.6v4.8M20.6 7h4.8"/>
+</svg>
