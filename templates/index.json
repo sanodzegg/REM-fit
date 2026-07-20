@@ -160,11 +160,11 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>SUMMER SALE <br/></strong><em><strong>ends Sunday 2nd August<br/></strong></em><strong><br/>Sleep Cooler For Less</strong></p>",
+            "heading": "<p><strong>SUMMER SALE - Sleep Cool For Less. </strong></p><p><em>Ends Sun 2nd Aug</em></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 34,
-            "heading_size_mobile": 24,
+            "heading_size_mobile": 20,
             "heading_height": 100,
             "heading_mt": 24,
             "heading_mt_mobile": 20,
@@ -173,6 +173,7 @@
         },
         "text_cwUMEN": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "<p><strong>• Save 10% On All Mattresses</strong><br/>• <strong>Save £200 On All Divan Bases<br/><br/></strong></p>",
             "text_custom": false,
