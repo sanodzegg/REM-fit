@@ -187,7 +187,7 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>Award-Winning Mattresses<br/>With Free Sleep Bundle Offer!</strong></p>",
+            "heading": "<p><strong>Award-Winning Mattresses</strong></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 30,
@@ -201,7 +201,7 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>• Free Pillows With Mattresses (-£99.98)<br/>• + Free Cotton Pillow Protectors (-£49.98)<br/></strong>• <strong>Save £200 Off Divan Bases<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
+            "text": "<p>• <strong>Save £200 Off Divan Bases<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
@@ -380,7 +380,7 @@
         "content_align_mobile": "left",
         "content_vertical_align": "start",
         "media_type": "image",
-        "image": "shopify://shop_images/sleep-bundle-homepage-promo-1.jpg",
+        "image": "shopify://shop_images/RF-Firm-Hybrid-Mattress-UK_Awards-2026.jpg",
         "video": "shopify://files/videos/Animate_this_bedroom_image_int.mp4",
         "video_url": "",
         "media_ratio_mobile": "original",
