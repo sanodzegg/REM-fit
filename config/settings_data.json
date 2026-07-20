@@ -100,7 +100,7 @@
     "enable_savings_widget": false,
     "savings_popup_text": "<p>The total saving amount is calculated against the full value of the free gifts and additional discounts. The total savings value will vary depending on the mattress size you choose.</p>",
     "savings_amount": "99.98",
-    "enable_freegift_widget": true,
+    "enable_freegift_widget": false,
     "gift_bundle_section_title": "Included FREE With Your Order!",
     "gift_bundle_product1_title": "Luxury Memory Foam Pillow",
     "gift_bundle_product1_price": "49.99",
