@@ -160,11 +160,11 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>SUMMER SALE - </strong><em>Ends Sunday 2nd Aug</em></p>",
+            "heading": "<p>Award-Winning Sleep, <br/>Now 10% Lighter On Price</p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 30,
-            "heading_size_mobile": 20,
+            "heading_size_mobile": 24,
             "heading_height": 100,
             "heading_mt": 24,
             "heading_mt_mobile": 20,
@@ -312,11 +312,11 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>• Save 10% On All Mattresses</strong><br/>• <strong>Save £200 On All Divan Bases<br/></strong>• <strong>100 Night Sleep Trial<br/></strong>• <strong>Free* 2-5 Day Delivery<br/><br/></strong></p>",
+            "text": "<p><strong>Every mattress in the Summer Sale comes with our full sleep trial and free</strong>*<strong> delivery.<br/></strong></p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
-            "text_size_mobile": 19,
+            "text_size_mobile": 18,
             "text_height": 140,
             "text_mt": 24,
             "text_mt_mobile": 20,
