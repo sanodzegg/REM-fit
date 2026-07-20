@@ -160,10 +160,10 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>SUMMER SALE <br/></strong><em><strong>ends Sunday 2nd August</strong></em></p><p><strong><br/>Sleep Cooler For Less</strong></p>",
+            "heading": "<p><strong>SUMMER SALE <br/></strong><em><strong>ends Sunday 2nd August<br/></strong></em><strong><br/>Sleep Cooler For Less</strong></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
-            "heading_size": 30,
+            "heading_size": 34,
             "heading_size_mobile": 24,
             "heading_height": 100,
             "heading_mt": 24,
