@@ -157,41 +157,14 @@
     "ss_hero_30_pzmy8C": {
       "type": "ss-hero-30",
       "blocks": {
-        "review_LTNtBy": {
-          "type": "review",
-          "settings": {
-            "review_padding_horizontal": 12,
-            "review_padding_horizontal_mobile": 8,
-            "review_padding_vertical": 8,
-            "review_padding_vertical_mobile": 0,
-            "review_radius": 6,
-            "review_bg_opacity": 0.5,
-            "review_mt": 20,
-            "review_mt_mobile": 0,
-            "stars_count": 4.5,
-            "stars_size": 18,
-            "stars_size_mobile": 16,
-            "review": "<p><strong>Excellent 4.2 | </strong><a href=\"https://www.trustpilot.com/review/shop.rem-fit.co.uk\" target=\"_blank\" title=\"https://www.trustpilot.com/review/shop.rem-fit.co.uk\"><strong>2745+ Trustpilot reviews</strong></a></p>",
-            "review_custom": false,
-            "review_font": "josefin_sans_n4",
-            "review_size": 18,
-            "review_size_mobile": 14,
-            "review_height": 130,
-            "review_color": "#121212",
-            "review_bg_color": "#f3f3f3",
-            "stars_color": "#ffffff",
-            "stars_bg_color": "#00b67a",
-            "stars_bg_half_color": "#dddddd"
-          }
-        },
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>Award-Winning Mattresses<br/>Sleep Cooler For Less!</strong></p>",
+            "heading": "<p><strong>SUMMER SALE <br/></strong><em><strong>ends Sunday 2nd August</strong></em></p><p><strong><br/>Sleep Cooler For Less</strong></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 30,
-            "heading_size_mobile": 22,
+            "heading_size_mobile": 24,
             "heading_height": 100,
             "heading_mt": 24,
             "heading_mt_mobile": 20,
@@ -201,7 +174,7 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>• Summer Sale Ends Aug 2nd <br/>• Save 10% Off All Mattresses</strong><br/>• <strong>Save £200 Off Divan Bases<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
+            "text": "<p><strong>• Save 10% On All Mattresses</strong><br/>• <strong>Save £200 On All Divan Bases<br/><br/></strong></p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
@@ -215,14 +188,14 @@
         "button_NpMU7b": {
           "type": "button",
           "settings": {
-            "button": "Hybrid Mattresses",
+            "button": "Shop The Sale",
             "url": "shopify://collections/rem-fit-hybrid-mattresses",
             "button_custom": false,
             "button_font": "josefin_sans_n4",
             "button_size": 18,
             "button_size_mobile": 16,
             "button_height": 140,
-            "button_padding_horizontal": 64,
+            "button_padding_horizontal": 78,
             "button_padding_horizontal_mobile": 74,
             "button_padding_vertical": 16,
             "button_padding_vertical_mobile": 16,
@@ -324,6 +297,7 @@
         },
         "button_Prfk3f": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "button": "Shop Pillows",
             "url": "shopify://collections/rem-fit-pillows",
@@ -348,17 +322,44 @@
             "button_border_color": "#3f2155",
             "button_border_hover_color": "#000000"
           }
+        },
+        "review_LTNtBy": {
+          "type": "review",
+          "settings": {
+            "review_padding_horizontal": 12,
+            "review_padding_horizontal_mobile": 8,
+            "review_padding_vertical": 8,
+            "review_padding_vertical_mobile": 22,
+            "review_radius": 6,
+            "review_bg_opacity": 0.5,
+            "review_mt": 20,
+            "review_mt_mobile": 0,
+            "stars_count": 4.5,
+            "stars_size": 18,
+            "stars_size_mobile": 16,
+            "review": "<p><strong>Excellent 4.2 | </strong><a href=\"https://www.trustpilot.com/review/shop.rem-fit.co.uk\" target=\"_blank\" title=\"https://www.trustpilot.com/review/shop.rem-fit.co.uk\"><strong>2745+ Trustpilot reviews</strong></a></p>",
+            "review_custom": false,
+            "review_font": "josefin_sans_n4",
+            "review_size": 18,
+            "review_size_mobile": 14,
+            "review_height": 130,
+            "review_color": "#121212",
+            "review_bg_color": "#f3f3f3",
+            "stars_color": "#ffffff",
+            "stars_bg_color": "#00b67a",
+            "stars_bg_half_color": "#dddddd"
+          }
         }
       },
       "block_order": [
-        "review_LTNtBy",
         "heading_tepiWr",
         "text_cwUMEN",
         "button_NpMU7b",
         "button_XqyGCj",
         "button_pDy9Fd",
         "button_4ViJ93",
-        "button_Prfk3f"
+        "button_Prfk3f",
+        "review_LTNtBy"
       ],
       "custom_css": [
         ".hero-button-inner-button_NpMU7b {color: white;}",
@@ -366,7 +367,7 @@
       ],
       "settings": {
         "hero_height": "auto",
-        "hero_fixed_height": 590,
+        "hero_fixed_height": 630,
         "hero_fixed_height_mobile": 350,
         "layout": "content_media",
         "layout_mobile": "media_content",
@@ -375,7 +376,7 @@
         "content_padding_horizontal": 100,
         "content_padding_horizontal_mobile": 24,
         "content_padding_vertical": 76,
-        "content_padding_vertical_mobile": 40,
+        "content_padding_vertical_mobile": 0,
         "content_align": "left",
         "content_align_mobile": "left",
         "content_vertical_align": "start",
