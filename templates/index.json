@@ -165,8 +165,8 @@
             "heading_font": "josefin_sans_n4",
             "heading_size": 30,
             "heading_size_mobile": 24,
-            "heading_height": 100,
-            "heading_mt": 14,
+            "heading_height": 110,
+            "heading_mt": 0,
             "heading_mt_mobile": 20,
             "heading_color": "#3f2155"
           }
