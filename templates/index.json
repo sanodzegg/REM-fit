@@ -187,7 +187,7 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p><strong>Award-Winning Mattresses</strong></p>",
+            "heading": "<p><strong>Award-Winning Mattresses<br/>Sleep Cooler For Less!</strong></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 30,
@@ -201,7 +201,7 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<p>• <strong>Save £200 Off Divan Bases<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
+            "text": "<p><strong>• Summer Sale Ends Aug 2nd <br/>• Save 10% Off All Mattresses</strong><br/>• <strong>Save £200 Off Divan Bases<br/></strong>• <strong>Risk Free 100-Night Sleep Trial<br/></strong>• <strong>GHI Approved 8 Years In a Row</strong>🥇<strong><br/><br/></strong></p>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
