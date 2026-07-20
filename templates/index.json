@@ -196,7 +196,7 @@
             "button_size": 18,
             "button_size_mobile": 16,
             "button_height": 140,
-            "button_padding_horizontal": 78,
+            "button_padding_horizontal": 40,
             "button_padding_horizontal_mobile": 74,
             "button_padding_vertical": 16,
             "button_padding_vertical_mobile": 16,
