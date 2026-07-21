@@ -312,7 +312,7 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<ul><li><strong>10% Off All Mattresses</strong></li><li><strong>Risk Free 100 Night Trial</strong></li><li><strong>0% Payment Options</strong></li><li><strong>Free 2-5 Day Delivery</strong></li></ul>",
+            "text": "<ul><li><strong>10% Off All Mattresses</strong></li><li><strong>Free Pillows (worth £99.98)</strong></li><li><strong>Risk Free 100 Night Trial</strong></li><li><strong>0% Payment Options</strong></li><li><strong>Free 2-5 Day Delivery</strong></li></ul>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
