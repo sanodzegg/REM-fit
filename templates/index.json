@@ -160,7 +160,7 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p>Summer Sale<br/>Sleep Cooler For Less</p>",
+            "heading": "<p>Summer Sale Live<br/>Sleep Cooler For Less</p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 42,
@@ -381,7 +381,7 @@
         "content_align_mobile": "left",
         "content_vertical_align": "center",
         "media_type": "image",
-        "image": "shopify://shop_images/summer-sale-5000-lux-minimal.jpg",
+        "image": "shopify://shop_images/summer-sale-5000-lux-minimal_b47ed9b8-80a2-4fa0-a733-5d134eef9f8e.jpg",
         "video": "shopify://files/videos/Animate_this_bedroom_image_int.mp4",
         "video_url": "",
         "media_ratio_mobile": "original",
