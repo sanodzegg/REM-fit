@@ -312,7 +312,7 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<ul><li><strong>10% Off All Mattresses</strong></li><li><strong>Free Pillows (worth £99.98)</strong></li><li><strong>Risk Free 100 Night Trial</strong></li><li><strong>0% Payment Options</strong></li><li><strong>Free 2-5 Day Delivery</strong></li></ul>",
+            "text": "<ul><li><strong>10% Off All Mattresses</strong></li><li><strong>Risk Free 100 Night Trial</strong></li><li><strong>0% Payment Options</strong></li><li><strong>Free 2-5 Day Delivery</strong></li></ul>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
@@ -381,7 +381,7 @@
         "content_align_mobile": "left",
         "content_vertical_align": "center",
         "media_type": "image",
-        "image": "shopify://shop_images/summersale-bundle-photo-hero_1.jpg",
+        "image": "shopify://shop_images/summer-sale-5000-lux-minimal_b47ed9b8-80a2-4fa0-a733-5d134eef9f8e.jpg",
         "video": "shopify://files/videos/Animate_this_bedroom_image_int.mp4",
         "video_url": "",
         "media_ratio_mobile": "original",
