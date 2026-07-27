@@ -380,7 +380,7 @@
         "content_padding_vertical_mobile": 0,
         "content_align": "left",
         "content_align_mobile": "left",
-        "content_vertical_align": "center",
+        "content_vertical_align": "start",
         "media_type": "image",
         "image": "shopify://shop_images/remfit-summer-1d-square.png",
         "video": "shopify://files/videos/Animate_this_bedroom_image_int.mp4",
