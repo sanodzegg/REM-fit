@@ -313,7 +313,7 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<ul><li><strong>Summer Sale Boosted</strong></li><li><strong>Now Up To 20% Off Mattresses</strong></li><li><strong>Risk Free 100 Night Trial</strong></li><li><strong>0% Payment Options</strong></li><li><strong>Free 2-5 Day Delivery</strong></li></ul>",
+            "text": "<ul><li><strong>Summer Sale Boosted</strong></li><li><strong>Up To 20% Off Mattresses</strong></li><li><strong>Risk Free 100 Night Trial</strong></li><li><strong>0% Payment Options</strong></li><li><strong>Free 2-5 Day Delivery</strong></li><li><strong>Ends Sunday 2nd Aug</strong></li></ul>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
