@@ -313,11 +313,11 @@
         "text_cwUMEN": {
           "type": "text",
           "settings": {
-            "text": "<ul><li><strong>Summer Sale Boosted</strong></li><li><strong>Up To 20% Off Mattresses</strong></li><li><strong>Risk Free 100 Night Trial</strong></li><li><strong>0% Payment Options</strong></li><li><strong>Free 2-5 Day Delivery</strong></li><li><strong>Ends Sunday 2nd Aug</strong></li></ul>",
+            "text": "<ul><li><strong>Free Luxury Memory Foam Pillows</strong></li><li><strong>Free Cotton Pillow Protectors</strong></li><li><strong>Risk Free 100 Night Trial</strong></li><li><strong>0% Payment Options</strong></li><li><strong>Free 2-5 Day Delivery</strong></li></ul>",
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
-            "text_size_mobile": 18,
+            "text_size_mobile": 16,
             "text_height": 140,
             "text_mt": 24,
             "text_mt_mobile": 20,
@@ -382,7 +382,7 @@
         "content_align_mobile": "left",
         "content_vertical_align": "start",
         "media_type": "image",
-        "image": "shopify://shop_images/remfit-summer-1d-square_3x_2_2_2.jpg",
+        "image": "shopify://shop_images/RF-Firm-Hybrid-Mattress-UK_Awards-2026.jpg",
         "video": "shopify://files/videos/Animate_this_bedroom_image_int.mp4",
         "video_url": "",
         "media_ratio_mobile": "original",
