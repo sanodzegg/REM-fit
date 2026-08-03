@@ -159,13 +159,12 @@
       "blocks": {
         "heading_tepiWr": {
           "type": "heading",
-          "disabled": true,
           "settings": {
-            "heading": "<p>Summer Sale Boosted<br/>Now Up To 20% Off<br/></p>",
+            "heading": "<p>August Sleep Bundle Giveaway Worth £149.96<br/></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
-            "heading_size": 42,
-            "heading_size_mobile": 24,
+            "heading_size": 32,
+            "heading_size_mobile": 22,
             "heading_height": 110,
             "heading_mt": 0,
             "heading_mt_mobile": 20,
