@@ -40,6 +40,7 @@
     assign data = ''
     assign total = 0
     assign shown = 0
+    assign has_sized_gift = false
   -%}
 
   {%- for gift in gift_refs -%}
@@ -53,58 +54,122 @@
           assign sized = true
         endif
       endfor
+
+      assign base_qty = 1
+      if qty_list[i] != blank
+        assign base_qty = qty_list[i] | strip | plus: 0
+      endif
+      if base_qty < 1
+        assign base_qty = 1
+      endif
+
+      assign doubles = false
+      if gift.tags contains 'free-gift-pillow'
+        assign doubles = true
+      endif
+
+      assign qty = base_qty
+      if doubles and size_is_large
+        assign qty = base_qty | times: 2
+      endif
+
+      assign gv = gift.selected_or_first_available_variant
+      assign matched_label = ''
     -%}
 
-    {%- unless sized -%}
-      {%- liquid
-        assign base_qty = 1
-        if qty_list[i] != blank
-          assign base_qty = qty_list[i] | strip | plus: 0
-        endif
-        if base_qty < 1
-          assign base_qty = 1
-        endif
+    {%- if sized -%}
+      {%- assign has_sized_gift = true -%}
+      {%- for v in gift.variants -%}
+        {%- liquid
+          assign vkey = ''
+          assign vlabel = ''
+          assign vwords = v.title | split: ' '
+          for w in vwords
+            assign lw = w | downcase
+            if lw contains 'x'
+              break
+            endif
+            assign vlabel = vlabel | append: w | append: ' '
+            unless lw == 'size'
+              assign vkey = vkey | append: lw | append: ' '
+            endunless
+          endfor
+          assign vkey = vkey | strip
+        -%}
+        {%- if vkey == sel_key and sel_key != blank -%}
+          {%- liquid
+            assign gv = v
+            assign matched_label = vlabel | strip
+          -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
 
-        assign doubles = false
-        if gift.tags contains 'free-gift-pillow'
-          assign doubles = true
-        endif
+    {%- liquid
+      assign line = gv.price | times: qty
+      assign total = total | plus: line
+      assign shown = shown | plus: 1
+    -%}
 
-        assign qty = base_qty
-        if doubles and size_is_large
-          assign qty = base_qty | times: 2
-        endif
-
-        assign gv = gift.selected_or_first_available_variant
-        assign line = gv.price | times: qty
-        assign total = total | plus: line
-        assign shown = shown | plus: 1
-      -%}
-
-      {%- capture rows -%}
-        {{ rows }}
-        <div class="rfg__row" data-rfg-row="{{ i }}">
-          <span class="rfg__tick" aria-hidden="true"></span>
-          {%- if gift.featured_image -%}
-            <img class="rfg__img" src="{{ gift.featured_image | image_url: width: 96 }}" alt="" width="44" height="44" loading="lazy">
-          {%- else -%}
-            <span class="rfg__img" aria-hidden="true"></span>
-          {%- endif -%}
-          <div class="rfg__main">
-            <div class="rfg__top">
-              <p class="rfg__name">
-                <span class="rfg__qty" data-rfg-qty>{%- if qty > 1 -%}{{ qty }}&nbsp;×&nbsp;{%- endif -%}</span>{{ gift.title | strip }}
-              </p>
-              <span class="rfg__val" data-rfg-val>{{ line | money }}</span>
-            </div>
+    {%- capture rows -%}
+      {{ rows }}
+      <div class="rfg__row" data-rfg-row="{{ i }}">
+        <span class="rfg__tick" aria-hidden="true"></span>
+        {%- if gift.featured_image -%}
+          <img class="rfg__img" src="{{ gift.featured_image | image_url: width: 96 }}" alt="" width="44" height="44" loading="lazy">
+        {%- else -%}
+          <span class="rfg__img" aria-hidden="true"></span>
+        {%- endif -%}
+        <div class="rfg__main">
+          <div class="rfg__top">
+            <p class="rfg__name">
+              <span class="rfg__qty" data-rfg-qty>{%- if qty > 1 -%}{{ qty }}&nbsp;×&nbsp;{%- endif -%}</span>{{ gift.title | strip }}
+            </p>
+            <span class="rfg__val" data-rfg-val>{{ line | money }}</span>
           </div>
+          {%- if sized -%}
+            <div class="rfg__size" data-rfg-size>
+              {%- if matched_label != blank -%}
+                Size: <b>{{ matched_label }}</b> - matched to your mattress
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         </div>
-      {%- endcapture -%}
+      </div>
+    {%- endcapture -%}
 
-      {%- capture data -%}
-        {{ data }}{% unless shown == 1 %},{% endunless %}{ "qty": {{ base_qty }}, "doubles": {{ doubles }}, "price": {{ gv.price }} }
-      {%- endcapture -%}
-    {%- endunless -%}
+    {%- capture data -%}
+      {{ data }}{% unless shown == 1 %},{% endunless %}{
+        "qty": {{ base_qty }},
+        "doubles": {{ doubles }},
+        "sized": {{ sized }},
+        "price": {{ gv.price }},
+        "sizes": { {%- if sized -%}
+          {%- for v in gift.variants -%}
+            {%- liquid
+              assign vkey = ''
+              assign vlabel = ''
+              assign vwords = v.title | split: ' '
+              for w in vwords
+                assign lw = w | downcase
+                if lw contains 'x'
+                  break
+                endif
+                assign vlabel = vlabel | append: w | append: ' '
+                unless lw == 'size'
+                  assign vkey = vkey | append: lw | append: ' '
+                endunless
+              endfor
+              assign vkey = vkey | strip
+              assign vlabel = vlabel | strip
+            -%}
+            {%- unless forloop.first -%},{%- endunless -%}
+            {{ vkey | json }}: { "price": {{ v.price }}, "label": {{ vlabel | json }} }
+          {%- endfor -%}
+        {%- endif -%} }
+      }
+    {%- endcapture -%}
   {%- endfor -%}
 
   <div class="rfg" id="rfg-{{ product.id }}" data-rfg>
@@ -124,17 +189,14 @@
 
     <div class="rfg__items" data-rfg-items>
       {{ rows }}
-      {%- comment -%}
-        Hidden until Rebuy populates it. Widget 205022 is currently in Live Mode OFF, so
-        this stays empty — better to never paint a stray tick than to show one and remove
-        it a few seconds later.
-      {%- endcomment -%}
-      <div class="rfg__row rfg__row--rebuy" data-rfg-rebuy-row style="display:none">
-        <span class="rfg__tick" aria-hidden="true"></span>
-        <div class="rfg__main">
-          <div data-rebuy-id="205022" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+      {%- unless has_sized_gift -%}
+        <div class="rfg__row rfg__row--rebuy" data-rfg-rebuy-row style="display:none">
+          <span class="rfg__tick" aria-hidden="true"></span>
+          <div class="rfg__main">
+            <div data-rebuy-id="205022" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+          </div>
         </div>
-      </div>
+      {%- endunless -%}
     </div>
 
     <div class="rfg__total" data-rfg-total>
@@ -220,8 +282,6 @@
         return el ? Math.round(num(el.textContent) * 100) : 0;
       }
 
-      /* Reveal the Rebuy row only once it has actually rendered something. Returns
-         whether it counts as a gift row. */
       function syncRebuyRow() {
         if (!rebuyRow) return false;
         var slot = rebuyRow.querySelector('[data-rebuy-id]');
@@ -240,11 +300,28 @@
         gifts.forEach(function (g, i) {
           var row = rows[i];
           if (!row) return;
+
           var qty = g.doubles && large ? g.qty * 2 : g.qty;
-          var lineTotal = g.price * qty;
+          var unit = g.price;
+          var label = '';
+
+          if (g.sized && key && g.sizes[key]) {
+            unit = g.sizes[key].price;
+            label = g.sizes[key].label;
+          }
+
+          var lineTotal = unit * qty;
           subtotal += lineTotal;
-          row.querySelector('[data-rfg-qty]').textContent = qty > 1 ? qty + ' × ' : '';
+
+          row.querySelector('[data-rfg-qty]').textContent = qty > 1 ? qty + '\u00a0\u00d7\u00a0' : '';
           row.querySelector('[data-rfg-val]').textContent = money(lineTotal);
+
+          var sizeEl = row.querySelector('[data-rfg-size]');
+          if (sizeEl) {
+            sizeEl.innerHTML = label
+              ? 'Size: <b>' + label + '</b> \u2014 matched to your mattress'
+              : '';
+          }
         });
       }
 
@@ -331,7 +408,6 @@
       observer.observe(document.body, { childList: true, subtree: true });
       setTimeout(function () { observer.disconnect(); }, 15000);
 
-      /* Late safety net for a slow Rebuy render. */
       setTimeout(updateTotals, 5000);
 
       sync(false);
@@ -339,18 +415,7 @@
   </script>
 {%- endif -%}
 
-{%- comment -%}
-  Rebuy 196540 — "Pillow protector on mattress pages in free gift section (ATC btn)".
-
-  A PAID Product Cross-Sell, despite the name: it offers protectors behind an
-  "Add (-20%)" button at a non-zero price. It is deliberately rendered OUTSIDE the .rfg
-  card above — a paid button inside a box headed "Free gifts, worth £X" would read as
-  deceptive, and §9 of the handover keeps the quiet gift widget and the bold upsell
-  visually distinct.
-
-  It sits outside the gift_refs check so the upsell still shows on products that have no
-  gift list configured.
-{%- endcomment -%}
+{%- comment -%} Rebuy 196540 — "Pillow protector on mattress pages in free gift section (ATC btn)". {%- endcomment -%}
 <div data-rebuy-id="196540" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
 
 {%- endif -%}

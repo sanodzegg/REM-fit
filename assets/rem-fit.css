@@ -15826,16 +15826,14 @@ span#monthly-payment {
   text-transform: none;
 }
 
-.rfg__items { padding: 2px 0; }
-
 .rfg__row {
   display: flex;
   align-items: flex-start;
   gap: 11px;
   padding: 11px 16px;
-  border-bottom: 1px solid var(--rfg-rail);
+  border-top: 1px solid var(--rfg-rail);
 }
-.rfg__row:last-child { border-bottom: 0; }
+.rfg__row:first-child { border-top: 0; }
 
 /* Confirmation mark, not a control — round, filled, non-interactive (§8). */
 .rfg__tick {
