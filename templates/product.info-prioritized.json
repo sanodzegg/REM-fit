@@ -373,14 +373,6 @@
                         "gotquestions-content": "<div class=\"pdp-got-faq\">\n<p>Got a question? We already have answers for the most questions<\/p>p&gt;<a href=\"https:\/\/rem-fit-uk.myshopify.com\/pages\/faq\" target=\"_blank\">Open FAQ page<\/a>\n      <p><\/p>\n<\/div>\n      <div class=\"pdp-got-chat\">\n      <p>Our friendly specialists are ready to help or recommend mattress <\/p>      <a href=\"javascript:void(0);\" class=\"pdp-link-chat\" onclick=\"GorgiasChat.open();return false;\">Start a chat<\/a>\n      <\/div>"
                     }
                 },
-                "product_page_badge_R9BqHi": {
-                    "type": "productPageBadge",
-                    "settings": {
-                        "noMargin": true,
-                        "badge": "shopify:\/\/shop_images\/Boost_Banner_10.png",
-                        "blockID": "extend-sleep-trial"
-                    }
-                },
                 "rebuy_personalization_engine_rebuy_widget_7QXn9E": {
                     "type": "shopify:\/\/apps\/rebuy-personalization-engine\/blocks\/rebuy-widget\/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
                     "settings": {
@@ -444,7 +436,6 @@
                 "product_page_accordion_WyYLmH",
                 "product_page_accordion_rRNCKJ",
                 "28ccac8d-ca6d-4b5d-aab0-970ac6e0269d",
-                "product_page_badge_R9BqHi",
                 "rebuy_personalization_engine_rebuy_widget_7QXn9E",
                 "rebuy_personalization_engine_rebuy_widget_XKzUYA",
                 "rebuy_personalization_engine_rebuy_widget_eBPrcr",
@@ -453,7 +444,6 @@
             ],
             "custom_css": [
                 ".product__swatches {margin-bottom: 0px !important;}",
-                "#extend-sleep-trial {margin-top: 32px !important;}",
                 ".pdp-got-que-sec {margin-top: 24px !important;}",
                 ".section-template--24643506241916__ss_product_videos_4_cNcKw3-settings {margin-top: 32px !important;}"
             ],

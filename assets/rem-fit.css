@@ -15835,7 +15835,6 @@ span#monthly-payment {
 }
 .rfg__row:first-child { border-top: 0; }
 
-/* Confirmation mark, not a control — round, filled, non-interactive (§8). */
 .rfg__tick {
   width: 17px;
   height: 17px;
@@ -15937,11 +15936,6 @@ span#monthly-payment {
   .rfg * { transition: none !important; animation: none !important; }
 }
 
-/* --------------------------------------------------------------------------
-   Add to cart treatment (§7). Approved in review: the live button is oversized
-   with heavy uppercase text. Scoped to the product page so collection and
-   quick-buy buttons are untouched.
-   -------------------------------------------------------------------------- */
 .template--product #my-button {
   border-radius: 10px;
   background-color: #3f2155;
@@ -15962,11 +15956,6 @@ span#monthly-payment {
 }
 .template--product .product__atc .button { text-transform: none; }
 
-/* --------------------------------------------------------------------------
-   snippets/free-gift-pdp-coll.liquid — free gift list on collection cards.
-   Compact sibling of .rfg; shares the token values but not the heavy chrome
-   (no header block, no dark total bar) since it sits inside a product tile.
-   -------------------------------------------------------------------------- */
 .rfg-card {
   font-family: var(--baseFont, "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif);
   border: 1px solid #ddccee;
@@ -15995,7 +15984,6 @@ span#monthly-payment {
 }
 .rfg-card__row::marker { content: none; }
 
-/* Confirmation mark, not a control — round, filled, non-interactive. */
 .rfg-card__tick {
   width: 12px;
   height: 12px;
@@ -16050,3 +16038,405 @@ span#monthly-payment {
   color: #6b6478;
 }
 .rfg__row--rebuy .gift-bundle-mattress-protector-description-line-2 b { color: #3f2155; }
+
+.pup {
+  --pup-ink: #3f2155;
+  --pup-ink-deep: #2b1639;
+  --pup-gold: #f7c948;
+  --pup-lilac: #ddccee;
+  --pup-rail: #ebe2f3;
+  --pup-surface: #f8f5fb;
+  --pup-grey: #6b6478;
+  --pup-count: 2;
+  --pup-font: var(--baseFont, "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif);
+
+  font-family: var(--pup-font);
+  color: var(--pup-ink-deep);
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+.pup * { box-sizing: border-box; }
+
+/* Rebuy's stylesheet dresses these wrappers as a card of its own. Strip it
+   back to a plain box so the design below is the only thing on screen. */
+.pup .rebuy-widget-container,
+.pup .rebuy-widget-content {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  max-width: none;
+}
+.pup .rebuy-widget-content {
+  border: 1px solid var(--pup-rail);
+  border-radius: 15px;
+  overflow: hidden;
+  background: #fff;
+  margin: 24px 0 0;
+}
+.pup .rebuy-modal-close,
+.pup .powered-by-rebuy { display: none; }
+
+/* ---- header ---- */
+.pup__head {
+  background: var(--pup-ink);
+  padding: 14px 16px 16px;
+}
+.pup__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  min-height: 18px;
+}
+.pup__kicker {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--pup-lilac);
+}
+.pup__chip {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  background: var(--pup-gold);
+  color: var(--pup-ink);
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  margin-left: auto;
+}
+.pup .pup__title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -.01em;
+  text-transform: none;
+}
+.pup__title em {
+  font-style: normal;
+  color: var(--pup-gold);
+}
+
+/* ---- trial meter ---- */
+.pup__meter { margin-top: 14px; }
+.pup__track {
+  position: relative;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  display: flex;
+  overflow: hidden;
+}
+.pup__owned {
+  width: 50%;
+  background: var(--pup-lilac);
+  border-radius: 999px 0 0 999px;
+}
+/* Hatched while the boost is unclaimed, solid once it is. */
+.pup__bonus {
+  width: 50%;
+  border-radius: 0 999px 999px 0;
+  background-image: repeating-linear-gradient(115deg, rgba(247, 201, 72, .32) 0 5px, rgba(247, 201, 72, 0) 5px 10px);
+  box-shadow: inset 0 0 0 1px rgba(247, 201, 72, .55);
+  transition: background .45s ease, box-shadow .45s ease;
+}
+.pup.is-added .pup__bonus {
+  background-image: none;
+  background-color: var(--pup-gold);
+  box-shadow: none;
+}
+.pup__pin {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  width: 2px;
+  height: 18px;
+  background: var(--pup-ink);
+  opacity: .5;
+}
+.pup__scale {
+  display: flex;
+  margin-top: 7px;
+}
+.pup__scale span {
+  width: 50%;
+  font-size: 10.5px;
+  line-height: 1.3;
+  color: rgba(221, 204, 238, .8);
+}
+.pup__scale span:last-child {
+  text-align: right;
+  color: var(--pup-gold);
+  font-weight: 600;
+}
+
+/* ---- body ---- */
+.pup__body {
+  padding: 14px 16px 16px;
+  background: #fff;
+}
+
+/* ---- protector switch ----
+   A custom template cannot add state to Rebuy's Vue component, so the choice
+   lives in hidden radios and the switching is done here. The radios are the
+   first children of .pup__switch, which is what lets ~ reach the panels. */
+.pup__switch { position: relative; }
+.pup__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+.pup__seg {
+  position: relative;
+  display: flex;
+  background: var(--pup-surface);
+  border: 1.5px solid var(--pup-rail);
+  border-radius: 11px;
+  padding: 4px;
+}
+.pup__pill {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / var(--pup-count));
+  height: calc(100% - 8px);
+  background: #fff;
+  border: 1.5px solid var(--pup-ink);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(43, 22, 57, .1);
+  transition: transform .28s cubic-bezier(.4, 0, .2, 1);
+}
+.pup__opt {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 calc(100% / var(--pup-count));
+  min-width: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: var(--pup-font);
+  padding: 8px 4px;
+  text-align: center;
+  color: var(--pup-grey);
+  transition: color .2s ease;
+}
+.pup__opt-name {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.pup__opt-price {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+  opacity: .85;
+}
+
+.pup__panels > .pup__panel { display: none; }
+
+/* One rule set per position. Three is the ceiling the switch is designed for;
+   a fourth protector needs a different pattern, not another line here. */
+.pup__radio:nth-of-type(1):checked ~ .pup__panels > .pup__panel:nth-child(1),
+.pup__radio:nth-of-type(2):checked ~ .pup__panels > .pup__panel:nth-child(2),
+.pup__radio:nth-of-type(3):checked ~ .pup__panels > .pup__panel:nth-child(3) {
+  display: block;
+}
+.pup__radio:nth-of-type(1):checked ~ .pup__seg .pup__opt:nth-of-type(1),
+.pup__radio:nth-of-type(2):checked ~ .pup__seg .pup__opt:nth-of-type(2),
+.pup__radio:nth-of-type(3):checked ~ .pup__seg .pup__opt:nth-of-type(3) {
+  color: var(--pup-ink);
+}
+.pup__radio:nth-of-type(1):checked ~ .pup__seg .pup__opt:nth-of-type(1) .pup__opt-price,
+.pup__radio:nth-of-type(2):checked ~ .pup__seg .pup__opt:nth-of-type(2) .pup__opt-price,
+.pup__radio:nth-of-type(3):checked ~ .pup__seg .pup__opt:nth-of-type(3) .pup__opt-price {
+  color: var(--pup-ink);
+  opacity: 1;
+}
+.pup__radio:nth-of-type(2):checked ~ .pup__seg .pup__pill { transform: translateX(100%); }
+.pup__radio:nth-of-type(3):checked ~ .pup__seg .pup__pill { transform: translateX(200%); }
+
+/* Keyboard focus lands on the radio, which is invisible — show it on the
+   label the shopper is actually looking at. */
+.pup__radio:nth-of-type(1):focus-visible ~ .pup__seg .pup__opt:nth-of-type(1),
+.pup__radio:nth-of-type(2):focus-visible ~ .pup__seg .pup__opt:nth-of-type(2),
+.pup__radio:nth-of-type(3):focus-visible ~ .pup__seg .pup__opt:nth-of-type(3) {
+  outline: 3px solid #7d5aa6;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ---- chosen protector ---- */
+.pup__product {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 13px;
+}
+.pup .pup__img {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  border-radius: 9px;
+  background: var(--pup-surface);
+  border: 1px solid var(--pup-rail);
+  object-fit: cover;
+  display: block;
+}
+.pup__detail { min-width: 0; }
+.pup .pup__name {
+  margin: 0 0 2px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--pup-ink-deep);
+  text-transform: none;
+}
+.pup .pup__why {
+  margin: 0 0 6px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--pup-grey);
+}
+.pup__prices {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.pup__now {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--pup-ink);
+  font-variant-numeric: tabular-nums;
+}
+.pup__was {
+  font-size: 12.5px;
+  color: var(--pup-grey);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+.pup__save {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--pup-ink);
+  background: #fdf3d4;
+  border: 1px solid var(--pup-gold);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- size ---- */
+.pup__select {
+  position: relative;
+  margin-top: 13px;
+}
+.pup .pup__select select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: var(--pup-font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pup-ink-deep);
+  padding: 11px 38px 11px 12px;
+  border: 1.5px solid var(--pup-rail);
+  border-radius: 9px;
+  background: #fff;
+  cursor: pointer;
+  height: auto;
+  margin: 0;
+}
+.pup__select::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--pup-ink);
+  border-bottom: 2px solid var(--pup-ink);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+/* ---- actions ---- */
+.pup .pup__cta {
+  display: block;
+  width: 100%;
+  margin-top: 11px;
+  font-family: var(--pup-font);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--pup-ink);
+  border: 0;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.3;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: background .2s ease, transform .1s ease;
+}
+.pup .pup__cta span {
+  color: #FFF;
+}
+.pup .pup__cta:hover { background: var(--pup-ink-deep); }
+.pup .pup__cta:active { transform: translateY(1px); }
+.pup .pup__cta[disabled] {
+  background: #b9abc8;
+  cursor: not-allowed;
+}
+.pup__panel.cart-has-item .pup__cta { background: #1f7a4d; }
+.pup .pup__decline {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--pup-font);
+  font-size: 11.5px;
+  color: var(--pup-grey);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 3px;
+  text-transform: none;
+}
+.pup__note {
+  display: none !important;
+  margin-top: 12px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--pup-grey);
+}
+.pup__note ul { margin: 0; padding-left: 16px; }
+
+.pup :focus-visible {
+  outline: 3px solid #7d5aa6;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pup *,
+  .pup *::before,
+  .pup *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -254,14 +254,6 @@
                         "upgradesection-content": "{% if product.metafields.custom.upgrade_display_hide != false %}\n<style>\n    .upgrade-box-top {\n  margin: -35px 20px 0;\n  text-align: left;\n}\n.upgrade-box-bottom {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n}\nli {\n    padding-bottom: 8px;\n}\n  i.uil.uil-check {\n    background: #00b67a;\n    width: 18px;\n    height: 18px;\n    border-radius: 100%;\n    display: inline-block;\n    color: #fff;\n    text-align: center;\n    font-size: 14px;\n}\n.badge {\n    background-color: #fff;\n    color: #3F2155;\n    padding: 4px 16px;\n    border: 2px solid #3F2155;\n    border-radius: 50px;\n    cursor: pointer;\n    display: inline-block;\n    font-size: 16px;\n    font-weight: bold;\n    margin-bottom: 8px;\n}\n.content-right{\n    display: flex;\n}\n.heading {\n  font-size: 20px;\n  font-weight: 600;\n  margin: 12px 0 0;\n}\n.text {\n    margin-bottom: 20px;\n   padding-right: 5px;\n  width: max-content;\n}\n\n .upgrade-section img {\n  width: 160px;\n  height: auto;\n\n}\n.bullets {\n    list-style-type: none;\n    padding: 0;\n    font-size: 16px;\n}\n.content-left {\n  text-align: left;\n}\n.bullets li i {\n  margin-right: 5px; \n}\n.cta-button {\n    color: #3F2155;\n    cursor: pointer;\n    font-size: 16px;\n    border-bottom: 1.5px solid #58327a;\n    padding-bottom: 0px;\n    display: inline;\n    font-weight:bold;\n}\n@media (max-width: 420px) {\n .upgrade-section img {\n          width: 100px; \n          height: 120px; \n      }\n      .upgrade-box-top {\n          margin: -38px 0 0 5px; \n      }\n      .badge {\n          padding: 8px 15px; \n      }\n      .heading {\n          font-size: 20px; \n      }\n      .text {\n         margin-bottom: 20px;\n      }\n      .bullets {\n          font-size: 14px; \n      }\n  }\n<\/style>\n<a href=\"{{ product.metafields.custom.upgrade_cta_link}}\">\n<div class=\"upgrade-box\">\n    <div class=\"upgrade-box-top\">\n  {% if product.metafields.custom.upgrade_badge %}\n      <div class=\"badge\">{{ product.metafields.custom.upgrade_badge }}<\/div>\n  {% endif %}\n<\/div>\n\n    <div class=\"upgrade-box-bottom\">\n       {% if product.metafields.custom.upgrade_image != blank %}\n      <div class=\"content-right\">\n        <img src=\"{{ product.metafields.custom.upgrade_image | img_url: 'medium' }}\" alt=\"\">\n      <\/div>\n    {% endif %}    \n        <div class=\"content-left\">\n            <div class=\"heading\">{{ product.metafields.custom.upgrade_title }}<\/div>\n            <div class=\"text\">\n              <ul class=\"bullets\">\n                  {% if product.metafields.custom.upgrade_checklist_1 %}\n                      <li><i class=\"uil uil-check\"><\/i>{{ product.metafields.custom.upgrade_checklist_1 }}<\/li>\n                  {% endif %}\n                  {% if product.metafields.custom.upgrade_checklist_2 %}\n                      <li><i class=\"uil uil-check\"><\/i>{{ product.metafields.custom.upgrade_checklist_2 }}<\/li>\n                  {% endif %}\n                  {% if product.metafields.custom.upgrade_checklist_3 %}\n                      <li><i class=\"uil uil-check\"><\/i>{{ product.metafields.custom.upgrade_checklist_3 }}<\/li>\n                  {% endif %}\n              <\/ul>\n          <\/div>\n            <p class=\"cta-button\">{{ product.metafields.custom.upgrade_cta_text }}<\/p>\n        <\/div>\n    <\/div>\n<\/div>\n<\/a>\n{% endif %}"
                     }
                 },
-                "product_page_badge_R9BqHi": {
-                    "type": "productPageBadge",
-                    "settings": {
-                        "noMargin": true,
-                        "badge": "shopify:\/\/shop_images\/Boost_Banner_10.png",
-                        "blockID": "extend-sleep-trial"
-                    }
-                },
                 "rebuy_personalization_engine_rebuy_widget_7QXn9E": {
                     "type": "shopify:\/\/apps\/rebuy-personalization-engine\/blocks\/rebuy-widget\/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
                     "settings": {
@@ -448,7 +440,6 @@
                 "ppATC",
                 "49659766-1623-4eb2-b106-2a8952aaefb1",
                 "product_page_upgrades_7BwfxH",
-                "product_page_badge_R9BqHi",
                 "rebuy_personalization_engine_rebuy_widget_7QXn9E",
                 "rebuy_personalization_engine_rebuy_widget_XKzUYA",
                 "rebuy_personalization_engine_rebuy_widget_eBPrcr",

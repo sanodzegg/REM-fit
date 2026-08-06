@@ -1,25 +1,3 @@
-{%- comment -%}
-  Free gift bundle widget - PDP. Rendered by the `freegiftbundle` block in
-  sections/product-page__product.liquid.
-
-  This widget only describes the offer. The gifts are put in the basket by the
-  EG Auto Add to Cart app, which holds two rules keyed on mattress size:
-
-    Double / King / Super King  ->  Gift: 400 Memory Foam Pillow (pair SKU)  x2
-                                    Cotton Pillow Protector (Pair)           x1
-    Single sizes                ->  Gift: 400 Memory Foam Pillow             x1
-                                    Cotton Pillow Protector                  x1
-
-  Each tier has its own zero-priced gift SKU, so the rows shown here are filtered
-  to the tier matching the selected size rather than just re-counted. The gift
-  products carry `free-gift-single` or `free-gift-double` to say which tier they
-  belong to; anything untagged shows on both. Value comes from compare-at, since
-  the gift variants themselves are priced at zero.
-
-  Keep this in step with the app. A row here that no rule adds is a promise the
-  basket does not keep.
-{%- endcomment -%}
-
 {%- unless product.tags contains 'clearance' -%}
 {%- if settings.enable_freegift_widget and product.id != 15990166520188 -%}
 

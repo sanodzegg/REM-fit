@@ -126,14 +126,6 @@
                         "collection_id_enabled": false
                     }
                 },
-                "product_page_badge_R9BqHi": {
-                    "type": "productPageBadge",
-                    "settings": {
-                        "noMargin": true,
-                        "badge": "shopify:\/\/shop_images\/Boost_Banner_10.png",
-                        "blockID": "extend-sleep-trial"
-                    }
-                },
                 "rebuy_personalization_engine_rebuy_widget_7QXn9E": {
                     "type": "shopify:\/\/apps\/rebuy-personalization-engine\/blocks\/rebuy-widget\/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
                     "settings": {
@@ -203,7 +195,6 @@
                 "ppATC",
                 "rebuy_personalization_engine_rebuy_widget_p78PMx",
                 "rebuy_personalization_engine_rebuy_widget_TDcpQB",
-                "product_page_badge_R9BqHi",
                 "rebuy_personalization_engine_rebuy_widget_7QXn9E",
                 "rebuy_personalization_engine_rebuy_widget_fABppa",
                 "rebuy_personalization_engine_rebuy_widget_eBPrcr",

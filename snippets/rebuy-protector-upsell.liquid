@@ -1,0 +1,238 @@
+{%- assign pup_widget_id = '196337' -%}
+
+<script id="rebuy-widget-{{ pup_widget_id }}" type="text/template">
+{%- raw -%}
+<div
+  class="rebuy-widget pup"
+  v-cloak
+  v-on:click="stopPropagation($event)"
+  v-bind:id="'rebuy-widget-' + id"
+  v-bind:class="[
+    'widget-type-' + config.type.replace('_','-'),
+    'widget-display-' + config.display_type,
+    products.length > 0 ? 'is-visible' : 'is-hidden',
+    products.some(p => cartHasProduct(p)) ? 'is-added' : ''
+  ]"
+  v-bind:style="{ '--pup-count': products.length }">
+
+  <div
+    class="rebuy-widget-container"
+    v-cloak
+    v-bind:class="['widget-display-' + config.display_type, visible ? 'is-visible' : 'is-hidden']"
+    v-on:click.self="hide()">
+
+    <div class="rebuy-widget-content">
+
+      <div class="pup__head">
+        <div class="pup__eyebrow">
+          <span class="pup__kicker" v-html="config.language.super_title || 'Optional add-on'"></span>
+          <span
+            class="pup__chip"
+            v-if="products.length && variantOnSale(products[0], products[0].selected_variant)"
+          >Save {{ Math.round((variantCompareAtPrice(products[0], products[0].selected_variant) - variantPrice(products[0], products[0].selected_variant)) * 100 / variantCompareAtPrice(products[0], products[0].selected_variant)) }}%</span>
+        </div>
+
+        <h2 class="pup__title" v-html="config.language.title || 'Double your sleep trial to <em>200 nights</em>'"></h2>
+
+        <div class="pup__meter">
+          <div class="pup__track">
+            <div class="pup__owned"></div>
+            <div class="pup__bonus"></div>
+            <div class="pup__pin"></div>
+          </div>
+          <div class="pup__scale">
+            <span>100 nights as standard</span>
+            <span v-if="products.some(p => cartHasProduct(p))">+100 unlocked</span>
+            <span v-else>+100 with either protector</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pup__body">
+        <div class="pup__switch">
+
+          <input
+            class="pup__radio"
+            type="radio"
+            v-for="(product, product_index) in products"
+            v-bind:key="'radio-' + product.id"
+            v-bind:name="'pup-choice-' + id"
+            v-bind:id="'pup-choice-' + id + '-' + product_index"
+            v-bind:checked="product_index === 0">
+
+          <div
+            class="pup__seg"
+            v-if="products.length > 1"
+            role="radiogroup"
+            aria-label="Choose your protector">
+            <span class="pup__pill" aria-hidden="true"></span>
+            <label
+              class="pup__opt"
+              v-for="(product, product_index) in products"
+              v-bind:key="'label-' + product.id"
+              v-bind:for="'pup-choice-' + id + '-' + product_index">
+              <span class="pup__opt-name" v-html="product.title"></span>
+              <span class="pup__opt-price" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
+            </label>
+          </div>
+
+          <div class="pup__panels">
+            <div
+              class="pup__panel"
+              v-for="(product, product_index) in products"
+              v-bind:key="'panel-' + product.id"
+              v-bind:class="[product.handle, 'product-id-' + product.id, cartHasProduct(product) ? 'cart-has-item' : '']">
+
+              <div class="pup__product">
+                <img
+                  class="pup__img"
+                  v-bind:src="itemImage(product, product.selected_variant, '400x400')"
+                  v-bind:alt="product.title"
+                  width="64"
+                  height="64">
+                <div class="pup__detail">
+                  <h3 class="pup__name" v-html="product.title"></h3>
+                  <p
+                    class="pup__why"
+                    v-if="product.metafields && product.metafields.custom && product.metafields.custom.descriptor"
+                    v-html="product.metafields.custom.descriptor"></p>
+                  <div class="pup__prices">
+                    <span class="pup__now" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
+                    <template v-if="variantOnSale(product, product.selected_variant)">
+                      <span class="pup__was" v-html="formatMoney(variantCompareAtPrice(product, product.selected_variant))"></span>
+                      <span class="pup__save">Save {{ formatMoney(variantCompareAtPrice(product, product.selected_variant) - variantPrice(product, product.selected_variant)) }}</span>
+                    </template>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pup__select" v-if="showVariantSelect(product)">
+                <select
+                  class="rebuy-select"
+                  v-bind:id="id + '-select-' + product_index"
+                  v-bind:aria-label="'Size of ' + product.title"
+                  v-model="product.selected_variant_id"
+                  v-on:change="selectVariant(product)">
+                  <option
+                    v-for="variant in product.variants"
+                    v-bind:key="variant.id"
+                    v-bind:value="variant.id"
+                    v-bind:disabled="!variantAvailable(variant)"
+                    v-html="formatVariantOptionTitle(variant)"></option>
+                </select>
+              </div>
+
+              <button
+                class="pup__cta"
+                type="button"
+                v-bind:aria-label="'Add ' + product.title + ' to cart'"
+                v-bind:disabled="!variantAvailable(product.selected_variant)"
+                v-on:click="addToCart(product)">
+                <span v-if="cartHasProduct(product)">Protector added ✓</span>
+                <span v-else-if="!variantAvailable(product.selected_variant)">Not available in this size</span>
+                <span v-else v-html="config.language.button_text || config.language.add_to_cart || 'Add protector — extend to 200 nights'"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pup__note" v-if="config.language.description" v-html="config.language.description"></div>
+
+        <button
+          class="pup__decline"
+          type="button"
+          v-if="!products.some(p => cartHasProduct(p))"
+          v-on:click="hide()">No thanks, keep the 100-night trial</button>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endraw -%}
+</script>
+
+<script>
+  (function () {
+    var WIDGET = '{{ pup_widget_id }}';
+    var PRODUCT_ID = '{{ product.id }}';
+    var host = document.querySelector('[data-rebuy-id="' + WIDGET + '"]');
+    var input = document.querySelector('input[data-bstr-variant-input="' + PRODUCT_ID + '"]');
+    if (!host || !input) return;
+
+    function sizeKey(title) {
+      var out = [];
+      var words = String(title || '').split(' ');
+      for (var i = 0; i < words.length; i++) {
+        var w = words[i].toLowerCase();
+        if (w.indexOf('x') > -1) break;
+        if (w !== 'size') out.push(w);
+      }
+      return out.join(' ').trim();
+    }
+
+    var MATTRESS_KEYS = {
+      {%- for v in product.variants -%}
+        {%- liquid
+          assign vkey = ''
+          assign vwords = v.title | split: ' '
+          for w in vwords
+            assign lw = w | downcase
+            if lw contains 'x'
+              break
+            endif
+            unless lw == 'size'
+              assign vkey = vkey | append: lw | append: ' '
+            endunless
+          endfor
+          assign vkey = vkey | strip
+        -%}
+        {%- unless forloop.first -%},{%- endunless -%}
+        "{{ v.id }}": {{ vkey | json }}
+      {%- endfor -%}
+    };
+
+    var lastKey = null;
+
+    function ensureChoice() {
+      var radios = host.querySelectorAll('.pup__radio');
+      if (!radios.length) return;
+      for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) return;
+      }
+      radios[0].checked = true;
+    }
+
+    function sync() {
+      ensureChoice();
+
+      var key = MATTRESS_KEYS[input.getAttribute('value')];
+      if (!key) return;
+
+      var selects = host.querySelectorAll('select.rebuy-select');
+      if (!selects.length) return;
+
+      if (key === lastKey) return;
+      lastKey = key;
+
+      for (var i = 0; i < selects.length; i++) {
+        var select = selects[i];
+        for (var o = 0; o < select.options.length; o++) {
+          var option = select.options[o];
+          if (sizeKey(option.textContent) !== key || option.disabled) continue;
+          if (select.value !== option.value) {
+            select.value = option.value;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+          break;
+        }
+      }
+    }
+
+    new MutationObserver(function () { sync(); })
+      .observe(host, { childList: true, subtree: true });
+
+    new MutationObserver(function () { lastKey = null; sync(); })
+      .observe(input, { attributes: true, attributeFilter: ['value'] });
+
+    sync();
+  })();
+</script>
