@@ -340,13 +340,6 @@
             {% endif %}
           {% endif %}
           
-          {% if block.type == 'freegiftpdp' %}
-            {% if product.metafields.custom.display_free_gift_section %}
-              <div class="rfg-wrap">
-                {% render 'free-gift-pdp' with block as block %}
-              </div>
-            {% endif %}
-          {% endif %}
           {% if block.type == '@app' %}
             <div class="col-12 {{section.settings.layout}} unflex no-gap">
               {% render block %}
@@ -414,9 +407,6 @@
         {% assign firstTab = true %}
         {% for block in section.blocks %}
           {% if block.type == 'video' %}{% continue %}{% endif %}
-          {% if block.type == 'freegiftpdp' %}
-            {% render free-gift-pdp %}
-          {% endif %}
           {% if block.type == '@app' %}
             <div class="col-12 {{section.settings.layout}} unflex no-gap">
               {% render block %}
@@ -870,28 +860,6 @@ document.addEventListener("DOMContentLoaded", function () {
           "type": "freegiftbundle",
           "name": "Free Gift Bundle",
       },
-      {
-          "type": "freegiftpdp",
-              "name": "Free Gift",
-              "settings": [
-         {
-          "type": "header",
-          "content": "Free Gift Section Settings"
-        },
-        {
-          "type": "text",
-          "id": "title_free_gift",
-          "label": "Title",
-          "default": "Free Gift with Purchase"
-        },
-        {
-          "type": "text",
-          "id": "subtitle_free_gift",
-          "label": "Subtitle",
-          "default": "Get a Free Gift with Select Mattress Purchases"
-        }
-      ]
-    },
       {
           "type": "productPageCountdown",
           "name": "Offer countdown",

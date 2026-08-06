@@ -252,13 +252,6 @@
             "stickyATC": "disabled"
           }
         },
-        "722e3454-7ad2-4e7e-8e97-ad395ebe1ef0": {
-          "type": "freegiftpdp",
-          "settings": {
-            "title_free_gift": "Your FREE items with this mattress",
-            "subtitle_free_gift": "They will automatically be added to your order"
-          }
-        },
         "product_page_badge_R9BqHi": {
           "type": "productPageBadge",
           "name": "Mattress protector upsell promo image",
@@ -681,7 +674,6 @@
         "freegiftbundle_WEt8zE",
         "ppSwatch",
         "ppATC",
-        "722e3454-7ad2-4e7e-8e97-ad395ebe1ef0",
         "product_page_badge_R9BqHi",
         "rebuy_personalization_engine_rebuy_widget_7QXn9E",
         "49659766-1623-4eb2-b106-2a8952aaefb1",

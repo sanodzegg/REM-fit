@@ -1,247 +1,357 @@
-{% assign product_title = product.title | downcase %}
-{% unless product.tags contains 'clearance' %}
-{% if settings.enable_freegift_widget and product.id != 15990166520188%}
-  <div class="free-gift-sect">
-    <div class="free-gift-heading">
-      <p>{{ settings.gift_bundle_section_title }}</p>
-      <h4>Total Value: £<span id="gift_bundle_total"></span></h4>
+{%- comment -%} Free gift bundle widget - PDP. Rendered by the `freegiftbundle` block in {%- endcomment -%}
+
+{%- unless product.tags contains 'clearance' -%}
+{%- if settings.enable_freegift_widget and product.id != 15990166520188 -%}
+
+{%- liquid
+  assign gift_refs = product.metafields.custom.free_gift_products.value
+
+  assign qty_meta = product.metafields.custom.free_gift_quantities
+  assign qty_list = ''
+  if qty_meta
+    assign qty_list = qty_meta.value | join: ',' | append: '' | split: ','
+  endif
+
+  assign sel_variant = product.selected_or_first_available_variant
+  assign sel_key = ''
+  if sel_variant
+    assign words = sel_variant.title | split: ' '
+    for w in words
+      assign lw = w | downcase
+      if lw contains 'x'
+        break
+      endif
+      unless lw == 'size'
+        assign sel_key = sel_key | append: lw | append: ' '
+      endunless
+    endfor
+    assign sel_key = sel_key | strip
+  endif
+
+  assign size_is_large = false
+  if sel_key contains 'double' or sel_key contains 'king'
+    assign size_is_large = true
+  endif
+-%}
+
+{%- if gift_refs.size > 0 -%}
+  {%- liquid
+    assign rows = ''
+    assign data = ''
+    assign total = 0
+    assign shown = 0
+  -%}
+
+  {%- for gift in gift_refs -%}
+    {%- liquid
+      assign i = forloop.index0
+
+      assign sized = false
+      for opt in gift.options_with_values
+        assign on = opt.name | downcase
+        if on contains 'size' and gift.variants.size > 1
+          assign sized = true
+        endif
+      endfor
+    -%}
+
+    {%- unless sized -%}
+      {%- liquid
+        assign base_qty = 1
+        if qty_list[i] != blank
+          assign base_qty = qty_list[i] | strip | plus: 0
+        endif
+        if base_qty < 1
+          assign base_qty = 1
+        endif
+
+        assign doubles = false
+        if gift.tags contains 'free-gift-pillow'
+          assign doubles = true
+        endif
+
+        assign qty = base_qty
+        if doubles and size_is_large
+          assign qty = base_qty | times: 2
+        endif
+
+        assign gv = gift.selected_or_first_available_variant
+        assign line = gv.price | times: qty
+        assign total = total | plus: line
+        assign shown = shown | plus: 1
+      -%}
+
+      {%- capture rows -%}
+        {{ rows }}
+        <div class="rfg__row" data-rfg-row="{{ i }}">
+          <span class="rfg__tick" aria-hidden="true"></span>
+          {%- if gift.featured_image -%}
+            <img class="rfg__img" src="{{ gift.featured_image | image_url: width: 96 }}" alt="" width="44" height="44" loading="lazy">
+          {%- else -%}
+            <span class="rfg__img" aria-hidden="true"></span>
+          {%- endif -%}
+          <div class="rfg__main">
+            <div class="rfg__top">
+              <p class="rfg__name">
+                <span class="rfg__qty" data-rfg-qty>{%- if qty > 1 -%}{{ qty }}&nbsp;×&nbsp;{%- endif -%}</span>{{ gift.title | strip }}
+              </p>
+              <span class="rfg__val" data-rfg-val>{{ line | money }}</span>
+            </div>
+          </div>
+        </div>
+      {%- endcapture -%}
+
+      {%- capture data -%}
+        {{ data }}{% unless shown == 1 %},{% endunless %}{ "qty": {{ base_qty }}, "doubles": {{ doubles }}, "price": {{ gv.price }} }
+      {%- endcapture -%}
+    {%- endunless -%}
+  {%- endfor -%}
+
+  <div class="rfg" id="rfg-{{ product.id }}" data-rfg>
+    <div class="rfg__head">
+      <div class="rfg__eyebrow">
+        <svg class="rfg__mark" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <rect x="1.4" y="6.6" width="13.2" height="8" rx="1"/>
+          <path d="M0.9 4.2h14.2v2.4H0.9z"/>
+          <path d="M8 4.2v10.4"/>
+          <path d="M8 4.2S6.9 1.4 5.2 1.4a1.5 1.5 0 000 2.8z"/>
+          <path d="M8 4.2s1.1-2.8 2.8-2.8a1.5 1.5 0 010 2.8z"/>
+        </svg>
+        <span class="rfg__kicker">Included free with your order</span>
+      </div>
+      <h2 class="rfg__title" data-rfg-title>Free gifts, worth {{ total | money }}</h2>
     </div>
-    <div class="free-gift-product">
-      <ul>
-        {% if settings.gift_bundle_product1_title != blank %}
-          <li>
-            <div class="free-gift-prod-img">
-              <img src="{{ settings.gift_bundle_product1_image | img_url: 'medium' }}" alt="Free Product">
-            </div>
-            <div class="free-gift-prod-title">
-              <div class="fgp-title">
-                <span class="bundle_gift_qty"> 2</span>
-                <span>x {{ settings.gift_bundle_product1_title }}</span>
-              </div>
-              <div class="fgp-price">
-                <span>Free </span>
-                <span class="fgp-currency">
-                  £<span class="memory_foam_pillow_price"
-                    ><del>{{ settings.gift_bundle_product1_price }}</del></span
-                  >
-                </span>
-              </div>
-            </div>
-          </li>
-        {% endif %}
-        {% if settings.gift_bundle_product2_title != blank %}
-          <li>
-            <div class="free-gift-prod-img">
-              <img src="{{ settings.gift_bundle_product2_image | img_url: 'medium' }}" alt="Free Product">
-            </div>
-            <div class="free-gift-prod-title">
-              <div class="fgp-title">
-                <span class="bundle_gift_qty"> 2</span>
-                <span>x {{ settings.gift_bundle_product2_title }}</span>
-              </div>
-              <div class="fgp-price">
-                <span>Free </span>
-                <span class="fgp-currency"
-                  >£<span class="cotton_pillow_protector_price"
-                    ><del>{{ settings.gift_bundle_product2_price }}</del></span
-                  >
-                </span>
-              </div>
-            </div>
-          </li>
-        {% endif %}
-        <li>
+
+    <div class="rfg__items" data-rfg-items>
+      {{ rows }}
+      {%- comment -%}
+        Hidden until Rebuy populates it. Widget 205022 is currently in Live Mode OFF, so
+        this stays empty — better to never paint a stray tick than to show one and remove
+        it a few seconds later.
+      {%- endcomment -%}
+      <div class="rfg__row rfg__row--rebuy" data-rfg-rebuy-row style="display:none">
+        <span class="rfg__tick" aria-hidden="true"></span>
+        <div class="rfg__main">
           <div data-rebuy-id="205022" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
+
+    <div class="rfg__total" data-rfg-total>
+      <span class="rfg__total-l">Total value, free to you</span>
+      <span class="rfg__total-r" data-rfg-total-val>{{ total | money }}</span>
+    </div>
+
+    <p class="rfg__sr" role="status" aria-live="polite" data-rfg-live></p>
   </div>
-{% endif %}
-<script>
-  // Hide blank rebuy widget after 1 second delay
-  document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(function () {
-      document.querySelectorAll('div[data-rebuy-id]').forEach(function(div) {
-        if (div.innerHTML.trim() === '') {
-          div.closest('li').style.display = 'none';
+
+  <script type="application/json" data-rfg-data="{{ product.id }}">
+    {"gifts":[{{ data }}],"moneyFormat":{{ shop.money_format | json }},"discountRate":{{ settings.percentage_discount | default: 0 | times: 0.01 }},"discountWidget":{% if settings.enable_discount_widget %}true{% else %}false{% endif %}}
+  </script>
+
+  <script>
+    (function () {
+      var root = document.getElementById('rfg-{{ product.id }}');
+      if (!root || root.dataset.rfgBound) return;
+      root.dataset.rfgBound = '1';
+
+      var cfg = JSON.parse(document.querySelector('[data-rfg-data="{{ product.id }}"]').textContent);
+      var gifts = cfg.gifts;
+      var rows = root.querySelectorAll('[data-rfg-row]');
+      var rebuyRow = root.querySelector('[data-rfg-rebuy-row]');
+      var live = root.querySelector('[data-rfg-live]');
+      var titleEl = root.querySelector('[data-rfg-title]');
+      var totalEl = root.querySelector('[data-rfg-total]');
+      var totalVal = root.querySelector('[data-rfg-total-val]');
+
+      var VARIANTS = {
+        {%- for v in product.variants -%}
+          {%- liquid
+            assign vkey = ''
+            assign vlabel = ''
+            assign vwords = v.title | split: ' '
+            for w in vwords
+              assign lw = w | downcase
+              if lw contains 'x'
+                break
+              endif
+              assign vlabel = vlabel | append: w | append: ' '
+              unless lw == 'size'
+                assign vkey = vkey | append: lw | append: ' '
+              endunless
+            endfor
+            assign vkey = vkey | strip
+            assign vlabel = vlabel | strip
+          -%}
+          {%- unless forloop.first -%},{%- endunless -%}
+          "{{ v.id }}": { "key": {{ vkey | json }}, "label": {{ vlabel | json }} }
+        {%- endfor -%}
+      };
+
+      {%- comment -%}
+        The amount placeholder must reach the browser as literal text, so it is wrapped
+        in raw. Emitting it through an output tag is a Liquid syntax error: the tag
+        closes at the first pair of braces and the rest of the string is left dangling.
+      {%- endcomment -%}
+      var DEFAULT_MONEY_FORMAT = '{% raw %}£{{amount}}{% endraw %}';
+
+      function money(cents) {
+        var f = cfg.moneyFormat || DEFAULT_MONEY_FORMAT;
+        function build(decimals, thousands, decimal) {
+          var n = (cents / 100).toFixed(decimals);
+          var parts = n.split('.');
+          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
+          return parts.length > 1 ? parts[0] + decimal + parts[1] : parts[0];
+        }
+        return f
+          .replace(/\{\{\s*amount\s*\}\}/g, build(2, ',', '.'))
+          .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, build(2, '.', ','))
+          .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g, build(0, '.', ','))
+          .replace(/\{\{\s*amount_no_decimals\s*\}\}/g, build(0, ',', '.'))
+          .replace(/<[^>]*>/g, '');
+      }
+
+      function num(text) {
+        return parseFloat(String(text).replace(/[^\d.-]+/g, '')) || 0;
+      }
+
+      function rebuyCents() {
+        var el = document.querySelector('.rebuy-addon__item-product-price .rebuy-money.compare-at span:last-child');
+        return el ? Math.round(num(el.textContent) * 100) : 0;
+      }
+
+      /* Reveal the Rebuy row only once it has actually rendered something. Returns
+         whether it counts as a gift row. */
+      function syncRebuyRow() {
+        if (!rebuyRow) return false;
+        var slot = rebuyRow.querySelector('[data-rebuy-id]');
+        var on = !!(slot && slot.innerHTML.trim() !== '');
+        rebuyRow.style.display = on ? '' : 'none';
+        return on;
+      }
+
+      var subtotal = 0;
+
+      function renderRows(size) {
+        var key = size ? size.key : '';
+        var large = /double|king/.test(key);
+        subtotal = 0;
+
+        gifts.forEach(function (g, i) {
+          var row = rows[i];
+          if (!row) return;
+          var qty = g.doubles && large ? g.qty * 2 : g.qty;
+          var lineTotal = g.price * qty;
+          subtotal += lineTotal;
+          row.querySelector('[data-rfg-qty]').textContent = qty > 1 ? qty + ' × ' : '';
+          row.querySelector('[data-rfg-val]').textContent = money(lineTotal);
+        });
+      }
+
+      function updateTotals() {
+        var total = subtotal + rebuyCents();
+        var count = gifts.length + (syncRebuyRow() ? 1 : 0);
+
+        titleEl.textContent = (count === 1 ? 'Free gift, worth ' : 'Free gifts, worth ') + money(total);
+        totalVal.textContent = money(total);
+        totalEl.style.display = count === 1 ? 'none' : '';
+
+        var productPrice = num((document.getElementById('prod-price') || {}).textContent);
+        var compProdPrice = num((document.getElementById('comp-prod-price') || {}).textContent);
+        var totalPounds = total / 100;
+        var savings;
+        if (cfg.discountWidget) {
+          savings = totalPounds + (compProdPrice - productPrice * (1 - cfg.discountRate));
+        } else {
+          savings = totalPounds + compProdPrice - productPrice;
+        }
+        document.querySelectorAll('.total_discounted_amount').forEach(function (el) {
+          el.textContent = Math.ceil(savings);
+        });
+      }
+
+      var lastKey = null;
+      function sync(announce) {
+        var input = document.querySelector('input[data-bstr-variant-input="{{ product.id }}"]');
+        var id = input && input.getAttribute('value');
+        var size = id && VARIANTS[id] ? VARIANTS[id] : null;
+        var key = size ? size.key : '';
+        if (key !== lastKey) {
+          lastKey = key;
+          renderRows(size);
+          if (announce && size && live) {
+            live.textContent = 'Mattress size ' + size.label + '. Free gift sizes updated.';
+          }
+        }
+        updateTotals();
+      }
+
+      var variantInput = document.querySelector('input[data-bstr-variant-input="{{ product.id }}"]');
+      if (variantInput) {
+        new MutationObserver(function () { sync(true); })
+          .observe(variantInput, { attributes: true, attributeFilter: ['value'] });
+      }
+      document.addEventListener('change', function (e) {
+        var t = e.target;
+        if (!t) return;
+        if (t.id === 'size_dropdown' || (t.classList && t.classList.contains('rebuy-select'))) {
+          setTimeout(function () { sync(true); }, 0);
         }
       });
-    }, 5000); // 1000 milliseconds = 1 second
-  });
-</script>
 
-<script>
-// Function to insert HTML before the target element
-function insertHTMLBefore(targetElement) {
-    if (!targetElement) return;
-
-    const newElement = document.createElement("div");
-    newElement.className = "gift-bundle-mattress-protector-description";
-    newElement.innerHTML = `
-        <p class="gift-bundle-mattress-protector-description-line-1">
-            ✅ Extended sleep trial: 200 nights!
-        </p>
-        <p class="gift-bundle-mattress-protector-description-line-2">
-            <b>Important - Choose protector size</b>
-        </p>`;
-
-    targetElement.parentNode.insertBefore(newElement, targetElement);
-}
-
-// Function to replace £0.00 with "Free"
-function replaceZeroPrice() {
-    const zeroPriceEl = document.querySelector(".rebuy-addon__item-product-price .rebuy-money.sale span:last-child");
-    if (zeroPriceEl && zeroPriceEl.textContent.trim() === "£0.00") {
-        zeroPriceEl.textContent = "Free";
-    }
-}
-
-// Mutation Observer to watch for changes in the DOM
-const observer = new MutationObserver((mutations, obs) => {
-    const targetElement = document.querySelector(".rebuy-addon__item-product-options");
-
-    if (targetElement) {
-        insertHTMLBefore(targetElement);
-        replaceZeroPrice();
-        console.log("HTML inserted and price replaced. Stopping observer.");
-        obs.disconnect(); // Stop observing after the tasks are done
-    }
-});
-
-// Start observing the document for added nodes
-observer.observe(document.body, {
-    childList: true,
-    subtree: true
-});
-</script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Include jQuery if not already present -->
-{% assign min_price = product.selected_or_first_available_variant.price | times: 0.01 %}
-{% assign discount_rate = settings.percentage_discount | times: 0.01 %}
-{% assign disc_price = product.selected_or_first_available_variant.price | times: discount_rate | times: 0.01 %}
-{% assign net_price = min_price | minus: disc_price %}
-{% assign net_price =  net_price | round: 2 %}
-{% assign gift_bundle_product1_title = settings.gift_bundle_product1_title | default: '' | escape %}
-{% assign gift_bundle_product2_title = settings.gift_bundle_product2_title | default: '' | escape %}
-
-<script>
-{% if gift_bundle_product1_title %}
-    var gift_bundle_product1_title = {{ gift_bundle_product1_title | json }};
-  {% else %}
-    var gift_bundle_product1_title = "";
-  {% endif %}
-
-  {% if gift_bundle_product2_title %}
-    var gift_bundle_product2_title = {{ gift_bundle_product2_title | json }};
-  {% else %}
-    var gift_bundle_product2_title = "";
-  {% endif %}
-
-  $(document).ready(function () {
-
-  function updateTotalPrice(updateQuantity = true) {
-    let quantity = 2; // Default fallback
-   let dynamicDiscountRate = {{ discount_rate }};
-
-    if (updateQuantity) {
-      let selectedValue = $('select#size_dropdown').val()?.trim() || "";
-      quantity = selectedValue.includes("Single") ? 1 : 2;
-      $(".bundle_gift_qty").data("quantity", quantity);
-      $(".bundle_gift_qty").text(quantity);
-    } else {
-      quantity = $(".bundle_gift_qty").data("quantity") || 2;
-    }
-
-    let totalMemoryFoam = 0;
-    if (gift_bundle_product1_title) {
-      var memoryFoamUnitPrice = {{ settings.gift_bundle_product1_price | default: 0 }};
-      totalMemoryFoam = quantity * memoryFoamUnitPrice;
-      $(".memory_foam_pillow_price").text(totalMemoryFoam.toFixed(2));
-    }
-
-    let totalCottonProtector = 0;
-    if (gift_bundle_product2_title) {
-      var cottonProtectorUnitPrice = {{ settings.gift_bundle_product2_price | default: 0 }};
-      totalCottonProtector = quantity * cottonProtectorUnitPrice;
-      $(".cotton_pillow_protector_price").text(totalCottonProtector.toFixed(2));
-    }
-
-    let additionalPrice = 0;
-    const rebuyPriceEl = $(".rebuy-addon__item-product-price .rebuy-money.compare-at span:last-child");
-    if (rebuyPriceEl.length) {
-      const priceText = rebuyPriceEl.text().trim();
-      additionalPrice = parseFloat(priceText.replace(/[^\d.-]+/g, "")) || 0;
-    }
-
-    const totalPrice = totalMemoryFoam + totalCottonProtector + additionalPrice;
-
-    $("#gift_bundle_total").text(totalPrice.toFixed(2));
-    let productPrice = $('#prod-price').text().replace('£', '').replace(/[^0-9.]/g, '');
-    productPrice = parseFloat(productPrice) || 0;
-    
-    let compProdPrice = $('#comp-prod-price').text().replace('£', '').replace(/[^0-9.]/g, '');
-    compProdPrice = parseFloat(compProdPrice) || 0;
-     // console.log('compProdPrice'+compProdPrice);
-
-    let discountedPrice = productPrice * (1 - dynamicDiscountRate);
-     // console.log('discountedPrice'+discountedPrice);
-
-    let discountedTotalPrice;
-    {% if settings.enable_discount_widget %}
-      //let dynamicPercentOfCompProdPrice = compProdPrice * dynamicDiscountRate;
-      let dynamicPercentOfCompProdPrice = compProdPrice - discountedPrice;
-
-      discountedTotalPrice = totalPrice + dynamicPercentOfCompProdPrice;
-
-    {% else %}
-      discountedTotalPrice = totalPrice + compProdPrice - productPrice;
-    {% endif %}
-
-    $(".total_discounted_amount").html('').append(Math.ceil(discountedTotalPrice));
-
-    if ($(".free-gift-product").length) {
-      $(".free-gift-product").find(".bundle-total-price").remove();
-      //$(".free-gift-product").append(`<div class="bundle-total-price">Bundle Total: £${Math.ceil(discountedTotalPrice)}</div>`);
-    }
-  }
-
-  // Utility: wait for multiple elements
-  function waitForAllElements(selectors, callback) {
-    const allExist = () => selectors.every(sel => $(sel).length > 0);
-
-    if (allExist()) {
-      callback();
-      return;
-    }
-
-    const observer = new MutationObserver(() => {
-      if (allExist()) {
-        callback();
-        observer.disconnect();
+      var dressed = false;
+      function dressRebuy() {
+        var options = document.querySelector('.rebuy-addon__item-product-options');
+        if (options && !dressed) {
+          dressed = true;
+          var note = document.createElement('div');
+          note.className = 'gift-bundle-mattress-protector-description';
+          note.innerHTML =
+            '<p class="gift-bundle-mattress-protector-description-line-1">✅ Extended sleep trial: 200 nights!</p>' +
+            '<p class="gift-bundle-mattress-protector-description-line-2"><b>Important - Choose protector size</b></p>';
+          options.parentNode.insertBefore(note, options);
+        }
+        var zero = document.querySelector('.rebuy-addon__item-product-price .rebuy-money.sale span:last-child');
+        if (zero && zero.textContent.trim() === '£0.00') zero.textContent = 'Free';
+        updateTotals();
       }
-    });
 
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
+      var queued = false;
+      var observer = new MutationObserver(function () {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(function () {
+          queued = false;
+          observer.disconnect();
+          dressRebuy();
+          if (dressed && rebuyCents() > 0) return;
+          observer.observe(document.body, { childList: true, subtree: true });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      setTimeout(function () { observer.disconnect(); }, 15000);
 
-  // Events
-  $('select#size_dropdown').change(() => updateTotalPrice(true));
-  $(document).on("change", "select.rebuy-select", () => updateTotalPrice(false));
+      /* Late safety net for a slow Rebuy render. */
+      setTimeout(updateTotals, 5000);
 
-  waitForAllElements(
-    [
-      "#prod-price", // main product price
-      ".free-gift-product" // free gift
-    ],
-    () => updateTotalPrice(false)
-  );
+      sync(false);
+    })();
+  </script>
+{%- endif -%}
 
-  waitForAllElements(
-    [".rebuy-addon__item-product-price .rebuy-money.compare-at span:last-child"],
-    () => updateTotalPrice(false)
-  );
-});
+{%- comment -%}
+  Rebuy 196540 — "Pillow protector on mattress pages in free gift section (ATC btn)".
 
-</script>
-  {% endunless %}
+  A PAID Product Cross-Sell, despite the name: it offers protectors behind an
+  "Add (-20%)" button at a non-zero price. It is deliberately rendered OUTSIDE the .rfg
+  card above — a paid button inside a box headed "Free gifts, worth £X" would read as
+  deceptive, and §9 of the handover keeps the quiet gift widget and the bold upsell
+  visually distinct.
+
+  It sits outside the gift_refs check so the upsell still shows on products that have no
+  gift list configured.
+{%- endcomment -%}
+<div data-rebuy-id="196540" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+
+{%- endif -%}
+{%- endunless -%}

@@ -15783,7 +15783,7 @@ span#monthly-payment {
   border-radius: 14px;
   overflow: hidden;
   background: #fff;
-  margin: 0 0 20px;
+  margin: 32px 0 0;
   text-align: left;
   -webkit-font-smoothing: antialiased;
 }
@@ -15863,9 +15863,8 @@ span#monthly-payment {
   width: 44px;
   height: 44px;
   flex: 0 0 44px;
-  margin-top: 1px;
   padding: 0;
-  border-radius: 7px;
+  border-radius: 8px;
   object-fit: cover;
   background: var(--rfg-surface);
   border: 1px solid var(--rfg-rail);
@@ -15964,3 +15963,92 @@ span#monthly-payment {
   cursor: not-allowed;
 }
 .template--product .product__atc .button { text-transform: none; }
+
+/* --------------------------------------------------------------------------
+   snippets/free-gift-pdp-coll.liquid — free gift list on collection cards.
+   Compact sibling of .rfg; shares the token values but not the heavy chrome
+   (no header block, no dark total bar) since it sits inside a product tile.
+   -------------------------------------------------------------------------- */
+.rfg-card {
+  font-family: var(--baseFont, "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif);
+  border: 1px solid #ddccee;
+  border-radius: 10px;
+  background: #f8f5fb;
+  padding: 9px 11px;
+  margin: 12px 0 0;
+  text-align: left;
+}
+.rfg-card__title {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: #3f2155;
+}
+.rfg-card__list { margin: 0; padding: 0; list-style: none; }
+.rfg-card__row {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 3px 0;
+  margin: 0;
+  list-style: none;
+}
+.rfg-card__row::marker { content: none; }
+
+/* Confirmation mark, not a control — round, filled, non-interactive. */
+.rfg-card__tick {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+  align-self: center;
+  border-radius: 50%;
+  background: #3f2155;
+  position: relative;
+}
+.rfg-card__tick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 5px;
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: translate(-50%, -62%) rotate(45deg);
+}
+.rfg-card__name {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #2b1639;
+}
+.rfg-card__val {
+  font-size: 11.5px;
+  color: #6b6478;
+  text-decoration: line-through;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Rebuy addon row inside the gift widget (snippets/free-gift-section.liquid).
+   Rebuy injects its own markup, so this only supplies the row frame. */
+.rfg__row--rebuy { align-items: flex-start; }
+.rfg__row--rebuy .rfg__main { padding-top: 2px; }
+.rfg__row--rebuy .rebuy-addon__item-product-title,
+.rfg__row--rebuy .rebuy-addon__item-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #2b1639;
+}
+.rfg__row--rebuy .gift-bundle-mattress-protector-description { margin: 6px 0 4px; }
+.rfg__row--rebuy .gift-bundle-mattress-protector-description p {
+  margin: 0 0 2px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: #6b6478;
+}
+.rfg__row--rebuy .gift-bundle-mattress-protector-description-line-2 b { color: #3f2155; }

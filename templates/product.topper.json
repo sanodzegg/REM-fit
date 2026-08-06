@@ -99,13 +99,6 @@
             "noMargin": true
           }
         },
-        "722e3454-7ad2-4e7e-8e97-ad395ebe1ef0": {
-          "type": "freegiftpdp",
-          "settings": {
-            "title_free_gift": "Your FREE items included with this mattress",
-            "subtitle_free_gift": "Free items will automatically be added to your order"
-          }
-        },
         "ppATC": {
           "type": "productPageATC",
           "settings": {
@@ -154,7 +147,6 @@
         "ppPrice",
         "dividebuy_spread_the_cost_dividebuyproduct_nrnrGC",
         "ppSwatch",
-        "722e3454-7ad2-4e7e-8e97-ad395ebe1ef0",
         "ppATC",
         "b03f2e56-c949-436f-bfcb-9fdac60ee296",
         "a75448eb-9dd0-4bf9-9419-90100c7bb264",
