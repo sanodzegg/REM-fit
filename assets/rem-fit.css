@@ -15766,3 +15766,201 @@ span#monthly-payment {
     border-left: 1px solid rgba(255, 255, 255, .14);
   }
 }
+
+.rfg {
+  --rfg-ink: #3f2155;
+  --rfg-ink-deep: #2b1639;
+  --rfg-gold: #f7c948;
+  --rfg-lilac: #ddccee;
+  --rfg-rail: #ebe2f3;
+  --rfg-surface: #f8f5fb;
+  --rfg-grey: #6b6478;
+  --rfg-font: var(--baseFont, "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif);
+
+  font-family: var(--rfg-font);
+  color: var(--rfg-ink-deep);
+  border: 1.5px solid var(--rfg-lilac);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  margin: 0 0 20px;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+.rfg * { box-sizing: border-box; }
+
+.rfg__head {
+  background: var(--rfg-surface);
+  padding: 14px 16px 13px;
+  border-bottom: 1px solid var(--rfg-rail);
+}
+.rfg__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 3px;
+}
+.rfg__mark { width: 16px; height: 16px; flex: 0 0 16px; display: block; }
+.rfg__mark path,
+.rfg__mark rect {
+  stroke: var(--rfg-ink);
+  stroke-width: 1.7;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.rfg__kicker {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--rfg-ink);
+}
+.rfg__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--rfg-ink-deep);
+  letter-spacing: -.01em;
+  text-transform: none;
+}
+
+.rfg__items { padding: 2px 0; }
+
+.rfg__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--rfg-rail);
+}
+.rfg__row:last-child { border-bottom: 0; }
+
+/* Confirmation mark, not a control — round, filled, non-interactive (§8). */
+.rfg__tick {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  margin-top: 12px;
+  border-radius: 50%;
+  background: var(--rfg-ink);
+  position: relative;
+}
+.rfg__tick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 7px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: translate(-50%, -62%) rotate(45deg);
+}
+
+.rfg__img {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  margin-top: 1px;
+  padding: 0;
+  border-radius: 7px;
+  object-fit: cover;
+  background: var(--rfg-surface);
+  border: 1px solid var(--rfg-rail);
+  display: block;
+}
+
+.rfg__main { flex: 1; min-width: 0; }
+.rfg__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+.rfg__name {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--rfg-ink-deep);
+}
+.rfg__qty { color: var(--rfg-ink); }
+.rfg__val {
+  font-size: 12.5px;
+  color: var(--rfg-grey);
+  text-decoration: line-through;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.rfg__size {
+  margin-top: 7px;
+  font-size: 11.5px;
+  color: var(--rfg-grey);
+  line-height: 1.4;
+}
+.rfg__size:empty { display: none; }
+.rfg__size b { color: var(--rfg-ink); font-weight: 600; }
+
+.rfg__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--rfg-ink);
+}
+.rfg__total-l { font-size: 12px; font-weight: 400; color: var(--rfg-lilac); }
+.rfg__total-r {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--rfg-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.rfg__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  margin: 0;
+}
+
+.rfg :focus-visible {
+  outline: 3px solid #7d5aa6;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rfg * { transition: none !important; animation: none !important; }
+}
+
+/* --------------------------------------------------------------------------
+   Add to cart treatment (§7). Approved in review: the live button is oversized
+   with heavy uppercase text. Scoped to the product page so collection and
+   quick-buy buttons are untouched.
+   -------------------------------------------------------------------------- */
+.template--product #my-button {
+  border-radius: 10px;
+  background-color: #3f2155;
+  padding: 15px;
+  height: auto;
+  margin-top: 10px;
+}
+.template--product #my-button .add_cart {
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: none;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.template--product #my-button[disabled] {
+  background-color: #b9abc8;
+  cursor: not-allowed;
+}
+.template--product .product__atc .button { text-transform: none; }

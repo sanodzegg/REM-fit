@@ -1,165 +1,451 @@
-{% assign free_products_image_urls = product.metafields.custom.free_gift_Image_url | split: ',' %}
-{% assign free_products_titles = product.metafields.custom.free_gift_product_title | split: ',' %}
-{% assign free_products_compare_prices = product.metafields.custom.free_gift_products_compare_at_price | split: ',' %}
-<div class="is-visible">
-  <div class="free-gift-pdp-container">
-    <div class="free-gift-pdp-content">
-      <h3 class="primary-title">{{ block.settings.title_free_gift }}</h3>
-      <div class="description">{{ block.settings.subtitle_free_gift }}</div>
-      <div class="free-gift-pdp-addon">
-        <div class="free-gift-pdp__items">
-        
-          {% for index in (0..free_products_titles.size) %}
-            {% assign free_product_image_url = free_products_image_urls[index] %}
-            {% assign free_product_title = free_products_titles[index] %}
-            {% assign free_product_compare_price = free_products_compare_prices[index] %}
-         
-            {% if free_product_title and free_product_image_url %}
-              <div class="free-gift-pdp__item">
-                <div class="free-gift-pdp__item-checkbox">
-                  <label class="free-gift-pdp-checkbox-label">
-                    <input type="checkbox" class="checkbox-input rebuy-checkbox" checked disabled >
-                  </label>
-                </div>
-                <div class="free-gift-pdp__item-image">
-                  <img src="{{ free_product_image_url }}" alt="free product image">
-                </div>
-                <div class="free-gift-pdp__item-info">
-                  <div class="free-gift-pdp__item-product-title">
-                    {% if free_product_title contains 'Pillow' %}
-                      <p id="bold" class="bold" style="display: inline;">1</p> X 
-                    {% endif %}{{ free_product_title }}
-                  </div>
-                  <div class="free-gift-pdp__item-product-price free-gift-pdp-product-price">
-                    <div>
-                      <span class="free-gift-pdp-money sale" style="margin-right: 10px;">
-                        <span class="sr-only">Sale price</span> <span style="font-weight:600; color: #58327a;">FREE</span>
-                      </span> 
-                      <span class="free-gift-pdp-money compare-at">
-                        <span class="sr-only">Original price</span>
-                        <span id="compare_price" >{{ free_product_compare_price }}</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {% endif %}
-          {% endfor %}
+{%- comment -%} Free gift widget - PDP, sits above "Pick your size". {%- endcomment -%}
+
+{%- liquid
+  assign gift_refs = product.metafields.custom.free_gift_products.value
+
+  assign qty_meta = product.metafields.custom.free_gift_quantities
+  assign qty_list = ''
+  if qty_meta
+    assign qty_list = qty_meta.value | join: ',' | append: '' | split: ','
+  endif
+
+  assign sel_variant = product.selected_or_first_available_variant
+  assign sel_key = ''
+  assign sel_label = ''
+  if sel_variant
+    assign words = sel_variant.title | split: ' '
+    for w in words
+      assign lw = w | downcase
+      if lw contains 'x'
+        break
+      endif
+      assign sel_label = sel_label | append: w | append: ' '
+      unless lw == 'size'
+        assign sel_key = sel_key | append: lw | append: ' '
+      endunless
+    endfor
+    assign sel_key = sel_key | strip
+    assign sel_label = sel_label | strip
+  endif
+
+  assign size_is_large = false
+  if sel_key contains 'double' or sel_key contains 'king'
+    assign size_is_large = true
+  endif
+-%}
+
+{%- if gift_refs.size > 0 -%}
+  {%- comment -%} ---------- LIVE PRODUCT REFERENCES ---------- {%- endcomment -%}
+  {%- liquid
+    assign rows = ''
+    assign data = ''
+    assign total = 0
+  -%}
+
+  {%- for gift in gift_refs -%}
+    {%- liquid
+      assign i = forloop.index0
+
+      assign base_qty = 1
+      if qty_list[i] != blank
+        assign base_qty = qty_list[i] | strip | plus: 0
+      endif
+      if base_qty < 1
+        assign base_qty = 1
+      endif
+
+      assign doubles = false
+      if gift.tags contains 'free-gift-pillow'
+        assign doubles = true
+      endif
+
+      assign qty = base_qty
+      if doubles and size_is_large
+        assign qty = base_qty | times: 2
+      endif
+
+      comment
+        Sized when the gift carries a Size option with more than one variant.
+      endcomment
+      assign sized = false
+      for opt in gift.options_with_values
+        assign on = opt.name | downcase
+        if on contains 'size' and gift.variants.size > 1
+          assign sized = true
+        endif
+      endfor
+
+      assign gv = gift.selected_or_first_available_variant
+      assign matched_label = ''
+    -%}
+
+    {%- if sized -%}
+      {%- comment -%} Find the gift variant whose size key equals the mattress's. {%- endcomment -%}
+      {%- for v in gift.variants -%}
+        {%- liquid
+          assign vkey = ''
+          assign vlabel = ''
+          assign vwords = v.title | split: ' '
+          for w in vwords
+            assign lw = w | downcase
+            if lw contains 'x'
+              break
+            endif
+            assign vlabel = vlabel | append: w | append: ' '
+            unless lw == 'size'
+              assign vkey = vkey | append: lw | append: ' '
+            endunless
+          endfor
+          assign vkey = vkey | strip
+        -%}
+        {%- if vkey == sel_key and sel_key != blank -%}
+          {%- liquid
+            assign gv = v
+            assign matched_label = vlabel | strip
+          -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- liquid
+      assign line = gv.price | times: qty
+      assign total = total | plus: line
+    -%}
+
+    {%- capture rows -%}
+      {{ rows }}
+      <div class="rfg__row" data-rfg-row="{{ i }}">
+        <span class="rfg__tick" aria-hidden="true"></span>
+        {%- if gift.featured_image -%}
+          <img class="rfg__img" src="{{ gift.featured_image | image_url: width: 96 }}" alt="" width="44" height="44" loading="lazy">
+        {%- else -%}
+          <span class="rfg__img" aria-hidden="true"></span>
+        {%- endif -%}
+        <div class="rfg__main">
+          <div class="rfg__top">
+            <p class="rfg__name">
+              {%- comment -%} Non-breaking spaces: {%- endif -%} would eat a plain trailing space. {%- endcomment -%}
+              <span class="rfg__qty" data-rfg-qty>{%- if qty > 1 -%}{{ qty }}&nbsp;×&nbsp;{%- endif -%}</span>{{ gift.title | strip }}
+            </p>
+            <span class="rfg__val" data-rfg-val>{{ line | money }}</span>
+          </div>
+          {%- if sized -%}
+            <div class="rfg__size" data-rfg-size>
+              {%- if matched_label != blank -%}
+                Size: <b>{{ matched_label }}</b> — matched to your mattress
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         </div>
       </div>
-      
-      {% if template.suffix == 'mattress-bundle' %}
-        <div class="free-gift-pdp__item" style="margin-top:20px;">
-                <div class="free-gift-pdp__item-checkbox">
-                  <label class="free-gift-pdp-checkbox-label">
-                    <input type="checkbox" class="checkbox-input rebuy-checkbox" checked disabled >
-                  </label>
-                </div>
-                <div class="free-gift-pdp__item-image">
-                  <img src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/premium_pillow_protector_cotton_terry_towelling_aacc2b4f-64e6-427c-93d1-990190306b3a.jpg?v=1729093807" alt="free product image">
-                </div>
-                <div class="free-gift-pdp__item-info">
-                  <div class="free-gift-pdp__item-product-title">
-                      <p id="bold" class="bold" style="display: inline;">1</p> X 
-                    Cotton Pillow Protector
-                  </div>
-                  <div class="free-gift-pdp__item-product-price free-gift-pdp-product-price">
-                    <div>
-                      <span class="free-gift-pdp-money sale" style="margin-right: 10px;">
-                        <span class="sr-only">Sale price</span> <span style="font-weight:600; color: #58327a;">FREE</span>
-                      </span> 
-                      <span class="free-gift-pdp-money compare-at">
-                        <span class="sr-only">Original price</span>
-                        <span id="compare_price">£29</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        <div data-rebuy-id="205022" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
-      {% endif %}
-      
-      <div data-rebuy-id="196540" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+    {%- endcapture -%}
+
+    {%- capture data -%}
+      {{ data }}{% unless forloop.first %},{% endunless %}{
+        "qty": {{ base_qty }},
+        "doubles": {{ doubles }},
+        "sized": {{ sized }},
+        "price": {{ gv.price }},
+        "sizes": { {%- if sized -%}
+          {%- for v in gift.variants -%}
+            {%- liquid
+              assign vkey = ''
+              assign vlabel = ''
+              assign vwords = v.title | split: ' '
+              for w in vwords
+                assign lw = w | downcase
+                if lw contains 'x'
+                  break
+                endif
+                assign vlabel = vlabel | append: w | append: ' '
+                unless lw == 'size'
+                  assign vkey = vkey | append: lw | append: ' '
+                endunless
+              endfor
+              assign vkey = vkey | strip
+              assign vlabel = vlabel | strip
+            -%}
+            {%- unless forloop.first -%},{%- endunless -%}
+            {{ vkey | json }}: { "price": {{ v.price }}, "label": {{ vlabel | json }} }
+          {%- endfor -%}
+        {%- endif -%} }
+      }
+    {%- endcapture -%}
+  {%- endfor -%}
+
+  {%- assign gift_count = gift_refs.size -%}
+
+  <div class="rfg" id="rfg-{{ product.id }}" data-rfg data-rfg-count="{{ gift_count }}">
+    <div class="rfg__head">
+      <div class="rfg__eyebrow">
+        <svg class="rfg__mark" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <rect x="1.4" y="6.6" width="13.2" height="8" rx="1"/>
+          <path d="M0.9 4.2h14.2v2.4H0.9z"/>
+          <path d="M8 4.2v10.4"/>
+          <path d="M8 4.2S6.9 1.4 5.2 1.4a1.5 1.5 0 000 2.8z"/>
+          <path d="M8 4.2s1.1-2.8 2.8-2.8a1.5 1.5 0 010 2.8z"/>
+        </svg>
+        <span class="rfg__kicker">Included free with your order</span>
+      </div>
+      <h2 class="rfg__title" data-rfg-title>
+        {%- if gift_count == 1 -%}Free gift, worth {{ total | money }}
+        {%- else -%}Free gifts, worth {{ total | money }}{%- endif -%}
+      </h2>
     </div>
 
-    {% if template.suffix == 'mattress-bundle' %}
-      <div style="font-weight:600;margin-top:16px;color:#3f2155">Total free gifts value: £399</div>
-    {% endif %}
-    
+    <div class="rfg__items" data-rfg-items>{{ rows }}</div>
+
+    {%- if gift_count > 1 -%}
+      <div class="rfg__total" data-rfg-total>
+        <span class="rfg__total-l">Total value, free to you</span>
+        <span class="rfg__total-r" data-rfg-total-val>{{ total | money }}</span>
+      </div>
+    {%- endif -%}
+
+    <p class="rfg__sr" role="status" aria-live="polite" data-rfg-live></p>
   </div>
-</div>
 
+  <script type="application/json" data-rfg-data="{{ product.id }}">
+    {"gifts":[{{ data }}],"moneyFormat":{{ shop.money_format | json }}}
+  </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    (function () {
+      var root = document.getElementById('rfg-{{ product.id }}');
+      if (!root || root.dataset.rfgBound) return;
+      root.dataset.rfgBound = '1';
 
+      var cfg = JSON.parse(document.querySelector('[data-rfg-data="{{ product.id }}"]').textContent);
+      var gifts = cfg.gifts;
+      var rows = root.querySelectorAll('[data-rfg-row]');
+      var live = root.querySelector('[data-rfg-live]');
 
-<script>
-var previousOption = '';
-var initialMultiplication = false;
-var shouldDivide = false;
+      /* Mattress variant id -> { key, label }, same normalisation as the Liquid above. */
+      var VARIANTS = {
+        {%- for v in product.variants -%}
+          {%- liquid
+            assign vkey = ''
+            assign vlabel = ''
+            assign vwords = v.title | split: ' '
+            for w in vwords
+              assign lw = w | downcase
+              if lw contains 'x'
+                break
+              endif
+              assign vlabel = vlabel | append: w | append: ' '
+              unless lw == 'size'
+                assign vkey = vkey | append: lw | append: ' '
+              endunless
+            endfor
+            assign vkey = vkey | strip
+            assign vlabel = vlabel | strip
+          -%}
+          {%- unless forloop.first -%},{%- endunless -%}
+          "{{ v.id }}": { "key": {{ vkey | json }}, "label": {{ vlabel | json }} }
+        {%- endfor -%}
+      };
 
-$(document).ready(function() {
-  const items = $('.free-gift-pdp__item');
-  const selectedOption = $('select#size_dropdown').find('option:selected').val();
+      /* Mirrors the money filter so JS-updated values match the server-rendered ones.
+         amount -> 1,234.56   amount_with_comma_separator -> 1.234,56 */
+      function money(cents) {
+        var f = cfg.moneyFormat || '£{{ "{{amount}}" }}';
 
-  items.each(function() {
-    const boldTag = $(this).find('.bold');
-    const comparePriceElement = $(this).find('.free-gift-pdp-money.compare-at');
-    const comparePrice = parseFloat(comparePriceElement.text().replace(/[^0-9.-]+/g, ""));
+        function build(decimals, thousands, decimal) {
+          var n = (cents / 100).toFixed(decimals);
+          var parts = n.split('.');
+          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
+          return parts.length > 1 ? parts[0] + decimal + parts[1] : parts[0];
+        }
 
-    if (boldTag.length > 0 && !isNaN(comparePrice)) {
-      if (selectedOption.includes('Double') || selectedOption.includes('King')) {
-        boldTag.text('2');
-        comparePriceElement.text('£' + (comparePrice * 2).toFixed(2));
-        initialMultiplication = true;
-      } else {
-        boldTag.text('1');
-        comparePriceElement.text('£' + comparePrice.toFixed(2));
+        return f
+          .replace(/\{\{\s*amount\s*\}\}/g, build(2, ',', '.'))
+          .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, build(2, '.', ','))
+          .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g, build(0, '.', ','))
+          .replace(/\{\{\s*amount_no_decimals\s*\}\}/g, build(0, ',', '.'))
+          .replace(/<[^>]*>/g, '');
       }
-    }
-  });
 
-  previousOption = selectedOption;
-});
+      function render(size) {
+        var key = size ? size.key : '';
+        var large = /double|king/.test(key);
+        var total = 0;
 
-$('select#size_dropdown').change(function() {
-  const selectedOption = $(this).find('option:selected').val();
-  const items = $('.free-gift-pdp__item');
+        gifts.forEach(function (g, i) {
+          var row = rows[i];
+          if (!row) return;
 
-  items.each(function() {
-    const boldTag = $(this).find('.bold');
-    const comparePriceElement = $(this).find('.free-gift-pdp-money.compare-at');
-    const comparePrice = parseFloat(comparePriceElement.text().replace(/[^0-9.-]+/g, ""));
+          var qty = g.doubles && large ? g.qty * 2 : g.qty;
+          var unit = g.price;
+          var label = '';
 
-    if (boldTag.length > 0 && !isNaN(comparePrice)) {
-      if (previousOption.includes('Double') || previousOption.includes('King')) {
-        if (!selectedOption.includes('Double') && !selectedOption.includes('King') && initialMultiplication) {
-          comparePriceElement.text('£' + (comparePrice / 2).toFixed(2));
-          shouldDivide = true;
+          if (g.sized && key && g.sizes[key]) {
+            unit = g.sizes[key].price;
+            label = g.sizes[key].label;
+          }
+
+          var line = unit * qty;
+          total += line;
+
+          row.querySelector('[data-rfg-qty]').textContent = qty > 1 ? qty + '\u00a0\u00d7\u00a0' : '';
+          row.querySelector('[data-rfg-val]').textContent = money(line);
+
+          var sizeEl = row.querySelector('[data-rfg-size]');
+          if (sizeEl) {
+            sizeEl.innerHTML = label
+              ? 'Size: <b>' + label + '</b> — matched to your mattress'
+              : '';
+          }
+        });
+
+        var title = root.querySelector('[data-rfg-title]');
+        title.textContent = (gifts.length === 1 ? 'Free gift, worth ' : 'Free gifts, worth ') + money(total);
+
+        var totalVal = root.querySelector('[data-rfg-total-val]');
+        if (totalVal) totalVal.textContent = money(total);
+      }
+
+      /* Same normalisation as the Liquid, for when we only have the option text. */
+      function normalise(title) {
+        var words = String(title).split(' ');
+        var key = [], label = [];
+        for (var i = 0; i < words.length; i++) {
+          var lw = words[i].toLowerCase();
+          if (!lw) continue;
+          if (lw.indexOf('x') !== -1) break;
+          label.push(words[i]);
+          if (lw !== 'size') key.push(lw);
+        }
+        return { key: key.join(' '), label: label.join(' ') };
+      }
+
+      var lastKey = null;
+      function sync(announce) {
+        var input = document.querySelector('input[data-bstr-variant-input="{{ product.id }}"]');
+        var id = input && input.getAttribute('value');
+        var size = id && VARIANTS[id] ? VARIANTS[id] : null;
+
+        /* The variant input only exists while the mattress is available, so fall back
+           to the size control's own value on a sold-out product. */
+        if (!size) {
+          var sel = document.getElementById('size_dropdown');
+          if (sel && sel.value && sel.value !== 'bstrSelectNill') size = normalise(sel.value);
+        }
+
+        var key = size ? size.key : '';
+        if (key === lastKey) return;
+        lastKey = key;
+        render(size);
+        if (announce && size && live) {
+          live.textContent = 'Mattress size ' + size.label + '. Free gift sizes updated.';
         }
       }
 
-      if (selectedOption.includes('Double') || selectedOption.includes('King')) {
-        if (!(previousOption.includes('Double') || previousOption.includes('King'))) {
-          boldTag.text('2');
-          comparePriceElement.text('£' + (comparePrice * 2).toFixed(2));
-          initialMultiplication = true;
-          shouldDivide = false;
-        }
-      } else {
-        boldTag.text('1');
-        if (shouldDivide) {
-          comparePriceElement.text('£' + (comparePrice / 2).toFixed(2));
-          shouldDivide = false;
-        } else {
-          comparePriceElement.text('£' + comparePrice.toFixed(2));
-        }
-        initialMultiplication = false;
+      var input = document.querySelector('input[data-bstr-variant-input="{{ product.id }}"]');
+      if (input) {
+        new MutationObserver(function () { sync(true); })
+          .observe(input, { attributes: true, attributeFilter: ['value'] });
       }
-    }
-  });
+      /* Belt and braces: the dropdown variant of the size control. */
+      document.addEventListener('change', function (e) {
+        if (e.target && e.target.id === 'size_dropdown') setTimeout(function () { sync(true); }, 0);
+      });
 
-  previousOption = selectedOption;
-});
-</script>
+      sync(false);
+    })();
+  </script>
 
+{%- else -%}
+  {%- comment -%} ---------- LEGACY STRING METAFIELDS ---------- {%- endcomment -%}
+  {%- liquid
+    assign l_titles = product.metafields.custom.free_gift_product_title | split: ','
+    assign l_images = product.metafields.custom.free_gift_Image_url | split: ','
+    assign l_prices = product.metafields.custom.free_gift_products_compare_at_price | split: ','
+
+    comment
+      Only sum when every value is a clean number. "Up To £79.95" is a range, not a value.
+    endcomment
+    assign summable = true
+    assign l_total = 0
+    for p in l_prices
+      assign cleaned = p | strip | remove: '£' | remove: ',' | remove: ' '
+      assign num = cleaned | times: 1.0
+      if cleaned == blank or num == 0
+        assign summable = false
+      endif
+      assign letters = cleaned | downcase | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9' | remove: '.'
+      if letters != blank
+        assign summable = false
+      endif
+      assign l_total = l_total | plus: num
+    endfor
+
+    comment
+      Convert to cents so the money filter formats it — "round: 2" alone renders 59.0.
+    endcomment
+    assign l_total_cents = l_total | times: 100 | round
+
+    assign l_count = l_titles.size
+  -%}
+
+  {%- if l_count > 0 -%}
+    <div class="rfg" data-rfg data-rfg-count="{{ l_count }}">
+      <div class="rfg__head">
+        <div class="rfg__eyebrow">
+          <svg class="rfg__mark" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <rect x="1.4" y="6.6" width="13.2" height="8" rx="1"/>
+            <path d="M0.9 4.2h14.2v2.4H0.9z"/>
+            <path d="M8 4.2v10.4"/>
+            <path d="M8 4.2S6.9 1.4 5.2 1.4a1.5 1.5 0 000 2.8z"/>
+            <path d="M8 4.2s1.1-2.8 2.8-2.8a1.5 1.5 0 010 2.8z"/>
+          </svg>
+          <span class="rfg__kicker">Included free with your order</span>
+        </div>
+        <h2 class="rfg__title">
+          {%- if l_count == 1 -%}Free gift{%- else -%}Free gifts{%- endif -%}
+          {%- if summable -%}, worth {{ l_total_cents | money }}{%- endif -%}
+        </h2>
+      </div>
+
+      <div class="rfg__items">
+        {%- for t in l_titles -%}
+          {%- assign title = t | strip -%}
+          {%- if title != blank -%}
+            {%- assign img = l_images[forloop.index0] | strip -%}
+            {%- assign val = l_prices[forloop.index0] | strip -%}
+            <div class="rfg__row">
+              <span class="rfg__tick" aria-hidden="true"></span>
+              {%- if img != blank -%}
+                <img class="rfg__img" src="{{ img }}" alt="" width="44" height="44" loading="lazy">
+              {%- else -%}
+                <span class="rfg__img" aria-hidden="true"></span>
+              {%- endif -%}
+              <div class="rfg__main">
+                <div class="rfg__top">
+                  <p class="rfg__name">{{ title }}</p>
+                  {%- if val != blank -%}<span class="rfg__val">{{ val }}</span>{%- endif -%}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if l_count > 1 and summable -%}
+        <div class="rfg__total">
+          <span class="rfg__total-l">Total value, free to you</span>
+          <span class="rfg__total-r">{{ l_total_cents | money }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+{%- comment -%}
+  Rebuy hooks — these are what actually place the gifts in the basket. Display above is
+  presentational only, so these must stay.
+{%- endcomment -%}
+{%- if template.suffix == 'mattress-bundle' -%}
+  <div data-rebuy-id="205022" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+{%- endif -%}
+<div data-rebuy-id="196540" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
