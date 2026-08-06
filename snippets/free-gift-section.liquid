@@ -1,4 +1,24 @@
-{%- comment -%} Free gift bundle widget - PDP. Rendered by the `freegiftbundle` block in {%- endcomment -%}
+{%- comment -%}
+  Free gift bundle widget - PDP. Rendered by the `freegiftbundle` block in
+  sections/product-page__product.liquid.
+
+  This widget only describes the offer. The gifts are put in the basket by the
+  EG Auto Add to Cart app, which holds two rules keyed on mattress size:
+
+    Double / King / Super King  ->  Gift: 400 Memory Foam Pillow (pair SKU)  x2
+                                    Cotton Pillow Protector (Pair)           x1
+    Single sizes                ->  Gift: 400 Memory Foam Pillow             x1
+                                    Cotton Pillow Protector                  x1
+
+  Each tier has its own zero-priced gift SKU, so the rows shown here are filtered
+  to the tier matching the selected size rather than just re-counted. The gift
+  products carry `free-gift-single` or `free-gift-double` to say which tier they
+  belong to; anything untagged shows on both. Value comes from compare-at, since
+  the gift variants themselves are priced at zero.
+
+  Keep this in step with the app. A row here that no rule adds is a promise the
+  basket does not keep.
+{%- endcomment -%}
 
 {%- unless product.tags contains 'clearance' -%}
 {%- if settings.enable_freegift_widget and product.id != 15990166520188 -%}
@@ -32,6 +52,11 @@
   if sel_key contains 'double' or sel_key contains 'king'
     assign size_is_large = true
   endif
+
+  assign sel_tier = 'single'
+  if size_is_large
+    assign sel_tier = 'double'
+  endif
 -%}
 
 {%- if gift_refs.size > 0 -%}
@@ -40,20 +65,18 @@
     assign data = ''
     assign total = 0
     assign shown = 0
-    assign has_sized_gift = false
   -%}
 
   {%- for gift in gift_refs -%}
     {%- liquid
       assign i = forloop.index0
 
-      assign sized = false
-      for opt in gift.options_with_values
-        assign on = opt.name | downcase
-        if on contains 'size' and gift.variants.size > 1
-          assign sized = true
-        endif
-      endfor
+      assign tier = 'any'
+      if gift.tags contains 'free-gift-double'
+        assign tier = 'double'
+      elsif gift.tags contains 'free-gift-single'
+        assign tier = 'single'
+      endif
 
       assign base_qty = 1
       if qty_list[i] != blank
@@ -73,23 +96,27 @@
         assign qty = base_qty | times: 2
       endif
 
+      assign sized = false
+      for opt in gift.options_with_values
+        assign on = opt.name | downcase
+        if on contains 'size' and gift.variants.size > 1
+          assign sized = true
+        endif
+      endfor
+
       assign gv = gift.selected_or_first_available_variant
-      assign matched_label = ''
     -%}
 
     {%- if sized -%}
-      {%- assign has_sized_gift = true -%}
       {%- for v in gift.variants -%}
         {%- liquid
           assign vkey = ''
-          assign vlabel = ''
           assign vwords = v.title | split: ' '
           for w in vwords
             assign lw = w | downcase
             if lw contains 'x'
               break
             endif
-            assign vlabel = vlabel | append: w | append: ' '
             unless lw == 'size'
               assign vkey = vkey | append: lw | append: ' '
             endunless
@@ -97,24 +124,33 @@
           assign vkey = vkey | strip
         -%}
         {%- if vkey == sel_key and sel_key != blank -%}
-          {%- liquid
-            assign gv = v
-            assign matched_label = vlabel | strip
-          -%}
+          {%- assign gv = v -%}
           {%- break -%}
         {%- endif -%}
       {%- endfor -%}
     {%- endif -%}
 
     {%- liquid
-      assign line = gv.price | times: qty
-      assign total = total | plus: line
-      assign shown = shown | plus: 1
+      assign unit = gv.compare_at_price | default: 0
+      if unit < gv.price
+        assign unit = gv.price
+      endif
+
+      assign visible = false
+      if tier == 'any' or tier == sel_tier
+        assign visible = true
+      endif
+
+      assign line = unit | times: qty
+      if visible
+        assign total = total | plus: line
+        assign shown = shown | plus: 1
+      endif
     -%}
 
     {%- capture rows -%}
       {{ rows }}
-      <div class="rfg__row" data-rfg-row="{{ i }}">
+      <div class="rfg__row" data-rfg-row="{{ i }}" data-rfg-tier="{{ tier }}"{% unless visible %} style="display:none"{% endunless %}>
         <span class="rfg__tick" aria-hidden="true"></span>
         {%- if gift.featured_image -%}
           <img class="rfg__img" src="{{ gift.featured_image | image_url: width: 96 }}" alt="" width="44" height="44" loading="lazy">
@@ -129,43 +165,41 @@
             <span class="rfg__val" data-rfg-val>{{ line | money }}</span>
           </div>
           {%- if sized -%}
-            <div class="rfg__size" data-rfg-size>
-              {%- if matched_label != blank -%}
-                Size: <b>{{ matched_label }}</b> - matched to your mattress
-              {%- endif -%}
-            </div>
+            <div class="rfg__size">You choose your size when you add to basket</div>
           {%- endif -%}
         </div>
       </div>
     {%- endcapture -%}
 
     {%- capture data -%}
-      {{ data }}{% unless shown == 1 %},{% endunless %}{
+      {{ data }}{% unless forloop.first %},{% endunless %}{
         "qty": {{ base_qty }},
         "doubles": {{ doubles }},
+        "tier": {{ tier | json }},
         "sized": {{ sized }},
-        "price": {{ gv.price }},
+        "price": {{ unit }},
         "sizes": { {%- if sized -%}
           {%- for v in gift.variants -%}
             {%- liquid
               assign vkey = ''
-              assign vlabel = ''
               assign vwords = v.title | split: ' '
               for w in vwords
                 assign lw = w | downcase
                 if lw contains 'x'
                   break
                 endif
-                assign vlabel = vlabel | append: w | append: ' '
                 unless lw == 'size'
                   assign vkey = vkey | append: lw | append: ' '
                 endunless
               endfor
               assign vkey = vkey | strip
-              assign vlabel = vlabel | strip
+              assign vunit = v.compare_at_price | default: 0
+              if vunit < v.price
+                assign vunit = v.price
+              endif
             -%}
             {%- unless forloop.first -%},{%- endunless -%}
-            {{ vkey | json }}: { "price": {{ v.price }}, "label": {{ vlabel | json }} }
+            {{ vkey | json }}: { "id": {{ v.id }}, "price": {{ vunit }} }
           {%- endfor -%}
         {%- endif -%} }
       }
@@ -189,14 +223,6 @@
 
     <div class="rfg__items" data-rfg-items>
       {{ rows }}
-      {%- unless has_sized_gift -%}
-        <div class="rfg__row rfg__row--rebuy" data-rfg-rebuy-row style="display:none">
-          <span class="rfg__tick" aria-hidden="true"></span>
-          <div class="rfg__main">
-            <div data-rebuy-id="205022" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
-          </div>
-        </div>
-      {%- endunless -%}
     </div>
 
     <div class="rfg__total" data-rfg-total>
@@ -220,7 +246,6 @@
       var cfg = JSON.parse(document.querySelector('[data-rfg-data="{{ product.id }}"]').textContent);
       var gifts = cfg.gifts;
       var rows = root.querySelectorAll('[data-rfg-row]');
-      var rebuyRow = root.querySelector('[data-rfg-rebuy-row]');
       var live = root.querySelector('[data-rfg-live]');
       var titleEl = root.querySelector('[data-rfg-title]');
       var totalEl = root.querySelector('[data-rfg-total]');
@@ -277,65 +302,46 @@
         return parseFloat(String(text).replace(/[^\d.-]+/g, '')) || 0;
       }
 
-      function rebuyCents() {
-        var el = document.querySelector('.rebuy-addon__item-product-price .rebuy-money.compare-at span:last-child');
-        return el ? Math.round(num(el.textContent) * 100) : 0;
-      }
+      var subtotal = {{ total }};
+      var visibleCount = {{ shown }};
 
-      function syncRebuyRow() {
-        if (!rebuyRow) return false;
-        var slot = rebuyRow.querySelector('[data-rebuy-id]');
-        var on = !!(slot && slot.innerHTML.trim() !== '');
-        rebuyRow.style.display = on ? '' : 'none';
-        return on;
-      }
-
-      var subtotal = 0;
+      var serverTier = {{ sel_tier | json }};
 
       function renderRows(size) {
         var key = size ? size.key : '';
-        var large = /double|king/.test(key);
+        var tier = key ? (/double|king/.test(key) ? 'double' : 'single') : serverTier;
+        var large = tier === 'double';
         subtotal = 0;
+        visibleCount = 0;
 
         gifts.forEach(function (g, i) {
           var row = rows[i];
           if (!row) return;
 
+          var show = g.tier === 'any' || g.tier === tier;
+          row.style.display = show ? '' : 'none';
+          if (!show) return;
+
           var qty = g.doubles && large ? g.qty * 2 : g.qty;
-          var unit = g.price;
-          var label = '';
-
-          if (g.sized && key && g.sizes[key]) {
-            unit = g.sizes[key].price;
-            label = g.sizes[key].label;
-          }
-
+          var unit = g.sized && key && g.sizes[key] ? g.sizes[key].price : g.price;
           var lineTotal = unit * qty;
           subtotal += lineTotal;
+          visibleCount += 1;
 
-          row.querySelector('[data-rfg-qty]').textContent = qty > 1 ? qty + '\u00a0\u00d7\u00a0' : '';
+          row.querySelector('[data-rfg-qty]').textContent = qty > 1 ? qty + ' × ' : '';
           row.querySelector('[data-rfg-val]').textContent = money(lineTotal);
-
-          var sizeEl = row.querySelector('[data-rfg-size]');
-          if (sizeEl) {
-            sizeEl.innerHTML = label
-              ? 'Size: <b>' + label + '</b> \u2014 matched to your mattress'
-              : '';
-          }
         });
       }
 
       function updateTotals() {
-        var total = subtotal + rebuyCents();
-        var count = gifts.length + (syncRebuyRow() ? 1 : 0);
-
-        titleEl.textContent = (count === 1 ? 'Free gift, worth ' : 'Free gifts, worth ') + money(total);
-        totalVal.textContent = money(total);
-        totalEl.style.display = count === 1 ? 'none' : '';
+        titleEl.textContent =
+          (visibleCount === 1 ? 'Free gift, worth ' : 'Free gifts, worth ') + money(subtotal);
+        totalVal.textContent = money(subtotal);
+        totalEl.style.display = visibleCount === 1 ? 'none' : '';
 
         var productPrice = num((document.getElementById('prod-price') || {}).textContent);
         var compProdPrice = num((document.getElementById('comp-prod-price') || {}).textContent);
-        var totalPounds = total / 100;
+        var totalPounds = subtotal / 100;
         var savings;
         if (cfg.discountWidget) {
           savings = totalPounds + (compProdPrice - productPrice * (1 - cfg.discountRate));
@@ -353,11 +359,11 @@
         var id = input && input.getAttribute('value');
         var size = id && VARIANTS[id] ? VARIANTS[id] : null;
         var key = size ? size.key : '';
-        if (key !== lastKey) {
+        if (key && key !== lastKey) {
           lastKey = key;
           renderRows(size);
-          if (announce && size && live) {
-            live.textContent = 'Mattress size ' + size.label + '. Free gift sizes updated.';
+          if (announce && live) {
+            live.textContent = 'Mattress size ' + size.label + '. Free gifts updated.';
           }
         }
         updateTotals();
@@ -369,48 +375,15 @@
           .observe(variantInput, { attributes: true, attributeFilter: ['value'] });
       }
       document.addEventListener('change', function (e) {
-        var t = e.target;
-        if (!t) return;
-        if (t.id === 'size_dropdown' || (t.classList && t.classList.contains('rebuy-select'))) {
+        if (e.target && e.target.id === 'size_dropdown') {
           setTimeout(function () { sync(true); }, 0);
         }
       });
 
-      var dressed = false;
-      function dressRebuy() {
-        var options = document.querySelector('.rebuy-addon__item-product-options');
-        if (options && !dressed) {
-          dressed = true;
-          var note = document.createElement('div');
-          note.className = 'gift-bundle-mattress-protector-description';
-          note.innerHTML =
-            '<p class="gift-bundle-mattress-protector-description-line-1">✅ Extended sleep trial: 200 nights!</p>' +
-            '<p class="gift-bundle-mattress-protector-description-line-2"><b>Important - Choose protector size</b></p>';
-          options.parentNode.insertBefore(note, options);
-        }
-        var zero = document.querySelector('.rebuy-addon__item-product-price .rebuy-money.sale span:last-child');
-        if (zero && zero.textContent.trim() === '£0.00') zero.textContent = 'Free';
-        updateTotals();
-      }
-
-      var queued = false;
-      var observer = new MutationObserver(function () {
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(function () {
-          queued = false;
-          observer.disconnect();
-          dressRebuy();
-          if (dressed && rebuyCents() > 0) return;
-          observer.observe(document.body, { childList: true, subtree: true });
-        });
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-      setTimeout(function () { observer.disconnect(); }, 15000);
-
-      setTimeout(updateTotals, 5000);
+      setTimeout(updateTotals, 1500);
 
       sync(false);
+
     })();
   </script>
 {%- endif -%}
