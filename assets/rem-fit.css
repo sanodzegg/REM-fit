@@ -15786,6 +15786,8 @@ span#monthly-payment {
   margin: 32px 0 0;
   text-align: left;
   -webkit-font-smoothing: antialiased;
+
+  position: relative;
 }
 .rfg * { box-sizing: border-box; }
 
@@ -15918,12 +15920,17 @@ span#monthly-payment {
 
 .rfg__sr {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 1px;
   height: 1px;
+  padding: 0;
+  margin: 0;
+  border: 0;
   overflow: hidden;
   clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   white-space: nowrap;
-  margin: 0;
 }
 
 .rfg :focus-visible {
