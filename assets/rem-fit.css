@@ -9897,7 +9897,7 @@ div#cs-tab1 {
   animation: lds-dual-ring 1.2s linear infinite;
   text-align: center;
   position: absolute;
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%);
 }
 .lds-dual-ring {
@@ -15942,6 +15942,7 @@ span#monthly-payment {
 .template--product #my-button[disabled] {
   background-color: #b9abc8;
   cursor: not-allowed;
+
 }
 .template--product .product__atc .button { text-transform: none; }
 
