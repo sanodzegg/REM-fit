@@ -3610,18 +3610,6 @@ div#shopify-section-template--18416162767094__breadcrumbs
   border-style: solid;
 }
 
-.helptochoose {
-  text-decoration: none;
-  color: #3f2155;
-  text-align: center;
-  padding: 10px;
-  border: 2px solid #3f2155;
-  border-radius: 8px;
-  margin-top: 10px;
-  width: 100%;
-  font-weight: 600;
-}
-
 @media (max-width: 767px) {
   .grid-layout-mobile .countdown.gallery-below-countd {
     display: none;
