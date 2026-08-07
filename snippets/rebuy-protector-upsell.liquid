@@ -71,7 +71,7 @@
               v-for="(product, product_index) in products"
               v-bind:key="'label-' + product.id"
               v-bind:for="'pup-choice-' + id + '-' + product_index">
-              <span class="pup__opt-name" v-html="product.title"></span>
+              <span class="pup__opt-name" v-html="product.title.replace(/\s*mattress protector\s*/i, ' ').replace(/^[\s\-–—|]+|[\s\-–—|]+$/g, '').replace(/\s{2,}/g, ' ')"></span>
               <span class="pup__opt-price" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
             </label>
           </div>
@@ -94,8 +94,10 @@
                   <h3 class="pup__name" v-html="product.title"></h3>
                   <p
                     class="pup__why"
-                    v-if="product.metafields && product.metafields.custom && product.metafields.custom.descriptor"
-                    v-html="product.metafields.custom.descriptor"></p>
+                    v-html="[Array.isArray(product.metafields)
+                      ? (product.metafields.filter(m => m.key === 'rebuy_product_subtitle')[0] || {}).value
+                      : ((product.metafields || {}).custom || {}).rebuy_product_subtitle
+                    ].map(v => v && v.value !== undefined ? v.value : v)[0] || ''"></p>
                   <div class="pup__prices">
                     <span class="pup__now" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
                     <template v-if="variantOnSale(product, product.selected_variant)">

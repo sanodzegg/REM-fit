@@ -16118,6 +16118,7 @@ span#monthly-payment {
   color: #fff;
   letter-spacing: -.01em;
   text-transform: none;
+  text-align: left;
 }
 .pup__title em {
   font-style: normal;
@@ -16170,6 +16171,7 @@ span#monthly-payment {
   font-size: 10.5px;
   line-height: 1.3;
   color: rgba(221, 204, 238, .8);
+  text-align: left;
 }
 .pup__scale span:last-child {
   text-align: right;
@@ -16302,12 +16304,17 @@ span#monthly-payment {
   line-height: 1.3;
   color: var(--pup-ink-deep);
   text-transform: none;
+  text-align: left;
 }
 .pup .pup__why {
   margin: 0 0 6px;
   font-size: 11.5px;
   line-height: 1.4;
   color: var(--pup-grey);
+}
+/* No subtitle metafield on this product: leave no gap behind. */
+.pup .pup__why:empty {
+  display: none;
 }
 .pup__prices {
   display: flex;
@@ -16438,5 +16445,239 @@ span#monthly-payment {
   .pup *::after {
     transition: none !important;
     animation: none !important;
+  }
+}
+
+#aca-modal {
+  --aca-ink: #3f2155;
+  --aca-ink-deep: #2b1639;
+  --aca-gold: #f7c948;
+  --aca-lilac: #ddccee;
+  --aca-rail: #ebe2f3;
+  --aca-surface: #f8f5fb;
+  --aca-cream: #fffaeb;
+  --aca-grey: #6b6478;
+  --aca-font: var(--baseFont, "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif);
+
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(43, 22, 57, 0.55);
+  font-family: var(--aca-font);
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+#aca-modal-wrapper {
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+}
+
+#aca-modal #aca-modal-container {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 26px 22px 20px;
+  border: 1.5px solid var(--aca-lilac);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(43, 22, 57, 0.28);
+  color: var(--aca-ink-deep);
+  text-align: center;
+  overflow: visible;
+}
+#aca-modal #aca-modal-container::backdrop { background: transparent; }
+
+#aca-modal #aca-close-icon-container {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  line-height: 0;
+  display: block !important;
+}
+#aca-modal #aca-close-icon-container:hover { background: var(--aca-surface); }
+#aca-modal #aca-close-icon { stroke: var(--aca-grey); }
+#aca-modal #aca-close-icon-container:hover #aca-close-icon { stroke: var(--aca-ink); }
+
+#aca-modal #aca-modal-headline {
+  margin: 0;
+  font-family: var(--aca-font);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--aca-ink-deep);
+}
+
+#aca-modal #aca-modal-subheadline {
+  margin: 0 0 18px;
+  font-family: var(--aca-font);
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--aca-grey);
+}
+
+#aca-modal #aca-products-container {
+  display: grid;
+  gap: 12px;
+  width: 100% !important;
+}
+
+#aca-modal .aca-product {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  grid-template-areas:
+    "image name"
+    "image dropdown"
+    "button button";
+  align-items: center;
+  gap: 8px 14px;
+  padding: 14px;
+  border: 1px solid var(--aca-rail);
+  border-radius: 12px;
+  background: var(--aca-surface);
+  text-align: left;
+}
+
+#aca-modal .aca-product-image {
+  grid-area: image;
+  align-self: start;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+}
+#aca-modal .aca-product-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#aca-modal .aca-product-name {
+  grid-area: name;
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--aca-ink-deep);
+}
+
+#aca-modal .aca-product-dropdown {
+  grid-area: dropdown;
+  position: relative;
+  display: block;
+}
+#aca-modal .aca-product-variants {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 4px;
+  padding-right: 30px;
+  border: 1px solid var(--aca-ink);
+  border-radius: 10px;
+  background: var(--aca-cream);
+  font-family: var(--aca-font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--aca-ink-deep);
+  cursor: pointer;
+}
+#aca-modal .aca-product-dropdown .dropdown-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 11px;
+  height: 11px;
+  transform: translateY(-50%);
+  fill: var(--aca-ink);
+  pointer-events: none;
+}
+
+#aca-modal .aca-product-button {
+  grid-area: button;
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--aca-ink);
+  font-family: var(--aca-font);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+#aca-modal .aca-product-button:hover { background: var(--aca-ink-deep); }
+#aca-modal .aca-product-button:disabled {
+  background: var(--aca-rail);
+  color: var(--aca-grey);
+  cursor: default;
+}
+
+#aca-products-container .aca-product {
+  width: 100% !important;
+  max-width: unset !important;
+  margin: 0 !important;
+  padding: 8px !important;
+}
+
+#aca-modal #aca-bottom-close {
+  display: block;
+  width: 100%;
+  margin: 14px 0 0;
+  padding: 6px;
+  border: 0;
+  background: transparent;
+  font-family: var(--aca-font);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--aca-grey);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+#aca-modal #aca-bottom-close:hover { color: var(--aca-ink); }
+
+#aca-modal :focus-visible {
+  outline: 3px solid var(--aca-gold);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+@media (max-width: 480px) {
+  #aca-modal { padding: 14px; }
+  #aca-modal #aca-modal-container { padding: 16px 8px; }
+  #aca-modal #aca-modal-headline { font-size: 17.5px; }
+  #aca-modal .aca-product {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 8px 12px;
+    padding: 12px;
+  }
+  #aca-modal .aca-product-image { width: 56px; height: 56px; }
+}
+
+@media screen and (min-width: 778px) {
+  #aca-modal #aca-modal-container {
+    width: fit-content !important;
   }
 }
