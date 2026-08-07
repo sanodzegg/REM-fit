@@ -164,15 +164,15 @@
     {% else %}
       type="button"
       {% if variant %}
-        onclick="document.querySelector('#my-button > span').style.fontSize = '0';BoosterTheme.cart.addToCartJSON(event, {items: [{id: {{variant}}, quantity: {{quantity}}}]}); this.classList.add('lds-dual-ring'); "
+        onclick="document.querySelector('#my-button > span').style.visibility = 'hidden';BoosterTheme.cart.addToCartJSON(event, {items: [{id: {{variant}}, quantity: {{quantity}}}]}); this.classList.add('lds-dual-ring'); "
       {% else %}
         {% comment %}
-        onclick="document.querySelector('#my-button > span').style.fontSize = '0';BoosterTheme.cart.addToCart(event); this.classList.add('lds-dual-ring');"
+        onclick="document.querySelector('#my-button > span').style.visibility = 'hidden';BoosterTheme.cart.addToCart(event); this.classList.add('lds-dual-ring');"
         {% endcomment %}
-        onclick="document.querySelector('#my-button > span').style.fontSize = '0'; BoosterTheme.cart.addToCart(event); this.classList.add('lds-dual-ring'); 
+        onclick="document.querySelector('#my-button > span').style.visibility = 'hidden'; BoosterTheme.cart.addToCart(event); this.classList.add('lds-dual-ring'); 
         setTimeout(function() { 
         this.classList.remove('lds-dual-ring'); 
-        document.querySelector('#my-button > span[data-button-text]').style.fontSize = '18px'; 
+        document.querySelector('#my-button > span[data-button-text]').style.visibility = 'visible'; 
         }.bind(this), 1000);"
       {% endif %}
     {% endif %}

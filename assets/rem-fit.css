@@ -3610,18 +3610,6 @@ div#shopify-section-template--18416162767094__breadcrumbs
   border-style: solid;
 }
 
-.helptochoose {
-  text-decoration: none;
-  color: #3f2155;
-  text-align: center;
-  padding: 10px;
-  border: 2px solid #3f2155;
-  border-radius: 8px;
-  margin-top: 10px;
-  width: 100%;
-  font-weight: 600;
-}
-
 @media (max-width: 767px) {
   .grid-layout-mobile .countdown.gallery-below-countd {
     display: none;
@@ -7463,15 +7451,16 @@ div#shopify-section-template--18416162767094__breadcrumbs
 }
 
 .helptochoose {
-  text-decoration: none;
   color: #3f2155;
   text-align: center;
-  padding: 10px;
-  border: 2px solid #3f2155;
-  border-radius: 8px;
+  padding: 4px;
   margin-top: 10px;
   width: 100%;
   font-weight: 600;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 700;
 }
 
 @media (max-width: 767px) {
@@ -9908,7 +9897,7 @@ div#cs-tab1 {
   animation: lds-dual-ring 1.2s linear infinite;
   text-align: center;
   position: absolute;
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%);
 }
 .lds-dual-ring {
@@ -15960,6 +15949,7 @@ span#monthly-payment {
 .template--product #my-button[disabled] {
   background-color: #b9abc8;
   cursor: not-allowed;
+
 }
 .template--product .product__atc .button { text-transform: none; }
 
