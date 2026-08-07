@@ -7451,15 +7451,16 @@ div#shopify-section-template--18416162767094__breadcrumbs
 }
 
 .helptochoose {
-  text-decoration: none;
   color: #3f2155;
   text-align: center;
-  padding: 10px;
-  border: 2px solid #3f2155;
-  border-radius: 8px;
+  padding: 4px;
   margin-top: 10px;
   width: 100%;
   font-weight: 600;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 700;
 }
 
 @media (max-width: 767px) {
