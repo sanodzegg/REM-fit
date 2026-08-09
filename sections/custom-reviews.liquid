@@ -1,0 +1,125 @@
+{%- liquid
+  assign embed = ''
+  if section.settings.source == 'auto' and product != blank
+    assign embed = product.metafields.prod.trustpilotreviewscript.value
+  endif
+
+  assign profile_url = section.settings.profile_url | default: 'https://uk.trustpilot.com/review/shop.rem-fit.co.uk'
+-%}
+
+<div class="sec"{% if section.settings.anchor != blank %} id="{{ section.settings.anchor | escape }}"{% endif %}>
+  {%- if section.settings.heading != blank -%}
+    <h2>{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  <div class="tp">
+    {%- if embed != blank -%}
+      {{ embed }}
+    {%- else -%}
+      <div
+        class="trustpilot-widget"
+        data-locale="{{ section.settings.locale | escape }}"
+        data-template-id="{{ section.settings.template_id | escape }}"
+        data-businessunit-id="{{ section.settings.businessunit_id | escape }}"
+        data-style-height="{{ section.settings.height | escape }}"
+        data-style-width="100%"
+        data-theme="{{ section.settings.theme }}"
+        {% if section.settings.stars != blank %}data-stars="{{ section.settings.stars | escape }}"{% endif %}
+        {% if section.settings.review_languages != blank %}data-review-languages="{{ section.settings.review_languages | escape }}"{% endif %}
+      >
+        <a href="{{ profile_url }}" target="_blank" rel="noopener">Trustpilot</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom reviews",
+  "tag": "section",
+  "class": "custom-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor ID",
+      "default": "reviews",
+      "info": "Used as the section's id, so links elsewhere on the page can jump to it."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What customers say"
+    },
+    {
+      "type": "header",
+      "content": "Feed"
+    },
+    {
+      "type": "radio",
+      "id": "source",
+      "label": "Where the feed comes from",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Product metafield" },
+        { "value": "settings", "label": "Always the settings below" }
+      ],
+      "info": "The metafield is prod.trustpilotreviewscript, set per product. Products that do not have it get the widget built below instead."
+    },
+    {
+      "type": "text",
+      "id": "template_id",
+      "label": "TrustBox template ID",
+      "default": "53aa8912dec7e10d38f59f36",
+      "info": "53aa8912dec7e10d38f59f36 is the Review Carousel. Other IDs are listed against each widget in the Trustpilot Business dashboard."
+    },
+    {
+      "type": "text",
+      "id": "businessunit_id",
+      "label": "Business unit ID",
+      "default": "57c53e850000ff000594131a"
+    },
+    {
+      "type": "url",
+      "id": "profile_url",
+      "label": "Trustpilot profile link"
+    },
+    {
+      "type": "text",
+      "id": "locale",
+      "label": "Locale",
+      "default": "en-GB"
+    },
+    {
+      "type": "text",
+      "id": "height",
+      "label": "Widget height",
+      "default": "240px",
+      "info": "A CSS length. The carousel sizes its own iframe to this, so it is not something the stylesheet can override."
+    },
+    {
+      "type": "select",
+      "id": "theme",
+      "label": "Theme",
+      "default": "light",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "dark", "label": "Dark" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "stars",
+      "label": "Star ratings to show",
+      "info": "Optional, comma separated, e.g. 4,5. Leave blank to show every review."
+    },
+    {
+      "type": "text",
+      "id": "review_languages",
+      "label": "Review languages",
+      "info": "Optional, comma separated, e.g. en. Leave blank to show every language."
+    }
+  ]
+}
+{% endschema %}

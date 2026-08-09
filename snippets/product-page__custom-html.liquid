@@ -1,0 +1,26 @@
+{%- comment -%}
+  Custom HTML block for the product page.
+
+  Accepts:
+    block   - required, the block object
+    section - required, used to build the scope id
+{%- endcomment -%}
+
+{%- liquid
+  assign scope_id = 'block__' | append: section.id | append: '-' | append: block.id
+  assign scope_selector = scope_id | prepend: '#'
+-%}
+
+{%- if block.settings.customCSS != blank -%}
+  <style>
+    {{ block.settings.customCSS | replace: '##scoped', scope_selector }}
+  </style>
+{%- endif -%}
+
+<div
+  id="{{ scope_id }}"
+  class="col-12 block__html product-page__custom-html {% if block.settings.noMargin %}margin__bottom--reduced{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.html }}
+</div>

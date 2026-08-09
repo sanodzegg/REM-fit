@@ -1,0 +1,112 @@
+<div class="sec"{% if section.settings.anchor != blank %} id="{{ section.settings.anchor | escape }}"{% endif %}>
+  {%- if section.settings.heading != blank -%}
+    <h2>{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="xsell">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'item' -%}
+            {%- liquid
+              assign col = block.settings.collection
+              assign item_url = block.settings.url | default: col.url
+              assign item_image = block.settings.image | default: col.image
+              assign item_heading = block.settings.heading | default: col.title
+            -%}
+            <a href="{{ item_url | default: '#' }}" {{ block.shopify_attributes }}>
+              {%- if item_image != blank -%}
+                <img
+                  src="{{ item_image | image_url: width: 600 }}"
+                  srcset="
+                    {{ item_image | image_url: width: 200 }} 200w,
+                    {{ item_image | image_url: width: 400 }} 400w,
+                    {{ item_image | image_url: width: 600 }} 600w
+                  "
+                  alt="{{ block.settings.image_alt | escape }}"
+                  width="{{ item_image.width }}"
+                  height="{{ item_image.height }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+
+              {%- if item_heading != blank -%}
+                <b>{{ item_heading | escape }}</b>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank -%}
+                <span>{{ block.settings.text | escape }}</span>
+              {%- endif -%}
+            </a>
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Custom cross-sell",
+  "tag": "section",
+  "class": "custom-xsell",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor ID",
+      "info": "Optional. Set this only if something needs to link to the section."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Save more when you bundle"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Tile",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link override",
+          "info": "Leave blank to link to the collection. Set this to point the tile somewhere else, such as a single product."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Leave blank to use the collection's own image."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "info": "Leave blank when the tile's own wording already says where the link goes, which is usually the case here."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Leave blank to use the collection's title."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Offer",
+          "info": "The smaller line underneath, e.g. Save an extra 10%."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

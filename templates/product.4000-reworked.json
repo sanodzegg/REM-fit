@@ -1,0 +1,1277 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "navigation": {
+      "type": "custom-page-navigation",
+      "blocks": {
+        "nav_items_ymzKhY": {
+          "type": "nav_items",
+          "settings": {
+            "nav_label": "Construction",
+            "nav_id": "#construction"
+          }
+        },
+        "nav_items_6dHc7W": {
+          "type": "nav_items",
+          "settings": {
+            "nav_label": "Why this one",
+            "nav_id": "#whythisone"
+          }
+        },
+        "nav_items_NK7h4R": {
+          "type": "nav_items",
+          "settings": {
+            "nav_label": "Awards",
+            "nav_id": "#awards"
+          }
+        },
+        "nav_items_a4B4eV": {
+          "type": "nav_items",
+          "settings": {
+            "nav_label": "Reviews",
+            "nav_id": "#reviews"
+          }
+        },
+        "nav_items_eMiDPM": {
+          "type": "nav_items",
+          "settings": {
+            "nav_label": "Trial & delivery",
+            "nav_id": "#trialdelivery"
+          }
+        },
+        "nav_items_k9Ytmi": {
+          "type": "nav_items",
+          "settings": {
+            "nav_label": "FAQs",
+            "nav_id": "#faqs"
+          }
+        }
+      },
+      "block_order": [
+        "nav_items_ymzKhY",
+        "nav_items_6dHc7W",
+        "nav_items_NK7h4R",
+        "nav_items_a4B4eV",
+        "nav_items_eMiDPM",
+        "nav_items_k9Ytmi"
+      ],
+      "settings": {}
+    },
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {}
+    },
+    "ss_product_videos_4_cNcKw3": {
+      "type": "ss-product-videos-4",
+      "blocks": {
+        "video_TfTcae": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/REM-FitCustomer600Lux+PillowsPORTRAIT(1).mp4",
+            "preload_video": "shopify://files/videos/REM-FitCustomer600Lux+PillowsPORTRAIT(1).mp4",
+            "title": "5000 Lux Elite"
+          }
+        },
+        "video_FR8TWy": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/REM-Fit Customer 500 Ortho 1 PORTRAIT.mp4",
+            "title": "4000 Ortho Elite"
+          }
+        },
+        "video_VmWWXn": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/600Lux.mov",
+            "title": "5000 Lux Elite + Essence Bed"
+          }
+        },
+        "video_epzGf9": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/REM-FitCustomer500OrthoPORTRAIT(1).mp4",
+            "title": "4000 Ortho Elite"
+          }
+        },
+        "video_qTVXBb": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Essencebedframe.mov",
+            "title": "Essence Bed Frame"
+          }
+        },
+        "video_mBhjQa": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Topper_60288205-d279-407b-afa5-1a2b5aad2fa9.mov",
+            "title": "Halo Topper"
+          }
+        },
+        "video_eAp4kN": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/REM-FitCustomer600LuxPORTRAIT.mp4",
+            "title": "5000 Lux Elite"
+          }
+        }
+      },
+      "block_order": [
+        "video_TfTcae",
+        "video_FR8TWy",
+        "video_VmWWXn",
+        "video_epzGf9",
+        "video_qTVXBb",
+        "video_mBhjQa",
+        "video_eAp4kN"
+      ],
+      "disabled": true,
+      "settings": {
+        "videos_position": "below_buy",
+        "heading": "<p><strong>Customer experience videos</strong></p>",
+        "heading_custom": false,
+        "heading_font": "josefin_sans_n4",
+        "heading_size": 18,
+        "heading_size_mobile": 16,
+        "heading_height": 130,
+        "heading_align": "center",
+        "heading_align_mobile": "center",
+        "slider_view": 4.6,
+        "slider_view_mobile": 3.6,
+        "slider_gap": 8,
+        "slider_gap_mobile": 8,
+        "slider_mt": 12,
+        "slider_mt_mobile": 12,
+        "card_padding": 2,
+        "card_radius": 300,
+        "card_border_thickness": 1,
+        "card_hover": true,
+        "card_first_animation": false,
+        "video_ratio": "square",
+        "video_ratio_mobile": "square",
+        "video_overlay": 0,
+        "title_custom": false,
+        "title_font": "josefin_sans_n4",
+        "title_size": 14,
+        "title_size_mobile": 12,
+        "title_height": 130,
+        "title_mt": 6,
+        "title_mt_mobile": 6,
+        "title_align": "center",
+        "title_align_mobile": "center",
+        "arrow_size": 24,
+        "arrow_size_mobile": 24,
+        "arrow_border_thickness": 0,
+        "arrow_show_desktop": true,
+        "arrow_show_mobile": true,
+        "dots_size": 5,
+        "dots_size_mobile": 5,
+        "dots_mt": 0,
+        "dots_mt_mobile": 0,
+        "dots_show_desktop": false,
+        "dots_show_mobile": false,
+        "modal_width": 420,
+        "modal_width_mobile": 320,
+        "modal_padding_vertical": 0,
+        "modal_padding_vertical_mobile": 0,
+        "modal_padding_horizontal": 0,
+        "modal_padding_horizontal_mobile": 10,
+        "modal_radius": 10,
+        "modal_border_thickness": 0,
+        "modal_overlay": 0.9,
+        "modal_video_radius": 10,
+        "modal_video_border_thickness": 0,
+        "modal_video_ratio": "portrait",
+        "modal_video_ratio_mobile": "portrait",
+        "use_progress": true,
+        "action_size": 28,
+        "action_size_mobile": 36,
+        "action_border_thickness": 0,
+        "buttons_size": 32,
+        "buttons_size_mobile": 32,
+        "buttons_border_thickness": 0,
+        "card_bg_color": "#ffffff",
+        "card_bg_gradient": "",
+        "card_border_color": "#3f2155",
+        "video_overlay_color": "#000000",
+        "card_animation_color": "#3f2155",
+        "play_button_color": "#3f2155",
+        "title_color": "#000000",
+        "arrow_color": "#ffffff",
+        "arrow_hover_color": "#ffffff",
+        "arrow_bg_color": "#000000",
+        "arrow_bg_hover_color": "#555555",
+        "arrow_border_color": "#000000",
+        "arrow_border_hover_color": "#555555",
+        "dots_color": "#000000",
+        "modal_overlay_color": "#242424",
+        "modal_bg_color": "#ffffff",
+        "modal_border_color": "#000000",
+        "modal_video_border_color": "#000000",
+        "action_icon_color": "#ffffff",
+        "action_bg_color": "#000000",
+        "action_border_color": "#000000",
+        "buttons_icon_color": "#000000",
+        "buttons_bg_color": "#ffffff",
+        "buttons_border_color": "#000000",
+        "heading_color": "#000000",
+        "background_color": "#ffffff",
+        "border_color": "#000000",
+        "margin_top": 12,
+        "margin_bottom": 12,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_horizontal": 0,
+        "padding_horizontal_mobile": 0,
+        "border_thickness": 0,
+        "lazy": true
+      }
+    },
+    "page": {
+      "type": "product-page__product",
+      "blocks": {
+        "6fa07946-ae02-4a7a-805e-91dd7f546aeb": {
+          "type": "productPageTitledefault",
+          "settings": {
+            "noMargin": false,
+            "color": "rgba(0,0,0,0)",
+            "fontFamily": "base",
+            "fontSize": "medium"
+          }
+        },
+        "product_page_countdown_dxVzRH": {
+          "type": "productPageCountdown",
+          "settings": {
+            "noMargin": false,
+            "style": "compact",
+            "title": "",
+            "text": ""
+          }
+        },
+        "c7a2155b-b433-4af9-a666-6f7a6e1c2d59": {
+          "type": "productPageDescription",
+          "settings": {
+            "heading": "",
+            "noMargin": false
+          }
+        },
+        "ppPrice": {
+          "type": "productPagePrice",
+          "settings": {
+            "noMargin": false,
+            "color": "#ffffff",
+            "newPriceColor": "#3f2155",
+            "oldPriceColor": "#6c6c6c",
+            "fontFamily": "base",
+            "fontSize": "medium",
+            "saleType": "percent"
+          }
+        },
+        "dividebuy_spread_the_cost_dividebuyproduct_XiRVhf": {
+          "type": "shopify://apps/dividebuy-spread-the-cost/blocks/dividebuyproduct/3ea5bc0e-1a15-490b-b431-d3ea9a2cd3da",
+          "settings": {
+            "integration_type": "legacy",
+            "widget_service_api_key": "",
+            "finproms_text": "or_from",
+            "include_cart_total": false,
+            "alignment": "left",
+            "tooltip-alignment": "left",
+            "top_margin": 0,
+            "bottom_margin": 0,
+            "alignment-mobile": "left",
+            "top_margin_mobile": 0,
+            "bottom_margin_mobile": 0,
+            "price_dom_element_selector": ""
+          }
+        },
+        "freegiftbundle_WEt8zE": {
+          "type": "freegiftbundle",
+          "settings": {}
+        },
+        "ppSwatch": {
+          "type": "productPageSwatch",
+          "settings": {
+            "noMargin": true
+          }
+        },
+        "ppATC": {
+          "type": "productPageATC",
+          "settings": {
+            "noMargin": true,
+            "stickyATC": "disabled"
+          }
+        },
+        "rebuy_personalization_engine_rebuy_widget_7QXn9E": {
+          "type": "shopify://apps/rebuy-personalization-engine/blocks/rebuy-widget/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
+          "name": "Mattress protector upsell Rebuy widget",
+          "settings": {
+            "enabled": true,
+            "id": "196337",
+            "product_id_enabled": true,
+            "collection_id_enabled": false
+          }
+        },
+        "49659766-1623-4eb2-b106-2a8952aaefb1": {
+          "type": "productPagebadges",
+          "settings": {
+            "badges-html": "<ul>\n{% if product.metafields.custom.pp_guarantee_1.value %}\n<li>{{ product.metafields.custom.pp_guarantee_1.value }}</li>{% endif %}\n{% if product.metafields.custom.pp_guarantee_2.value %}\n<li> \n{{ product.metafields.custom.pp_guarantee_2}}</li> \n{% endif %}\n{% if product.metafields.custom.pp_guarantee_2.value %}\n<li>\n{{ product.metafields.custom.pp_guarantee_3}}</li> \n{% endif %}\n</ul>\n<br/>"
+          }
+        },
+        "product_page_upgrades_7BwfxH": {
+          "type": "productPageUpgrades",
+          "settings": {
+            "upgradesection-content": "{% if product.metafields.custom.upgrade_display_hide != false %}\n<style>\n    .upgrade-box-top {\n  margin: -35px 20px 0;\n  text-align: left;\n}\n.upgrade-box-bottom {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n}\nli {\n    padding-bottom: 8px;\n}\n  i.uil.uil-check {\n    background: #00b67a;\n    width: 18px;\n    height: 18px;\n    border-radius: 100%;\n    display: inline-block;\n    color: #fff;\n    text-align: center;\n    font-size: 14px;\n}\n.badge {\n    background-color: #fff;\n    color: #3F2155;\n    padding: 4px 16px;\n    border: 2px solid #3F2155;\n    border-radius: 50px;\n    cursor: pointer;\n    display: inline-block;\n    font-size: 16px;\n    font-weight: bold;\n    margin-bottom: 8px;\n}\n.content-right{\n    display: flex;\n}\n.heading {\n  font-size: 20px;\n  font-weight: 600;\n  margin: 12px 0 0;\n}\n.text {\n    margin-bottom: 20px;\n   padding-right: 5px;\n  width: max-content;\n}\n\n .upgrade-section img {\n  width: 160px;\n  height: auto;\n\n}\n.bullets {\n    list-style-type: none;\n    padding: 0;\n    font-size: 16px;\n}\n.content-left {\n  text-align: left;\n}\n.bullets li i {\n  margin-right: 5px; \n}\n.cta-button {\n    color: #3F2155;\n    cursor: pointer;\n    font-size: 16px;\n    border-bottom: 1.5px solid #58327a;\n    padding-bottom: 0px;\n    display: inline;\n    font-weight:bold;\n}\n@media (max-width: 420px) {\n .upgrade-section img {\n          width: 100px; \n          height: 120px; \n      }\n      .upgrade-box-top {\n          margin: -38px 0 0 5px; \n      }\n      .badge {\n          padding: 8px 15px; \n      }\n      .heading {\n          font-size: 20px; \n      }\n      .text {\n         margin-bottom: 20px;\n      }\n      .bullets {\n          font-size: 14px; \n      }\n  }\n</style>\n<a href=\"{{ product.metafields.custom.upgrade_cta_link}}\">\n<div class=\"upgrade-box\">\n    <div class=\"upgrade-box-top\">\n  {% if product.metafields.custom.upgrade_badge %}\n      <div class=\"badge\">{{ product.metafields.custom.upgrade_badge }}</div>\n  {% endif %}\n</div>\n\n    <div class=\"upgrade-box-bottom\">\n       {% if product.metafields.custom.upgrade_image != blank %}\n      <div class=\"content-right\">\n        <img src=\"{{ product.metafields.custom.upgrade_image | img_url: 'medium' }}\" alt=\"\">\n      </div>\n    {% endif %}    \n        <div class=\"content-left\">\n            <div class=\"heading\">{{ product.metafields.custom.upgrade_title }}</div>\n            <div class=\"text\">\n              <ul class=\"bullets\">\n                  {% if product.metafields.custom.upgrade_checklist_1 %}\n                      <li><i class=\"uil uil-check\"></i>{{ product.metafields.custom.upgrade_checklist_1 }}</li>\n                  {% endif %}\n                  {% if product.metafields.custom.upgrade_checklist_2 %}\n                      <li><i class=\"uil uil-check\"></i>{{ product.metafields.custom.upgrade_checklist_2 }}</li>\n                  {% endif %}\n                  {% if product.metafields.custom.upgrade_checklist_3 %}\n                      <li><i class=\"uil uil-check\"></i>{{ product.metafields.custom.upgrade_checklist_3 }}</li>\n                  {% endif %}\n              </ul>\n          </div>\n            <p class=\"cta-button\">{{ product.metafields.custom.upgrade_cta_text }}</p>\n        </div>\n    </div>\n</div>\n</a>\n{% endif %}"
+          }
+        },
+        "rebuy_personalization_engine_rebuy_widget_XKzUYA": {
+          "type": "shopify://apps/rebuy-personalization-engine/blocks/rebuy-widget/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
+          "settings": {
+            "enabled": true,
+            "id": "166132",
+            "product_id_enabled": true,
+            "collection_id_enabled": false
+          }
+        },
+        "rebuy_personalization_engine_rebuy_widget_eBPrcr": {
+          "type": "shopify://apps/rebuy-personalization-engine/blocks/rebuy-widget/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
+          "settings": {
+            "enabled": true,
+            "id": "137571",
+            "product_id_enabled": true,
+            "collection_id_enabled": false
+          }
+        },
+        "rebuy_personalization_engine_rebuy_widget_zEckrk": {
+          "type": "shopify://apps/rebuy-personalization-engine/blocks/rebuy-widget/a26ae9b9-933b-40bf-bbc6-bf1220bbc4dc",
+          "settings": {
+            "enabled": true,
+            "id": "165393",
+            "product_id_enabled": true,
+            "collection_id_enabled": false
+          }
+        },
+        "video_GXKG33": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Luxury_mattress_cutaway_animat (1).mp4",
+            "controls": false,
+            "autoplay": true,
+            "loop": true,
+            "heading": "Pocket Sprung Support",
+            "text": "Our hybrid mattress collection integrates traditional pocket spring technology with high-performance visco memory foam to deliver responsive pressure redistribution, enhanced spinal alignment, and targeted support throughout the night.",
+            "link": "",
+            "link_url": ""
+          }
+        },
+        "video_yAK8YQ": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Ultra_clean_ecommerce_product.mp4",
+            "controls": false,
+            "autoplay": true,
+            "loop": true,
+            "heading": "Contouring Memory Foam",
+            "text": "Responsive memory foam contours to your body, delivering tailored comfort where you need it most. Its pressure-relieving properties help reduce stress on key areas, creating a soothing and comfortable sleep experience.",
+            "link": "",
+            "link_url": ""
+          }
+        },
+        "video_X6UdyJ": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/A_block_of_open_cell_memory_fo.mp4",
+            "controls": false,
+            "autoplay": true,
+            "loop": true,
+            "heading": "Cool & Breathable",
+            "text": "REM-Fit's open-cell memory foam features an advanced breathable structure that encourages airflow, regulates temperature, and delivers adaptive pressure relief for a cooler, more responsive sleep surface and mattress.",
+            "link": "",
+            "link_url": ""
+          }
+        },
+        "product_page_tab_wWT4fi": {
+          "type": "productPageTab",
+          "disabled": true,
+          "settings": {
+            "showInline": true,
+            "heading": "Product Details",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p style=\"font-weight:700;\">Product Details</p>"
+          }
+        },
+        "accordion_group_start_product": {
+          "type": "accordionGroupStart",
+          "settings": {
+            "heading": "Product FAQs",
+            "openByDefault": false,
+            "accCustomID": "accordion-group-product"
+          }
+        },
+        "product_page_accordion_FUPk3U": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "{{ product.metafields.custom.accordion_firmness_heading.value }}",
+            "content": "metafield",
+            "metafieldNS": "custom",
+            "metafieldKey": "accordion_firmness_description",
+            "page": "",
+            "customContent": ""
+          }
+        },
+        "product_page_accordion_springs": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "{{ product.metafields.custom.accordion_springs_heading.value }}",
+            "content": "metafield",
+            "metafieldNS": "custom",
+            "metafieldKey": "accordion_springs_description",
+            "page": "",
+            "customContent": ""
+          }
+        },
+        "product_page_accordion_backpain": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "{{ product.metafields.custom.accordion_back_pain_heading.value }}",
+            "content": "metafield",
+            "metafieldNS": "custom",
+            "metafieldKey": "accordion_back_pain_description",
+            "page": "",
+            "customContent": ""
+          }
+        },
+        "product_page_accordion_cooling": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "{{ product.metafields.custom.accordion_cooling_heading.value }}",
+            "content": "metafield",
+            "metafieldNS": "custom",
+            "metafieldKey": "accordion_cooling_description",
+            "page": "",
+            "customContent": ""
+          }
+        },
+        "product_page_accordion_compare": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "{{ product.metafields.custom.accordion_compare_heading.value }}",
+            "content": "metafield",
+            "metafieldNS": "custom",
+            "metafieldKey": "accordion_compare_description",
+            "page": "",
+            "customContent": ""
+          }
+        },
+        "product_page_accordion_y6CVPL": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Dimensions & weight",
+            "content": "metafield",
+            "metafieldNS": "custom",
+            "metafieldKey": "accordion_dimensions_weight_description",
+            "page": "",
+            "customContent": "<p>Add custom content here!</p>"
+          }
+        },
+        "product_page_accordion_GeqcyN": {
+          "type": "productPageAccordion",
+          "disabled": true,
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Mattress tension guide",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<img src=\"https://cdn.shopify.com/s/files/1/0635/4432/8438/files/tmp_7f074b08-1cd2-4f7a-b8ae-75d4686847e0.png?v=1746188502\">"
+          }
+        },
+        "product_page_accordion_hBnRQJ": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Mattress Cover",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Your mattress may arrive in the previous cover design while we transition to our updated cover. As part of our commitment to reducing waste and maintaining efficient production, we are currently using remaining stock of the previous cover before fully switching to the new design.</p><p>\n\nPlease be assured that the mattress inside is the exact model and specification advertised. The internal construction, materials, and comfort level are unchanged and fully consistent with the product description. To provide complete clarity, the outer packaging label will confirm the mattress model and specifications, ensuring you receive the correct product regardless of the cover design used during this transition period.</p>"
+          }
+        },
+        "accordion_group_end_product": {
+          "type": "accordionGroupEnd",
+          "settings": {}
+        },
+        "accordion_group_start_delivery": {
+          "type": "accordionGroupStart",
+          "settings": {
+            "heading": "Delivery info",
+            "openByDefault": false,
+            "accCustomID": "accordion-group-delivery"
+          }
+        },
+        "product_page_accordion_wDmbQ9": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "Delivery information",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Experience swift and seamless service with our *free 2-5 day delivery to UK addresses! Our dedicated 2-person team ensures your new mattress is delivered right to your room of choice. </p><p>Please note that some further reaching postcodes in Scotland, Northern Ireland and islands are on longer lead times - input your address at the checkout for information on your area. </p>\n\n<p>Express next working day delivery is available on the Pocket 1000 mattress in single, double &amp; UK king size. This delivery service is to the front door of the property only for this service. </p>\n\n<p>Enhance your convenience further by opting for old mattress removal at checkout for a nominal fee.\n </p>\n\n\n<p>Enjoy complete flexibility with delivery dates: Our courier will contact you via email and WhatsApp, providing a selection of dates to choose from. The day before delivery, you'll receive an advisory 3-hour time window. The drivers will call when they're just 30 minutes away - Your comfort is our priority!</p>"
+          }
+        },
+        "product_page_accordion_Eg6NWd": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Old mattress collection",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>We can collect and recycle your old mattress when we deliver your new one. A small recycling fee applies, which will be clearly shown during checkout. </p>"
+          }
+        },
+        "accordion_group_end_delivery": {
+          "type": "accordionGroupEnd",
+          "settings": {}
+        },
+        "accordion_group_start_returns": {
+          "type": "accordionGroupStart",
+          "settings": {
+            "heading": "Sleep trial & returns",
+            "openByDefault": false,
+            "accCustomID": "accordion-group-returns"
+          }
+        },
+        "product_page_accordion_WKNk8T": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "nightsleeptrial",
+            "heading": "200-night sleep trial",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>We provide a risk-free sleep trial on all our mattresses. This allows you to sleep on a REM-Fit for up to 200-nights (100-nights without mattress protector included in the order), in the comfort of your own home, and really put it to the test!</p>\n<p>If the mattress, for whatever reason doesn't live up to your expectations, you can send it back for a full refund without collection charges!</p>\n<p>We request that you give your new REM-Fit mattress 30 nights to bed-in before you raise a return. This will give your body the right amount of time to fully adjust. The sleep trial applies to one mattress per order and address.</p>"
+          }
+        },
+        "product_page_accordion_KQUpnN": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": true,
+            "accCustomID": "",
+            "heading": "Returns information",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Mattress returns are free (excluding any delivery fees, which are typically free). Refunds apply to one trial per address only.</p>\n\n<p>Condition Requirements: The mattress must be kept clean and in good condition. A £35 cleaning fee applies for soiled or stained mattresses. Severely soiled returns may be refused.</p>\n\n<p>Return Process: Begin your return via our website and use the chatbot with your order number ready.</p>\n\n<p>Collection Info: Collections are handled by the BHF (The British Heart Foundation) or Rhenus Logistics. Your contact info will be shared solely for collection purposes. Be flexible with scheduling to avoid delays or a £5/day late collection fee after 21 working days.</p>\n\n<p>Refunds: Issued within 5 working days of mattress collection.</p>\n\n\n<p>Returned mattresses are donated or resold as \"rejuvenated\" – they are never sold as new.</p>"
+          }
+        },
+        "accordion_group_end_returns": {
+          "type": "accordionGroupEnd",
+          "settings": {}
+        },
+        "accordion_group_start_UVNFDA": {
+          "type": "accordionGroupStart",
+          "settings": {
+            "heading": "Finance your order",
+            "openByDefault": false,
+            "accCustomID": "accordion-group-finance"
+          }
+        },
+        "product_page_accordion_Ym8wcV": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "DivideBuy",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Financing your new mattress is easy with flexible options at the checkout! With DivideBuy, you can spread payments up to 12 months with 0% APR interest.</p>\n<p>If you decide to return your mattress during the sleep trial, no worries - any payments made will be refunded, and your finance agreement will be cancelled.</p>"
+          }
+        },
+        "product_page_accordion_i88eF8": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "Klarna",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Spread the cost of your purchase with Klarna and enjoy greater flexibility at checkout. Choose to pay in 3 interest-free instalments, with payments taken automatically every 30 days, making it easier to manage your budget.</p>"
+          }
+        },
+        "product_page_accordion_mtJqa4": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "Clearpay",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Clearpay lets you divide your order into four interest-free instalments over six weeks. You'll pay the first instalment when you place your order, with the remaining payments collected automatically every two weeks, helping you shop now and pay over time.</p>"
+          }
+        },
+        "product_page_accordion_rTCCcU": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "PayPal",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>With PayPal Pay in 3, you can split your purchase into three interest-free payments. Your first payment is made at the time of purchase, with the remaining two payments taken monthly, giving you a simple and convenient way to spread the cost.</p>"
+          }
+        },
+        "accordion_group_end_DN7nzf": {
+          "type": "accordionGroupEnd",
+          "settings": {}
+        },
+        "accordion_group_start_7qzQ7t": {
+          "type": "accordionGroupStart",
+          "settings": {
+            "heading": "15 year guarantee",
+            "openByDefault": false,
+            "accCustomID": "accordion-group-guarantee"
+          }
+        },
+        "product_page_accordion_trPGTG": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "What the guarantee covers",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>We’re confident in our mattress quality, so every new REM-Fit mattress comes with up to a 15-year guarantee (1 year for rejuvenated models) at no extra cost.</p>\n<p>Just set it up on a supportive base, and you’re covered! In case of a replacement, your original guarantee period remains, and if it’s an upgrade, simply pay the difference. Note: returns must be unstained and claimed by the original buyer only.</p>\n<p>Full T&amp;C's on our guarantee are covered in our general <a href=\"/pages/terms-and-conditons\" target=\"_blank\">T&amp;C's page.</a></p>"
+          }
+        },
+        "product_page_accordion_rFmbPT": {
+          "type": "productPageAccordion",
+          "settings": {
+            "noMargin": false,
+            "accCustomID": "",
+            "heading": "Register your guarantee",
+            "content": "custom",
+            "metafieldNS": "global",
+            "metafieldKey": "",
+            "page": "",
+            "customContent": "<p>Remember to register your guarantee <a href=\"/pages/guarantee-registration\" target=\"_blank\">here</a></p>"
+          }
+        },
+        "accordion_group_end_4jqiTd": {
+          "type": "accordionGroupEnd",
+          "settings": {}
+        },
+        "28ccac8d-ca6d-4b5d-aab0-970ac6e0269d": {
+          "type": "productPagequestions",
+          "settings": {
+            "gotquestions-title": "Any questions? We're here to help!",
+            "gotquestions-content": "<div class=\"pdp-got-faq\">\n<p>Got a question? We already have answers for the most questions</p>\n<a href=\"https://rem-fit-uk.myshopify.com/pages/faq\" target=\"_blank\">Open FAQ page</a>\n      </div>\n      <div class=\"pdp-got-chat\">\n<p>\n      Our friendly specialists are ready to help or recommend mattress</p>       <a href=\"javascript:void(0);\" class=\"pdp-link-chat\" onclick=\"GorgiasChat.open();return false;\">Start a chat</a>\n      </div>"
+          }
+        }
+      },
+      "block_order": [
+        "6fa07946-ae02-4a7a-805e-91dd7f546aeb",
+        "product_page_countdown_dxVzRH",
+        "c7a2155b-b433-4af9-a666-6f7a6e1c2d59",
+        "ppPrice",
+        "dividebuy_spread_the_cost_dividebuyproduct_XiRVhf",
+        "freegiftbundle_WEt8zE",
+        "ppSwatch",
+        "ppATC",
+        "rebuy_personalization_engine_rebuy_widget_7QXn9E",
+        "49659766-1623-4eb2-b106-2a8952aaefb1",
+        "product_page_upgrades_7BwfxH",
+        "rebuy_personalization_engine_rebuy_widget_XKzUYA",
+        "rebuy_personalization_engine_rebuy_widget_eBPrcr",
+        "rebuy_personalization_engine_rebuy_widget_zEckrk",
+        "video_GXKG33",
+        "video_yAK8YQ",
+        "video_X6UdyJ",
+        "product_page_tab_wWT4fi",
+        "accordion_group_start_product",
+        "product_page_accordion_FUPk3U",
+        "product_page_accordion_springs",
+        "product_page_accordion_backpain",
+        "product_page_accordion_cooling",
+        "product_page_accordion_compare",
+        "product_page_accordion_y6CVPL",
+        "product_page_accordion_GeqcyN",
+        "product_page_accordion_hBnRQJ",
+        "accordion_group_end_product",
+        "accordion_group_start_delivery",
+        "product_page_accordion_wDmbQ9",
+        "product_page_accordion_Eg6NWd",
+        "accordion_group_end_delivery",
+        "accordion_group_start_returns",
+        "product_page_accordion_WKNk8T",
+        "product_page_accordion_KQUpnN",
+        "accordion_group_end_returns",
+        "accordion_group_start_UVNFDA",
+        "product_page_accordion_Ym8wcV",
+        "product_page_accordion_i88eF8",
+        "product_page_accordion_mtJqa4",
+        "product_page_accordion_rTCCcU",
+        "accordion_group_end_DN7nzf",
+        "accordion_group_start_7qzQ7t",
+        "product_page_accordion_trPGTG",
+        "product_page_accordion_rFmbPT",
+        "accordion_group_end_4jqiTd",
+        "28ccac8d-ca6d-4b5d-aab0-970ac6e0269d"
+      ],
+      "custom_css": [],
+      "settings": {
+        "customID": "product-details",
+        "view": "default",
+        "layout": "max-width",
+        "galleryStyle": "verticalDouble",
+        "galleryPosition": "left",
+        "autoZoom": false,
+        "autoChange": false,
+        "galleryImageFit": "contain",
+        "galleryImageGap": 12,
+        "productNavigation": false
+      }
+    },
+    "why": {
+      "type": "custom-why",
+      "blocks": {
+        "passage_fyne7n": {
+          "type": "passage",
+          "settings": {
+            "heading": "What makes it different",
+            "text": "<p>Most hybrid mattresses use a single layer of pocket springs. The 4000 Ortho Elite uses a dual-layer system, doubling the spring count and significantly increasing the stability and longevity of the support core. The stability-focused memory foam above the springs minimises sink, keeping your hips and shoulders from dropping out of alignment as you sleep.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "passage_fyne7n"
+      ],
+      "settings": {
+        "anchor": "why",
+        "heading": "Who the 4000 Ortho Elite is for",
+        "intro": "<p>The best choice if you suffer from back pain, prefer to sleep on your back or stomach, or need a firmer mattress that holds its shape under pressure. At firm tension 9/10 it delivers corrective orthopaedic support and is rated for sleepers up to 20 stone. It is also the right upgrade if your current mattress has started to sag.</p>"
+      }
+    },
+    "construction": {
+      "type": "custom-construction",
+      "blocks": {
+        "layer_FRgwPF": {
+          "type": "layer",
+          "settings": {
+            "number": "1",
+            "heading": "Breathable cover",
+            "text": "<p>Re-Ax thermo-regulating hypoallergenic cover. Removable and machine washable.</p>"
+          }
+        },
+        "video_Vrz3qd": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/A_block_of_open_cell_memory_fo.mp4",
+            "poster": "shopify://shop_images/4000OrthoEliteCentipur.jpg",
+            "caption_lead": "Airflow through the cover and foam.",
+            "caption_text": "<p> A firm mattress puts more of your body on the surface rather than in it, so the cover and the open-cell structure beneath do most of the temperature work.</p>",
+            "controls": false,
+            "autoplay": true,
+            "loop": true
+          }
+        },
+        "layer_QhReM8": {
+          "type": "layer",
+          "settings": {
+            "number": "2",
+            "heading": "Cool, adaptive memory foam",
+            "text": "<p>Open-cell memory foam, 5cm, zoned for tailored support. The open-cell structure encourages airflow rather than trapping heat, so it runs cooler than traditional memory foam.</p>"
+          }
+        },
+        "video_KPDcV3": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Ultra_clean_ecommerce_product.mp4",
+            "poster": "shopify://shop_images/500-comfortdetailsV2_c77850a5-5ba5-4b24-8146-13956d445b6c.jpg",
+            "caption_lead": "Contouring without sink.",
+            "caption_text": "<p> The foam gives at the shoulder and hip, but the stability layer beneath stops it travelling far — the difference between pressure relief and losing your alignment.</p>",
+            "controls": false,
+            "autoplay": true,
+            "loop": true
+          }
+        },
+        "layer_4McjD3": {
+          "type": "layer",
+          "settings": {
+            "number": "3",
+            "heading": "Performance foam",
+            "text": "<p>PU foam, 2.5cm. Reinforces the structure and prevents settlement of the sleeping surface.</p>"
+          }
+        },
+        "layer_fFgbgJ": {
+          "type": "layer",
+          "settings": {
+            "number": "4",
+            "heading": "Zoned support",
+            "text": "<p>Cushions shoulders and supports hips for proper spinal alignment.</p>"
+          }
+        },
+        "layer_GdQhpr": {
+          "type": "layer",
+          "settings": {
+            "number": "5",
+            "heading": "Dual-layer pocket springs",
+            "text": "<p>2000 encapsulated pocket springs at 12.5cm plus 2000 mini pocket springs at 2.5cm — 4000 in total, firm tension gauge, with zero motion transfer.</p>"
+          }
+        },
+        "video_4gQJkH": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Luxury_mattress_cutaway_animat (1).mp4",
+            "poster": "shopify://shop_images/4000OrthoElitePocketSprings.jpg",
+            "caption_lead": "Springs compressing independently.",
+            "caption_text": "<p> On the firm gauge each spring travels less than it would in a medium mattress — that shorter travel is what holds the spine level, and why movement on one side doesn't carry across.</p>",
+            "controls": false,
+            "autoplay": true,
+            "loop": true
+          }
+        },
+        "layer_tHkkCL": {
+          "type": "layer",
+          "settings": {
+            "number": "6",
+            "heading": "Side support walls",
+            "text": "<p>High-density foam prevents roll-off and improves longevity.</p>"
+          }
+        },
+        "layer_fK6YP3": {
+          "type": "layer",
+          "settings": {
+            "number": "7",
+            "heading": "Base layer",
+            "text": "<p>High-density foam, suitable for all base types. Slatted bases need slats no more than 10cm apart.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "layer_FRgwPF",
+        "video_Vrz3qd",
+        "layer_QhReM8",
+        "video_KPDcV3",
+        "layer_4McjD3",
+        "layer_fFgbgJ",
+        "layer_GdQhpr",
+        "video_4gQJkH",
+        "layer_tHkkCL",
+        "layer_fK6YP3"
+      ],
+      "name": "Custom construction",
+      "settings": {
+        "anchor": "construction",
+        "heading": "Inside the mattress",
+        "layup_image": "shopify://shop_images/4000_Ortho_Elite_Layup.png",
+        "layup_alt": "Cross-section of the REM-Fit 4000 Ortho Elite showing seven construction layers"
+      }
+    },
+    "why-this-one": {
+      "type": "custom-why-this-one",
+      "blocks": {
+        "card_nHh6QB": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/THUMB_TALL-POCKET-SPRINGS-circle.png",
+            "image_alt": "pocket springs",
+            "heading": "4000 firm pocket springs",
+            "text": "<p>Full-height springs cradle and support the body while isolating movement.</p>"
+          }
+        },
+        "card_RNwpFp": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/THUMB_PRESSURE-RELIEF_ELLA-circle.png",
+            "image_alt": "a person sleeping",
+            "heading": "Zoned pressure relief",
+            "text": "<p>Deep zoned memory foam relieves pressure points and supports the back and joints.</p>"
+          }
+        },
+        "card_KQcdAU": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/THUMB_COOL-GEL-FOAM-circle.png",
+            "image_alt": "visco foam",
+            "heading": "Open-cell visco foam",
+            "text": "<p>Temperature regulation that enhances breathability and reduces wake-ups.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_nHh6QB",
+        "card_RNwpFp",
+        "card_KQcdAU"
+      ],
+      "settings": {
+        "anchor": "whythisone",
+        "heading": "Why choose this one"
+      }
+    },
+    "awards": {
+      "type": "custom-awards",
+      "blocks": {
+        "award_yMJdR7": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/GHI_APPROVED_2026_WEB.png",
+            "image_alt": "good housekeeping institute approved 2026 badge"
+          }
+        },
+        "award_xATtmA": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/GH_Sleep_awards_roundel_winner_776ff237-96e0-4a9c-a301-278904005390.png",
+            "image_alt": "sleep awards winner 2026 badge"
+          }
+        },
+        "award_FmNKqm": {
+          "type": "award",
+          "settings": {
+            "image": "shopify://shop_images/which-best-buy-22.png",
+            "image_alt": "which_? best buy badge"
+          }
+        }
+      },
+      "block_order": [
+        "award_yMJdR7",
+        "award_xATtmA",
+        "award_FmNKqm"
+      ],
+      "settings": {
+        "anchor": "awards",
+        "heading": "Tested and approved",
+        "quote": "After simulating ten years of use in tough durability tests, this mattress hadn't sagged, softened or become less supportive.",
+        "quote_source": "Which? Best Buy Mattress, 2022",
+        "durability_heading": "Built to last 15 years",
+        "durability_image": "shopify://shop_images/DurabilityWebsiteLoopV5.gif",
+        "durability_alt": "rolling wood on a rem-fit mattress",
+        "durability_text": "<p>We test every mattress on the Juggernaut machine, which simulates fifteen years of use, before it goes on sale.</p>"
+      }
+    },
+    "reviews": {
+      "type": "custom-reviews",
+      "settings": {
+        "anchor": "reviews",
+        "heading": "What customers say",
+        "source": "auto",
+        "template_id": "53aa8912dec7e10d38f59f36",
+        "businessunit_id": "57c53e850000ff000594131a",
+        "profile_url": "",
+        "locale": "en-GB",
+        "height": "240px",
+        "theme": "light",
+        "stars": "",
+        "review_languages": ""
+      }
+    },
+    "xsell": {
+      "type": "custom-xsell",
+      "blocks": {
+        "item_VMFYft": {
+          "type": "item",
+          "settings": {
+            "collection": "rem-fit-pillows",
+            "url": "",
+            "image": "shopify://shop_images/rem-fit-500-cool-gel-memory-foam-pillow-white-background-ghi-award_fee89b1f-f3fe-4408-a3e4-544e0f545b8b.jpg",
+            "image_alt": "",
+            "heading": "Add Pillows",
+            "text": "Save an extra 10%"
+          }
+        },
+        "item_D9dWGp": {
+          "type": "item",
+          "settings": {
+            "collection": "divan-beds",
+            "url": "",
+            "image": "shopify://shop_images/rem-fit-500-mattress-explosion-CLASSIC-RIGHTcopy_2f2dd484-f937-42c2-a3c3-5b36931d1214.jpg",
+            "image_alt": "",
+            "heading": "Add a divan base",
+            "text": "Save £200"
+          }
+        },
+        "item_aRQqP8": {
+          "type": "item",
+          "settings": {
+            "collection": "bed-frames-1",
+            "url": "",
+            "image": "shopify://shop_images/500-comfortdetailsV2_c77850a5-5ba5-4b24-8146-13956d445b6c.jpg",
+            "image_alt": "",
+            "heading": "Add a divan base",
+            "text": "Save £150"
+          }
+        }
+      },
+      "block_order": [
+        "item_VMFYft",
+        "item_D9dWGp",
+        "item_aRQqP8"
+      ],
+      "settings": {
+        "anchor": "",
+        "heading": "Save more when you bundle"
+      }
+    },
+    "ethics": {
+      "type": "custom-ethics",
+      "blocks": {
+        "item_DHtCiE": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/image_1.jpg",
+            "image_alt": "",
+            "heading": "British Heart Foundation",
+            "text": "<p>Every returned mattress is donated to the BHF and resold through their stores. Since 2016 that has raised over £500,000 for their research and care. Returned mattresses are never sold as new.</p>"
+          }
+        },
+        "item_6eC4Yq": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/C-AU-UK-0825-235-0272.web.png",
+            "image_alt": "",
+            "heading": "CertiPUR tested",
+            "text": "<p>Registered number C-AU-UK-0825-235-0272. Made without heavy metals, allergenic dyes, phthalate plasticisers or carcinogenic substances, and emitting low levels of VOCs.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_DHtCiE",
+        "item_6eC4Yq"
+      ],
+      "settings": {
+        "anchor": "",
+        "heading": "How we do things"
+      }
+    },
+    "accordion": {
+      "type": "custom-accordion",
+      "blocks": {
+        "panel_trial": {
+          "type": "panel",
+          "settings": {
+            "summary": "Sleep trial and returns",
+            "callout": "100 nights as standard. 200 nights when a mattress protector is included in the order.",
+            "content": "<p>Sleep on it at home and really put it to the test. If it doesn't live up to expectations, send it back for a full refund with no collection charge. We ask that you give it 30 nights to bed in first, so your body has time to adjust.</p>\n<p>One trial per address. The mattress must be kept clean — a £35 cleaning fee applies to soiled returns, and severely soiled returns may be refused. Collections are handled by the British Heart Foundation or Rhenus Logistics, and refunds are issued within five working days of collection.</p>",
+            "open": false
+          }
+        },
+        "panel_delivery": {
+          "type": "panel",
+          "settings": {
+            "summary": "Delivery",
+            "callout": "",
+            "content": "<p>Free 2–5 day delivery to UK addresses, by a two-person team, to your room of choice. Delivered rolled and bagged.</p>\n<p>Some further-reaching postcodes in Scotland, Northern Ireland and the islands are on longer lead times — enter your address at checkout for your area.</p>\n<p>The courier contacts you by email and WhatsApp with a choice of dates, then gives a three-hour window the day before and a call 30 minutes out. Old mattress collection and recycling is available at checkout for a small fee.</p>",
+            "open": false
+          }
+        },
+        "panel_sizes": {
+          "type": "panel",
+          "settings": {
+            "summary": "Sizes, dimensions and weights",
+            "callout": "",
+            "content": "<table>\n<thead><tr><th>Size</th><th>Dimensions</th><th>Weight</th></tr></thead>\n<tbody>\n<tr><td>Small Single</td><td>75 × 190 cm</td><td>23 kg</td></tr>\n<tr><td>Long Small Single</td><td>75 × 200 cm</td><td>26 kg</td></tr>\n<tr><td>UK Single</td><td>90 × 190 cm</td><td>26 kg</td></tr>\n<tr><td>EU Single</td><td>90 × 200 cm</td><td>27.5 kg</td></tr>\n<tr><td>Small Double</td><td>120 × 190 cm</td><td>33 kg</td></tr>\n<tr><td>UK Double</td><td>135 × 190 cm</td><td>38 kg</td></tr>\n<tr><td>EU Double</td><td>140 × 200 cm</td><td>38.5 kg</td></tr>\n<tr><td>UK King</td><td>150 × 200 cm</td><td>44 kg</td></tr>\n<tr><td>EU King</td><td>160 × 200 cm</td><td>44.5 kg</td></tr>\n<tr><td>Super King</td><td>180 × 200 cm</td><td>52 kg</td></tr>\n</tbody>\n</table>\n<p style=\"margin-top:9px;\">Every size is 25cm deep with identical construction.</p>",
+            "open": false
+          }
+        },
+        "panel_construction": {
+          "type": "panel",
+          "settings": {
+            "summary": "Construction and materials",
+            "callout": "",
+            "content": "<p>Depth 25cm. Top comfort layer: premium viscoelastic open-cell memory foam, 5cm, zoned. Second comfort layer: PU foam, 2.5cm. Dual spring system: 2000 encapsulated pocket springs at 12.5cm plus 2000 mini pocket springs at 2.5cm, firm tension gauge. Side walls and base layer: high-density foam.</p>\n<p>Cover: Re-Ax thermo-regulating hypoallergenic knit, removable and washable.</p>",
+            "open": false
+          }
+        },
+        "panel_guarantee": {
+          "type": "panel",
+          "settings": {
+            "summary": "15-year guarantee",
+            "callout": "",
+            "content": "<p>Every new REM-Fit mattress comes with up to a 15-year guarantee at no extra cost — one year for rejuvenated models. Set it on a supportive base and you're covered.</p>\n<p>On a replacement your original guarantee period continues; on an upgrade you pay the difference. Returns must be unstained and claimed by the original buyer. Remember to register your guarantee.</p>",
+            "open": false
+          }
+        },
+        "panel_finance": {
+          "type": "panel",
+          "settings": {
+            "summary": "Finance options",
+            "callout": "",
+            "content": "<p><b>Zopa, trading as DivideBuy</b> — spread payments up to 12 months at 0% APR. If you return during the sleep trial, payments are refunded and the agreement cancelled.</p>\n<p><b>Klarna</b> — three interest-free instalments, taken every 30 days.</p>\n<p><b>Clearpay</b> — four interest-free instalments over six weeks.</p>\n<p><b>PayPal Pay in 3</b> — three interest-free payments, the first at purchase.</p>\n<p style=\"font-size:11px;color:var(--grey);\">Lending is subject to your circumstances and to credit checks. Missed repayments may affect your credit rating. Zopa Bank Limited is authorised by the Prudential Regulation Authority and regulated by the FCA (800542).</p>",
+            "open": false
+          }
+        },
+        "panel_cover": {
+          "type": "panel",
+          "settings": {
+            "summary": "Mattress cover transition",
+            "callout": "",
+            "content": "<p>Your mattress may arrive in the previous cover design while we use up remaining stock. The mattress inside is the exact model and specification advertised — construction, materials and comfort are unchanged. The outer packaging label confirms the model.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "panel_trial",
+        "panel_delivery",
+        "panel_sizes",
+        "panel_construction",
+        "panel_guarantee",
+        "panel_finance",
+        "panel_cover"
+      ],
+      "settings": {
+        "anchor": ""
+      }
+    },
+    "faq": {
+      "type": "custom-accordion",
+      "blocks": {
+        "faq_firmness": {
+          "type": "panel",
+          "settings": {
+            "summary": "How firm is the 4000 Ortho Elite?",
+            "callout": "",
+            "content": "<p>Firm orthopaedic tension, 9/10 — one of the firmest mattresses in the range. 4000 dual-layer pocket springs and stability-focused memory foam give a solid, supportive feel with minimal sink, rated for sleepers up to 20 stone.</p>",
+            "open": false
+          }
+        },
+        "faq_backpain": {
+          "type": "panel",
+          "settings": {
+            "summary": "Is an orthopaedic mattress good for back pain?",
+            "callout": "",
+            "content": "<p>For many people, yes. It is designed to keep the spine aligned and stop hips and shoulders sinking out of position, a common cause of morning back pain. In our own customer data, 84.5% of firm-mattress shoppers came to us with back pain as their main concern. As non-medical professionals we make no guarantees — for personalised advice, speak to a GP or physiotherapist.</p>",
+            "open": false
+          }
+        },
+        "faq_vs_hybrid": {
+          "type": "panel",
+          "settings": {
+            "summary": "What's the difference between this and a standard hybrid?",
+            "callout": "",
+            "content": "<p>Most hybrids use a single layer of pocket springs. This uses a dual-layer system that doubles the spring count for firmer, more stable support, with stability-focused memory foam on top to minimise sink. The result is a firmer, corrective feel rather than the medium feel of a standard hybrid.</p>",
+            "open": false
+          }
+        },
+        "faq_vs_5000": {
+          "type": "panel",
+          "settings": {
+            "summary": "Should I choose the 4000 Ortho Elite or the 5000 Lux Elite?",
+            "callout": "",
+            "content": "<p>Choose the 4000 Ortho Elite for the firmest, orthopaedic-level support. If you want excellent support with a little more cushioning and pressure relief, the 5000 Lux Elite is medium-firm and the better fit. Side sleepers who need more give at the hips and shoulders may prefer the 3000 Supreme.</p>",
+            "open": false
+          }
+        },
+        "faq_trial": {
+          "type": "panel",
+          "settings": {
+            "summary": "What happens if I try it and don't get on with it?",
+            "callout": "",
+            "content": "<p>It comes with a 100-night sleep trial — 200 nights with a protector — and a 15-year guarantee. If you return it during the trial, email us and we'll arrange free collection. Through our partnership with the British Heart Foundation, your returned mattress is sold through their stores with 100% of the proceeds supporting their work.</p>",
+            "open": false
+          }
+        },
+        "faq_springs": {
+          "type": "panel",
+          "settings": {
+            "summary": "Why are REM-Fit springs different?",
+            "callout": "",
+            "content": "<p>We use tall pocket springs made from triple-tempered steel, each in its own fabric pocket so the springs never rub against each other. Tall springs give better support and isolate partner movement more effectively than mini springs alone, and sit deep enough beneath the comfort layers that you never feel them.</p>",
+            "open": false
+          }
+        },
+        "faq_base": {
+          "type": "panel",
+          "settings": {
+            "summary": "What base can it go on?",
+            "callout": "",
+            "content": "<p>Any base, including adjustable, thanks to the high-density foam base layer. Slatted bases need slats no more than 10cm apart.</p>",
+            "open": false
+          }
+        },
+        "faq_delivery": {
+          "type": "panel",
+          "settings": {
+            "summary": "How long does delivery take?",
+            "callout": "",
+            "content": "<p>Free 2–5 day delivery to UK addresses by a two-person team, to your room of choice, delivered rolled and bagged. Old mattress recycling is available at checkout for a small fee.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_firmness",
+        "faq_backpain",
+        "faq_vs_hybrid",
+        "faq_vs_5000",
+        "faq_trial",
+        "faq_springs",
+        "faq_base",
+        "faq_delivery"
+      ],
+      "settings": {
+        "anchor": "faq",
+        "heading": "Frequently asked questions"
+      }
+    }
+  },
+  "order": [
+    "navigation",
+    "breadcrumbs",
+    "ss_product_videos_4_cNcKw3",
+    "page",
+    "why",
+    "construction",
+    "why-this-one",
+    "awards",
+    "reviews",
+    "xsell",
+    "ethics",
+    "accordion",
+    "faq"
+  ]
+}

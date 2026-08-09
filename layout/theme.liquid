@@ -55,6 +55,7 @@ head.appendChild(script);
     }}
     {{ 'rem-fit.css' | asset_url | stylesheet_tag }}
     {{ 'unicons.css' | asset_url | stylesheet_tag }}
+    {% if template.suffix == '4000-reworked' %} {{ '4000-reworked.css' | asset_url | stylesheet_tag }} {% endif %}
     <style>
       {% render 'global-scss' %}
       {% render 'custom__unicons-css' %}

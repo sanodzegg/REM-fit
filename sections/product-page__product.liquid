@@ -152,13 +152,24 @@
     {% endif %}
 {% endif %}</div> 
 
+  {%- liquid
+    assign tp_summary = settings.rating-summary
+    assign tp_rating = settings.rating-value
+    assign tp_reviews = settings.review-text | prepend: '(' | append: ')' 
+
+    if template.suffix == '4000-reworked'
+      assign tp_rating = settings.rating-value | remove: "/5"
+      assign tp_reviews = settings.review-text | prepend: '· ' | append: ' reviews on Trustpilot'
+    endif
+  -%}
+
   <div class="mobile-trustpilot-widget">
     <div class="trustpilot-widget-block">
       <a href="https://www.trustpilot.com/review/shop.rem-fit.co.uk" target="_blank">
-        <span class="trustpilot-rating-summary">{{settings.rating-summary}}</span>
+        <span class="trustpilot-rating-summary">{{ tp_summary }}</span>
         <img class="trustpilot-rating-stars" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot_ratings_img.png?v=1741608082" alt="" />
-        <span class="trustpilot-rating-numbers">{{settings.rating-value}}</span>
-        <span class="trustpilot-rating-reviews-number">({{settings.review-text}})</span>
+        <span class="trustpilot-rating-numbers">{{ tp_rating }}</span>
+        <span class="trustpilot-rating-reviews-number">{{ tp_reviews }}</span>
         <img class="trustpilot-logo tp-desktop-logo" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot_brand_logo.png?v=1741608082" alt="" />
         <img class="trustpilot-logo tp-mobile-logo" src="https://cdn.shopify.com/s/files/1/0635/4432/8438/files/trustpilot-white-logo.png?v=1741768075" alt="" />
       </a>
@@ -1157,6 +1168,28 @@ document.addEventListener("DOMContentLoaded", function () {
             "type": "liquid",
             "label": "Custom Badges liquid",
             "id": "badges-html"
+          }
+        ]
+      },
+    {
+        "type": "productPageCustomHtml",
+        "name": "Custom HTML",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "noMargin",
+            "label": "Remove bottom space"
+          },
+          {
+            "type": "textarea",
+            "id": "html",
+            "label": "HTML content"
+          },
+          {
+            "type": "textarea",
+            "id": "customCSS",
+            "label": "Block scoped CSS",
+            "info": "Write ##scoped before a selector to keep the rule inside this block, e.g. ##scoped p { color: red; }. Rules without it apply to the whole page."
           }
         ]
       },

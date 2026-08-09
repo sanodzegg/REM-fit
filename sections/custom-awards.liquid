@@ -1,0 +1,164 @@
+<div class="sec"{% if section.settings.anchor != blank %} id="{{ section.settings.anchor | escape }}"{% endif %}>
+  {%- if section.settings.heading != blank -%}
+    <h2>{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="awards">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'award' -%}
+            {%- if block.settings.image != blank -%}
+              {%- comment -%}
+                Hand-written rather than piped through image_tag so shopify_attributes can
+                sit on the img itself — .awards styles its children directly, so wrapping
+                each logo in a div to carry them would break the layout.
+              {%- endcomment -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                srcset="
+                  {{ block.settings.image | image_url: width: 200 }} 200w,
+                  {{ block.settings.image | image_url: width: 400 }} 400w,
+                  {{ block.settings.image | image_url: width: 600 }} 600w,
+                  {{ block.settings.image | image_url: width: 800 }} 800w
+                "
+                alt="{{ block.settings.image_alt | default: block.settings.image.alt | escape }}"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+                loading="lazy"
+                {{ block.shopify_attributes }}
+              >
+            {%- endif -%}
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.quote != blank -%}
+    <p class="quote">
+      {{- section.settings.quote | escape -}}
+      {%- if section.settings.quote_source != blank -%}
+        <b>{{ section.settings.quote_source | escape }}</b>
+      {%- endif -%}
+    </p>
+  {%- endif -%}
+</div>
+
+{%- liquid
+  assign durability_image = section.settings.durability_image
+  assign has_durability = false
+  if section.settings.durability_heading != blank or durability_image != blank or section.settings.durability_text != blank
+    assign has_durability = true
+  endif
+-%}
+
+{%- if has_durability -%}
+  <div class="sec">
+    {%- if section.settings.durability_heading != blank -%}
+      <h2>{{ section.settings.durability_heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if durability_image != blank -%}
+      {%- comment -%}
+        No srcset here on purpose: this slot holds an animated GIF, and asking the CDN
+        for several sizes of one is wasteful when a single width will do.
+      {%- endcomment -%}
+      <img
+        class="layup"
+        src="{{ durability_image | image_url: width: 1200 }}"
+        alt="{{ section.settings.durability_alt | default: durability_image.alt | escape }}"
+        width="{{ durability_image.width }}"
+        height="{{ durability_image.height }}"
+        loading="lazy"
+      >
+    {%- endif -%}
+
+    {{ section.settings.durability_text }}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Custom awards",
+  "tag": "section",
+  "class": "custom-awards",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Awards"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor ID",
+      "default": "awards",
+      "info": "Used as the section's id, so links elsewhere on the page can jump to it."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tested and approved"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote"
+    },
+    {
+      "type": "text",
+      "id": "quote_source",
+      "label": "Quote source",
+      "info": "The bold attribution that closes the quote, e.g. Which? Best Buy Mattress, 2022."
+    },
+    {
+      "type": "header",
+      "content": "Durability",
+      "info": "Leave this group empty to drop the second block entirely."
+    },
+    {
+      "type": "text",
+      "id": "durability_heading",
+      "label": "Heading",
+      "default": "Built to last 15 years"
+    },
+    {
+      "type": "image_picker",
+      "id": "durability_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "durability_alt",
+      "label": "Image alt text",
+      "info": "Leave blank to use the alt text set in the media library."
+    },
+    {
+      "type": "richtext",
+      "id": "durability_text",
+      "label": "Text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "award",
+      "name": "Award",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo or roundel"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Alt text",
+          "info": "Name the award and the year, since the wording is part of the claim."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,33 @@
+<ul>
+  {% for block in section.blocks %}
+    <li>
+        <a href="{{ block.settings.nav_id }}">{{ block.settings.nav_label }}</a>    
+    </li>
+  {% endfor %}
+</ul>
+
+{% schema %}
+{
+  "name": "Navigation",
+  "tag": "section",
+  "class": "custom-onpage-navigation",
+  "blocks": [
+    {
+      "type": "nav_items",
+      "name": "Navigation Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "nav_label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "nav_id",
+          "label": "Section ID (#section)"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

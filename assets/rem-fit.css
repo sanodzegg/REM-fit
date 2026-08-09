@@ -8254,7 +8254,7 @@ div.free-gift-pdp-addon
 
 @media screen and (max-width: 768px) {
   .hide-on-mobile {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -8266,7 +8266,7 @@ div.free-gift-pdp-addon
 
 @media screen and (min-width: 769px) {
   .hide-on-desktop {
-    display: none;
+    display: none !important;
   }
 }
 

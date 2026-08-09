@@ -1,0 +1,64 @@
+<div class="sec" id="{{ section.settings.anchor | default: 'why' | escape }}">
+  {%- if section.settings.heading != blank -%}
+    <h2>{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  {{ section.settings.intro }}
+
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+
+      {%- when 'passage' -%}
+        {%- if block.settings.heading != blank -%}
+          <h3 {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h3>
+        {%- endif -%}
+        {{ block.settings.text }}
+
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Custom why",
+  "tag": "section",
+  "class": "custom-why",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor ID",
+      "default": "why",
+      "info": "Used as the section's id, so links elsewhere on the page can jump to it."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "passage",
+      "name": "Passage",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -20,6 +20,8 @@
       render 'block__content--image' with block as block
     when 'html'
       render 'block__general--html', block: block, section: section
+    when 'productPageCustomHtml'
+      render 'product-page__custom-html', block: block, section: section
     when 'liquidBlock':
       render 'block__general--liquid', block: block, section: section
     when 'pageBlock':
