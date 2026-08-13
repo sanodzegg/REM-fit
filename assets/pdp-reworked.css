@@ -174,8 +174,7 @@ div[data-product-holder] .product__description {
 #product-videos-vertical,
 .pdp-got-que-sec,
 details.product-accordion-group,
-.pdp-badges-sectext,
-gocertify-placement {
+.pdp-badges-sectext {
   display: none !important;
 }
 
@@ -486,7 +485,7 @@ div.rfg {
 }
 
 #reviews .tp {
-  min-height: 240px;
+  min-height: 420px;
   margin: 0 -6px;
   border-radius: 12px;
   overflow: hidden;
@@ -827,4 +826,444 @@ div.rfg {
 
 .product__page--info .product__description ul li {
   padding-left: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .custom-onpage-navigation ul {
+    justify-content: center;
+    gap: 26px;
+    padding: 12px 24px;
+  }
+
+  .custom-onpage-navigation li a {
+    font-size: 13px;
+  }
+
+  .breadcrumbs--default {
+    padding: 11px 24px !important;
+  }
+
+  .breadcrumbs--default * {
+    font-size: 13px !important;
+  }
+
+  .sec,
+  .custom-accordion {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 34px 24px 0;
+  }
+
+  .custom-why .sec {
+    padding-top: 0;
+  }
+
+  #why h2,
+  #construction h2,
+  #whythisone h2,
+  #awards h2,
+  #reviews h2,
+  .custom-awards .sec h2,
+  .custom-xsell h2,
+  .custom-ethics h2,
+  .custom-accordion h2,
+  .custom-bases h2 {
+    margin: 0 0 14px;
+    font-size: 25px;
+  }
+
+  #why p,
+  #construction p,
+  .custom-awards .sec p,
+  .custom-bases p {
+    font-size: 14.5px;
+  }
+
+  #why h3,
+  #construction h3 {
+    margin: 22px 0 7px;
+    font-size: 16.5px;
+  }
+
+  #construction .vid figcaption {
+    font-size: 12px;
+  }
+
+  #whythisone .cards,
+  .custom-xsell .xsell {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    overflow-x: visible;
+  }
+
+  #whythisone .cards .card {
+    flex: initial;
+    padding: 18px;
+  }
+
+  #whythisone .cards .card img {
+    width: 76px;
+    height: 76px;
+  }
+
+  #whythisone .cards .card h3 {
+    font-size: 15px;
+  }
+
+  #whythisone .cards .card p {
+    font-size: 13px;
+  }
+
+  .custom-xsell .xsell a {
+    flex: initial;
+  }
+
+  .custom-xsell .xsell img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .custom-xsell .xsell b,
+  .custom-xsell .xsell span {
+    font-size: 13.5px;
+  }
+
+  #awards .awards {
+    gap: 22px;
+    padding: 20px;
+  }
+
+  #awards .awards img {
+    height: 82px;
+  }
+
+  #awards .quote {
+    font-size: 14.5px;
+    padding: 15px 18px;
+  }
+
+  .custom-ethics .ethics {
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+
+  .custom-ethics .ethics img {
+    width: 88px;
+    height: 88px;
+    flex: 0 0 88px;
+  }
+
+  .custom-ethics .ethics h3 {
+    font-size: 15px;
+  }
+
+  .custom-ethics .ethics p {
+    font-size: 13.5px;
+  }
+
+  #reviews .tp {
+    margin: 0;
+  }
+
+  .custom-bases .bases {
+    gap: 12px;
+  }
+
+  .custom-bases .bases div {
+    padding: 14px 6px;
+    font-size: 13px;
+  }
+
+  .custom-accordion .acc summary {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+
+  .custom-accordion .acc .acc__body {
+    padding: 0 20px 18px;
+  }
+
+  .custom-accordion .acc .acc__body,
+  .custom-accordion .acc .acc__body p {
+    font-size: 13.5px;
+  }
+
+  .custom-accordion .acc .acc__body table {
+    font-size: 13px;
+  }
+
+  .product__discount--title {
+    font-size: 13px;
+  }
+
+  .product__discount--subtitle {
+    font-size: 12px;
+  }
+
+  .product__delivery-note * {
+    font-size: 12.5px;
+  }
+
+  .product__assurances--lead {
+    font-size: 12.5px;
+  }
+
+  .product__assurances--text {
+    font-size: 11px;
+  }
+
+  #shopify-section-footer {
+    margin-top: 40px;
+  }
+
+  div[data-product-holder] .trustpilot-widget-block {
+    margin-left: 0;
+  }
+
+  div[data-product-holder] .delivery-info {
+    padding-left: 0;
+  }
+
+  .template--product .product__row--default .product__page--info h1.product__title {
+    margin-bottom: 10px !important;
+  }
+
+  div[data-product-holder] .product__description {
+    margin-bottom: 16px !important;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .custom-why .sec {
+    padding-top: 44px !important;
+  }
+  #why h2, #construction h2, #whythisone h2, #awards h2, #reviews h2, .custom-awards .sec h2, .custom-xsell h2, .custom-ethics h2, .custom-accordion h2, .custom-bases h2 {
+    text-align: center;
+  }
+  .template--product .product__row--default .product__page--info h1.product__title {
+    margin-top: 16px !important;
+  }
+
+  .custom-onpage-navigation ul {
+    gap: 34px;
+    padding: 14px 24px;
+  }
+
+  .custom-onpage-navigation li a {
+    font-size: 14px;
+    transition: color .15s ease;
+  }
+
+  .custom-onpage-navigation li a:hover {
+    color: var(--ink);
+  }
+
+  .sec,
+  .custom-accordion {
+    max-width: 900px;
+    padding: 44px 24px 0;
+  }
+
+  #why h2,
+  #construction h2,
+  #whythisone h2,
+  #awards h2,
+  #reviews h2,
+  .custom-awards .sec h2,
+  .custom-xsell h2,
+  .custom-ethics h2,
+  .custom-accordion h2,
+  .custom-bases h2 {
+    margin: 0 0 16px;
+    font-size: 32px;
+  }
+
+  #why p,
+  #construction p,
+  .custom-awards .sec p,
+  .custom-bases p {
+    font-size: 16px;
+  }
+
+  #why h3,
+  #construction h3 {
+    margin: 26px 0 8px;
+    font-size: 18px;
+  }
+
+  #construction {
+    max-width: 1060px;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    column-gap: 52px;
+    align-items: start;
+  }
+
+  #construction h2 {
+    grid-column: 1 / -1;
+  }
+
+  #construction .layup {
+    grid-column: 1;
+    grid-row: 2 / span 200;
+    position: sticky;
+    top: 64px;
+    align-self: start;
+    padding: 12px;
+  }
+
+  #construction h3,
+  #construction p,
+  #construction .vid {
+    grid-column: 2;
+  }
+
+  #construction h3:first-of-type {
+    margin-top: 0;
+  }
+
+  #construction .vid {
+    margin: 14px 0 20px;
+  }
+
+  #construction .vid figcaption {
+    font-size: 12.5px;
+  }
+
+  #whythisone .cards,
+  .custom-xsell .xsell {
+    gap: 18px;
+  }
+
+  #whythisone .cards .card {
+    padding: 22px;
+  }
+
+  #whythisone .cards .card img {
+    width: 88px;
+    height: 88px;
+  }
+
+  #whythisone .cards .card h3 {
+    font-size: 16px;
+  }
+
+  #whythisone .cards .card p {
+    font-size: 13.5px;
+  }
+
+  .custom-xsell .xsell b {
+    font-size: 15px;
+    margin-top: 9px;
+  }
+
+  .custom-xsell .xsell span {
+    font-size: 14px;
+  }
+
+  .custom-xsell .xsell a {
+    transition: transform .15s ease;
+  }
+
+  .custom-xsell .xsell a:hover {
+    transform: translateY(-3px);
+  }
+
+  .custom-xsell .xsell a:hover span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  #awards .awards {
+    gap: 34px;
+    padding: 26px;
+  }
+
+  #awards .awards img {
+    height: 100px;
+  }
+
+  #awards .quote {
+    font-size: 15.5px;
+    padding: 18px 22px;
+  }
+
+  .custom-ethics .ethics {
+    gap: 22px;
+    margin-bottom: 26px;
+  }
+
+  .custom-ethics .ethics img {
+    width: 104px;
+    height: 104px;
+    flex: 0 0 104px;
+  }
+
+  .custom-ethics .ethics h3 {
+    font-size: 16px;
+  }
+
+  .custom-ethics .ethics p {
+    font-size: 14.5px;
+    max-width: 62ch;
+  }
+
+  .custom-bases .bases {
+    gap: 14px;
+  }
+
+  .custom-bases .bases div {
+    padding: 16px 8px;
+    font-size: 14px;
+  }
+
+  .custom-accordion .acc summary {
+    padding: 18px 24px;
+    font-size: 16px;
+    transition: background .15s ease;
+  }
+
+  .custom-accordion .acc summary:hover {
+    background: var(--surface);
+  }
+
+  .custom-accordion .acc .acc__body {
+    padding: 24px 24px 20px;
+  }
+
+  .custom-accordion .acc .acc__body,
+  .custom-accordion .acc .acc__body p {
+    font-size: 14.5px;
+    max-width: 72ch;
+  }
+
+  .custom-accordion .acc .acc__body table {
+    font-size: 13.5px;
+    max-width: 540px;
+  }
+
+  .product__discount {
+    transition: border-color .15s ease;
+  }
+
+  .product__discount:hover {
+    border-color: var(--ink);
+  }
+
+  #shopify-section-footer {
+    margin-top: 56px;
+  }
+
+  .custom-ethics .sec {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .custom-ethics .sec h2 {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
 }

@@ -1027,15 +1027,16 @@
       "settings": {
         "anchor": "reviews",
         "heading": "What customers say",
-        "source": "auto",
+        "source": "settings",
         "template_id": "53aa8912dec7e10d38f59f36",
         "businessunit_id": "57c53e850000ff000594131a",
         "profile_url": "",
         "locale": "en-GB",
-        "height": "240px",
+        "height": "420px",
         "theme": "light",
-        "stars": "",
-        "review_languages": ""
+        "tags": "500-mattress",
+        "stars": "3,4,5",
+        "review_languages": "en"
       }
     },
     "bases": {

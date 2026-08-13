@@ -24,6 +24,7 @@
         data-style-height="{{ section.settings.height | escape }}"
         data-style-width="100%"
         data-theme="{{ section.settings.theme }}"
+        {% if section.settings.tags != blank %}data-tags="{{ section.settings.tags | escape }}"{% endif %}
         {% if section.settings.stars != blank %}data-stars="{{ section.settings.stars | escape }}"{% endif %}
         {% if section.settings.review_languages != blank %}data-review-languages="{{ section.settings.review_languages | escape }}"{% endif %}
       >
@@ -72,7 +73,7 @@
       "id": "template_id",
       "label": "TrustBox template ID",
       "default": "53aa8912dec7e10d38f59f36",
-      "info": "53aa8912dec7e10d38f59f36 is the Review Carousel. Other IDs are listed against each widget in the Trustpilot Business dashboard."
+      "info": "Short: 53aa8912dec7e10d38f59f36 Carousel, 54ad5defc6454f065c28af8b Slider, 539ad0ffdec7e10e686debd7 Mini Carousel. Tall, full review text: 539ad60defb9600b94d7df2c List. Every ID is shown against its widget in the Trustpilot Business dashboard."
     },
     {
       "type": "text",
@@ -107,6 +108,12 @@
         { "value": "light", "label": "Light" },
         { "value": "dark", "label": "Dark" }
       ]
+    },
+    {
+      "type": "text",
+      "id": "tags",
+      "label": "Review tags",
+      "info": "Optional. Scopes the feed to reviews carrying these Trustpilot tags, e.g. 500-mattress. Leave blank for every review in the store."
     },
     {
       "type": "text",
