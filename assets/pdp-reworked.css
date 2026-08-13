@@ -819,3 +819,12 @@ div.rfg {
   line-height: 1.65;
   color: #4a4256;
 }
+
+.product__page--info .product__description ul li:before,
+.product__page--info .product__description ul li:after {
+  content: none !important;
+}
+
+.product__page--info .product__description ul li {
+  padding-left: 0;
+}
