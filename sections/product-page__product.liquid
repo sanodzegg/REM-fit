@@ -157,7 +157,7 @@
     assign tp_rating = settings.rating-value
     assign tp_reviews = settings.review-text | prepend: '(' | append: ')' 
 
-    if template.suffix == '4000-reworked'
+    if template.suffix == 'reworked'
       assign tp_rating = settings.rating-value | remove: "/5"
       assign tp_reviews = settings.review-text | prepend: '· ' | append: ' reviews on Trustpilot'
     endif
@@ -1190,6 +1190,114 @@ document.addEventListener("DOMContentLoaded", function () {
             "id": "customCSS",
             "label": "Block scoped CSS",
             "info": "Write ##scoped before a selector to keep the rule inside this block, e.g. ##scoped p { color: red; }. Rules without it apply to the whole page."
+          }
+        ]
+      },
+    {
+        "type": "productPageDiscount",
+        "name": "Discount promo",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Only renders on the reworked product template, which is the only one carrying the styles for it."
+          },
+          {
+            "type": "text",
+            "id": "percent",
+            "label": "Badge",
+            "default": "8%",
+            "info": "The short value in the circle. Kept as free text so it can read 8%, £50 or 2 for 1."
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Student, key worker and senior discounts"
+          },
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "default": "Save 8% on this mattress"
+          },
+          {
+            "type": "text",
+            "id": "code",
+            "label": "Discount code",
+            "info": "Rendered inside the block and also exposed as data-discount-code, ready for a copy button later."
+          }
+        ]
+      },
+    {
+        "type": "productPageDeliveryNote",
+        "name": "Delivery note",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Only renders on the reworked product template, which is the only one carrying the styles for it."
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      },
+    {
+        "type": "productPageAssurances",
+        "name": "Assurance tiles",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Only renders on the reworked product template, which is the only one carrying the styles for it. Leave a tile's fields empty to drop that tile."
+          },
+          {
+            "type": "header",
+            "content": "Tile 1"
+          },
+          {
+            "type": "text",
+            "id": "lead_1",
+            "label": "Lead",
+            "default": "100 nights"
+          },
+          {
+            "type": "text",
+            "id": "text_1",
+            "label": "Text",
+            "default": "Trial, 200 with a protector"
+          },
+          {
+            "type": "header",
+            "content": "Tile 2"
+          },
+          {
+            "type": "text",
+            "id": "lead_2",
+            "label": "Lead",
+            "default": "Free"
+          },
+          {
+            "type": "text",
+            "id": "text_2",
+            "label": "Text",
+            "default": "2-man delivery"
+          },
+          {
+            "type": "header",
+            "content": "Tile 3"
+          },
+          {
+            "type": "text",
+            "id": "lead_3",
+            "label": "Lead",
+            "default": "15 years"
+          },
+          {
+            "type": "text",
+            "id": "text_3",
+            "label": "Text",
+            "default": "Guarantee"
           }
         ]
       },

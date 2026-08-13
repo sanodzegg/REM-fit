@@ -1,0 +1,46 @@
+{%- comment -%}
+  Discount promo block for the product page.
+
+  Accepts:
+    block - required, the block object
+{%- endcomment -%}
+
+{%- liquid
+  assign percent = block.settings.percent
+  assign title = block.settings.title
+  assign subtitle = block.settings.subtitle
+  assign code = block.settings.code
+
+  assign show = false
+  if template.suffix == 'reworked'
+    if title != blank or percent != blank
+      assign show = true
+    endif
+  endif
+-%}
+
+{%- if show -%}
+  <div
+    class="product__discount"
+    {% if code != blank %}data-discount-code="{{ code | escape }}"{% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {%- if percent != blank -%}
+      <span class="product__discount--percent">{{ percent | escape }}</span>
+    {%- endif -%}
+
+    <span class="product__discount--body">
+      {%- if title != blank -%}
+        <b class="product__discount--title">{{ title | escape }}</b>
+      {%- endif -%}
+      {%- if subtitle != blank -%}
+        <span class="product__discount--subtitle">{{ subtitle | escape }}</span>
+      {%- endif -%}
+      {%- if code != blank -%}
+        <span class="product__discount--code">{{ code | escape }}</span>
+      {%- endif -%}
+    </span>
+
+    <span class="product__discount--chevron" aria-hidden="true">&rsaquo;</span>
+  </div>
+{%- endif -%}

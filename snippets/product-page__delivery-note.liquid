@@ -1,0 +1,26 @@
+{%- comment -%}
+  Delivery note block for the product page.
+
+  Accepts:
+    block - required, the block object
+{%- endcomment -%}
+
+{%- liquid
+  assign text = block.settings.text
+
+  assign show = false
+  if template.suffix == 'reworked'
+    if text != blank
+      assign show = true
+    endif
+  endif
+-%}
+
+{%- if show -%}
+  <div
+    class="product__delivery-note"
+    {{ block.shopify_attributes }}
+  >
+    {{ text }}
+  </div>
+{%- endif -%}

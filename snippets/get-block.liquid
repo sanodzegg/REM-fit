@@ -22,6 +22,12 @@
       render 'block__general--html', block: block, section: section
     when 'productPageCustomHtml'
       render 'product-page__custom-html', block: block, section: section
+    when 'productPageDiscount'
+      render 'product-page__discount', block: block
+    when 'productPageDeliveryNote'
+      render 'product-page__delivery-note', block: block
+    when 'productPageAssurances'
+      render 'product-page__assurances', block: block
     when 'liquidBlock':
       render 'block__general--liquid', block: block, section: section
     when 'pageBlock':

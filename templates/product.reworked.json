@@ -291,6 +291,15 @@
             "price_dom_element_selector": ""
           }
         },
+        "product_page_discount_fnK9Aw": {
+          "type": "productPageDiscount",
+          "settings": {
+            "percent": "8%",
+            "title": "Student, key worker and senior discounts",
+            "subtitle": "Save 8% on this mattress",
+            "code": ""
+          }
+        },
         "freegiftbundle_WEt8zE": {
           "type": "freegiftbundle",
           "settings": {}
@@ -299,6 +308,23 @@
           "type": "productPageSwatch",
           "settings": {
             "noMargin": true
+          }
+        },
+        "product_page_delivery_note_4LRxnf": {
+          "type": "productPageDeliveryNote",
+          "settings": {
+            "text": "<p>Free <strong>2-5</strong> working days delivery - old mattress removal available at the checkout</p>"
+          }
+        },
+        "product_page_assurances_DUgN73": {
+          "type": "productPageAssurances",
+          "settings": {
+            "lead_1": "100 nights",
+            "text_1": "Trial, 200 with a protector",
+            "lead_2": "Free",
+            "text_2": "2-man delivery",
+            "lead_3": "15 years",
+            "text_3": "Guarantee"
           }
         },
         "ppATC": {
@@ -718,8 +744,11 @@
         "c7a2155b-b433-4af9-a666-6f7a6e1c2d59",
         "ppPrice",
         "dividebuy_spread_the_cost_dividebuyproduct_XiRVhf",
+        "product_page_discount_fnK9Aw",
         "freegiftbundle_WEt8zE",
         "ppSwatch",
+        "product_page_delivery_note_4LRxnf",
+        "product_page_assurances_DUgN73",
         "ppATC",
         "rebuy_personalization_engine_rebuy_widget_7QXn9E",
         "49659766-1623-4eb2-b106-2a8952aaefb1",
@@ -1009,6 +1038,46 @@
         "review_languages": ""
       }
     },
+    "bases": {
+      "type": "custom-bases",
+      "blocks": {
+        "base_adjustable": {
+          "type": "base",
+          "settings": {
+            "label": "Adjustable"
+          }
+        },
+        "base_divan": {
+          "type": "base",
+          "settings": {
+            "label": "Divan"
+          }
+        },
+        "base_platform": {
+          "type": "base",
+          "settings": {
+            "label": "Platform"
+          }
+        },
+        "base_slatted": {
+          "type": "base",
+          "settings": {
+            "label": "Slatted"
+          }
+        }
+      },
+      "block_order": [
+        "base_adjustable",
+        "base_divan",
+        "base_platform",
+        "base_slatted"
+      ],
+      "settings": {
+        "anchor": "",
+        "heading": "Sleeps on all bases",
+        "note": "<p>Slatted bases need slats no more than 10cm apart.</p>"
+      }
+    },
     "xsell": {
       "type": "custom-xsell",
       "blocks": {
@@ -1113,7 +1182,7 @@
           "settings": {
             "summary": "Sizes, dimensions and weights",
             "callout": "",
-            "content": "<table>\n<thead><tr><th>Size</th><th>Dimensions</th><th>Weight</th></tr></thead>\n<tbody>\n<tr><td>Small Single</td><td>75 × 190 cm</td><td>23 kg</td></tr>\n<tr><td>Long Small Single</td><td>75 × 200 cm</td><td>26 kg</td></tr>\n<tr><td>UK Single</td><td>90 × 190 cm</td><td>26 kg</td></tr>\n<tr><td>EU Single</td><td>90 × 200 cm</td><td>27.5 kg</td></tr>\n<tr><td>Small Double</td><td>120 × 190 cm</td><td>33 kg</td></tr>\n<tr><td>UK Double</td><td>135 × 190 cm</td><td>38 kg</td></tr>\n<tr><td>EU Double</td><td>140 × 200 cm</td><td>38.5 kg</td></tr>\n<tr><td>UK King</td><td>150 × 200 cm</td><td>44 kg</td></tr>\n<tr><td>EU King</td><td>160 × 200 cm</td><td>44.5 kg</td></tr>\n<tr><td>Super King</td><td>180 × 200 cm</td><td>52 kg</td></tr>\n</tbody>\n</table>\n<p style=\"margin-top:9px;\">Every size is 25cm deep with identical construction.</p>",
+            "content": "<table>\n<thead><tr>\n<th>Size</th>\n<th>Dimensions</th>\n<th>Weight</th>\n</tr></thead>\n<tbody>\n<tr>\n<td>Small Single</td>\n<td>75 × 190 cm</td>\n<td>23 kg</td>\n</tr>\n<tr>\n<td>Long Small Single</td>\n<td>75 × 200 cm</td>\n<td>26 kg</td>\n</tr>\n<tr>\n<td>UK Single</td>\n<td>90 × 190 cm</td>\n<td>26 kg</td>\n</tr>\n<tr>\n<td>EU Single</td>\n<td>90 × 200 cm</td>\n<td>27.5 kg</td>\n</tr>\n<tr>\n<td>Small Double</td>\n<td>120 × 190 cm</td>\n<td>33 kg</td>\n</tr>\n<tr>\n<td>UK Double</td>\n<td>135 × 190 cm</td>\n<td>38 kg</td>\n</tr>\n<tr>\n<td>EU Double</td>\n<td>140 × 200 cm</td>\n<td>38.5 kg</td>\n</tr>\n<tr>\n<td>UK King</td>\n<td>150 × 200 cm</td>\n<td>44 kg</td>\n</tr>\n<tr>\n<td>EU King</td>\n<td>160 × 200 cm</td>\n<td>44.5 kg</td>\n</tr>\n<tr>\n<td>Super King</td>\n<td>180 × 200 cm</td>\n<td>52 kg</td>\n</tr>\n</tbody>\n</table>\n<p style=\"margin-top:9px;\">Every size is 25cm deep with identical construction.</p>",
             "open": false
           }
         },
@@ -1164,7 +1233,8 @@
         "panel_cover"
       ],
       "settings": {
-        "anchor": ""
+        "anchor": "",
+        "heading": ""
       }
     },
     "faq": {
@@ -1269,6 +1339,7 @@
     "why-this-one",
     "awards",
     "reviews",
+    "bases",
     "xsell",
     "ethics",
     "accordion",

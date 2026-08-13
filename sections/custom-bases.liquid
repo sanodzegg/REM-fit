@@ -1,0 +1,63 @@
+<div class="sec"{% if section.settings.anchor != blank %} id="{{ section.settings.anchor | escape }}"{% endif %}>
+  {%- if section.settings.heading != blank -%}
+    <h2>{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="bases">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'base' -%}
+            {%- if block.settings.label != blank -%}
+              <div {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</div>
+            {%- endif -%}
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {{ section.settings.note }}
+</div>
+
+{% schema %}
+{
+  "name": "Custom bases",
+  "tag": "section",
+  "class": "custom-bases",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor ID",
+      "info": "Optional. Set this only if something needs to link to the section."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sleeps on all bases"
+    },
+    {
+      "type": "richtext",
+      "id": "note",
+      "label": "Note",
+      "info": "The smaller line below the tiles, for caveats such as slat spacing."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "base",
+      "name": "Base",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
