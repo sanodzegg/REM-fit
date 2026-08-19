@@ -29,6 +29,7 @@
           "settings": {
             "step_id": "who",
             "save_as": "who",
+            "export_as": "who",
             "show_when": "",
             "eyebrow": "About you",
             "title": "Who's the mattress for?",
@@ -112,6 +113,7 @@
           "settings": {
             "step_id": "position",
             "save_as": "position",
+            "export_as": "sleep_position",
             "show_when": "",
             "eyebrow": "Sleep style",
             "title": "How do you usually sleep?",
@@ -195,6 +197,7 @@
           "settings": {
             "step_id": "partnerPosition",
             "save_as": "partnerPosition",
+            "export_as": "partner_position",
             "show_when": "who=couple",
             "eyebrow": "Your partner",
             "title": "And how does your partner sleep?",
@@ -278,6 +281,7 @@
           "settings": {
             "step_id": "pressureQ",
             "save_as": "pressureQ",
+            "export_as": "pressure_points",
             "show_when": "position=side",
             "eyebrow": "Comfort check",
             "title": "Do you wake with hip or shoulder pressure?",
@@ -361,6 +365,7 @@
           "settings": {
             "step_id": "backQ",
             "save_as": "backQ",
+            "export_as": "back_pain",
             "show_when": "position=back|combi",
             "eyebrow": "Support check",
             "title": "How does your back feel in the morning?",
@@ -444,6 +449,7 @@
           "settings": {
             "step_id": "build",
             "save_as": "build",
+            "export_as": "build",
             "show_when": "who!=couple",
             "eyebrow": "Support needs",
             "title": "Which best describes your build?",
@@ -527,6 +533,7 @@
           "settings": {
             "step_id": "coupleWeight",
             "save_as": "coupleWeight",
+            "export_as": "couple_weight_band",
             "show_when": "who=couple",
             "eyebrow": "Support needs",
             "title": "Roughly, what's your combined weight?",
@@ -610,6 +617,7 @@
           "settings": {
             "step_id": "temperature",
             "save_as": "temperature",
+            "export_as": "sleeps_hot",
             "show_when": "",
             "eyebrow": "Temperature",
             "title": "Do you sleep hot?",
@@ -693,6 +701,7 @@
           "settings": {
             "step_id": "feel",
             "save_as": "feel",
+            "export_as": "feel_preference",
             "show_when": "",
             "eyebrow": "Feel",
             "title": "What feel do you prefer?",
@@ -776,6 +785,7 @@
           "settings": {
             "step_id": "materials",
             "save_as": "materials",
+            "export_as": "materials_preference",
             "show_when": "",
             "eyebrow": "Materials",
             "title": "Any preference on comfort materials?",
@@ -859,6 +869,7 @@
           "settings": {
             "step_id": "sizeQ",
             "save_as": "size",
+            "export_as": "size",
             "show_when": "",
             "eyebrow": "Size",
             "title": "What size do you need?",
@@ -942,6 +953,7 @@
           "settings": {
             "step_id": "sizeHelper",
             "save_as": "sizeHelper",
+            "export_as": "room_size",
             "show_when": "size=help",
             "eyebrow": "Size helper",
             "title": "How would you describe the bedroom?",
@@ -1025,6 +1037,7 @@
           "settings": {
             "step_id": "budget",
             "save_as": "budget",
+            "export_as": "budget_band",
             "show_when": "",
             "eyebrow": "Budget",
             "title": "Roughly what's your budget?",
@@ -1335,14 +1348,14 @@
           "type": "reason",
           "settings": {
             "when": "partnerConflict>=1",
-            "text": "You sleep on your {{position.token}} and your partner on their {{partnerPosition.token}} — different ideal tensions, so {{tension}}/10 is the best compromise: supportive enough for the firmer sleeper, cushioned enough for the softer one."
+            "text": "You sleep on your [[position.token]] and your partner on their [[partnerPosition.token]] — different ideal tensions, so [[tension]]/10 is the best compromise: supportive enough for the firmer sleeper, cushioned enough for the softer one."
           }
         },
         "r_tension_fit": {
           "type": "reason",
           "settings": {
             "when": "partnerConflict<1",
-            "text": "Its {{product.tensionLabelLower}} feel sits right on your ideal tension of {{tension}}/10 for {{position.token}} sleeping {{build.token}}."
+            "text": "Its [[product.tensionLabelLower]] feel sits right on your ideal tension of [[tension]]/10 for [[position.token]] sleeping [[build.token]]."
           }
         },
         "r_disc": {
@@ -1377,7 +1390,7 @@
           "type": "reason",
           "settings": {
             "when": "coupleWeight=heavy",
-            "text": "With your combined weight, {{product.feature1Lower}} give the durable, deep support a shared mattress needs to hold its feel night after night."
+            "text": "With your combined weight, [[product.feature1Lower]] give the durable, deep support a shared mattress needs to hold its feel night after night."
           }
         },
         "r_hot_natural": {
@@ -1412,7 +1425,7 @@
           "type": "reason",
           "settings": {
             "when": "who=couple",
-            "text": "{{product.feature1}} isolate movement, so you won't feel a partner turning over — the concern for 72% of UK couples we surveyed."
+            "text": "[[product.feature1]] isolate movement, so you won't feel a partner turning over — the concern for 72% of UK couples we surveyed."
           }
         },
         "r_natural_match": {
@@ -1486,7 +1499,7 @@
         "progress_mode": "auto",
         "progress_expected": 8,
         "show_counter": true,
-        "counter_template": "Question {{n}}",
+        "counter_template": "Question [[n]]",
         "back_label": "← Back",
         "enable_keyboard": true,
         "enable_animations": true,
@@ -1507,7 +1520,7 @@
         "color_error": "#B03A2E",
         "radius": 14,
         "font_source": "theme",
-        "result_heading_template": "Your match: {{product.name}}",
+        "result_heading_template": "Your match: [[product.name]]",
         "show_product_image": false,
         "show_product_price": false,
         "scale_min": 4,
@@ -1515,17 +1528,17 @@
         "scale_soft_label": "Softer",
         "scale_firm_label": "Firmer",
         "marker_title": "Your ideal tension",
-        "tension_caption": "This mattress: <b>{{product.tensionLabel}}</b> &nbsp;·&nbsp; your ideal tension: <b>{{tension}}/10</b>",
+        "tension_caption": "This mattress: <b>[[product.tensionLabel]]</b> &nbsp;·&nbsp; your ideal tension: <b>[[tension]]/10</b>",
         "max_reasons": 5,
         "empty_text": "We couldn't find a match — please try again.",
-        "size_template": "📏 <b>Recommended size: {{size.label}}</b> — {{size.dims}}.",
+        "size_template": "📏 <b>Recommended size: [[size.label]]</b> — [[size.dims]].",
         "size_selected_note": "As you selected.",
         "size_helped_note": "Based on your room and who's sleeping in it.",
         "size_couple_note": "A standard double gives each of you just 67.5cm — less than a single bed — so we've sized up for the space you'll actually share.",
         "size_couple_note_when": "who=couple,recommendedSize=king|superking",
-        "size_link_template": "Browse {{size.labelLower}} mattresses",
+        "size_link_template": "Browse [[size.labelLower]] mattresses",
         "size_footnote": "Every mattress is available in all five UK sizes — you can change size on the product page.",
-        "cta_template": "Shop the {{product.short}} →",
+        "cta_template": "Shop the [[product.short]] →",
         "trust_1": "🛏️ 100-night trial",
         "trust_2": "🛡️ 15-year guarantee",
         "trust_3": "🚚 Free UK delivery",
@@ -1542,7 +1555,7 @@
         "copy_label": "Copy",
         "copied_label": "Copied!",
         "default_tension": 7,
-        "tension_rounding": 0.25,
+        "tension_rounding": "0.25",
         "base_score": 10,
         "tension_penalty": 2.6,
         "rule_1_when": "temperature=hot",
@@ -1612,7 +1625,15 @@
         "klaviyo_site_id": "",
         "klaviyo_list_id": "",
         "klaviyo_source": "Mattress Finder Quiz",
-        "klaviyo_event_name": "Completed Mattress Quiz"
+        "klaviyo_event_name": "Completed Mattress Quiz",
+        "klaviyo_retries": 3,
+        "klaviyo_retry_delay": 1500,
+        "derived_1_name": "pain_type",
+        "derived_1_from": "backQ,pressureQ",
+        "derived_2_name": "",
+        "derived_2_from": "",
+        "derived_3_name": "",
+        "derived_3_from": ""
       }
     }
   },

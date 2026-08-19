@@ -173,6 +173,8 @@
     "klaviyoListId": {{ s.klaviyo_list_id | default: '' | json }},
     "klaviyoSource": {{ s.klaviyo_source | default: '' | json }},
     "klaviyoEventName": {{ s.klaviyo_event_name | default: '' | json }},
+    "klaviyoRetries": {{ s.klaviyo_retries | default: 3 | json }},
+    "klaviyoRetryDelay": {{ s.klaviyo_retry_delay | default: 1500 | json }},
     "discountEnabled": {{ s.discount_enabled | json }},
     "discountCode": {{ s.discount_code | default: '' | json }},
     "discountLabel": {{ s.discount_label | default: '' | json }},
@@ -190,6 +192,18 @@
       {%- if s[ra] != blank -%}
         {{ rsep }}{"when": {{ s[rw] | default: '' | json }}, "attr": {{ s[ra] | json }}, "amount": {{ s[ram] | default: 0 | json }}}
         {%- assign rsep = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+
+  "derived": [
+    {%- assign dsep = '' -%}
+    {%- for n in (1..3) -%}
+      {%- assign dn = 'derived_' | append: n | append: '_name' -%}
+      {%- assign df = 'derived_' | append: n | append: '_from' -%}
+      {%- if s[dn] != blank -%}
+        {{ dsep }}{"name": {{ s[dn] | json }}, "from": {{ s[df] | default: '' | json }}}
+        {%- assign dsep = ',' -%}
       {%- endif -%}
     {%- endfor -%}
   ],
@@ -242,10 +256,12 @@
 
         {%- when 'question' -%}
           {%- assign step_id = block.settings.step_id | default: block.id -%}
+          {%- assign save_as = block.settings.save_as | default: step_id -%}
           {{ ssep }}{
             "type": "question",
             "id": {{ step_id | json }},
-            "saveAs": {{ block.settings.save_as | default: step_id | json }},
+            "saveAs": {{ save_as | json }},
+            "exportAs": {{ block.settings.export_as | default: save_as | json }},
             "showWhen": {{ block.settings.show_when | default: '' | json }},
             "tensionOrder": {{ block.settings.tension_order | default: 0 | json }},
             "conflictWith": {{ block.settings.conflict_with | default: '' | json }},
@@ -496,8 +512,8 @@
       "type": "text",
       "id": "counter_template",
       "label": "Counter text",
-      "default": "Question {{n}}",
-      "info": "Tokens: {{n}}, {{total}}"
+      "default": "Question [[n]]",
+      "info": "Tokens: [[n]], [[total]]"
     },
     {
       "type": "text",
@@ -645,7 +661,7 @@
       "type": "text",
       "id": "result_heading_template",
       "label": "Heading",
-      "default": "Your match: {{product.name}}"
+      "default": "Your match: [[product.name]]"
     },
     {
       "type": "checkbox",
@@ -693,7 +709,7 @@
       "type": "inline_richtext",
       "id": "tension_caption",
       "label": "Tension caption",
-      "default": "This mattress: <b>{{product.tensionLabel}}</b> &nbsp;·&nbsp; your ideal tension: <b>{{tension}}/10</b>"
+      "default": "This mattress: <b>[[product.tensionLabel]]</b> &nbsp;·&nbsp; your ideal tension: <b>[[tension]]/10</b>"
     },
     {
       "type": "range",
@@ -718,7 +734,7 @@
       "type": "inline_richtext",
       "id": "size_template",
       "label": "Size box text",
-      "default": "📏 <b>Recommended size: {{size.label}}</b> — {{size.dims}}."
+      "default": "📏 <b>Recommended size: [[size.label]]</b> — [[size.dims]]."
     },
     {
       "type": "text",
@@ -749,7 +765,7 @@
       "type": "text",
       "id": "size_link_template",
       "label": "Size link text",
-      "default": "Browse {{size.labelLower}} mattresses"
+      "default": "Browse [[size.labelLower]] mattresses"
     },
     {
       "type": "text",
@@ -765,7 +781,7 @@
       "type": "text",
       "id": "cta_template",
       "label": "Primary button",
-      "default": "Shop the {{product.short}} →"
+      "default": "Shop the [[product.short]] →"
     },
     {
       "type": "text",
@@ -876,10 +892,28 @@
       "default": 7
     },
     {
-      "type": "number",
+      "type": "select",
       "id": "tension_rounding",
       "label": "Round the target to the nearest",
-      "default": 0.25
+      "options": [
+        {
+          "value": "0",
+          "label": "No rounding"
+        },
+        {
+          "value": "0.25",
+          "label": "Quarter point (0.25)"
+        },
+        {
+          "value": "0.5",
+          "label": "Half point (0.5)"
+        },
+        {
+          "value": "1",
+          "label": "Whole point (1)"
+        }
+      ],
+      "default": "0.25"
     },
     {
       "type": "number",
@@ -1185,7 +1219,7 @@
       "type": "number",
       "id": "rule_6_amount",
       "label": "Rule 6 · score change",
-      "default": 0.75
+      "info": "REM-Fit's tuned value is 0.75 (set on the mattress finder page)."
     },
     {
       "type": "text",
@@ -1684,6 +1718,60 @@
       "id": "klaviyo_event_name",
       "label": "Onsite event name",
       "default": "Completed Mattress Quiz"
+    },
+    {
+      "type": "range",
+      "id": "klaviyo_retries",
+      "label": "Subscription attempts",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "info": "A lost email capture is a lost lead, so this call retries on network failures and 5xx responses. The result screen never waits on it."
+    },
+    {
+      "type": "number",
+      "id": "klaviyo_retry_delay",
+      "label": "Delay between attempts (ms)",
+      "default": 1500
+    },
+    {
+      "type": "header",
+      "content": "Derived fields",
+      "info": "Fold several answers into one published field. Sent to Klaviyo and saved to the on-device profile; the stats webhook keeps the raw answers."
+    },
+    {
+      "type": "text",
+      "id": "derived_1_name",
+      "label": "Field 1 · name",
+      "default": "pain_type"
+    },
+    {
+      "type": "text",
+      "id": "derived_1_from",
+      "label": "Field 1 · from answer keys",
+      "default": "backQ,pressureQ",
+      "info": "Comma-separated answer keys. The first one the shopper actually answered wins."
+    },
+    {
+      "type": "text",
+      "id": "derived_2_name",
+      "label": "Field 2 · name"
+    },
+    {
+      "type": "text",
+      "id": "derived_2_from",
+      "label": "Field 2 · from answer keys"
+    },
+    {
+      "type": "text",
+      "id": "derived_3_name",
+      "label": "Field 3 · name"
+    },
+    {
+      "type": "text",
+      "id": "derived_3_from",
+      "label": "Field 3 · from answer keys"
     }
   ],
   "blocks": [
@@ -1745,6 +1833,12 @@
           "id": "save_as",
           "label": "Save answer as",
           "info": "Key the answer is stored under and referenced by in conditions. Defaults to the step ID."
+        },
+        {
+          "type": "text",
+          "id": "export_as",
+          "label": "Publish answer as",
+          "info": "Field name used in the stats webhook and Klaviyo. Keep it stable — the sleep-statistics dataset is longitudinal. Defaults to the answer key."
         },
         {
           "type": "text",
@@ -1838,7 +1932,7 @@
           "type": "text",
           "id": "opt_1_token",
           "label": "Copy token",
-          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+          "info": "Short phrase used by result reason lines as [[answerKey.token]]."
         },
         {
           "type": "url",
@@ -1931,7 +2025,7 @@
           "type": "text",
           "id": "opt_2_token",
           "label": "Copy token",
-          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+          "info": "Short phrase used by result reason lines as [[answerKey.token]]."
         },
         {
           "type": "url",
@@ -2024,7 +2118,7 @@
           "type": "text",
           "id": "opt_3_token",
           "label": "Copy token",
-          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+          "info": "Short phrase used by result reason lines as [[answerKey.token]]."
         },
         {
           "type": "url",
@@ -2117,7 +2211,7 @@
           "type": "text",
           "id": "opt_4_token",
           "label": "Copy token",
-          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+          "info": "Short phrase used by result reason lines as [[answerKey.token]]."
         },
         {
           "type": "url",
@@ -2210,7 +2304,7 @@
           "type": "text",
           "id": "opt_5_token",
           "label": "Copy token",
-          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+          "info": "Short phrase used by result reason lines as [[answerKey.token]]."
         },
         {
           "type": "url",
@@ -2303,7 +2397,7 @@
           "type": "text",
           "id": "opt_6_token",
           "label": "Copy token",
-          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+          "info": "Short phrase used by result reason lines as [[answerKey.token]]."
         },
         {
           "type": "url",
@@ -2638,7 +2732,7 @@
           "type": "inline_richtext",
           "id": "text",
           "label": "Text",
-          "info": "Tokens: {{tension}}, {{product.name}}, {{product.short}}, {{product.tensionLabel}}, {{product.tensionLabelLower}}, {{product.feature1}}, {{product.feature1Lower}}, {{size.label}}, {{size.dims}}, and {{answerKey.token}} / {{answerKey.label}} for any answered step."
+          "info": "Tokens: [[tension]], [[product.name]], [[product.short]], [[product.tensionLabel]], [[product.tensionLabelLower]], [[product.feature1]], [[product.feature1Lower]], [[size.label]], [[size.dims]], and [[answerKey.token]] / [[answerKey.label]] for any answered step."
         }
       ]
     }

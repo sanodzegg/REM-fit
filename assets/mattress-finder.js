@@ -125,10 +125,13 @@
     return node == null ? '' : String(node);
   }
 
+  /* Tokens use [[ ]] rather than {{ }}: Shopify parses {{ ... }} inside JSON
+     template settings as a dynamic source binding, which would reject these
+     values before they ever reached us. */
   function interpolate(template, tokens) {
     if (!template) return '';
     return tidy(
-      String(template).replace(/\{\{\s*([\w.]+)\s*\}\}/g, function (_, path) {
+      String(template).replace(/\[\[\s*([\w.]+)\s*\]\]/g, function (_, path) {
         return lookupToken(path, tokens);
       })
     );
@@ -147,6 +150,7 @@
     var reasons = config.reasons || [];
     var rules = config.rules || [];
     var sizeRules = config.sizeRules || [];
+    var derived = config.derived || [];
     var weights = config.weights || {};
     var result = config.result || {};
 
@@ -535,12 +539,47 @@
       };
     }
 
+    /* Answers keyed by their internal key — used for the on-device profile. */
     function answerSnapshot() {
       var out = {};
       steps.forEach(function (step) {
         if (step.type !== 'question') return;
         var key = stepKey(step);
         out[key] = state.answers[key] == null ? null : state.answers[key];
+      });
+      return out;
+    }
+
+    /* Answers keyed by their published field name. This is the wire contract
+       for the stats sheet and Klaviyo, so it is deliberately independent of
+       the internal keys the branching uses. */
+    function exportSnapshot() {
+      var out = {};
+      steps.forEach(function (step) {
+        if (step.type !== 'question') return;
+        var key = stepKey(step);
+        out[step.exportAs || key] = state.answers[key] == null ? null : state.answers[key];
+      });
+      return out;
+    }
+
+    /* Fields folded from several answers into one, e.g. pain_type taking
+       whichever of the two pain questions the shopper was actually asked. */
+    function derivedFields() {
+      var out = {};
+      derived.forEach(function (field) {
+        if (!field.name) return;
+        var sources = String(field.from || '').split(',');
+        var value = null;
+        for (var i = 0; i < sources.length; i++) {
+          var key = sources[i].trim();
+          if (!key) continue;
+          if (state.answers[key] != null && state.answers[key] !== '') {
+            value = state.answers[key];
+            break;
+          }
+        }
+        out[field.name] = value;
       });
       return out;
     }
@@ -569,6 +608,8 @@
       isExtendedSize: isExtendedSize,
       answerContext: answerContext,
       answerSnapshot: answerSnapshot,
+      exportSnapshot: exportSnapshot,
+      derivedFields: derivedFields,
       resultModel: resultModel
     };
   }
@@ -966,7 +1007,7 @@
         window.localStorage.setItem(
           integrations.storageKey,
           JSON.stringify(
-            Object.assign({ v: 2, ts: Date.now() }, engine.answerSnapshot(), {
+            Object.assign({ v: 2, ts: Date.now() }, engine.answerSnapshot(), engine.derivedFields(), {
               size: model.sizeKey,
               targetTension: model.match.target,
               match: model.match.primary ? model.match.primary.key : null,
@@ -987,7 +1028,7 @@
       if (statsSent) return;
       statsSent = true;
 
-      var payload = Object.assign({}, engine.answerSnapshot(), {
+      var payload = Object.assign({}, engine.exportSnapshot(), {
         ts: new Date().toISOString(),
         quiz_version: integrations.quizVersion || '',
         size: model.sizeKey,
@@ -1024,7 +1065,7 @@
 
     function quizProperties() {
       var match = engine.computeMatch();
-      return Object.assign({}, engine.answerSnapshot(), {
+      return Object.assign({}, engine.exportSnapshot(), engine.derivedFields(), {
         quiz_source: integrations.klaviyoSource || '',
         quiz_completed_at: new Date().toISOString(),
         recommended_size: engine.recommendSize(),
@@ -1034,34 +1075,58 @@
       });
     }
 
+    /* Retries on transport failure or a 5xx, with a fixed backoff.
+       4xx responses are not retried — they mean the request itself is wrong. */
+    function postWithRetry(url, options, attemptsLeft, delay) {
+      return window
+        .fetch(url, options)
+        .then(function (response) {
+          if (response && response.status >= 500) throw new Error('klaviyo ' + response.status);
+          return response;
+        })
+        ['catch'](function (err) {
+          if (attemptsLeft <= 1) return;
+          return new Promise(function (resolve) {
+            window.setTimeout(resolve, delay);
+          }).then(function () {
+            return postWithRetry(url, options, attemptsLeft - 1, delay);
+          });
+        });
+    }
+
     function sendToKlaviyo(email) {
       if (!integrations.klaviyoEnabled) return;
       if (!integrations.klaviyoSiteId || !integrations.klaviyoListId) return;
 
       var props = quizProperties();
 
-      window
-        .fetch(
-          'https://a.klaviyo.com/client/subscriptions/?company_id=' +
-            encodeURIComponent(integrations.klaviyoSiteId),
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', revision: '2024-10-15' },
-            body: JSON.stringify({
-              data: {
-                type: 'subscription',
-                attributes: {
-                  custom_source: integrations.klaviyoSource || 'Mattress Finder Quiz',
-                  profile: {
-                    data: { type: 'profile', attributes: { email: email, properties: props } }
-                  }
-                },
-                relationships: { list: { data: { type: 'list', id: integrations.klaviyoListId } } }
+      var options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', revision: '2024-10-15' },
+        body: JSON.stringify({
+          data: {
+            type: 'subscription',
+            attributes: {
+              custom_source: integrations.klaviyoSource || 'Mattress Finder Quiz',
+              profile: {
+                data: { type: 'profile', attributes: { email: email, properties: props } }
               }
-            })
+            },
+            relationships: { list: { data: { type: 'list', id: integrations.klaviyoListId } } }
           }
-        )
-        ['catch'](function () {});
+        })
+      };
+
+      /* A lost email capture is a lost lead, so unlike the stats beacon this
+         call retries. It is never awaited — a Klaviyo outage must not stop a
+         shopper seeing their match. */
+      postWithRetry(
+        'https://a.klaviyo.com/client/subscriptions/?company_id=' +
+          encodeURIComponent(integrations.klaviyoSiteId),
+        options,
+        Math.max(1, num(integrations.klaviyoRetries, 3)),
+        num(integrations.klaviyoRetryDelay, 1500)
+      );
 
       try {
         var klaviyo = window.klaviyo || window._learnq;
@@ -1132,7 +1197,9 @@
       } else if (action === 'submit-email') {
         submitEmail();
       } else if (action === 'restart') {
-        statsSent = false;
+        /* statsSent is deliberately NOT reset: the stats store takes one
+           anonymous row per page load, so retaking in the same session must
+           not double-count it. */
         go(engine.reset());
       } else if (action === 'copy-code') {
         var code = integrations.discountCode || '';
