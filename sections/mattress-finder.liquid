@@ -1,0 +1,2672 @@
+{% comment %}
+  REM-Fit Mattress Finder
+  ------------------------------------------------------------------
+  This file renders a shell plus a JSON config. All quiz content, all
+  branching and all matching maths come from the schema below and are
+  executed by assets/mattress-finder.js — there is no quiz content in
+  the JavaScript.
+
+  Conditions (used by "show when", boosts, guides, reasons, rules):
+    who=couple            answer equals
+    position=back|combi   any of
+    who!=couple           not equal
+    partnerConflict>=1    numeric compare (>= <= > <)
+    a=1,b=2               AND
+    a=1;b=2               OR
+    (blank)               always true
+{% endcomment %}
+
+{{ 'mattress-finder.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign is_full = false
+  if s.layout_mode == 'full'
+    assign is_full = true
+  endif
+
+  assign font_stack = 'var(--baseFont, "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif)'
+  if s.font_source == 'nunito'
+    assign font_stack = '"Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif'
+  endif
+
+  assign purple_rgb = s.color_purple | color_to_rgb | remove: 'rgb(' | remove: ')'
+  assign gold_rgb = s.color_gold_dark | color_to_rgb | remove: 'rgb(' | remove: ')'
+-%}
+
+{%- if s.hide_theme_chrome -%}
+  <style>
+    .container__top-part,
+    .wrapper--bottom {
+      display: none !important;
+    }
+    {% if is_full %}
+      body { overflow: hidden; }
+    {% endif %}
+  </style>
+{%- endif -%}
+
+<style>
+  #MattressFinder-{{ section.id }} {
+    --rf-font: {{ font_stack }};
+    --rf-purple: {{ s.color_purple }};
+    --rf-purple-deep: {{ s.color_purple_deep }};
+    --rf-purple-light: {{ s.color_purple_light }};
+    --rf-gold: {{ s.color_gold }};
+    --rf-gold-dark: {{ s.color_gold_dark }};
+    --rf-bg: {{ s.color_bg }};
+    --rf-tint: {{ s.color_tint }};
+    --rf-border: {{ s.color_border }};
+    --rf-muted: {{ s.color_muted }};
+    --rf-ink: {{ s.color_ink }};
+    --rf-sub-color: {{ s.color_sub }};
+    --rf-error: {{ s.color_error }};
+    --rf-radius: {{ s.radius }}px;
+    --rf-max-width: {{ s.max_width }}px;
+    --rf-min-height: {{ s.min_height }}px;
+    --rf-purple-shadow: rgba({{ purple_rgb }}, 0.10);
+    --rf-purple-shadow-strong: rgba({{ purple_rgb }}, 0.25);
+    --rf-purple-shadow-card: rgba({{ purple_rgb }}, 0.12);
+    --rf-purple-ring: rgba({{ purple_rgb }}, 0.12);
+    --rf-gold-shadow: rgba({{ gold_rgb }}, 0.35);
+    --rf-gold-shadow-soft: rgba({{ gold_rgb }}, 0.20);
+  }
+</style>
+
+<div
+  id="MattressFinder-{{ section.id }}"
+  class="rf-finder {% if is_full %}rf-finder--full{% else %}rf-finder--embedded{% endif %}{% unless s.enable_animations %} rf-finder--no-anim{% endunless %}"
+  data-rf-root
+>
+  {%- if s.show_progress -%}
+    <div class="rf-progress" role="progressbar" aria-label="Quiz progress">
+      <div class="rf-progress__fill" data-rf-progress-fill></div>
+    </div>
+  {%- endif -%}
+
+  {%- if s.show_brand -%}
+    <div class="rf-brand">{{ s.brand_text }}<span>{{ s.brand_accent }}</span></div>
+  {%- endif -%}
+
+  <div class="rf-stage" data-rf-stage aria-live="polite"></div>
+
+  <div class="rf-nav">
+    <button class="rf-nav__back" type="button" data-rf-back>{{ s.back_label }}</button>
+    <div class="rf-nav__count" data-rf-counter></div>
+  </div>
+
+  <noscript>
+    <div class="rf-noscript">
+      <p class="rf-sub">{{ s.noscript_text }}</p>
+      {%- if s.noscript_url != blank -%}
+        <a class="rf-btn rf-btn--gold" href="{{ s.noscript_url }}">{{ s.noscript_link_text }}</a>
+      {%- endif -%}
+    </div>
+  </noscript>
+
+  {%- capture rf_config -%}
+{
+  "sizeAnswerKey": {{ s.size_answer_key | default: 'size' | json }},
+  "sizeHelpValue": {{ s.size_help_value | default: 'help' | json }},
+  "maxReasons": {{ s.max_reasons | json }},
+
+  "layout": {
+    "animate": {{ s.enable_animations | json }},
+    "keyboard": {{ s.enable_keyboard | json }},
+    "showCounter": {{ s.show_counter | json }},
+    "counterTemplate": {{ s.counter_template | default: '' | json }},
+    "progressMode": {{ s.progress_mode | default: 'auto' | json }},
+    "progressExpected": {{ s.progress_expected | json }}
+  },
+
+  "weights": {
+    "defaultTension": {{ s.default_tension | json }},
+    "rounding": {{ s.tension_rounding | json }},
+    "baseScore": {{ s.base_score | json }},
+    "tensionPenalty": {{ s.tension_penalty | json }}
+  },
+
+  "result": {
+    "headingTemplate": {{ s.result_heading_template | default: '' | json }},
+    "showImage": {{ s.show_product_image | json }},
+    "showPrice": {{ s.show_product_price | json }},
+    "scaleMin": {{ s.scale_min | json }},
+    "scaleMax": {{ s.scale_max | json }},
+    "scaleSoftLabel": {{ s.scale_soft_label | default: '' | json }},
+    "scaleFirmLabel": {{ s.scale_firm_label | default: '' | json }},
+    "markerTitle": {{ s.marker_title | default: '' | json }},
+    "tensionCaption": {{ s.tension_caption | default: '' | json }},
+    "emptyText": {{ s.empty_text | default: '' | json }},
+    "sizeTemplate": {{ s.size_template | default: '' | json }},
+    "sizeSelectedNote": {{ s.size_selected_note | default: '' | json }},
+    "sizeHelpedNote": {{ s.size_helped_note | default: '' | json }},
+    "sizeCoupleNote": {{ s.size_couple_note | default: '' | json }},
+    "sizeCoupleNoteWhen": {{ s.size_couple_note_when | default: '' | json }},
+    "sizeLinkTemplate": {{ s.size_link_template | default: '' | json }},
+    "sizeFootnote": {{ s.size_footnote | default: '' | json }},
+    "ctaTemplate": {{ s.cta_template | default: '' | json }},
+    "trustItems": [
+      {%- assign tsep = '' -%}
+      {%- for n in (1..4) -%}
+        {%- assign tkey = 'trust_' | append: n -%}
+        {%- assign tval = s[tkey] -%}
+        {%- if tval != blank -%}{{ tsep }}{{ tval | json }}{%- assign tsep = ',' -%}{%- endif -%}
+      {%- endfor -%}
+    ],
+    "guideText": {{ s.guide_text | default: '' | json }},
+    "showRunner": {{ s.show_runner | json }},
+    "runnerLabel": {{ s.runner_label | default: '' | json }},
+    "runnerLinkText": {{ s.runner_link_text | default: '' | json }},
+    "restartLabel": {{ s.restart_label | default: '' | json }}
+  },
+
+  "integrations": {
+    "analytics": {{ s.analytics_enabled | json }},
+    "analyticsPrefix": {{ s.analytics_prefix | default: 'rf_quiz_' | json }},
+    "storageEnabled": {{ s.storage_enabled | json }},
+    "storageKey": {{ s.storage_key | default: '' | json }},
+    "statsEnabled": {{ s.stats_enabled | json }},
+    "statsWebhookUrl": {{ s.stats_webhook_url | default: '' | json }},
+    "quizVersion": {{ s.quiz_version | default: '' | json }},
+    "klaviyoEnabled": {{ s.klaviyo_enabled | json }},
+    "klaviyoSiteId": {{ s.klaviyo_site_id | default: '' | json }},
+    "klaviyoListId": {{ s.klaviyo_list_id | default: '' | json }},
+    "klaviyoSource": {{ s.klaviyo_source | default: '' | json }},
+    "klaviyoEventName": {{ s.klaviyo_event_name | default: '' | json }},
+    "discountEnabled": {{ s.discount_enabled | json }},
+    "discountCode": {{ s.discount_code | default: '' | json }},
+    "discountLabel": {{ s.discount_label | default: '' | json }},
+    "discountRequiresEmail": {{ s.discount_requires_email | json }},
+    "copyLabel": {{ s.copy_label | default: '' | json }},
+    "copiedLabel": {{ s.copied_label | default: '' | json }}
+  },
+
+  "rules": [
+    {%- assign rsep = '' -%}
+    {%- for n in (1..12) -%}
+      {%- assign rw = 'rule_' | append: n | append: '_when' -%}
+      {%- assign ra = 'rule_' | append: n | append: '_attr' -%}
+      {%- assign ram = 'rule_' | append: n | append: '_amount' -%}
+      {%- if s[ra] != blank -%}
+        {{ rsep }}{"when": {{ s[rw] | default: '' | json }}, "attr": {{ s[ra] | json }}, "amount": {{ s[ram] | default: 0 | json }}}
+        {%- assign rsep = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+
+  "sizeRules": [
+    {%- assign zsep = '' -%}
+    {%- for n in (1..9) -%}
+      {%- assign zw = 'size_rule_' | append: n | append: '_when' -%}
+      {%- assign zv = 'size_rule_' | append: n | append: '_value' -%}
+      {%- if s[zv] != blank -%}
+        {{ zsep }}{"when": {{ s[zw] | default: '' | json }}, "value": {{ s[zv] | json }}}
+        {%- assign zsep = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+
+  "steps": [
+    {%- assign ssep = '' -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+
+        {%- when 'welcome' -%}
+          {{ ssep }}{
+            "type": "welcome",
+            "id": "welcome",
+            "offerPill": {{ block.settings.offer_pill | default: '' | json }},
+            "heading": {{ block.settings.heading | default: '' | json }},
+            "subtext": {{ block.settings.subtext | default: '' | json }},
+            "buttonText": {{ block.settings.button_text | default: '' | json }},
+            "enterHint": {{ block.settings.enter_hint | default: '' | json }},
+            "dataBadge": {{ block.settings.data_badge | default: '' | json }}
+          }
+          {%- assign ssep = ',' -%}
+
+        {%- when 'email' -%}
+          {{ ssep }}{
+            "type": "email",
+            "id": "email",
+            "eyebrow": {{ block.settings.eyebrow | default: '' | json }},
+            "heading": {{ block.settings.heading | default: '' | json }},
+            "subtext": {{ block.settings.subtext | default: '' | json }},
+            "placeholder": {{ block.settings.placeholder | default: '' | json }},
+            "buttonText": {{ block.settings.button_text | default: '' | json }},
+            "errorText": {{ block.settings.error_text | default: '' | json }},
+            "fineprint": {{ block.settings.fineprint | default: '' | json }},
+            "allowSkip": {{ block.settings.allow_skip | json }},
+            "skipLabel": {{ block.settings.skip_label | default: '' | json }}
+          }
+          {%- assign ssep = ',' -%}
+
+        {%- when 'question' -%}
+          {%- assign step_id = block.settings.step_id | default: block.id -%}
+          {{ ssep }}{
+            "type": "question",
+            "id": {{ step_id | json }},
+            "saveAs": {{ block.settings.save_as | default: step_id | json }},
+            "showWhen": {{ block.settings.show_when | default: '' | json }},
+            "tensionOrder": {{ block.settings.tension_order | default: 0 | json }},
+            "conflictWith": {{ block.settings.conflict_with | default: '' | json }},
+            "eyebrow": {{ block.settings.eyebrow | default: '' | json }},
+            "title": {{ block.settings.title | default: '' | json }},
+            "subtext": {{ block.settings.subtext | default: '' | json }},
+            "proofPct": {{ block.settings.proof_pct | default: '' | json }},
+            "proofText": {{ block.settings.proof_text | default: '' | json }},
+            "proofSub": {{ block.settings.proof_sub | default: '' | json }},
+            "proofWhen": {{ block.settings.proof_when | default: '' | json }},
+            "options": [
+              {%- assign osep = '' -%}
+              {%- for i in (1..6) -%}
+                {%- assign k_value = 'opt_' | append: i | append: '_value' -%}
+                {%- if block.settings[k_value] != blank -%}
+                  {%- assign k_label = 'opt_' | append: i | append: '_label' -%}
+                  {%- assign k_hint = 'opt_' | append: i | append: '_hint' -%}
+                  {%- assign k_emoji = 'opt_' | append: i | append: '_emoji' -%}
+                  {%- assign k_token = 'opt_' | append: i | append: '_token' -%}
+                  {%- assign k_link = 'opt_' | append: i | append: '_link' -%}
+                  {%- assign k_ext = 'opt_' | append: i | append: '_extended' -%}
+                  {%- assign k_next = 'opt_' | append: i | append: '_next' -%}
+                  {%- assign k_op = 'opt_' | append: i | append: '_tension_op' -%}
+                  {%- assign k_tv = 'opt_' | append: i | append: '_tension_value' -%}
+                  {%- assign k_tw = 'opt_' | append: i | append: '_tension_weight' -%}
+                  {{ osep }}{
+                    "value": {{ block.settings[k_value] | json }},
+                    "label": {{ block.settings[k_label] | default: '' | json }},
+                    "hint": {{ block.settings[k_hint] | default: '' | json }},
+                    "emoji": {{ block.settings[k_emoji] | default: '' | json }},
+                    "token": {{ block.settings[k_token] | default: '' | json }},
+                    "link": {{ block.settings[k_link] | default: '' | json }},
+                    "extended": {{ block.settings[k_ext] | json }},
+                    "next": {{ block.settings[k_next] | default: '' | json }},
+                    "tensionOp": {{ block.settings[k_op] | default: 'none' | json }},
+                    "tensionValue": {{ block.settings[k_tv] | default: 0 | json }},
+                    "tensionWeight": {{ block.settings[k_tw] | default: 0.4 | json }}
+                  }
+                  {%- assign osep = ',' -%}
+                {%- endif -%}
+              {%- endfor -%}
+            ]
+          }
+          {%- assign ssep = ',' -%}
+
+      {%- endcase -%}
+    {%- endfor -%}
+  ],
+
+  "products": [
+    {%- assign psep = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product' -%}
+        {%- assign prod = block.settings.product -%}
+        {%- assign p_url = block.settings.custom_url | default: prod.url -%}
+        {%- assign p_key = block.settings.key | default: prod.handle | default: block.id -%}
+        {%- assign p_name = block.settings.name_override | default: prod.title -%}
+        {%- assign p_img = block.settings.image | default: prod.featured_image -%}
+        {{ psep }}{
+          "key": {{ p_key | json }},
+          "name": {{ p_name | default: '' | json }},
+          "short": {{ block.settings.short | default: p_name | default: '' | json }},
+          "tag": {{ block.settings.tag | default: '' | json }},
+          "blurb": {{ block.settings.blurb | default: '' | json }},
+          "runnerLine": {{ block.settings.runner_line | default: '' | json }},
+          "url": {{ p_url | default: '' | json }},
+          "image": {%- if p_img %}{{ p_img | image_url: width: 800 | json }}{% else %}""{% endif -%},
+          "price": {%- if prod != blank %}{{ prod.price | money | json }}{% else %}""{% endif -%},
+          "compareAtPrice": {%- if prod != blank and prod.compare_at_price > prod.price %}{{ prod.compare_at_price | money | json }}{% else %}""{% endif -%},
+          "tension": {{ block.settings.tension | json }},
+          "tensionLabel": {{ block.settings.tension_label | default: '' | json }},
+          "cooling": {{ block.settings.cooling | json }},
+          "natural": {{ block.settings.natural | json }},
+          "foam": {{ block.settings.foam | json }},
+          "priceBand": {{ block.settings.price_band | default: '1' | json }},
+          "excludeUnless": {{ block.settings.exclude_unless | default: '' | json }},
+          "features": [
+            {%- assign fsep = '' -%}
+            {%- for n in (1..3) -%}
+              {%- assign fkey = 'feature_' | append: n -%}
+              {%- if block.settings[fkey] != blank -%}{{ fsep }}{{ block.settings[fkey] | json }}{%- assign fsep = ',' -%}{%- endif -%}
+            {%- endfor -%}
+          ],
+          "boosts": [
+            {%- assign bsep = '' -%}
+            {%- for n in (1..3) -%}
+              {%- assign bw = 'boost_' | append: n | append: '_when' -%}
+              {%- assign ba = 'boost_' | append: n | append: '_amount' -%}
+              {%- if block.settings[bw] != blank -%}
+                {{ bsep }}{"when": {{ block.settings[bw] | json }}, "amount": {{ block.settings[ba] | default: 0 | json }}}
+                {%- assign bsep = ',' -%}
+              {%- endif -%}
+            {%- endfor -%}
+          ]
+        }
+        {%- assign psep = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+
+  "guides": [
+    {%- assign gsep = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'guide' -%}
+        {{ gsep }}{
+          "when": {{ block.settings.when | default: '' | json }},
+          "title": {{ block.settings.title | default: '' | json }},
+          "url": {{ block.settings.url | default: '' | json }}
+        }
+        {%- assign gsep = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ],
+
+  "reasons": [
+    {%- assign nsep = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'reason' -%}
+        {{ nsep }}{
+          "when": {{ block.settings.when | default: '' | json }},
+          "text": {{ block.settings.text | default: '' | json }}
+        }
+        {%- assign nsep = ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+  {%- endcapture -%}
+  <script type="application/json" data-rf-config>{{ rf_config }}</script>
+</div>
+
+<script src="{{ 'mattress-finder.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Mattress finder",
+  "tag": "section",
+  "class": "mattress-finder-section",
+  "enabled_on": {
+    "templates": [
+      "page"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_mode",
+      "label": "Layout mode",
+      "default": "full",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full viewport takeover"
+        },
+        {
+          "value": "embedded",
+          "label": "Embedded in page"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_theme_chrome",
+      "label": "Hide theme header & footer",
+      "default": true,
+      "info": "Hides the theme header, info bars and footer on this page only."
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height (embedded)",
+      "default": 720,
+      "min": 400,
+      "max": 1200,
+      "step": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content width",
+      "default": 660,
+      "min": 440,
+      "max": 1000,
+      "step": 10,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_brand",
+      "label": "Show brand mark",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "brand_text",
+      "label": "Brand text",
+      "default": "REM-"
+    },
+    {
+      "type": "text",
+      "id": "brand_accent",
+      "label": "Brand accent text",
+      "default": "Fit"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_progress",
+      "label": "Show progress bar",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "progress_mode",
+      "label": "Progress calculation",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Automatic (count visible questions)"
+        },
+        {
+          "value": "fixed",
+          "label": "Fixed expected length"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "progress_expected",
+      "label": "Expected questions",
+      "default": 8,
+      "min": 1,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_counter",
+      "label": "Show question counter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "counter_template",
+      "label": "Counter text",
+      "default": "Question {{n}}",
+      "info": "Tokens: {{n}}, {{total}}"
+    },
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "Back button label",
+      "default": "← Back"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_keyboard",
+      "label": "Enable keyboard shortcuts",
+      "default": true,
+      "info": "A–F selects an option, Enter advances the welcome and email screens."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "Enable screen transitions",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "noscript_text",
+      "label": "No-JavaScript message",
+      "default": "This quiz needs JavaScript. Browse our mattresses instead."
+    },
+    {
+      "type": "url",
+      "id": "noscript_url",
+      "label": "No-JavaScript link"
+    },
+    {
+      "type": "text",
+      "id": "noscript_link_text",
+      "label": "No-JavaScript link text",
+      "default": "Browse our mattresses"
+    },
+    {
+      "type": "header",
+      "content": "Colours & type"
+    },
+    {
+      "type": "color",
+      "id": "color_purple",
+      "label": "Purple",
+      "default": "#3F2155"
+    },
+    {
+      "type": "color",
+      "id": "color_purple_deep",
+      "label": "Purple (deep)",
+      "default": "#2E1740"
+    },
+    {
+      "type": "color",
+      "id": "color_purple_light",
+      "label": "Purple (light)",
+      "default": "#B79ED1"
+    },
+    {
+      "type": "color",
+      "id": "color_gold",
+      "label": "Gold",
+      "default": "#F7C948"
+    },
+    {
+      "type": "color",
+      "id": "color_gold_dark",
+      "label": "Gold (dark)",
+      "default": "#DBA914"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background",
+      "default": "#F8F5FB"
+    },
+    {
+      "type": "color",
+      "id": "color_tint",
+      "label": "Tint",
+      "default": "#F0EBF5"
+    },
+    {
+      "type": "color",
+      "id": "color_border",
+      "label": "Border",
+      "default": "#E0D8EA"
+    },
+    {
+      "type": "color",
+      "id": "color_muted",
+      "label": "Muted text",
+      "default": "#7F68A0"
+    },
+    {
+      "type": "color",
+      "id": "color_ink",
+      "label": "Body text",
+      "default": "#2B2138"
+    },
+    {
+      "type": "color",
+      "id": "color_sub",
+      "label": "Subheading text",
+      "default": "#5C3D78"
+    },
+    {
+      "type": "color",
+      "id": "color_error",
+      "label": "Error text",
+      "default": "#B03A2E"
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Corner radius",
+      "default": 14,
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "font_source",
+      "label": "Font",
+      "default": "theme",
+      "options": [
+        {
+          "value": "theme",
+          "label": "Theme font"
+        },
+        {
+          "value": "nunito",
+          "label": "Nunito"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Result card"
+    },
+    {
+      "type": "text",
+      "id": "result_heading_template",
+      "label": "Heading",
+      "default": "Your match: {{product.name}}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_image",
+      "label": "Show product image",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_price",
+      "label": "Show product price",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "scale_min",
+      "label": "Tension scale minimum",
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "scale_max",
+      "label": "Tension scale maximum",
+      "default": 10
+    },
+    {
+      "type": "text",
+      "id": "scale_soft_label",
+      "label": "Scale label (soft end)",
+      "default": "Softer"
+    },
+    {
+      "type": "text",
+      "id": "scale_firm_label",
+      "label": "Scale label (firm end)",
+      "default": "Firmer"
+    },
+    {
+      "type": "text",
+      "id": "marker_title",
+      "label": "Marker tooltip",
+      "default": "Your ideal tension"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "tension_caption",
+      "label": "Tension caption",
+      "default": "This mattress: <b>{{product.tensionLabel}}</b> &nbsp;·&nbsp; your ideal tension: <b>{{tension}}/10</b>"
+    },
+    {
+      "type": "range",
+      "id": "max_reasons",
+      "label": "Maximum reason lines",
+      "default": 5,
+      "min": 1,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "No-match message",
+      "default": "We couldn't find a match — please try again."
+    },
+    {
+      "type": "header",
+      "content": "Result card · size box"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "size_template",
+      "label": "Size box text",
+      "default": "📏 <b>Recommended size: {{size.label}}</b> — {{size.dims}}."
+    },
+    {
+      "type": "text",
+      "id": "size_selected_note",
+      "label": "Note when the shopper chose a size",
+      "default": "As you selected."
+    },
+    {
+      "type": "text",
+      "id": "size_helped_note",
+      "label": "Note when we chose the size",
+      "default": "Based on your room and who's sleeping in it."
+    },
+    {
+      "type": "text",
+      "id": "size_couple_note",
+      "label": "Note when we sized a couple up",
+      "default": "A standard double gives each of you just 67.5cm — less than a single bed — so we've sized up for the space you'll actually share."
+    },
+    {
+      "type": "text",
+      "id": "size_couple_note_when",
+      "label": "Show the couple note when",
+      "default": "who=couple,recommendedSize=king|superking",
+      "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always."
+    },
+    {
+      "type": "text",
+      "id": "size_link_template",
+      "label": "Size link text",
+      "default": "Browse {{size.labelLower}} mattresses"
+    },
+    {
+      "type": "text",
+      "id": "size_footnote",
+      "label": "Size box footnote",
+      "default": "Every mattress is available in all five UK sizes — you can change size on the product page."
+    },
+    {
+      "type": "header",
+      "content": "Result card · calls to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_template",
+      "label": "Primary button",
+      "default": "Shop the {{product.short}} →"
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Trust item 1",
+      "default": "🛏️ 100-night trial"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Trust item 2",
+      "default": "🛡️ 15-year guarantee"
+    },
+    {
+      "type": "text",
+      "id": "trust_3",
+      "label": "Trust item 3",
+      "default": "🚚 Free UK delivery"
+    },
+    {
+      "type": "text",
+      "id": "trust_4",
+      "label": "Trust item 4",
+      "default": "🇬🇧 Made in the UK"
+    },
+    {
+      "type": "text",
+      "id": "guide_text",
+      "label": "Guide link lead-in",
+      "default": "Want the deeper reasoning? Read our"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_runner",
+      "label": "Show runner-up",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "runner_label",
+      "label": "Runner-up label",
+      "default": "Close second"
+    },
+    {
+      "type": "text",
+      "id": "runner_link_text",
+      "label": "Runner-up link text",
+      "default": "View →"
+    },
+    {
+      "type": "text",
+      "id": "restart_label",
+      "label": "Retake link",
+      "default": "Retake the quiz"
+    },
+    {
+      "type": "header",
+      "content": "Discount code"
+    },
+    {
+      "type": "checkbox",
+      "id": "discount_enabled",
+      "label": "Show a discount code on the result",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Code",
+      "default": "QUIZ7"
+    },
+    {
+      "type": "text",
+      "id": "discount_label",
+      "label": "Code label",
+      "default": "YOUR 7% OFF CODE"
+    },
+    {
+      "type": "checkbox",
+      "id": "discount_requires_email",
+      "label": "Only show after an email is captured",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "copy_label",
+      "label": "Copy button",
+      "default": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "copied_label",
+      "label": "Copied confirmation",
+      "default": "Copied!"
+    },
+    {
+      "type": "header",
+      "content": "Matching engine"
+    },
+    {
+      "type": "paragraph",
+      "content": "Every mattress starts at the base score, loses points for the distance between its tension and the shopper's ideal tension, then gains or loses points from the rules below."
+    },
+    {
+      "type": "number",
+      "id": "default_tension",
+      "label": "Starting tension target",
+      "default": 7
+    },
+    {
+      "type": "number",
+      "id": "tension_rounding",
+      "label": "Round the target to the nearest",
+      "default": 0.25
+    },
+    {
+      "type": "number",
+      "id": "base_score",
+      "label": "Base score",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "id": "tension_penalty",
+      "label": "Penalty per point of tension distance",
+      "default": 2.6
+    },
+    {
+      "type": "header",
+      "content": "Matching engine · score rules",
+      "info": "When the condition passes, every product matching the target gains the amount."
+    },
+    {
+      "type": "text",
+      "id": "rule_1_when",
+      "label": "Rule 1 · when",
+      "default": "temperature=hot",
+      "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always."
+    },
+    {
+      "type": "select",
+      "id": "rule_1_attr",
+      "label": "Rule 1 · applies to",
+      "default": "cooling",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_1_amount",
+      "label": "Rule 1 · score change",
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "rule_2_when",
+      "label": "Rule 2 · when",
+      "default": "temperature=warm"
+    },
+    {
+      "type": "select",
+      "id": "rule_2_attr",
+      "label": "Rule 2 · applies to",
+      "default": "cooling",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_2_amount",
+      "label": "Rule 2 · score change",
+      "default": 0.8
+    },
+    {
+      "type": "text",
+      "id": "rule_3_when",
+      "label": "Rule 3 · when",
+      "default": "temperature=hot"
+    },
+    {
+      "type": "select",
+      "id": "rule_3_attr",
+      "label": "Rule 3 · applies to",
+      "default": "foam",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_3_amount",
+      "label": "Rule 3 · score change",
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "rule_4_when",
+      "label": "Rule 4 · when",
+      "default": "materials=natural"
+    },
+    {
+      "type": "select",
+      "id": "rule_4_attr",
+      "label": "Rule 4 · applies to",
+      "default": "natural",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_4_amount",
+      "label": "Rule 4 · score change",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "rule_5_when",
+      "label": "Rule 5 · when",
+      "default": "materials=memoryfoam"
+    },
+    {
+      "type": "select",
+      "id": "rule_5_attr",
+      "label": "Rule 5 · applies to",
+      "default": "foam",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_5_amount",
+      "label": "Rule 5 · score change",
+      "default": 1.5
+    },
+    {
+      "type": "text",
+      "id": "rule_6_when",
+      "label": "Rule 6 · when",
+      "default": "pressureQ=often|sometimes"
+    },
+    {
+      "type": "select",
+      "id": "rule_6_attr",
+      "label": "Rule 6 · applies to",
+      "default": "foam",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_6_amount",
+      "label": "Rule 6 · score change",
+      "default": 0.75
+    },
+    {
+      "type": "text",
+      "id": "rule_7_when",
+      "label": "Rule 7 · when",
+      "default": "budget=value"
+    },
+    {
+      "type": "select",
+      "id": "rule_7_attr",
+      "label": "Rule 7 · applies to",
+      "default": "band1",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_7_amount",
+      "label": "Rule 7 · score change",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "rule_8_when",
+      "label": "Rule 8 · when",
+      "default": "budget=value"
+    },
+    {
+      "type": "select",
+      "id": "rule_8_attr",
+      "label": "Rule 8 · applies to",
+      "default": "band2",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_8_amount",
+      "label": "Rule 8 · score change",
+      "default": 0.5
+    },
+    {
+      "type": "text",
+      "id": "rule_9_when",
+      "label": "Rule 9 · when",
+      "default": "budget=value"
+    },
+    {
+      "type": "select",
+      "id": "rule_9_attr",
+      "label": "Rule 9 · applies to",
+      "default": "band3",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_9_amount",
+      "label": "Rule 9 · score change",
+      "default": -2.5
+    },
+    {
+      "type": "text",
+      "id": "rule_10_when",
+      "label": "Rule 10 · when",
+      "default": "budget=mid"
+    },
+    {
+      "type": "select",
+      "id": "rule_10_attr",
+      "label": "Rule 10 · applies to",
+      "default": "band2",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_10_amount",
+      "label": "Rule 10 · score change",
+      "default": 1.5
+    },
+    {
+      "type": "text",
+      "id": "rule_11_when",
+      "label": "Rule 11 · when",
+      "default": "budget=premium"
+    },
+    {
+      "type": "select",
+      "id": "rule_11_attr",
+      "label": "Rule 11 · applies to",
+      "default": "band3",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_11_amount",
+      "label": "Rule 11 · score change",
+      "default": 1.5
+    },
+    {
+      "type": "text",
+      "id": "rule_12_when",
+      "label": "Rule 12 · when"
+    },
+    {
+      "type": "select",
+      "id": "rule_12_attr",
+      "label": "Rule 12 · applies to",
+      "default": "any",
+      "options": [
+        {
+          "value": "any",
+          "label": "Any product"
+        },
+        {
+          "value": "cooling",
+          "label": "Cooling products"
+        },
+        {
+          "value": "natural",
+          "label": "Natural products"
+        },
+        {
+          "value": "foam",
+          "label": "Foam products"
+        },
+        {
+          "value": "band1",
+          "label": "Price band 1"
+        },
+        {
+          "value": "band2",
+          "label": "Price band 2"
+        },
+        {
+          "value": "band3",
+          "label": "Price band 3"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "rule_12_amount",
+      "label": "Rule 12 · score change",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Size recommendation",
+      "info": "Used when the shopper asks for help choosing. The first rule that matches wins."
+    },
+    {
+      "type": "text",
+      "id": "size_answer_key",
+      "label": "Size answer key",
+      "default": "size",
+      "info": "The `Save answer as` key of the size question."
+    },
+    {
+      "type": "text",
+      "id": "size_help_value",
+      "label": "\"Help me choose\" value",
+      "default": "help"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_1_when",
+      "label": "Size rule 1 · when",
+      "default": "who=guest,sizeHelper=compact",
+      "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always."
+    },
+    {
+      "type": "text",
+      "id": "size_rule_1_value",
+      "label": "Size rule 1 · recommend",
+      "default": "single"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_2_when",
+      "label": "Size rule 2 · when",
+      "default": "who=guest"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_2_value",
+      "label": "Size rule 2 · recommend",
+      "default": "double"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_3_when",
+      "label": "Size rule 3 · when",
+      "default": "who!=couple,sizeHelper=compact"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_3_value",
+      "label": "Size rule 3 · recommend",
+      "default": "smalldouble"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_4_when",
+      "label": "Size rule 4 · when",
+      "default": "who!=couple,sizeHelper=spacious"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_4_value",
+      "label": "Size rule 4 · recommend",
+      "default": "king"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_5_when",
+      "label": "Size rule 5 · when",
+      "default": "who!=couple"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_5_value",
+      "label": "Size rule 5 · recommend",
+      "default": "double"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_6_when",
+      "label": "Size rule 6 · when",
+      "default": "who=couple,sizeHelper=compact"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_6_value",
+      "label": "Size rule 6 · recommend",
+      "default": "double"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_7_when",
+      "label": "Size rule 7 · when",
+      "default": "who=couple,sizeHelper=spacious"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_7_value",
+      "label": "Size rule 7 · recommend",
+      "default": "superking"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_8_when",
+      "label": "Size rule 8 · when",
+      "default": "who=couple,build=heavier;who=couple,coupleWeight=heavy"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_8_value",
+      "label": "Size rule 8 · recommend",
+      "default": "superking"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_9_when",
+      "label": "Size rule 9 · when"
+    },
+    {
+      "type": "text",
+      "id": "size_rule_9_value",
+      "label": "Size rule 9 · recommend",
+      "default": "king"
+    },
+    {
+      "type": "header",
+      "content": "Analytics"
+    },
+    {
+      "type": "checkbox",
+      "id": "analytics_enabled",
+      "label": "Push events to dataLayer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "analytics_prefix",
+      "label": "Event name prefix",
+      "default": "rf_quiz_"
+    },
+    {
+      "type": "checkbox",
+      "id": "storage_enabled",
+      "label": "Save the profile to localStorage",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "storage_key",
+      "label": "localStorage key",
+      "default": "rf_quiz_profile"
+    },
+    {
+      "type": "header",
+      "content": "Sleep stats webhook",
+      "info": "Fires once per completion for every finisher. Contains no email address."
+    },
+    {
+      "type": "checkbox",
+      "id": "stats_enabled",
+      "label": "Send completions to a webhook",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "stats_webhook_url",
+      "label": "Webhook URL",
+      "info": "Leave blank and nothing is sent."
+    },
+    {
+      "type": "text",
+      "id": "quiz_version",
+      "label": "Quiz version tag",
+      "default": "v2"
+    },
+    {
+      "type": "header",
+      "content": "Klaviyo"
+    },
+    {
+      "type": "checkbox",
+      "id": "klaviyo_enabled",
+      "label": "Send captured emails to Klaviyo",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_site_id",
+      "label": "Public API key / Site ID",
+      "info": "Klaviyo → Settings → API keys. Safe to expose."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_list_id",
+      "label": "List ID",
+      "info": "Klaviyo → Lists & Segments → open the list → ID is in the URL."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_source",
+      "label": "Custom source",
+      "default": "Mattress Finder Quiz"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_event_name",
+      "label": "Onsite event name",
+      "default": "Completed Mattress Quiz"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "welcome",
+      "name": "Screen: Welcome",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "offer_pill",
+          "label": "Offer pill",
+          "default": "🎁 7% off unlocked when you finish"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Find your perfect mattress in 60 seconds"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "A few quick questions — your answers shape which questions come next, so you'll never answer anything irrelevant. We'll match you to the right REM-Fit hybrid <em>and</em> the right size."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Start →"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "enter_hint",
+          "label": "Keyboard hint",
+          "default": "press <b>Enter ↩</b>"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "data_badge",
+          "label": "Data badge",
+          "default": "📊 Powered by sleep data from <strong>105,165 UK sleepers</strong>"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Screen: Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_id",
+          "label": "Step ID",
+          "info": "Unique key for this step. Referenced by `Jump to step`."
+        },
+        {
+          "type": "text",
+          "id": "save_as",
+          "label": "Save answer as",
+          "info": "Key the answer is stored under and referenced by in conditions. Defaults to the step ID."
+        },
+        {
+          "type": "text",
+          "id": "show_when",
+          "label": "Show this step when",
+          "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always."
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "subtext",
+          "label": "Subtext"
+        },
+        {
+          "type": "header",
+          "content": "Social proof banner"
+        },
+        {
+          "type": "text",
+          "id": "proof_pct",
+          "label": "Statistic"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "proof_text",
+          "label": "Statistic text"
+        },
+        {
+          "type": "text",
+          "id": "proof_sub",
+          "label": "Statistic footnote"
+        },
+        {
+          "type": "text",
+          "id": "proof_when",
+          "label": "Show the banner when",
+          "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always."
+        },
+        {
+          "type": "header",
+          "content": "Tension maths"
+        },
+        {
+          "type": "number",
+          "id": "tension_order",
+          "label": "Apply order",
+          "default": 0,
+          "info": "Lower runs first. Lets the maths run in a different order from the questions."
+        },
+        {
+          "type": "text",
+          "id": "conflict_with",
+          "label": "Compare tension with step",
+          "info": "Optional. Names another step's answer key; the gap between the two becomes `partnerConflict`."
+        },
+        {
+          "type": "header",
+          "content": "Option A"
+        },
+        {
+          "type": "text",
+          "id": "opt_1_value",
+          "label": "Value",
+          "info": "Leave blank to hide this option. This is what conditions match on."
+        },
+        {
+          "type": "text",
+          "id": "opt_1_label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "opt_1_hint",
+          "label": "Hint"
+        },
+        {
+          "type": "text",
+          "id": "opt_1_emoji",
+          "label": "Emoji"
+        },
+        {
+          "type": "text",
+          "id": "opt_1_token",
+          "label": "Copy token",
+          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+        },
+        {
+          "type": "url",
+          "id": "opt_1_link",
+          "label": "Link",
+          "info": "Size options only — the collection to link to on the result."
+        },
+        {
+          "type": "checkbox",
+          "id": "opt_1_extended",
+          "label": "Non-standard size",
+          "default": false,
+          "info": "Size options only — exposes `sizeExtended` to conditions."
+        },
+        {
+          "type": "text",
+          "id": "opt_1_next",
+          "label": "Jump to step",
+          "info": "Optional. Skips straight to this step ID."
+        },
+        {
+          "type": "select",
+          "id": "opt_1_tension_op",
+          "label": "Tension effect",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "No effect"
+            },
+            {
+              "value": "set",
+              "label": "Set target to value"
+            },
+            {
+              "value": "add",
+              "label": "Add value to target"
+            },
+            {
+              "value": "blend",
+              "label": "Blend value into target (uses weight)"
+            },
+            {
+              "value": "min",
+              "label": "Raise target to at least value"
+            },
+            {
+              "value": "max",
+              "label": "Cap target at value"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "opt_1_tension_value",
+          "label": "Tension value"
+        },
+        {
+          "type": "number",
+          "id": "opt_1_tension_weight",
+          "label": "Blend weight",
+          "info": "0–1. Only used by \"Blend\"."
+        },
+        {
+          "type": "header",
+          "content": "Option B"
+        },
+        {
+          "type": "text",
+          "id": "opt_2_value",
+          "label": "Value",
+          "info": "Leave blank to hide this option. This is what conditions match on."
+        },
+        {
+          "type": "text",
+          "id": "opt_2_label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "opt_2_hint",
+          "label": "Hint"
+        },
+        {
+          "type": "text",
+          "id": "opt_2_emoji",
+          "label": "Emoji"
+        },
+        {
+          "type": "text",
+          "id": "opt_2_token",
+          "label": "Copy token",
+          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+        },
+        {
+          "type": "url",
+          "id": "opt_2_link",
+          "label": "Link",
+          "info": "Size options only — the collection to link to on the result."
+        },
+        {
+          "type": "checkbox",
+          "id": "opt_2_extended",
+          "label": "Non-standard size",
+          "default": false,
+          "info": "Size options only — exposes `sizeExtended` to conditions."
+        },
+        {
+          "type": "text",
+          "id": "opt_2_next",
+          "label": "Jump to step",
+          "info": "Optional. Skips straight to this step ID."
+        },
+        {
+          "type": "select",
+          "id": "opt_2_tension_op",
+          "label": "Tension effect",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "No effect"
+            },
+            {
+              "value": "set",
+              "label": "Set target to value"
+            },
+            {
+              "value": "add",
+              "label": "Add value to target"
+            },
+            {
+              "value": "blend",
+              "label": "Blend value into target (uses weight)"
+            },
+            {
+              "value": "min",
+              "label": "Raise target to at least value"
+            },
+            {
+              "value": "max",
+              "label": "Cap target at value"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "opt_2_tension_value",
+          "label": "Tension value"
+        },
+        {
+          "type": "number",
+          "id": "opt_2_tension_weight",
+          "label": "Blend weight",
+          "info": "0–1. Only used by \"Blend\"."
+        },
+        {
+          "type": "header",
+          "content": "Option C"
+        },
+        {
+          "type": "text",
+          "id": "opt_3_value",
+          "label": "Value",
+          "info": "Leave blank to hide this option. This is what conditions match on."
+        },
+        {
+          "type": "text",
+          "id": "opt_3_label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "opt_3_hint",
+          "label": "Hint"
+        },
+        {
+          "type": "text",
+          "id": "opt_3_emoji",
+          "label": "Emoji"
+        },
+        {
+          "type": "text",
+          "id": "opt_3_token",
+          "label": "Copy token",
+          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+        },
+        {
+          "type": "url",
+          "id": "opt_3_link",
+          "label": "Link",
+          "info": "Size options only — the collection to link to on the result."
+        },
+        {
+          "type": "checkbox",
+          "id": "opt_3_extended",
+          "label": "Non-standard size",
+          "default": false,
+          "info": "Size options only — exposes `sizeExtended` to conditions."
+        },
+        {
+          "type": "text",
+          "id": "opt_3_next",
+          "label": "Jump to step",
+          "info": "Optional. Skips straight to this step ID."
+        },
+        {
+          "type": "select",
+          "id": "opt_3_tension_op",
+          "label": "Tension effect",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "No effect"
+            },
+            {
+              "value": "set",
+              "label": "Set target to value"
+            },
+            {
+              "value": "add",
+              "label": "Add value to target"
+            },
+            {
+              "value": "blend",
+              "label": "Blend value into target (uses weight)"
+            },
+            {
+              "value": "min",
+              "label": "Raise target to at least value"
+            },
+            {
+              "value": "max",
+              "label": "Cap target at value"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "opt_3_tension_value",
+          "label": "Tension value"
+        },
+        {
+          "type": "number",
+          "id": "opt_3_tension_weight",
+          "label": "Blend weight",
+          "info": "0–1. Only used by \"Blend\"."
+        },
+        {
+          "type": "header",
+          "content": "Option D"
+        },
+        {
+          "type": "text",
+          "id": "opt_4_value",
+          "label": "Value",
+          "info": "Leave blank to hide this option. This is what conditions match on."
+        },
+        {
+          "type": "text",
+          "id": "opt_4_label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "opt_4_hint",
+          "label": "Hint"
+        },
+        {
+          "type": "text",
+          "id": "opt_4_emoji",
+          "label": "Emoji"
+        },
+        {
+          "type": "text",
+          "id": "opt_4_token",
+          "label": "Copy token",
+          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+        },
+        {
+          "type": "url",
+          "id": "opt_4_link",
+          "label": "Link",
+          "info": "Size options only — the collection to link to on the result."
+        },
+        {
+          "type": "checkbox",
+          "id": "opt_4_extended",
+          "label": "Non-standard size",
+          "default": false,
+          "info": "Size options only — exposes `sizeExtended` to conditions."
+        },
+        {
+          "type": "text",
+          "id": "opt_4_next",
+          "label": "Jump to step",
+          "info": "Optional. Skips straight to this step ID."
+        },
+        {
+          "type": "select",
+          "id": "opt_4_tension_op",
+          "label": "Tension effect",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "No effect"
+            },
+            {
+              "value": "set",
+              "label": "Set target to value"
+            },
+            {
+              "value": "add",
+              "label": "Add value to target"
+            },
+            {
+              "value": "blend",
+              "label": "Blend value into target (uses weight)"
+            },
+            {
+              "value": "min",
+              "label": "Raise target to at least value"
+            },
+            {
+              "value": "max",
+              "label": "Cap target at value"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "opt_4_tension_value",
+          "label": "Tension value"
+        },
+        {
+          "type": "number",
+          "id": "opt_4_tension_weight",
+          "label": "Blend weight",
+          "info": "0–1. Only used by \"Blend\"."
+        },
+        {
+          "type": "header",
+          "content": "Option E"
+        },
+        {
+          "type": "text",
+          "id": "opt_5_value",
+          "label": "Value",
+          "info": "Leave blank to hide this option. This is what conditions match on."
+        },
+        {
+          "type": "text",
+          "id": "opt_5_label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "opt_5_hint",
+          "label": "Hint"
+        },
+        {
+          "type": "text",
+          "id": "opt_5_emoji",
+          "label": "Emoji"
+        },
+        {
+          "type": "text",
+          "id": "opt_5_token",
+          "label": "Copy token",
+          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+        },
+        {
+          "type": "url",
+          "id": "opt_5_link",
+          "label": "Link",
+          "info": "Size options only — the collection to link to on the result."
+        },
+        {
+          "type": "checkbox",
+          "id": "opt_5_extended",
+          "label": "Non-standard size",
+          "default": false,
+          "info": "Size options only — exposes `sizeExtended` to conditions."
+        },
+        {
+          "type": "text",
+          "id": "opt_5_next",
+          "label": "Jump to step",
+          "info": "Optional. Skips straight to this step ID."
+        },
+        {
+          "type": "select",
+          "id": "opt_5_tension_op",
+          "label": "Tension effect",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "No effect"
+            },
+            {
+              "value": "set",
+              "label": "Set target to value"
+            },
+            {
+              "value": "add",
+              "label": "Add value to target"
+            },
+            {
+              "value": "blend",
+              "label": "Blend value into target (uses weight)"
+            },
+            {
+              "value": "min",
+              "label": "Raise target to at least value"
+            },
+            {
+              "value": "max",
+              "label": "Cap target at value"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "opt_5_tension_value",
+          "label": "Tension value"
+        },
+        {
+          "type": "number",
+          "id": "opt_5_tension_weight",
+          "label": "Blend weight",
+          "info": "0–1. Only used by \"Blend\"."
+        },
+        {
+          "type": "header",
+          "content": "Option F"
+        },
+        {
+          "type": "text",
+          "id": "opt_6_value",
+          "label": "Value",
+          "info": "Leave blank to hide this option. This is what conditions match on."
+        },
+        {
+          "type": "text",
+          "id": "opt_6_label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "opt_6_hint",
+          "label": "Hint"
+        },
+        {
+          "type": "text",
+          "id": "opt_6_emoji",
+          "label": "Emoji"
+        },
+        {
+          "type": "text",
+          "id": "opt_6_token",
+          "label": "Copy token",
+          "info": "Short phrase used by result reason lines as {{answerKey.token}}."
+        },
+        {
+          "type": "url",
+          "id": "opt_6_link",
+          "label": "Link",
+          "info": "Size options only — the collection to link to on the result."
+        },
+        {
+          "type": "checkbox",
+          "id": "opt_6_extended",
+          "label": "Non-standard size",
+          "default": false,
+          "info": "Size options only — exposes `sizeExtended` to conditions."
+        },
+        {
+          "type": "text",
+          "id": "opt_6_next",
+          "label": "Jump to step",
+          "info": "Optional. Skips straight to this step ID."
+        },
+        {
+          "type": "select",
+          "id": "opt_6_tension_op",
+          "label": "Tension effect",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "No effect"
+            },
+            {
+              "value": "set",
+              "label": "Set target to value"
+            },
+            {
+              "value": "add",
+              "label": "Add value to target"
+            },
+            {
+              "value": "blend",
+              "label": "Blend value into target (uses weight)"
+            },
+            {
+              "value": "min",
+              "label": "Raise target to at least value"
+            },
+            {
+              "value": "max",
+              "label": "Cap target at value"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "opt_6_tension_value",
+          "label": "Tension value"
+        },
+        {
+          "type": "number",
+          "id": "opt_6_tension_weight",
+          "label": "Blend weight",
+          "info": "0–1. Only used by \"Blend\"."
+        }
+      ]
+    },
+    {
+      "type": "email",
+      "name": "Screen: Email capture",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "Nearly there"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Your personalised match is ready 🎉"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Pop in your email and we'll reveal your match, your recommended size, and your exclusive <strong>7% off code</strong>."
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Input placeholder",
+          "default": "name@email.com"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Reveal my match"
+        },
+        {
+          "type": "text",
+          "id": "error_text",
+          "label": "Validation message",
+          "default": "Hmm, that email doesn't look right — try again."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "fineprint",
+          "label": "Fine print",
+          "default": "By continuing you agree to receive emails from REM-Fit. Unsubscribe anytime. We never share your data."
+        },
+        {
+          "type": "checkbox",
+          "id": "allow_skip",
+          "label": "Allow skipping",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "skip_label",
+          "label": "Skip link",
+          "default": "Skip — show my match without the discount"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Data: Mattress",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Supplies the link, image and price."
+        },
+        {
+          "type": "text",
+          "id": "key",
+          "label": "Key",
+          "info": "Short slug used by conditions (`match=pocket1000`). Defaults to the product handle."
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "Link override"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image override"
+        },
+        {
+          "type": "text",
+          "id": "name_override",
+          "label": "Name override"
+        },
+        {
+          "type": "text",
+          "id": "short",
+          "label": "Short name"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Eyebrow tag"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "blurb",
+          "label": "Blurb"
+        },
+        {
+          "type": "text",
+          "id": "runner_line",
+          "label": "Runner-up one-liner",
+          "info": "Shown when this product places second."
+        },
+        {
+          "type": "header",
+          "content": "Feel"
+        },
+        {
+          "type": "range",
+          "id": "tension",
+          "label": "Tension",
+          "default": 7,
+          "min": 1,
+          "max": 10,
+          "step": 0.5
+        },
+        {
+          "type": "text",
+          "id": "tension_label",
+          "label": "Tension label"
+        },
+        {
+          "type": "header",
+          "content": "Attributes",
+          "info": "Drive the score rules and the result reason lines."
+        },
+        {
+          "type": "checkbox",
+          "id": "cooling",
+          "label": "Cooling",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "natural",
+          "label": "Natural fillings",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "foam",
+          "label": "Memory foam",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "price_band",
+          "label": "Price band",
+          "default": "1",
+          "options": [
+            {
+              "value": "1",
+              "label": "1 · Value"
+            },
+            {
+              "value": "2",
+              "label": "2 · Mid"
+            },
+            {
+              "value": "3",
+              "label": "3 · Premium"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature 1"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature 2"
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "Feature 3"
+        },
+        {
+          "type": "header",
+          "content": "Eligibility & boosts"
+        },
+        {
+          "type": "text",
+          "id": "exclude_unless",
+          "label": "Only consider this product when",
+          "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always. Blank = always eligible."
+        },
+        {
+          "type": "text",
+          "id": "boost_1_when",
+          "label": "Boost 1 · when",
+          "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always."
+        },
+        {
+          "type": "number",
+          "id": "boost_1_amount",
+          "label": "Boost 1 · score change"
+        },
+        {
+          "type": "text",
+          "id": "boost_2_when",
+          "label": "Boost 2 · when"
+        },
+        {
+          "type": "number",
+          "id": "boost_2_amount",
+          "label": "Boost 2 · score change"
+        },
+        {
+          "type": "text",
+          "id": "boost_3_when",
+          "label": "Boost 3 · when"
+        },
+        {
+          "type": "number",
+          "id": "boost_3_amount",
+          "label": "Boost 3 · score change"
+        }
+      ]
+    },
+    {
+      "type": "guide",
+      "name": "Result: Guide link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "when",
+          "label": "Show when",
+          "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always. The first matching guide wins."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Guide title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Guide URL"
+        }
+      ]
+    },
+    {
+      "type": "reason",
+      "name": "Result: Reason line",
+      "settings": [
+        {
+          "type": "text",
+          "id": "when",
+          "label": "Show when",
+          "info": "Condition. `key=value` matches an answer, `key=a|b` matches any, `key!=value` negates, `>= <= > <` compare numbers. Join with `,` for AND and `;` for OR. Blank = always."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "info": "Tokens: {{tension}}, {{product.name}}, {{product.short}}, {{product.tensionLabel}}, {{product.tensionLabelLower}}, {{product.feature1}}, {{product.feature1Lower}}, {{size.label}}, {{size.dims}}, and {{answerKey.token}} / {{answerKey.label}} for any answered step."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mattress finder",
+      "blocks": [
+        {
+          "type": "welcome"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "email"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "guide"
+        },
+        {
+          "type": "reason"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

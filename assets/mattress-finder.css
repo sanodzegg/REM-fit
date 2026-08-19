@@ -1,0 +1,786 @@
+/* ==========================================================================
+   REM-Fit Mattress Finder
+   Colour tokens, layout mode and min-height are emitted inline by
+   sections/mattress-finder.liquid, scoped to #MattressFinder-{section.id}.
+   Everything below consumes those custom properties.
+   ========================================================================== */
+
+.rf-finder {
+  --rf-radius-sm: 8px;
+  --rf-radius-pill: 999px;
+  font-family: var(--rf-font);
+  color: var(--rf-ink);
+  background: var(--rf-bg);
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+}
+
+.rf-finder *,
+.rf-finder *::before,
+.rf-finder *::after {
+  box-sizing: border-box;
+}
+
+/* ---------- layout modes ---------- */
+
+.rf-finder--full {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  overflow: hidden;
+}
+
+.rf-finder--full .rf-stage {
+  height: 100vh;
+  height: 100dvh;
+  padding: 88px 24px 96px;
+}
+
+.rf-finder--embedded {
+  position: relative;
+  min-height: var(--rf-min-height, 720px);
+  overflow: hidden;
+}
+
+.rf-finder--embedded .rf-stage {
+  min-height: var(--rf-min-height, 720px);
+  padding: 72px 24px 88px;
+}
+
+.rf-stage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+/* ---------- chrome: progress, brand, nav ---------- */
+
+.rf-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--rf-tint);
+  z-index: 50;
+}
+
+.rf-progress__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--rf-purple), var(--rf-gold));
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 3px 3px 0;
+}
+
+.rf-brand {
+  position: absolute;
+  top: 22px;
+  left: 28px;
+  z-index: 50;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: var(--rf-purple);
+  user-select: none;
+}
+
+.rf-brand span {
+  color: var(--rf-gold-dark);
+}
+
+.rf-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  background: linear-gradient(to top, var(--rf-bg) 65%, transparent);
+}
+
+.rf-nav__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--rf-muted);
+  padding: 8px 12px;
+  border-radius: var(--rf-radius-sm);
+  visibility: hidden;
+}
+
+.rf-nav__back:hover {
+  color: var(--rf-purple);
+  background: var(--rf-tint);
+}
+
+.rf-nav__count {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--rf-muted);
+}
+
+/* ---------- screens ---------- */
+
+.rf-screen {
+  width: 100%;
+  max-width: var(--rf-max-width, 660px);
+  margin: auto;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.3, 0.9, 0.4, 1);
+}
+
+.rf-screen:focus {
+  outline: none;
+}
+
+.rf-screen.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rf-screen.is-out {
+  opacity: 0;
+  transform: translateY(-28px);
+}
+
+.rf-finder--no-anim .rf-screen,
+.rf-finder--no-anim .rf-progress__fill {
+  transition: none;
+}
+
+.rf-finder--no-anim .rf-screen {
+  opacity: 1;
+  transform: none;
+}
+
+.rf-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--rf-gold-dark);
+  font-weight: 800;
+  font-size: 13.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.rf-finder h1 {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--rf-purple);
+  margin: 0 0 12px;
+}
+
+.rf-finder h2 {
+  font-size: clamp(23px, 4vw, 31px);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--rf-purple);
+  margin: 0 0 10px;
+}
+
+.rf-sub {
+  font-size: 16.5px;
+  color: var(--rf-sub-color);
+  line-height: 1.55;
+  margin: 0 0 28px;
+}
+
+/* ---------- social proof interstitial ---------- */
+
+.rf-proof {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1.5px solid var(--rf-gold);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--rf-purple);
+  line-height: 1.4;
+  animation: rfProofIn 0.5s 0.15s both;
+}
+
+.rf-proof__pct {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--rf-gold-dark);
+  flex: 0 0 auto;
+}
+
+.rf-proof small {
+  display: block;
+  font-weight: 600;
+  color: var(--rf-muted);
+  font-size: 12px;
+  margin-top: 1px;
+}
+
+@keyframes rfProofIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rf-finder--no-anim .rf-proof {
+  animation: none;
+}
+
+/* ---------- options ---------- */
+
+.rf-options {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-bottom: 24px;
+}
+
+.rf-opt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 2px solid var(--rf-border);
+  border-radius: var(--rf-radius);
+  padding: 15px 17px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--rf-ink);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s, background 0.15s;
+}
+
+.rf-opt:hover {
+  border-color: var(--rf-purple);
+  box-shadow: 0 4px 14px var(--rf-purple-shadow);
+  transform: translateY(-1px);
+}
+
+.rf-opt:focus-visible {
+  outline: 3px solid var(--rf-gold);
+  outline-offset: 2px;
+}
+
+.rf-opt.is-picked {
+  border-color: var(--rf-purple);
+  background: var(--rf-tint);
+}
+
+.rf-opt__key {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--rf-border);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--rf-muted);
+  transition: all 0.15s;
+}
+
+.rf-opt:hover .rf-opt__key,
+.rf-opt.is-picked .rf-opt__key {
+  background: var(--rf-purple);
+  border-color: var(--rf-purple);
+  color: #fff;
+}
+
+.rf-opt__emoji {
+  font-size: 21px;
+  flex: 0 0 auto;
+}
+
+.rf-opt__hint {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--rf-muted);
+  margin-top: 2px;
+}
+
+/* ---------- buttons ---------- */
+
+.rf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--rf-purple);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 30px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 6px 18px var(--rf-purple-shadow-strong);
+  text-decoration: none;
+}
+
+.rf-btn:hover {
+  background: var(--rf-purple-deep);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.rf-btn:focus-visible {
+  outline: 3px solid var(--rf-gold);
+  outline-offset: 2px;
+}
+
+.rf-btn--gold {
+  background: var(--rf-gold);
+  color: var(--rf-purple);
+  box-shadow: 0 6px 18px var(--rf-gold-shadow);
+}
+
+.rf-btn--gold:hover {
+  background: var(--rf-gold-dark);
+  color: #fff;
+}
+
+.rf-enter-hint {
+  font-size: 13px;
+  color: var(--rf-muted);
+  margin-left: 14px;
+}
+
+.rf-enter-hint b {
+  font-weight: 800;
+}
+
+.rf-offer-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 2px solid var(--rf-gold);
+  border-radius: var(--rf-radius-pill);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--rf-purple);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px var(--rf-gold-shadow-soft);
+}
+
+.rf-data-badge {
+  font-size: 13px;
+  color: var(--rf-muted);
+  font-weight: 700;
+  margin: 20px 0 0;
+}
+
+/* ---------- email capture ---------- */
+
+.rf-email-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.rf-email-row input {
+  flex: 1;
+  min-width: 220px;
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 600;
+  padding: 15px 18px;
+  border: 2px solid var(--rf-border);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--rf-ink);
+}
+
+.rf-email-row input:focus {
+  outline: none;
+  border-color: var(--rf-purple);
+  box-shadow: 0 0 0 3px var(--rf-purple-ring);
+}
+
+.rf-email-err {
+  color: var(--rf-error);
+  font-size: 14px;
+  font-weight: 700;
+  min-height: 20px;
+  margin-bottom: 4px;
+}
+
+.rf-fineprint {
+  font-size: 12.5px;
+  color: var(--rf-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.rf-skip {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--rf-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 14px;
+  padding: 0;
+}
+
+.rf-skip:hover {
+  color: var(--rf-purple);
+}
+
+/* ---------- result ---------- */
+
+.rf-result-card {
+  background: #fff;
+  border: 2px solid var(--rf-border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 14px 40px var(--rf-purple-shadow-card);
+  margin-bottom: 16px;
+}
+
+.rf-result-card__eyebrow {
+  display: inline-block;
+  background: var(--rf-gold);
+  color: var(--rf-purple);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: var(--rf-radius-pill);
+  margin-bottom: 14px;
+}
+
+.rf-product-media {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.rf-product-price {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--rf-purple);
+  margin: 12px 0 0;
+}
+
+.rf-product-price s {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--rf-muted);
+  margin-left: 8px;
+}
+
+.rf-tension {
+  margin: 16px 0 4px;
+}
+
+.rf-tension__labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--rf-muted);
+  margin-bottom: 6px;
+}
+
+.rf-tension__track {
+  position: relative;
+  height: 10px;
+  background: var(--rf-tint);
+  border-radius: var(--rf-radius-pill);
+}
+
+.rf-tension__fill {
+  height: 100%;
+  border-radius: var(--rf-radius-pill);
+  background: linear-gradient(90deg, var(--rf-purple-light), var(--rf-purple));
+}
+
+.rf-tension__you {
+  position: absolute;
+  top: -6px;
+  width: 22px;
+  height: 22px;
+  transform: translateX(-50%);
+  background: var(--rf-gold);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.rf-tension__caption {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rf-muted);
+  margin: 8px 0 0;
+}
+
+.rf-tension__caption b {
+  color: var(--rf-purple);
+}
+
+.rf-why {
+  margin: 18px 0 20px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.rf-why li {
+  display: flex;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.rf-why svg {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+.rf-why__icon circle {
+  fill: var(--rf-gold);
+}
+
+.rf-why__icon path {
+  stroke: var(--rf-purple);
+}
+
+.rf-sizebox {
+  background: var(--rf-tint);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.rf-sizebox b {
+  color: var(--rf-purple);
+}
+
+.rf-sizebox a {
+  color: var(--rf-purple);
+  font-weight: 800;
+}
+
+.rf-sizebox__note {
+  font-size: 12.5px;
+  color: var(--rf-muted);
+}
+
+.rf-code-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--rf-tint);
+  border: 2px dashed var(--rf-purple);
+  border-radius: 12px;
+  padding: 13px 18px;
+  margin-bottom: 18px;
+}
+
+.rf-code-box b {
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  color: var(--rf-purple);
+}
+
+.rf-code-box small {
+  display: block;
+  font-size: 12px;
+  color: var(--rf-muted);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.rf-copy-btn {
+  background: var(--rf-purple);
+  color: #fff;
+  border: none;
+  border-radius: var(--rf-radius-sm);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 9px 14px;
+  cursor: pointer;
+}
+
+.rf-copy-btn:hover {
+  background: var(--rf-purple-deep);
+}
+
+.rf-trust-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--rf-muted);
+}
+
+.rf-trust-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rf-guide-link {
+  display: block;
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--rf-muted);
+}
+
+.rf-guide-link a {
+  color: var(--rf-purple);
+  font-weight: 800;
+}
+
+.rf-runner {
+  background: #fff;
+  border: 2px solid var(--rf-border);
+  border-radius: 16px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.rf-runner__label {
+  font-size: 11.5px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rf-muted);
+  margin-bottom: 3px;
+}
+
+.rf-runner__name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--rf-purple);
+}
+
+.rf-runner__tension {
+  font-weight: 600;
+  color: var(--rf-muted);
+  font-size: 13.5px;
+}
+
+.rf-runner__why {
+  font-size: 13.5px;
+  color: var(--rf-muted);
+  margin-top: 2px;
+}
+
+.rf-runner a {
+  font-weight: 800;
+  color: var(--rf-purple);
+  font-size: 14.5px;
+  white-space: nowrap;
+}
+
+.rf-restart {
+  margin-top: 18px;
+}
+
+/* ---------- noscript fallback ---------- */
+
+.rf-noscript {
+  max-width: var(--rf-max-width, 660px);
+  margin: 0 auto;
+  padding: 88px 24px;
+  text-align: center;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 520px) {
+  .rf-brand {
+    left: 20px;
+    font-size: 16px;
+  }
+
+  .rf-finder--full .rf-stage {
+    padding: 70px 18px 90px;
+  }
+
+  .rf-finder--embedded .rf-stage {
+    padding: 60px 18px 84px;
+  }
+
+  .rf-opt {
+    padding: 13px;
+    font-size: 15px;
+  }
+
+  .rf-enter-hint {
+    display: none;
+  }
+
+  .rf-result-card {
+    padding: 22px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rf-screen {
+    transition: none;
+    transform: none;
+  }
+
+  .rf-progress__fill {
+    transition: none;
+  }
+
+  .rf-proof {
+    animation: none;
+  }
+}
