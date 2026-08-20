@@ -14998,18 +14998,20 @@ span#monthly-payment {
 /* Product info parent accordion groups (Product / Delivery / Returns) */
 .product__page--info .product-accordion-group {
   border: 1px solid #e0d8ea;
-  border-radius: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   overflow: hidden;
 }
 .product-accordion-group:first-of-type {
   margin-top: 20px;
 }
-.product__page--info .product-accordion-group__title:first-of-type {
+.product__page--info .product-accordion-group + .product-accordion-group {
+  border-top: none;
+}
+.product__page--info .product-accordion-group:first-of-type {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 }
-.product__page--info .product-accordion-group__title:last-of-type {
+.product__page--info .product-accordion-group:last-of-type {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
