@@ -16753,7 +16753,7 @@ span#monthly-payment {
 
 .product__image-note--media {
   flex: 0 0 auto;
-  width: 56px;
+  width: 45px;
 }
 
 .product__image-note--media img {
@@ -16791,7 +16791,7 @@ span#monthly-payment {
   }
 
   .product__image-note--media {
-    width: 64px;
+    width: 50px;
   }
 
   .product__image-note--body * {

@@ -897,6 +897,28 @@ div.rfg {
     padding-top: 0;
   }
 
+  .product__image-note {
+    gap: 14px;
+    padding: 13px 15px;
+    border-radius: 14px;
+  }
+
+  .product__image-note--media {
+    width: 50px;
+  }
+
+  .product__image-note--body * {
+    font-size: 12.5px;
+  }
+
+  .product__assurances--lead {
+    font-size: 12.5px;
+  }
+
+  .product__assurances--text {
+    font-size: 11px;
+  }
+
   #why h2,
   #construction h2,
   #whythisone h2,
