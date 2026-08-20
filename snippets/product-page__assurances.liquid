@@ -16,35 +16,28 @@
       assign filled = filled | plus: 1
     endif
   endfor
-
-  assign show = false
-  if template.suffix == 'reworked' and filled > 0
-    assign show = true
-  endif
 -%}
 
-{%- if show -%}
-  <div
-    class="product__assurances"
-    {{ block.shopify_attributes }}
-  >
-    {%- for i in slots -%}
-      {%- liquid
-        assign lead_key = 'lead_' | append: i
-        assign text_key = 'text_' | append: i
-        assign lead = block.settings[lead_key]
-        assign text = block.settings[text_key]
-      -%}
-      {%- if lead != blank or text != blank -%}
-        <div class="product__assurances--tile">
-          {%- if lead != blank -%}
-            <b class="product__assurances--lead">{{ lead | escape }}</b>
-          {%- endif -%}
-          {%- if text != blank -%}
-            <span class="product__assurances--text">{{ text | escape }}</span>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
-  </div>
-{%- endif -%}
+<div
+  class="product__assurances"
+  {{ block.shopify_attributes }}
+>
+  {%- for i in slots -%}
+    {%- liquid
+      assign lead_key = 'lead_' | append: i
+      assign text_key = 'text_' | append: i
+      assign lead = block.settings[lead_key]
+      assign text = block.settings[text_key]
+    -%}
+    {%- if lead != blank or text != blank -%}
+      <div class="product__assurances--tile">
+        {%- if lead != blank -%}
+          <b class="product__assurances--lead">{{ lead | escape }}</b>
+        {%- endif -%}
+        {%- if text != blank -%}
+          <span class="product__assurances--text">{{ text | escape }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
