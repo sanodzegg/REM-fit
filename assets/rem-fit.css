@@ -15005,6 +15005,14 @@ span#monthly-payment {
 .product-accordion-group:first-of-type {
   margin-top: 20px;
 }
+.product__page--info .product-accordion-group__title:first-of-type {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.product__page--info .product-accordion-group__title:last-of-type {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
 .product__page--info .product-accordion-group__title {
   display: flex;
   align-items: center;
