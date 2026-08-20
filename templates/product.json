@@ -257,7 +257,7 @@
             "lead_1": "100 nights",
             "text_1": "Trial, 200 with a protector",
             "lead_2": "Free",
-            "text_2": "2-man delivery",
+            "text_2": "Delivered to room of choice",
             "lead_3": "15 years",
             "text_3": "Guarantee"
           }
@@ -265,8 +265,8 @@
         "product_page_image_note_AaUCMD": {
           "type": "productPageImageNote",
           "settings": {
-            "image": "shopify://shop_images/C-AU-UK-0825-235-0272.web.png",
-            "text": "<p>Every trial return is collected free and donated to the <strong>British Heart Foundation</strong> - 100% of proceeds go to the BHF, so a mattress is never wasted.</p>"
+            "image": "shopify://shop_images/British_Heart_Foundation.png",
+            "text": "<p>Every trial return is collected free and donated to our partner charity, <strong>The British Heart Foundation.</strong> 100% of proceeds go to the BHF, so a mattress is never wasted.</p>"
           }
         },
         "ppATC": {
