@@ -15015,6 +15015,18 @@ span#monthly-payment {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
+.product__page--info .product-accordion-group:first-of-type > .product-accordion-group__title {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.product__page--info .product-accordion-group:last-of-type:not([open]) > .product-accordion-group__title {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.product__page--info .product-accordion-group:last-of-type[open] > .product-accordion-group__body {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
 .product__page--info .product-accordion-group__title {
   display: flex;
   align-items: center;
@@ -15056,7 +15068,15 @@ span#monthly-payment {
   background: #fff;
   padding: 4px 12px 12px;
 }
-/* Child accordions inside a group */
+/* Child accordions inside a group.
+   global-scss puts `border-top: 2px solid` on every .accordion__item, and the
+   PDP only ever reset border-bottom — so each row drew the theme's 2px top rule
+   as well as the 1px separator below, and the first row drew a stray line right
+   under the group summary. Drop the inherited top border and keep one 1px
+   separator between rows. */
+.product__page--info .product-accordion-group .product__accordion .accordion__item {
+  border-top: none;
+}
 .product__page--info .product-accordion-group .product__accordion {
   border-bottom: 1px solid #e0d8ea;
   margin-bottom: 0;
@@ -16703,7 +16723,7 @@ span#monthly-payment {
 .product__delivery-note * {
   margin: 0;
   color: #1a5c3b;
-  font-size: 11.5px;
+  font-size: 14px;
   line-height: 1.45;
 }
 
@@ -16736,7 +16756,7 @@ span#monthly-payment {
 
 .product__assurances--lead {
   display: block;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 800;
   color: var(--ink);
   line-height: 1.2;
@@ -16744,7 +16764,7 @@ span#monthly-payment {
 
 .product__assurances--text {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--grey);
   margin-top: 2px;
   line-height: 1.25;
@@ -16778,7 +16798,7 @@ span#monthly-payment {
 
 .product__image-note--body * {
   margin: 0;
-  font-size: 11.5px;
+  font-size: 13px;
   line-height: 1.45;
   color: var(--grey);
 }
@@ -16791,7 +16811,11 @@ span#monthly-payment {
 
 @media screen and (min-width: 768px) {
   .product__delivery-note * {
-    font-size: 12.5px;
+    font-size: 15px;
+  }
+
+  .product__assurances--tile {
+    padding: 9px 0;
   }
 
   .product__image-note {
@@ -16805,14 +16829,14 @@ span#monthly-payment {
   }
 
   .product__image-note--body * {
-    font-size: 12.5px;
+    font-size: 14px;
   }
 
   .product__assurances--lead {
-    font-size: 12.5px;
+    font-size: 14px;
   }
 
   .product__assurances--text {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
