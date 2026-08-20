@@ -1,0 +1,31 @@
+{%- comment -%}
+  Image + text note for the product page.
+
+  Accepts:
+    block - required, the block object
+
+  Renders on every product template — its styles live in rem-fit.css.
+{%- endcomment -%}
+
+{%- liquid
+  assign image = block.settings.image
+  assign text = block.settings.text
+-%}
+
+{%- if image != blank or text != blank -%}
+  <div class="product__image-note" {{ block.shopify_attributes }}>
+    {%- if image != blank -%}
+      <div class="product__image-note--media">
+        {{
+          image
+          | image_url: width: 240
+          | image_tag: alt: image.alt, loading: 'lazy', widths: '60, 120, 180, 240'
+        }}
+      </div>
+    {%- endif -%}
+
+    {%- if text != blank -%}
+      <div class="product__image-note--body">{{ text }}</div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

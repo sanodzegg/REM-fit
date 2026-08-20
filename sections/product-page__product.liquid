@@ -1233,8 +1233,20 @@ document.addEventListener("DOMContentLoaded", function () {
         "name": "Delivery note",
         "settings": [
           {
-            "type": "paragraph",
-            "content": "Only renders on the reworked product template, which is the only one carrying the styles for it."
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      },
+    {
+        "type": "productPageImageNote",
+        "name": "Image note",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
           },
           {
             "type": "richtext",
@@ -1258,14 +1270,12 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             "type": "text",
             "id": "lead_1",
-            "label": "Lead",
-            "default": "100 nights"
+            "label": "Lead"
           },
           {
             "type": "text",
             "id": "text_1",
-            "label": "Text",
-            "default": "Trial, 200 with a protector"
+            "label": "Text"
           },
           {
             "type": "header",
@@ -1274,14 +1284,12 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             "type": "text",
             "id": "lead_2",
-            "label": "Lead",
-            "default": "Free"
+            "label": "Lead"
           },
           {
             "type": "text",
             "id": "text_2",
-            "label": "Text",
-            "default": "2-man delivery"
+            "label": "Text"
           },
           {
             "type": "header",
@@ -1290,14 +1298,12 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             "type": "text",
             "id": "lead_3",
-            "label": "Lead",
-            "default": "15 years"
+            "label": "Lead"
           },
           {
             "type": "text",
             "id": "text_3",
-            "label": "Text",
-            "default": "Guarantee"
+            "label": "Text"
           }
         ]
       },

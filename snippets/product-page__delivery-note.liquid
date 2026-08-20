@@ -1,26 +1,18 @@
 {%- comment -%}
-  Delivery note block for the product page.
+  Delivery note for the product page.
 
   Accepts:
     block - required, the block object
+
+  Unlike the discount and assurance blocks this is not gated on the reworked
+  template — its styles have been migrated into rem-fit.css, so it renders
+  everywhere.
 {%- endcomment -%}
 
-{%- liquid
-  assign text = block.settings.text
+{%- assign text = block.settings.text -%}
 
-  assign show = false
-  if template.suffix == 'reworked'
-    if text != blank
-      assign show = true
-    endif
-  endif
--%}
-
-{%- if show -%}
-  <div
-    class="product__delivery-note"
-    {{ block.shopify_attributes }}
-  >
+{%- if text != blank -%}
+  <div class="product__delivery-note" {{ block.shopify_attributes }}>
     {{ text }}
   </div>
 {%- endif -%}

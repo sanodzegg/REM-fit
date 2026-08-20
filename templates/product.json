@@ -245,6 +245,30 @@
             "noMargin": true
           }
         },
+        "product_page_delivery_note_YDTFj8": {
+          "type": "productPageDeliveryNote",
+          "settings": {
+            "text": "<p>Free <strong>2-5</strong> working days delivery - old mattress removal available at the checkout</p>"
+          }
+        },
+        "product_page_assurances_7it7H8": {
+          "type": "productPageAssurances",
+          "settings": {
+            "lead_1": "100 nights",
+            "text_1": "Trial, 200 with a protector",
+            "lead_2": "Free",
+            "text_2": "2-man delivery",
+            "lead_3": "15 years",
+            "text_3": "Guarantee"
+          }
+        },
+        "product_page_image_note_AaUCMD": {
+          "type": "productPageImageNote",
+          "settings": {
+            "image": "shopify://shop_images/C-AU-UK-0825-235-0272.web.png",
+            "text": "<p>Every trial return is collected free and donated to the <strong>British Heart Foundation</strong> - 100% of proceeds go to the BHF, so a mattress is never wasted.</p>"
+          }
+        },
         "ppATC": {
           "type": "productPageATC",
           "settings": {
@@ -664,6 +688,9 @@
         "dividebuy_spread_the_cost_dividebuyproduct_XiRVhf",
         "freegiftbundle_WEt8zE",
         "ppSwatch",
+        "product_page_delivery_note_YDTFj8",
+        "product_page_assurances_7it7H8",
+        "product_page_image_note_AaUCMD",
         "ppATC",
         "rebuy_personalization_engine_rebuy_widget_7QXn9E",
         "49659766-1623-4eb2-b106-2a8952aaefb1",
