@@ -256,6 +256,7 @@
         },
         "button_4ViJ93": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "button": "Shop Divan Bases",
             "url": "https://www.rem-fit.co.uk/collections/bed-frames",
