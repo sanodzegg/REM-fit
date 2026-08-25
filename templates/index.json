@@ -333,7 +333,7 @@
             "review_radius": 6,
             "review_bg_opacity": 0.5,
             "review_mt": 20,
-            "review_mt_mobile": 0,
+            "review_mt_mobile": 6,
             "stars_count": 4.5,
             "stars_size": 18,
             "stars_size_mobile": 16,
