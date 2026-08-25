@@ -160,11 +160,11 @@
         "heading_tepiWr": {
           "type": "heading",
           "settings": {
-            "heading": "<p>Bank Holiday Sale - Save Up To £210<br/></p>",
+            "heading": "<p>Bank Holiday Sale - Save Up To £210 Off Award-Winning Sleep!<br/></p>",
             "heading_custom": false,
             "heading_font": "josefin_sans_n4",
             "heading_size": 32,
-            "heading_size_mobile": 26,
+            "heading_size_mobile": 20,
             "heading_height": 110,
             "heading_mt": 0,
             "heading_mt_mobile": 20,
@@ -316,7 +316,7 @@
             "text_custom": false,
             "text_font": "josefin_sans_n4",
             "text_size": 20,
-            "text_size_mobile": 16,
+            "text_size_mobile": 19,
             "text_height": 140,
             "text_mt": 24,
             "text_mt_mobile": 20,
