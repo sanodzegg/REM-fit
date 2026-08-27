@@ -12,9 +12,13 @@
 <input class="properties_note" id="properties_note" name="properties[Note]" type="hidden" value="{{ first_variant }}">
 
 <style>
-  .template--product .product__row--default .product__page--info .product__countdown--compact.gallery-countdown {display: none;}
+  .template--product .product__row--default .product__page--info .product__countdown--compact.gallery-countdown {
+    display: none;
+  }
   @media screen and (max-width: 767px){
-  .template--product .product__row--default .product__page--info .product__countdown--compact.gallery-countdown {display: block;}
+    .template--product .product__row--default .product__page--info .product__countdown--compact.gallery-countdown {
+      display: block;
+    }
   }
 </style>
 {% assign product_title = product.title | downcase %}

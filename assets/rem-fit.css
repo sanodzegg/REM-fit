@@ -154,8 +154,7 @@ body {
 @media only screen and (max-width: 767px) {
   .template--product
     .product__row--default
-    .product__page--info
-    .product__countdown--compact.gallery-countdown {
+    .product__page--info {
     margin-top: 32px;
   }
 
@@ -4021,8 +4020,7 @@ div.free-gift-pdp-addon
 @media only screen and (max-width: 767px) {
   .template--product
     .product__row--default
-    .product__page--info
-    .product__countdown--compact.gallery-countdown {
+    .product__page--info {
     margin-top: 32px;
   }
 
