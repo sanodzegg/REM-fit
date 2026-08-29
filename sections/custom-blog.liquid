@@ -1,0 +1,427 @@
+{% liquid
+    assign padding_x = section.settings.spacings_x_mobile
+    assign padding_y = section.settings.spacings_y_mobile
+    assign max_width = section.settings.section_max_width
+
+    assign title_margin_top = section.settings.margin_top
+    assign title_margin_bottom = section.settings.margin_bottom
+
+    assign align_text_mobile = section.settings.alignment_mobile
+    assign align_text_mobile = section.settings.alignment_desktop
+
+    assign user_controls = section.settings.let_users_control
+%}
+
+{% style %} 
+    .custom-booster-blog {
+        padding: {{ padding_x | divided_by: 1.9 | round }}px {{ padding_y | divided_by: 1.9 | round }}px;
+    }
+
+    .blog-title {
+        margin-top: {{ title_margin_top | divided_by: 1.9 | round }}px;
+        margin-bottom: {{ title_margin_bottom | divided_by: 1.9 | round }}px;
+        text-align: {{ align_text_mobile }};
+    }
+
+    .blog-title * {
+        font-size: 30px;
+        line-height: 36px;
+        color: var(--ink);
+        letter-spacing: -.01em;
+        margin: 0;
+    }
+
+    .cards-wrapper {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 30px;
+    }
+
+    .cards-wrapper[list-type="list"] .blog-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .cards-wrapper[list-type="list"] .ratio {
+        aspect-ratio: unset;
+        margin-bottom: 0;
+
+        width: 40%;
+        height: 80px;
+    }
+
+    .cards-wrapper[list-type="list"] .blog-card .info {
+        flex: unset;
+        width: 60%;
+    }
+
+    .cards-wrapper[list-type="list"] .blog-card .info h3 {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .cards-wrapper[list-type="list"] .blog-card .excerpt {
+        display: none;
+    }
+
+    .cards-wrapper[list-type="list"] .blog-card .tags {
+        margin-bottom: 4px;
+    }
+
+    #layout-toggler {
+        display: inline-flex;
+        gap: 4px;
+        background: #f6f3f9;
+        border-radius: 999px;
+        padding: 4px;
+        margin-bottom: 28px;
+    }
+
+    #layout-toggler button {
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        font-weight: 600;
+        font-size: .9rem;
+        padding: 8px 18px;
+        border-radius: 999px;
+        cursor: pointer;
+    }
+
+    #layout-toggler button[active] {
+        background: var(--ink);
+        color: #fff;
+    }
+
+    .blog-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .blog-card .ratio {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        aspect-ratio: 16 / 10;
+        position: relative;
+    }
+
+    .blog-card .info {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .blog-card .info h3 {
+        display: block;
+        font-size: 1.12rem;
+        line-height: 1.35;
+        font-weight: 700;
+        margin: 0 0 10px;
+        color: var(--ink);
+    }
+
+    .blog-card:hover img {
+        transform: scale(1.04);
+    }
+
+    .blog-card img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .4s ease;
+    }
+
+    .blog-card .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .blog-cards .tags:empty {
+        display: none;
+    }
+
+    .blog-card .tags a {
+        font-size: .68rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+        color: var(--ink);
+        text-transform: uppercase;
+        background: none;
+        border: none;
+        padding: 0;
+        text-decoration: none;
+    }
+
+    .blog-card .tags a:not(:last-child)::after {
+        content: "·";
+        margin-left: 6px;
+        color: #e5e0eb;
+    }
+
+    .blog-card .excerpt {
+        margin: 0 0 18px;
+        color: var(--grey);
+        font-size: .92rem;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .blog-card a.btn {
+        margin-top: auto;
+        align-self: flex-start;
+        background: var(--ink);
+        color: #FFF;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: .85rem;
+        padding: 10px 22px;
+        border-radius: 6px;
+    }
+
+    .blog-card a.btn:hover {
+        color: var(--ink);
+        background: #FFF;
+        outline: 1px solid var(--ink);
+    }
+
+    @media screen and (min-width: 768px) {
+        .custom-booster-blog {
+            max-width: {{ max_width }}px;
+            margin: 0 auto;
+            padding: {{ padding_x }}px {{ padding_y }}px;
+        }
+
+        .blog-title {
+            margin-top: {{ title_margin_top }}px;
+            margin-bottom: {{ title_margin_bottom }}px;
+        }
+
+        .cards-wrapper .blog-card .info h3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card .excerpt {
+            display: -webkit-box;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card .info h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card .tags {
+            margin-bottom: 10px;
+        }
+
+        .cards-wrapper[list-type="list"] .ratio {
+            height: 178px;
+        }
+        
+        .cards-wrapper[list-type="grid"] {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 36px 24px;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card:not(:last-child) {
+            border-bottom: 1px solid #e5e0eb;
+            padding-bottom: 30px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .blog-title {
+            text-align: {{ align_text_desktop }};
+        }
+
+        .cards-wrapper[list-type="grid"] {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 44px 28px;
+        }
+
+        .cards-wrapper[list-type="list"] .ratio {
+            height: 250px;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card .info {
+            height: 100%;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card .tags {
+            margin-bottom: 16px;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card .tags a {
+            font-size: .9rem;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card .info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            -webkit-line-clamp: 2;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card .excerpt {
+            font-size: 1.1rem;
+            -webkit-line-clamp: 2;
+        }
+
+        .cards-wrapper[list-type="list"] .blog-card a.btn {
+            font-size: 1rem;
+            padding: 12px 26px;
+        }
+    }
+{% endstyle %}
+
+<div class="blog-title">
+    {%- if section.settings.custom_title and section.settings.title != blank -%}
+        {{- section.settings.title -}}
+    {%- else -%}
+        <h1>{{ blog.title }}</h1>
+    {%- endif -%}
+</div>
+
+<div class="blog-cards-list">
+    <div {% unless user_controls -%}aria-hidden hidden{%- endunless %} id="layout-toggler">
+        <button type="grid" active>Grid</button>
+        <button type="list">List</button>
+    </div>
+
+    <div class="cards-wrapper" list-type="grid">
+        {% for article in blog.articles %} 
+            {% assign lazy_load = false %}
+            {% if forloop.index > 3 %}
+                {% assign lazy_load = true %}
+            {% endif %}
+            {% render 'custom-blog-card', article: article, lazy_load: lazy_load %}
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    const toggler = document.getElementById("layout-toggler");
+    const cardsWrapper = document.querySelector(".cards-wrapper");
+
+    const togglerButtons = toggler.querySelectorAll('button');
+    togglerButtons.forEach(btn => {
+        btn.onclick = () => {
+            togglerButtons.forEach(x => x.removeAttribute('active'));
+
+            btn.setAttribute('active', true);
+            const type = btn.getAttribute('type');
+            cardsWrapper.setAttribute('list-type', type);
+        }
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Blog Display",
+  "tag": "section",
+  "class": "custom-booster-blog",
+  "settings": [
+    {
+        "type": "header",
+        "content": "Section spacings"
+    },
+    {
+        "type": "range",
+        "id": "spacings_x_mobile",
+        "label": "X paddings for mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+    },
+    {
+        "type": "range",
+        "id": "spacings_y_mobile",
+        "label": "Y paddings for mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+    },
+    {
+        "type": "number",
+        "id": "section_max_width",
+        "label": "Section max width",
+        "default": 1200
+    },
+    {
+      "type": "header",
+      "content": "Title settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_title",
+      "label": "Custom title?",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "visible_if": "{{ section.settings.custom_title }}"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment_mobile",
+      "label": "Align mobile"
+    },
+    {
+      "type": "text_alignment",
+      "id": "alignment_desktop",
+      "label": "Align desktop"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 30
+    },
+    {
+        "type": "header",
+        "content": "Grid layout controls"
+    },
+    {
+        "type": "checkbox",
+        "id": "let_users_control",
+        "label": "Let users control layout?",
+        "default": true
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+<div class="blog-card">
+    <div class="ratio">        
+        <img
+          src="{{ article.image.src | image_url: width: 1000 }}"
+          alt="{{ article.image.src.alt | escape }}"
+          {% unless lazy_load == false %}
+            loading="lazy"
+          {% endunless %}
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+        >
+    </div>
+    <div class="info">
+        {%- if article.tags.size > 0 -%}
+            <div class="tags">
+                {%- for tag in article.tags -%}
+                    <a href="{{ blog.url }}/tagged/{{ tag | handleize }}">{{ tag | escape }}</a>
+                {%- endfor -%}
+            </div>
+        {%- endif -%}
+        <h3>{{ article.title }}</h3>
+        <p class="excerpt">{{ article.excerpt_or_content | strip_html | escape }}</p>
+        <a class="btn" href="{{ article.url }}">Read more</a>
+    </div>
+</div>
