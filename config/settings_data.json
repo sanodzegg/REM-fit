@@ -164,8 +164,8 @@
     "countdown": true,
     "countdownCard": false,
     "CustomCountdown": false,
-    "countdownDeskTitle": "<p><strong>⏰ Bank Holiday Sale Ends In:</strong></p>",
-    "countdownMobileTitle": "<p><strong>⏰ Bank Holiday Sale Ends In:</strong></p>",
+    "countdownDeskTitle": "<p><strong>⏰ Bank Holiday Sale Ends Soon:</strong></p>",
+    "countdownMobileTitle": "<p><strong>⏰ Bank Holiday Sale Ends Soon:</strong></p>",
     "countdownTime": "2026/09/03",
     "countdownTimeFormat": "days",
     "countdownRandom": 0,
@@ -370,7 +370,7 @@
           "height": 32,
           "fontSize": "font__size--small",
           "colorCombo": "customCombo",
-          "customFillColor": "#3f2155",
+          "customFillColor": "#D22C2C",
           "customContentColor": "#ffffff"
         }
       },
