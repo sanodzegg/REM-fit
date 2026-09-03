@@ -14,13 +14,18 @@
       "settings": {
         "spacings_x_mobile": 32,
         "spacings_y_mobile": 32,
+        "section_max_width": 1200,
         "custom_title": true,
         "title": "<h1>REM-Fit blog - All</h1>",
         "alignment_mobile": "left",
         "alignment_desktop": "center",
         "margin_top": 32,
         "margin_bottom": 32,
-        "let_users_controls": true
+        "let_users_control": true,
+        "layout_type": "grid",
+        "infinite_loading": true,
+        "show_blogs": 15,
+        "load_more_text": "Load More"
       }
     }
   },
