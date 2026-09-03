@@ -10,6 +10,14 @@
     assign align_text_mobile = section.settings.alignment_desktop
 
     assign user_controls = section.settings.let_users_control
+
+    assign infinite_loading = section.settings.infinite_loading
+    assign load_more_text = section.settings.load_more_text
+
+    assign per_page = section.settings.show_blogs
+    unless infinite_loading
+        assign per_page = 50
+    endunless
 %}
 
 {% style %} 
@@ -192,6 +200,34 @@
         border-radius: 6px;
     }
 
+    .blog-load-more {
+        display: flex;
+        justify-content: center;
+        margin-top: 32px;
+    }
+
+    .blog-load-more .btn {
+        background: var(--ink);
+        color: #FFF;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: .85rem;
+        padding: 12px 28px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .blog-load-more .btn:hover {
+        color: var(--ink);
+        background: #FFF;
+        outline: 1px solid var(--ink);
+    }
+
+    .blog-load-more .btn[aria-busy="true"] {
+        opacity: .6;
+        pointer-events: none;
+    }
+
     .blog-card a.btn:hover {
         color: var(--ink);
         background: #FFF;
@@ -307,15 +343,25 @@
         <button type="list">List</button>
     </div>
 
-    <div class="cards-wrapper" list-type="grid">
-        {% for article in blog.articles %} 
-            {% assign lazy_load = false %}
-            {% if forloop.index > 3 %}
-                {% assign lazy_load = true %}
-            {% endif %}
-            {% render 'custom-blog-card', article: article, lazy_load: lazy_load %}
-        {% endfor %}
-    </div>
+    {%- paginate blog.articles by per_page -%}
+        <div class="cards-wrapper" list-type="grid">
+            {% for article in blog.articles %}
+                {%- liquid
+                    assign lazy_load = true
+                    if paginate.current_page == 1 and forloop.index <= 3
+                        assign lazy_load = false
+                    endif
+                -%}
+                {% render 'custom-blog-card', article: article, lazy_load: lazy_load %}
+            {% endfor %}
+        </div>
+
+        {%- if infinite_loading and paginate.next -%}
+            <div class="blog-load-more">
+                <a class="btn" href="{{ paginate.next.url }}" data-load-more>{{ load_more_text }}</a>
+            </div>
+        {%- endif -%}
+    {%- endpaginate -%}
 </div>
 
 <script>
@@ -333,6 +379,64 @@
         }
     });
 </script>
+
+{%- if infinite_loading -%}
+<script>
+    (function () {
+        const root = document.getElementById('shopify-section-{{ section.id }}');
+        if (!root) return;
+
+        const wrapper = root.querySelector('.cards-wrapper');
+        const holder = root.querySelector('.blog-load-more');
+        if (!wrapper || !holder) return;
+
+        const button = holder.querySelector('[data-load-more]');
+        let loading = false;
+
+        function fetchPage(href) {
+            return fetch(href).then(function (response) {
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return response.text();
+            }).then(function (html) {
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                return {
+                    cards: doc.querySelectorAll('.cards-wrapper > .blog-card'),
+                    next: doc.querySelector('[data-load-more]')
+                };
+            });
+        }
+
+        function onClick(event) {
+            event.preventDefault();
+            if (loading) return;
+            loading = true;
+
+            const label = button.textContent;
+            button.setAttribute('aria-busy', 'true');
+
+            fetchPage(button.href).then(function (result) {
+                const fragment = document.createDocumentFragment();
+                result.cards.forEach(function (card) { fragment.appendChild(card); });
+                wrapper.appendChild(fragment);
+
+                if (result.next) {
+                    button.setAttribute('href', result.next.getAttribute('href'));
+                } else {
+                    holder.remove();
+                }
+            })['catch'](function () {
+                button.removeEventListener('click', onClick);
+            }).then(function () {
+                button.textContent = label;
+                button.removeAttribute('aria-busy');
+                loading = false;
+            });
+        }
+
+        button.addEventListener('click', onClick);
+    })();
+</script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -421,6 +525,48 @@
         "id": "let_users_control",
         "label": "Let users control layout?",
         "default": true
+    },
+    {
+        "type": "radio",
+        "id": "layout_type",
+        "label": "Set default layout type",
+        "visible_if": "{{ section.settings.let_users_control == false }}",
+        "options": [
+            {
+                "value": "grid",
+                "label": "Grid"
+            },
+            {
+                "value": "list",
+                "label": "List"
+            }
+        ]
+    },
+    {
+        "type": "header",
+        "content": "Layout settings"
+    },
+    {
+        "type": "checkbox",
+        "id": "infinite_loading",
+        "label": "Enable infinite loading"
+    },
+    {
+        "type": "range",
+        "id": "show_blogs",
+        "min": 6,
+        "max": 20,
+        "step": 1,
+        "default": 15,
+        "label": "Number of posts shown until button",
+        "visible_if": "{{ section.settings.infinite_loading }}"
+    },
+    {
+        "type": "text",
+        "id": "load_more_text",
+        "label": "Button text",
+        "default": "Load More",
+        "visible_if": "{{ section.settings.infinite_loading }}"
     }
   ]
 }
