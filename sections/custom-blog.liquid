@@ -10,6 +10,7 @@
     assign align_text_mobile = section.settings.alignment_desktop
 
     assign user_controls = section.settings.let_users_control
+    assign initial_layout = section.settings.layout_type
 
     assign infinite_loading = section.settings.infinite_loading
     assign load_more_text = section.settings.load_more_text
@@ -76,6 +77,11 @@
 
     .cards-wrapper[list-type="list"] .blog-card .tags {
         margin-bottom: 4px;
+    }
+
+    #layout-toggler[aria-hidden],
+    #layout-toggler[hidden] {
+        display: none !important;
     }
 
     #layout-toggler {
@@ -344,7 +350,7 @@
     </div>
 
     {%- paginate blog.articles by per_page -%}
-        <div class="cards-wrapper" list-type="grid">
+        <div class="cards-wrapper" list-type="{{ initial_layout }}">
             {% for article in blog.articles %}
                 {%- liquid
                     assign lazy_load = true

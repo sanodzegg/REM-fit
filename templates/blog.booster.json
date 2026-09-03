@@ -21,7 +21,7 @@
         "alignment_desktop": "center",
         "margin_top": 32,
         "margin_bottom": 32,
-        "let_users_control": true,
+        "let_users_control": false,
         "layout_type": "grid",
         "infinite_loading": true,
         "show_blogs": 15,
