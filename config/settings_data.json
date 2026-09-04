@@ -355,7 +355,7 @@
               "enabled": true,
               "enabledMobile": false,
               "align": "center",
-              "messages": "<p><strong>Free Luxury Memory Foam Pillows </strong></p><p><strong>£200 Off All Divan Bases</strong></p><p><strong>100-Night Risk-Free Sleep Trial</strong></p><p><strong>Good Housekeeping Institute Approved - 8 Years Running</strong></p><p><strong>Spread the Cost with Klarna, Dividebuy, PayPal or Clearpay</strong></p>"
+              "messages": "<p><strong>Free Luxury Memory Foam Pillows </strong></p><p><strong>£200 Off All Divan Bases</strong></p><p><strong>100-Night Risk-Free Sleep Trial</strong></p><p><strong>Good Housekeeping Institute Approved - 8 Years Running</strong></p><p><strong>Spread the Cost with Klarna, Zopa, PayPal or Clearpay</strong></p>"
             }
           }
         },
@@ -370,7 +370,7 @@
           "height": 32,
           "fontSize": "font__size--small",
           "colorCombo": "customCombo",
-          "customFillColor": "#3F2155",
+          "customFillColor": "#3f2155",
           "customContentColor": "#ffffff"
         }
       },
