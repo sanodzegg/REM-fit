@@ -1,0 +1,62 @@
+{% comment %}Product schema. Rendered from product-page__product and grid-layout-mobile so the two stay in step.{% endcomment %}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+
+  assign next_year = 'now' | date: '%Y' | plus: 1
+  assign price_valid_until = next_year | append: '-12-31'
+
+  assign availability = 'https://schema.org/OutOfStock'
+  if product.available
+    assign availability = 'https://schema.org/InStock'
+  endif
+
+  assign product_description = product.description | strip_html | strip
+  assign product_description = product_description | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | strip
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product_description | json }},
+  {%- if product.featured_image %}
+  "image": [
+    {{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }},
+    {{ product.featured_image | image_url: width: 960 | prepend: 'https:' | json }},
+    {{ product.featured_image | image_url: width: 720 | prepend: 'https:' | json }}
+  ],
+  {%- endif %}
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product.vendor | json }}
+  },
+  "itemCondition": "https://schema.org/NewCondition",
+  {%- if variant.sku != blank %}
+  "sku": {{ variant.sku | json }},
+  {%- endif %}
+  {%- if variant.barcode != blank %}
+  "gtin": {{ variant.barcode | json }},
+  {%- endif %}
+  {%- if product.variants.size > 1 %}
+  "offers": {
+    "@type": "AggregateOffer",
+    "offerCount": {{ product.variants.size }},
+    "lowPrice": {{ product.price_min | money_without_currency | replace: ',', '' | json }},
+    "highPrice": {{ product.price_max | money_without_currency | replace: ',', '' | json }},
+    "priceCurrency": {{ shop.currency | json }},
+    "availability": {{ availability | json }},
+    "priceValidUntil": {{ price_valid_until | json }},
+    "url": {{ canonical_url | json }}
+  }
+  {%- else %}
+  "offers": {
+    "@type": "Offer",
+    "price": {{ product.price | money_without_currency | replace: ',', '' | json }},
+    "priceCurrency": {{ shop.currency | json }},
+    "availability": {{ availability | json }},
+    "priceValidUntil": {{ price_valid_until | json }},
+    "url": {{ canonical_url | json }}
+  }
+  {%- endif %}
+}
+</script>
