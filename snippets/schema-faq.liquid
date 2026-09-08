@@ -1,0 +1,75 @@
+{% comment %}
+  Accepts:
+    content {string} body HTML to read - page.content or article.content
+{% endcomment %}
+
+{%- liquid
+  assign faq_region = ''
+
+  assign h2_chunks = content | split: '<h2'
+  for chunk in h2_chunks offset: 1
+    unless chunk contains '</h2>'
+      continue
+    endunless
+    assign heading = chunk | split: '</h2>' | first | prepend: '<h2' | strip_html | strip | upcase
+    if heading contains 'FAQ' or heading contains 'FREQUENTLY ASKED'
+      assign faq_region = chunk | split: '</h2>' | last
+      break
+    endif
+  endfor
+-%}
+
+{%- capture faq_items -%}
+  {%- liquid
+    if faq_region != blank
+      assign q_open = '<h3'
+      assign q_close = '</h3>'
+      if faq_region contains '<summary'
+        assign q_open = '<summary'
+        assign q_close = '</summary>'
+      endif
+
+      assign q_chunks = faq_region | split: q_open
+      for chunk in q_chunks offset: 1
+        unless chunk contains q_close
+          continue
+        endunless
+        assign after_question = chunk | split: q_close | last
+        unless after_question contains '</p>'
+          continue
+        endunless
+
+        assign question = chunk | split: q_close | first | prepend: q_open | strip_html | strip
+        assign question = question | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | strip
+
+        assign answer = after_question | split: '</p>' | first | strip_html | strip
+        assign answer = answer | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | strip
+
+        if question == blank
+          continue
+        endif
+        if answer == blank
+          continue
+        endif
+
+        echo ',{"@type":"Question","name":'
+        echo question | json
+        echo ',"acceptedAnswer":{"@type":"Answer","text":'
+        echo answer | json
+        echo '}}'
+      endfor
+    endif
+  -%}
+{%- endcapture -%}
+
+{%- assign faq_items = faq_items | strip | remove_first: ',' -%}
+
+{%- if faq_items != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{{ faq_items }}]
+}
+</script>
+{%- endif -%}

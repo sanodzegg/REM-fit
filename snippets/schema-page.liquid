@@ -1,0 +1,68 @@
+{% comment %}
+  Structured data for /pages/* templates.
+
+  Accepts:
+    page  {page}    the page object
+    type  {string}  'Article' or 'WebPage'. Defaults to 'WebPage'.
+
+  Optional page metafields, used when present:
+    custom.schema_image   {file_reference}  lead image for the page
+    custom.date_modified  {date}            genuine last-edit date
+{% endcomment %}
+
+{%- liquid
+  assign schema_type = type | default: 'WebPage'
+
+  assign fallback_description = page.content | strip_html | strip
+  assign fallback_description = fallback_description | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | truncatewords: 55
+  assign schema_description = page_description | default: fallback_description
+
+  assign schema_image = page.metafields.custom.schema_image.value
+
+  assign schema_modified = page.metafields.custom.date_modified.value | default: page.published_at
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": {{ schema_type | json }},
+  {%- if schema_type == 'Article' %}
+  "headline": {{ page.title | json }},
+  {%- else %}
+  "name": {{ page.title | json }},
+  {%- endif %}
+  "description": {{ schema_description | json }},
+  {%- if schema_image %}
+  "image": {{ schema_image | image_url: width: 1200 | prepend: 'https:' | json }},
+  {%- endif %}
+  "url": {{ canonical_url | json }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ canonical_url | json }}
+  },
+  "datePublished": {{ page.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "dateModified": {{ schema_modified | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "inLanguage": {{ request.locale.iso_code | json }},
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.secure_url | json }}
+  },
+  "author": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.secure_url | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.secure_url | json }}
+    {%- if settings.defaultLogo != blank -%}
+    ,
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ settings.defaultLogo | image_url: width: 600 | prepend: 'https:' | json }}
+    }
+    {%- endif %}
+  }
+}
+</script>
