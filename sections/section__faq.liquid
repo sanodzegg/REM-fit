@@ -83,6 +83,47 @@ class="{% render 'common-class', section: section, class: 'row', bg: true %}">
   </div>
 </div>
 </div>
+
+{%- if section.settings.emitFaqSchema -%}
+  {%- capture faq_schema_items -%}
+    {%- liquid
+      for block in section.blocks
+        if block.settings.question == empty or block.settings.answer == empty
+          continue
+        endif
+        if block.settings.question contains 'Size'
+          continue
+        endif
+
+        assign faq_q = block.settings.question | strip_html | strip
+        assign faq_q = faq_q | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | strip
+
+        assign faq_a = block.settings.answer | strip_html | strip
+        assign faq_a = faq_a | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | strip
+
+        if faq_q == blank or faq_a == blank
+          continue
+        endif
+
+        echo ',{"@type":"Question","name":'
+        echo faq_q | json
+        echo ',"acceptedAnswer":{"@type":"Answer","text":'
+        echo faq_a | json
+        echo '}}'
+      endfor
+    -%}
+  {%- endcapture -%}
+  {%- assign faq_schema_items = faq_schema_items | strip | remove_first: ',' -%}
+  {%- if faq_schema_items != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{{ faq_schema_items }}]
+}
+</script>
+  {%- endif -%}
+{%- endif -%}
 <script>
   function scrollToTargetAdjusted(targetElement) {
   const headerOffset = 150 ;
@@ -374,6 +415,17 @@ accordionItems.forEach(item => {
         "type": "richtext",
         "label": "Section's text",
         "id": "textContent"
+    },
+    {
+        "type": "header",
+        "content": "Structured data"
+    },
+    {
+        "type": "checkbox",
+        "id": "emitFaqSchema",
+        "default": false,
+        "label": "Output FAQ structured data",
+        "info": "Adds FAQPage schema built from the questions above. Enable it on only ONE FAQ section per page, and not on a page whose body content already has its own FAQ, or the page will carry duplicate FAQPage blocks. Questions containing 'Size' are skipped, because their visible answer is the specification table."
     }
     ],
     "blocks": [{
