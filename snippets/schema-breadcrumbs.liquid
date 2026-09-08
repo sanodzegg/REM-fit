@@ -1,0 +1,120 @@
+{% comment %}BreadcrumbList mirroring the visible trail in snippets/breadcrumbs.liquid. Rendered once from the layout, because the visible nav renders twice per page in the banner sections.{% endcomment %}
+{%- unless template == 'index' or settings.breadcrumbs == false -%}
+{%- capture crumb_items -%}
+  {%- liquid
+    echo '{"@type":"ListItem","position":1,"name":'
+    echo 'navigation.breadcrumbs.home' | t | json
+    echo ',"item":'
+    echo shop.secure_url | json
+    echo '}'
+
+    assign pos = 1
+
+    if template contains 'page'
+      echo ',{"@type":"ListItem","position":2,"name":'
+      echo page.title | json
+      echo ',"item":'
+      echo canonical_url | json
+      echo '}'
+
+    elsif template == 'list-collections'
+      echo ',{"@type":"ListItem","position":2,"name":'
+      echo 'navigation.breadcrumbs.collections' | t | json
+      echo ',"item":'
+      echo canonical_url | json
+      echo '}'
+
+    elsif template == 'cart'
+      echo ',{"@type":"ListItem","position":2,"name":'
+      echo 'navigation.breadcrumbs.cart' | t | json
+      echo ',"item":'
+      echo canonical_url | json
+      echo '}'
+
+    elsif template contains 'product'
+      if collection.url
+        assign pos = pos | plus: 1
+        echo ',{"@type":"ListItem","position":'
+        echo pos
+        echo ',"name":'
+        echo collection.title | json
+        echo ',"item":'
+        echo shop.secure_url | append: collection.url | json
+        echo '}'
+      endif
+      assign pos = pos | plus: 1
+      echo ',{"@type":"ListItem","position":'
+      echo pos
+      echo ',"name":'
+      echo product.title | json
+      echo ',"item":'
+      echo canonical_url | json
+      echo '}'
+
+    elsif template contains 'collection' and collection.handle
+      if current_tags
+        assign collection_path = '/collections/' | append: collection.handle
+        echo ',{"@type":"ListItem","position":2,"name":'
+        echo collection.title | json
+        echo ',"item":'
+        echo shop.secure_url | append: collection_path | json
+        echo '},{"@type":"ListItem","position":3,"name":'
+        echo current_tags | join: ' + ' | json
+        echo ',"item":'
+        echo canonical_url | json
+        echo '}'
+      else
+        echo ',{"@type":"ListItem","position":2,"name":'
+        echo collection.title | json
+        echo ',"item":'
+        echo canonical_url | json
+        echo '}'
+      endif
+
+    elsif template == 'blog'
+      if current_tags
+        echo ',{"@type":"ListItem","position":2,"name":'
+        echo blog.title | json
+        echo ',"item":'
+        echo shop.secure_url | append: blog.url | json
+        echo '},{"@type":"ListItem","position":3,"name":'
+        echo current_tags | join: ' + ' | json
+        echo ',"item":'
+        echo canonical_url | json
+        echo '}'
+      else
+        echo ',{"@type":"ListItem","position":2,"name":'
+        echo blog.title | json
+        echo ',"item":'
+        echo canonical_url | json
+        echo '}'
+      endif
+
+    elsif template == 'article'
+      echo ',{"@type":"ListItem","position":2,"name":'
+      echo blog.title | json
+      echo ',"item":'
+      echo shop.secure_url | append: blog.url | json
+      echo '},{"@type":"ListItem","position":3,"name":'
+      echo article.title | json
+      echo ',"item":'
+      echo canonical_url | json
+      echo '}'
+
+    else
+      echo ',{"@type":"ListItem","position":2,"name":'
+      echo page_title | json
+      echo ',"item":'
+      echo canonical_url | json
+      echo '}'
+    endif
+  -%}
+{%- endcapture -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{{ crumb_items | strip }}]
+}
+</script>
+{%- endunless -%}

@@ -100,6 +100,8 @@ head.appendChild(script);
     })(window, document, "clarity", "script", "xbg1rj5w2u");
 </script>
 
+    {% render 'schema-organization' %}
+    {% render 'schema-breadcrumbs' %}
     {%- if template.name == 'page' -%}
       {% render 'schema-page', page: page %}
       {% render 'schema-faq', content: page.content %}

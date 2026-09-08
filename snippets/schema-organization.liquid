@@ -1,0 +1,45 @@
+{% comment %}Organization + WebSite brand identity. Rendered once sitewide from the layout.{% endcomment %}
+{%- capture same_as -%}
+  {%- liquid
+    assign social_keys = 'sFacebook,sInstagram,sTwitter,sWhatsapp,sWe,sYoutube,sSnapchat,sViber,sVK,sDA,sTikTok,sTwitch,sLinkedin,sPinterest' | split: ','
+    for social_key in social_keys
+      assign social_url = settings[social_key] | default: ''
+      if social_url != blank
+        echo ','
+        echo social_url | json
+      endif
+    endfor
+  -%}
+{%- endcapture -%}
+{%- assign same_as = same_as | strip | remove_first: ',' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ shop.secure_url | append: '/#organization' | json }},
+      "name": {{ shop.name | json }},
+      "url": {{ shop.secure_url | json }}
+      {%- if settings.defaultLogo != blank -%}
+      ,
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ settings.defaultLogo | image_url: width: 600 | prepend: 'https:' | json }}
+      }
+      {%- endif -%}
+      {%- if same_as != blank -%}
+      ,
+      "sameAs": [{{ same_as }}]
+      {%- endif %}
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ shop.secure_url | append: '/#website' | json }},
+      "name": {{ shop.name | json }},
+      "url": {{ shop.secure_url | json }},
+      "publisher": { "@id": {{ shop.secure_url | append: '/#organization' | json }} }
+    }
+  ]
+}
+</script>

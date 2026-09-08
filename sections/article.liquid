@@ -39,6 +39,7 @@
   },
   "publisher": {
     "@type": "Organization",
+    "@id": {{ shop.secure_url | append: '/#organization' | json }},
     "name": {{ shop.name | json }},
     "url": {{ shop.secure_url | json }}
     {%- if settings.defaultLogo != blank -%}
