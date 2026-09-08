@@ -62,7 +62,57 @@
   -%}
 {%- endcapture -%}
 
-{%- assign faq_items = faq_items | strip | remove_first: ',' -%}
+{%- capture faq_items_bold -%}
+  {%- liquid
+    if faq_region != blank
+      assign bold_chunks = faq_region | split: '<strong>'
+      for chunk in bold_chunks offset: 1
+        unless chunk contains '</strong>'
+          continue
+        endunless
+
+        assign bold_q = chunk | split: '</strong>' | first | strip_html | strip
+        unless bold_q contains '?'
+          continue
+        endunless
+
+        assign after_bold = chunk | split: '</strong>' | last
+        unless after_bold contains '<br'
+          continue
+        endunless
+        unless after_bold contains '</p>'
+          continue
+        endunless
+
+        assign bold_lead = after_bold | split: '<br' | first | strip_html | strip
+        unless bold_lead == blank
+          continue
+        endunless
+
+        assign bold_a = after_bold | split: '</p>' | first | strip_html | strip
+
+        assign bold_q = bold_q | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | strip
+        assign bold_a = bold_a | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | strip
+
+        if bold_q == blank or bold_a == blank
+          continue
+        endif
+
+        echo ',{"@type":"Question","name":'
+        echo bold_q | json
+        echo ',"acceptedAnswer":{"@type":"Answer","text":'
+        echo bold_a | json
+        echo '}}'
+      endfor
+    endif
+  -%}
+{%- endcapture -%}
+
+{%- liquid
+  assign faq_items = faq_items | strip
+  assign faq_items_bold = faq_items_bold | strip
+  assign faq_items = faq_items | append: faq_items_bold | remove_first: ','
+-%}
 
 {%- if faq_items != blank -%}
 <script type="application/ld+json">

@@ -11,7 +11,28 @@
 {% endcomment %}
 
 {%- liquid
-  assign schema_type = type | default: 'WebPage'
+  assign schema_type = type | default: ''
+  if schema_type == blank
+    assign schema_type = 'WebPage'
+    assign editorial_handles = 'sleep-health-hub,orthopaedic-mattress,uk-sleep-statistics,uk-sleeper-preferences,back-pain-mattress-data' | split: ','
+    assign editorial_patterns = '-vs-,compar,best-mattress-for,best-pillow-for,sciatica,fibromyalgia,menopause,arthritis,spondylitis' | split: ','
+
+    for editorial_handle in editorial_handles
+      if page.handle == editorial_handle
+        assign schema_type = 'Article'
+        break
+      endif
+    endfor
+
+    if schema_type == 'WebPage'
+      for editorial_pattern in editorial_patterns
+        if page.handle contains editorial_pattern
+          assign schema_type = 'Article'
+          break
+        endif
+      endfor
+    endif
+  endif
 
   assign fallback_description = page.content | strip_html | strip
   assign fallback_description = fallback_description | replace: '&nbsp;', ' ' | replace: '&mdash;', '—' | replace: '&ndash;', '–' | replace: '&hellip;', '…' | replace: '&rsquo;', '’' | replace: '&lsquo;', '‘' | replace: '&ldquo;', '“' | replace: '&rdquo;', '”' | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | truncatewords: 55
@@ -19,7 +40,7 @@
 
   assign schema_image = page.metafields.custom.schema_image.value
 
-  assign schema_modified = page.metafields.custom.date_modified.value | default: page.published_at
+  assign schema_modified = page.metafields.custom.date_modified.value
 -%}
 <script type="application/ld+json">
 {
@@ -40,7 +61,9 @@
     "@id": {{ canonical_url | json }}
   },
   "datePublished": {{ page.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  {%- if schema_modified %}
   "dateModified": {{ schema_modified | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  {%- endif %}
   "inLanguage": {{ request.locale.iso_code | json }},
   "isPartOf": {
     "@type": "WebSite",

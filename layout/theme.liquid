@@ -99,12 +99,9 @@ head.appendChild(script);
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "xbg1rj5w2u");
 </script>
-    {%- comment -%}
-      Job 3 pilot: base structured data for /pages/*, scoped to the
-      emma-vs-simba comparison page. Delete the handle check to roll out.
-    {%- endcomment -%}
-    {%- if template.name == 'page' and page.handle == 'emma-vs-simba' -%}
-      {% render 'schema-page', page: page, type: 'Article' %}
+
+    {%- if template.name == 'page' -%}
+      {% render 'schema-page', page: page %}
       {% render 'schema-faq', content: page.content %}
     {%- endif -%}
 

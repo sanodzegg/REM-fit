@@ -85,6 +85,7 @@ class="{% render 'common-class', section: section, class: 'row', bg: true %}">
 </div>
 
 {%- if section.settings.emitFaqSchema -%}
+  {%- capture faq_body_schema -%}{% render 'schema-faq', content: page.content %}{%- endcapture -%}
   {%- capture faq_schema_items -%}
     {%- liquid
       for block in section.blocks
@@ -114,7 +115,8 @@ class="{% render 'common-class', section: section, class: 'row', bg: true %}">
     -%}
   {%- endcapture -%}
   {%- assign faq_schema_items = faq_schema_items | strip | remove_first: ',' -%}
-  {%- if faq_schema_items != blank -%}
+  {%- assign faq_body_schema = faq_body_schema | strip -%}
+  {%- if faq_schema_items != blank and faq_body_schema == blank -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -425,7 +427,7 @@ accordionItems.forEach(item => {
         "id": "emitFaqSchema",
         "default": false,
         "label": "Output FAQ structured data",
-        "info": "Adds FAQPage schema built from the questions above. Enable it on only ONE FAQ section per page, and not on a page whose body content already has its own FAQ, or the page will carry duplicate FAQPage blocks. Questions containing 'Size' are skipped, because their visible answer is the specification table."
+        "info": "Adds FAQPage schema built from the questions above. Enable it on only ONE FAQ section per page: a second enabled section would add a duplicate block. If the page body already contains its own FAQ, this section stays silent automatically. Questions containing 'Size' are skipped, because their visible answer is the specification table."
     }
     ],
     "blocks": [{
