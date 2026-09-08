@@ -1,30 +1,53 @@
-<!--
-  LOGO FOR PUBLISHER
-  IMAGE SRC ABSOLUTE URL
-  AUTHOR META
+{%- liquid
+  assign schema_modified = article.published_at
+  if article.updated_at
+    assign schema_modified = article.updated_at
+  endif
 
--->
-
+  assign schema_description = article.excerpt | strip_html
+  if schema_description == blank
+    assign schema_description = article.content | strip_html | truncatewords: 55
+  endif
+-%}
 <script type="application/ld+json">
-{ 
-  "@context": "https://schema.org", 
- "@type": "BlogPosting",
- "headline": "{{article.title|escape}}",
- "image": "{{article.image.src}}", 
- "publisher": {
-   "@type": "Organization",
-   "name": "{{shop.name|escape}}" 
- },
- "keywords": "{{article.tags | join: ', ' |escape}}", 
- "url": "{{ shop.secure_url }}{{article.url}}",
- "datePublished": "{{ article.published_at | date: '%Y-%m-%d' }}",
- "dateCreated": "{{ article.published_at | date: '%Y-%m-%d' }}",
- "dateModified": "{{ article.published_at | date: '%Y-%m-%d' }}",
- "description": "{{article.excerpt | strip_html |escape}}",
- "articleBody": "{{article.content | strip_html |escape}}",
-   "author": {
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "description": {{ schema_description | json }},
+  {%- if article.image != blank %}
+  "image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }},
+  {%- endif %}
+  "url": {{ canonical_url | json }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ canonical_url | json }}
+  },
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "dateModified": {{ schema_modified | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "keywords": {{ article.tags | join: ', ' | json }},
+  "articleBody": {{ article.content | strip_html | json }},
+  "author": {
+    {%- if article.author != blank %}
     "@type": "Person",
-    "name": "{{article.author |escape}}"
+    "name": {{ article.author | json }}
+    {%- else %}
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+    {%- endif %}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.secure_url | json }}
+    {%- if settings.defaultLogo != blank -%}
+    ,
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ settings.defaultLogo | image_url: width: 600 | prepend: 'https:' | json }}
+    }
+    {%- endif %}
   }
 }
 </script>
