@@ -21,9 +21,9 @@
   "description": {{ product_description | json }},
   {%- if product.featured_image %}
   "image": [
-    {{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }},
-    {{ product.featured_image | image_url: width: 960 | prepend: 'https:' | json }},
-    {{ product.featured_image | image_url: width: 720 | prepend: 'https:' | json }}
+    {{ product.featured_image | image_url: width: 1200, height: 1200, crop: 'center' | prepend: 'https:' | json }},
+    {{ product.featured_image | image_url: width: 1200, height: 900, crop: 'center' | prepend: 'https:' | json }},
+    {{ product.featured_image | image_url: width: 1200, height: 675, crop: 'center' | prepend: 'https:' | json }}
   ],
   {%- endif %}
   "brand": {

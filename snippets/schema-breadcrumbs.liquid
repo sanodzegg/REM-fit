@@ -1,5 +1,5 @@
 {% comment %}BreadcrumbList mirroring the visible trail in snippets/breadcrumbs.liquid. Rendered once from the layout, because the visible nav renders twice per page in the banner sections.{% endcomment %}
-{%- unless template == 'index' or settings.breadcrumbs == false -%}
+{%- unless template == 'index' or template == '404' or settings.breadcrumbs == false -%}
 {%- capture crumb_items -%}
   {%- liquid
     echo '{"@type":"ListItem","position":1,"name":'

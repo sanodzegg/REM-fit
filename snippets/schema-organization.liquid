@@ -1,4 +1,5 @@
 {% comment %}Organization + WebSite brand identity. Rendered once sitewide from the layout.{% endcomment %}
+{%- assign brand_name = settings.textLogo | default: shop.name -%}
 {%- capture same_as -%}
   {%- liquid
     assign social_keys = 'sFacebook,sInstagram,sTwitter,sWhatsapp,sWe,sYoutube,sSnapchat,sViber,sVK,sDA,sTikTok,sTwitch,sLinkedin,sPinterest' | split: ','
@@ -19,7 +20,7 @@
     {
       "@type": "Organization",
       "@id": {{ shop.secure_url | append: '/#organization' | json }},
-      "name": {{ shop.name | json }},
+      "name": {{ brand_name | json }},
       "url": {{ shop.secure_url | json }}
       {%- if settings.defaultLogo != blank -%}
       ,
@@ -36,7 +37,7 @@
     {
       "@type": "WebSite",
       "@id": {{ shop.secure_url | append: '/#website' | json }},
-      "name": {{ shop.name | json }},
+      "name": {{ brand_name | json }},
       "url": {{ shop.secure_url | json }},
       "publisher": { "@id": {{ shop.secure_url | append: '/#organization' | json }} }
     }

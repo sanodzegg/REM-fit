@@ -1,19 +1,21 @@
 {%- liquid
+  assign brand_name = settings.textLogo | default: shop.name
   assign schema_modified = article.published_at
   if article.updated_at
     assign schema_modified = article.updated_at
   endif
 
-  assign schema_description = article.excerpt | strip_html
-  if schema_description == blank
-    assign schema_description = article.content | strip_html | truncatewords: 55
-  endif
+  assign raw_description = article.excerpt | default: article.content
 -%}
+{%- capture schema_headline %}{% render 'schema-text', text: article.title %}{% endcapture -%}
+{%- capture schema_description %}{% render 'schema-text', text: raw_description %}{% endcapture -%}
+{%- capture schema_body %}{% render 'schema-text', text: article.content %}{% endcapture -%}
+{%- assign schema_description = schema_description | strip | truncatewords: 55 -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": {{ article.title | json }},
+  "headline": {{ schema_headline | strip | json }},
   "description": {{ schema_description | json }},
   {%- if article.image != blank %}
   "image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }},
@@ -27,20 +29,20 @@
   "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
   "dateModified": {{ schema_modified | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
   "keywords": {{ article.tags | join: ', ' | json }},
-  "articleBody": {{ article.content | strip_html | json }},
+  "articleBody": {{ schema_body | strip | json }},
   "author": {
     {%- if article.author != blank %}
     "@type": "Person",
     "name": {{ article.author | json }}
     {%- else %}
     "@type": "Organization",
-    "name": {{ shop.name | json }}
+    "name": {{ brand_name | json }}
     {%- endif %}
   },
   "publisher": {
     "@type": "Organization",
     "@id": {{ shop.secure_url | append: '/#organization' | json }},
-    "name": {{ shop.name | json }},
+    "name": {{ brand_name | json }},
     "url": {{ shop.secure_url | json }}
     {%- if settings.defaultLogo != blank -%}
     ,
@@ -54,11 +56,6 @@
 </script>
 
 {% render 'schema-faq', content: article.content %}
-
-{% assign number_of_comments = article.comments_count %}
-{% if comment and comment.created_at %}
-  {% assign number_of_comments = article.comments_count %}
-{% endif %}
 
 <div class="row article__row">
   <div class="col-12 breadcrumbs--default">
