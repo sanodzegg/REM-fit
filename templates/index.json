@@ -417,6 +417,17 @@
             "column_link_style": "button"
           }
         },
+        "image_fHkMLK": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/WINNER_-_Best_Mattress_-_Expert_Reviews_Sleep_Awards_2026_1_copy_4343f909-762e-4019-8a99-a96d1cecff72.png",
+            "heading": "Expert Reviews 2026",
+            "text": "",
+            "link": "",
+            "link_url": "",
+            "column_link_style": "button"
+          }
+        },
         "image_j83T9y": {
           "type": "image",
           "settings": {
@@ -442,6 +453,7 @@
       },
       "block_order": [
         "image_hAyahJ",
+        "image_fHkMLK",
         "image_j83T9y",
         "image_mJeEdL"
       ],
