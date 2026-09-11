@@ -28,7 +28,7 @@
   {%- endif %}
   "brand": {
     "@type": "Brand",
-    "name": {{ product.vendor | json }}
+    "name": {{ settings.textLogo | default: product.vendor | json }}
   },
   "itemCondition": "https://schema.org/NewCondition",
   {%- if variant.sku != blank %}

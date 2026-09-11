@@ -37,9 +37,15 @@
 
   assign raw_description = page_description | default: page.content
 
+  assign schema_image_url = ''
   assign schema_image = page.metafields.custom.schema_image.value
+  if schema_image
+    assign schema_image_url = schema_image | image_url: width: 1200 | prepend: 'https:'
+  elsif settings.defaultLogo != blank
+    assign schema_image_url = settings.defaultLogo | image_url: width: 600 | prepend: 'https:'
+  endif
 
-  assign schema_modified = page.metafields.custom.date_modified.value
+  assign schema_modified = page.metafields.custom.date_modified.value | default: page.published_at
 -%}
 {%- capture schema_description %}{% render 'schema-text', text: raw_description %}{% endcapture -%}
 {%- assign schema_description = schema_description | strip | truncatewords: 55 -%}
@@ -53,8 +59,8 @@
   "name": {{ page.title | json }},
   {%- endif %}
   "description": {{ schema_description | json }},
-  {%- if schema_image %}
-  "image": {{ schema_image | image_url: width: 1200 | prepend: 'https:' | json }},
+  {%- if schema_image_url != blank %}
+  "image": {{ schema_image_url | json }},
   {%- endif %}
   "url": {{ canonical_url | json }},
   "mainEntityOfPage": {
@@ -62,9 +68,7 @@
     "@id": {{ canonical_url | json }}
   },
   "datePublished": {{ page.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
-  {%- if schema_modified %}
   "dateModified": {{ schema_modified | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
-  {%- endif %}
   "inLanguage": {{ request.locale.iso_code | json }},
   "isPartOf": {
     "@type": "WebSite",
