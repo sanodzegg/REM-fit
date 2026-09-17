@@ -6,6 +6,26 @@
   endif
 
   assign raw_description = article.excerpt | default: article.content
+
+  assign brand_key = brand_name | downcase | replace: '-', '' | replace: ' ', ''
+  assign author_key = article.author | downcase | replace: '-', '' | replace: ' ', ''
+  assign author_is_brand = false
+  if article.author == blank or author_key contains brand_key
+    assign author_is_brand = true
+  endif
+
+  assign author_url = shop.secure_url
+  unless author_is_brand
+    assign about_page = pages['about-us-1']
+    if about_page.url != blank
+      assign author_url = shop.secure_url | append: about_page.url
+    endif
+    assign author_handle = article.author | handleize
+    assign author_page = pages[author_handle]
+    if author_page.url != blank
+      assign author_url = shop.secure_url | append: author_page.url
+    endif
+  endunless
 -%}
 {%- capture schema_headline %}{% render 'schema-text', text: article.title %}{% endcapture -%}
 {%- capture schema_description %}{% render 'schema-text', text: raw_description %}{% endcapture -%}
@@ -31,12 +51,15 @@
   "keywords": {{ article.tags | join: ', ' | json }},
   "articleBody": {{ schema_body | strip | json }},
   "author": {
-    {%- if article.author != blank %}
-    "@type": "Person",
-    "name": {{ article.author | json }}
-    {%- else %}
+    {%- if author_is_brand %}
     "@type": "Organization",
-    "name": {{ brand_name | json }}
+    "@id": {{ shop.secure_url | append: '/#organization' | json }},
+    "name": {{ brand_name | json }},
+    "url": {{ author_url | json }}
+    {%- else %}
+    "@type": "Person",
+    "name": {{ article.author | json }},
+    "url": {{ author_url | json }}
     {%- endif %}
   },
   "publisher": {
