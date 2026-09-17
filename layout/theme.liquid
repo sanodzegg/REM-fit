@@ -36,6 +36,12 @@ head.appendChild(script);
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
     <link rel="canonical" href="{{ canonical_url }}">
+    {%- comment -%}Blog tag and paginated listings: keep out of the index but let link equity flow to the articles. Page 1 of the blog itself stays indexable.{%- endcomment -%}
+    {%- if template.name == 'blog' -%}
+      {%- if current_tags != blank or current_page > 1 %}
+    <meta name="robots" content="noindex, follow">
+      {%- endif -%}
+    {%- endif %}
     <link href="https://static.boostertheme.co" rel="preconnect" crossorigin>
     <link rel="dns-prefetch" href="//static.boostertheme.co">
     <link href="https://theme.boostertheme.com" rel="preconnect" crossorigin>
