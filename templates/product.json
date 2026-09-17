@@ -2085,8 +2085,8 @@
             "icon": "bed",
             "iconSize": 50,
             "iconColor": "#3f2155",
-            "heading": "<p><strong>*200-Night Trial</strong></p>",
-            "content": "<p><br/>Sleep on it for up to 200 nights. Love it or we’ll collect it free for a full refund.</p>",
+            "heading": "<p><strong>100-Night Trial</strong></p>",
+            "content": "<p><br/>100 nights as standard, 200 when you add a protector. Love it or we'll collect it free for a full refund.<br/><br/></p>",
             "buttonText": "",
             "buttonURL": "",
             "openTab": false,
@@ -3016,7 +3016,8 @@
         "subheadingColor": "rgba(0,0,0,0)",
         "subheadingPosition": "above",
         "headingAlignment": "center",
-        "textContent": ""
+        "textContent": "",
+        "emitFaqSchema": false
       }
     },
     "1650400037410d6fbc": {
@@ -3092,7 +3093,8 @@
         "subheadingColor": "rgba(0,0,0,0)",
         "subheadingPosition": "above",
         "headingAlignment": "center",
-        "textContent": ""
+        "textContent": "",
+        "emitFaqSchema": false
       }
     },
     "section_image_text_iTiDqh": {
