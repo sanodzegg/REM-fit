@@ -218,7 +218,7 @@
             "image": "shopify://shop_images/GHI_APPROVED_2026_WEB.png",
             "alt": "Good Housekeeping Institute Approved 2026",
             "link": "",
-            "mobile_placement": "hidden"
+            "mobile_placement": "image"
           }
         },
         "badge_Jc9Xvb": {
@@ -226,6 +226,15 @@
           "settings": {
             "image": "shopify://shop_images/GH_Sleep_awards_roundel_winner_776ff237-96e0-4a9c-a301-278904005390.png",
             "alt": "Good Housekeeping Sleep Awards 2026 Winner",
+            "link": "",
+            "mobile_placement": "image"
+          }
+        },
+        "badge_eRixN6": {
+          "type": "badge",
+          "settings": {
+            "image": "shopify://shop_images/Exerpt-Reviews-REM-Fit-web.png",
+            "alt": "Expert Reviews 2026",
             "link": "",
             "mobile_placement": "image"
           }
@@ -253,6 +262,7 @@
         "rating_Zt6Ygf",
         "badge_Rm4Wkn",
         "badge_Jc9Xvb",
+        "badge_eRixN6",
         "pictured_Ls5Nde"
       ],
       "settings": {
