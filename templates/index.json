@@ -217,6 +217,7 @@
           "settings": {
             "image": "shopify://shop_images/GHI_APPROVED_2026_WEB.png",
             "alt": "Good Housekeeping Institute Approved 2026",
+            "link": "",
             "mobile_placement": "hidden"
           }
         },
@@ -225,6 +226,7 @@
           "settings": {
             "image": "shopify://shop_images/GH_Sleep_awards_roundel_winner_776ff237-96e0-4a9c-a301-278904005390.png",
             "alt": "Good Housekeeping Sleep Awards 2026 Winner",
+            "link": "",
             "mobile_placement": "image"
           }
         },
@@ -234,6 +236,7 @@
             "label": "Pictured",
             "product": "rem-fit-4000-ortho-elite-hybrid-mattress",
             "title": "REM-Fit 4000 Ortho Elite",
+            "link": "",
             "background": "#ffffff",
             "label_color": "#5e5468",
             "title_color": "#1e1428",
@@ -253,7 +256,8 @@
         "pictured_Ls5Nde"
       ],
       "settings": {
-        "image": "shopify://shop_images/RF-Firm-Hybrid-Mattress-UK_Awards-2026.jpg",
+        "image": "shopify://shop_images/ce2a5270-1a13-4246-9d1d-8690d26194e3.jpg",
+        "image_alt": "A couple relaxes in bed on a gray upholstered platform bed with white bedding and a visible mattress. The room is bright and modern with a white rug, bedside lamp, wall art, and a plant.",
         "image_position": "right",
         "desktop_height": 672,
         "stacked_image_size": "medium",
