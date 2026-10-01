@@ -91,7 +91,7 @@
     "tagEnabled": true,
     "tagOffset": 5,
     "tagSale": true,
-    "tagSaleColor": "#e13f46",
+    "tagSaleColor": "#F0602A",
     "enable_discount_widget": false,
     "discount_code": "STILLINIT10",
     "percentage_discount": "10",
