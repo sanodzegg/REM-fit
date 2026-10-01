@@ -484,14 +484,6 @@
     background: var(--hero-media-bg);
   }
 
-  .custom-hero--stack-small .custom-hero__media {
-    aspect-ratio: 4 / 3;
-  }
-
-  .custom-hero--stack-large .custom-hero__media {
-    aspect-ratio: 4 / 5;
-  }
-
   .custom-hero__image,
   .custom-hero__placeholder {
     position: absolute;
@@ -584,6 +576,14 @@
   }
 
   @media (max-width: 749px) {
+    .custom-hero--stack-small .custom-hero__media {
+      aspect-ratio: 4 / 3;
+    }
+
+    .custom-hero--stack-large .custom-hero__media {
+      aspect-ratio: 4 / 5;
+    }
+
     .custom-hero__rating-text--has-short .custom-hero__rating-text-full {
       display: none;
     }
@@ -667,9 +667,10 @@
     }
 
     .custom-hero__panel {
+      --hero-pad-y: clamp(24px, (var(--hero-height) - 480px) / 3, 64px);
       justify-content: center;
       gap: 30px;
-      padding: 64px clamp(32px, 4.45vw, 64px) 64px clamp(40px, 5.56vw, 80px);
+      padding: var(--hero-pad-y) clamp(32px, 4.45vw, 64px) var(--hero-pad-y) clamp(40px, 5.56vw, 80px);
     }
 
     .custom-hero--media-left .custom-hero__panel {
@@ -852,7 +853,8 @@
       "max": 880,
       "step": 8,
       "unit": "px",
-      "default": 672
+      "default": 672,
+      "info": "Applies from 990px wide. The section grows taller if the content needs more room."
     },
     {
       "type": "select",
