@@ -342,7 +342,7 @@
 
   .custom-hero__actions {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 10px;
   }
 
@@ -576,6 +576,10 @@
   }
 
   @media (max-width: 749px) {
+    .custom-hero__button {
+      flex: 1 1 auto;
+    }
+
     .custom-hero--stack-small .custom-hero__media {
       aspect-ratio: 4 / 3;
     }
@@ -594,6 +598,10 @@
   }
 
   @media (max-width: 989px) {
+    .custom-hero__rating {
+      flex-basis: 100%;
+    }
+
     .custom-hero__badge--mobile-image,
     .custom-hero__badge--mobile-hidden {
       display: none;
@@ -624,7 +632,6 @@
     }
 
     .custom-hero__actions {
-      flex-direction: row;
       gap: 12px;
     }
 
@@ -696,8 +703,6 @@
     }
 
     .custom-hero__actions {
-      flex-direction: row;
-      flex-wrap: wrap;
       gap: 12px;
     }
 
