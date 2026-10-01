@@ -237,6 +237,7 @@
         },
         "freegiftbundle_WEt8zE": {
           "type": "freegiftbundle",
+          "disabled": true,
           "settings": {}
         },
         "ppSwatch": {
