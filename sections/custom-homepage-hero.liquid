@@ -575,9 +575,15 @@
     transform: translateX(2px);
   }
 
+  @media (max-width: 524px) {
+    .custom-hero__button {
+      flex-basis: 100%;
+    }
+  }
+
   @media (max-width: 749px) {
     .custom-hero__button {
-      flex: 1 1 auto;
+      flex-grow: 1;
     }
 
     .custom-hero--stack-small .custom-hero__media {
