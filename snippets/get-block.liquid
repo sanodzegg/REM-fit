@@ -30,9 +30,9 @@
       render 'product-page__image-note', block: block
     when 'productPageAssurances'
       render 'product-page__assurances', block: block
-    when 'liquidBlock':
+    when 'liquidBlock'
       render 'block__general--liquid', block: block, section: section
-    when 'pageBlock':
+    when 'pageBlock'
       render 'block__general--page' with block as block
     when 'blockImage'
       render 'block__general--image' with block as block
@@ -170,3 +170,16 @@
       render 'block__footer--payment-icons' with block as block
   endcase
 %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "    when 'liquidBlock':"
+  to: "    when 'liquidBlock'"
+  position: 1316..1338
+- from: "    when 'pageBlock':"
+  to: "    when 'pageBlock'"
+  position: 1409..1429
+{% endcomment %}
