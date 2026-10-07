@@ -58,7 +58,7 @@
             v-bind:class="[hasFreeShippingProgress() ? 'has-progress' : 'no-progress']"
           >
             <span id="free-shipping-progress-label" class="rebuy-cart__flyout-shipping-bar-meter-fill-text">
-              Progress to free shipping: {{ freeShippingPercentComplete() }}
+              Progress to free shipping: {{ freeShippingPercentComplete }}
             </span>
             <div
               class="rebuy-cart__flyout-shipping-bar-meter-fill"
@@ -83,7 +83,7 @@
             <div class="rebuy-cart__progress-step-wrapper" v-bind:class="[ 'count-' + bar.tiers.length ]">
               <div v-for="tier in bar.tiers" class="rebuy-cart__progress-step" v-bind:style="{ width: progressStepMaxWidth(bar) }" v-bind:class="[ progressTierReached(tier) ? 'complete' : '' ]">
                 <div class="rebuy-cart__progress-step-icon" v-html="progressTierIcon(tier)"></div>
-                <span class="rebuy-cart__progress-step-label">{{ getTierLabel(tier)}}</span>
+                <span class="rebuy-cart__progress-step-label">{{ getTierLabel.tier }}</span>
               </div>
             </div>
 
@@ -130,7 +130,7 @@
                     v-on:click="removeFreeProduct(product)"
                   >
                     <i class="fal fa-times" aria-hidden="true"></i>
-                    <span class="sr-only">Remove {{ product.title }} {{ product.chosen_variant?.title ? product.chosen_variant.title : '' }} from Cart</span>
+                    <span class="sr-only">Remove {{ product.title }} {{ product.chosen_variant?.title }} from Cart</span>
                   </button>
                 </div>
               </div>
@@ -1160,3 +1160,19 @@
 
 
 
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ freeShippingPercentComplete() }}"
+  to: "{{ freeShippingPercentComplete }}"
+  position: 2093..2126
+- from: "{{ getTierLabel(tier)}}"
+  to: "{{ getTierLabel.tier }}"
+  position: 3445..3468
+- from: "{{ product.chosen_variant?.title ? product.chosen_variant.title : '' }}"
+  to: "{{ product.chosen_variant?.title }}"
+  position: 6479..6514
+{% endcomment %}
