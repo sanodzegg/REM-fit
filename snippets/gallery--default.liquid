@@ -1,4 +1,9 @@
-<div class="gallery__thumbnails hidden-scroll">
+{%- liquid
+    assign image_media = product.media | where: 'media_type', 'image'
+    assign slide_count = product.media.size | minus: image_media.size | plus: product.images.size
+-%}
+
+<div class="gallery__thumbnails hidden-scroll"{% if slide_count < 2 %} style="display: none"{% endif %}>
     {% for image in product.images %}
         <span class="gallery__thumbnail {% if forloop.first %}bstrSlider__thumb--active{%endif%}" data-media-type="image" data-bstr-slider-for="{{section.id}}" data-bstr-slider-thumb="{{forloop.index0}}"
         {% if section.settings.autoChange %}data-bstr-slider-thumb-hover{% endif %}
@@ -72,8 +77,10 @@
         {% endcase %}
     {% endfor %}
  </div>
+  {% if slide_count > 1 %}
   <button data-bstr-slider-button="-" class="slider__button customarrow-btn" data-bstr-slider-for="{{section.id}}"><i class="uil uil-angle-left-b"></i></button>
   <button data-bstr-slider-button="+" class="slider__button slider__button--next customarrow-btn" data-bstr-slider-for="{{section.id}}"><i class="uil uil-angle-right-b"></i></button>
+  {% endif %}
 {% comment %}
 {% if product.compare_at_price_min > 0 and settings.tagSale %}
     {% if product.price_varies %}
