@@ -30,7 +30,7 @@
         {% assign maxi = section.settings.productCount | at_most: 6 %}
         {% for i in (1..maxi) %}
           <div class="col-{{mobile}} col-md-{{-desktop}} card--holder">
-            {% render 'product-card-fake', i:i' %}
+            {% render 'product-card-fake', i: i %}
           </div>
         {% endfor %}
       {% endfor %}
@@ -231,3 +231,13 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'product-card-fake', i:i' %}"
+  to: "{% render 'product-card-fake', i: i %}"
+  position: 1504..1542
+{% endcomment %}

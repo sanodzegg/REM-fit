@@ -1,7 +1,7 @@
 <script>
   const shopPermanentDomain = "{{ shop.permanent_domain }}";
   const customerEmail = "{{ customer.email }}";
-  const customerHasAccount = "{{ customer != nil and customer.has_account }}";
+  const customerHasAccount = "{{ customer }}";
   const customerId = "{{ customer.id }}";
   const customerName = "{{ customer.name }}";
   const pageUrl = "{{ page.url }}";
@@ -184,3 +184,13 @@ const injectJsAfterScrollOrClick = () => {
 
 injectJsAfterScrollOrClick();
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ customer != nil and customer.has_account }}"
+  to: "{{ customer }}"
+  position: 148..162
+{% endcomment %}
