@@ -1,0 +1,30 @@
+{%- comment -%}
+  REM-Fit PDP awards strip.
+  Reads product.metafields.custom.awards (list of Award metaobjects: title, awarding_body, badge, link).
+  Renders nothing when the product has no awards.
+{%- endcomment -%}
+{%- assign rf_awards = product.metafields.custom.awards.value -%}
+{%- if rf_awards != blank -%}
+<style>
+.rf-pdp-awards{margin:10px 0 12px;display:flex;flex-direction:column;gap:8px;}
+.rf-pdp-awards .rf-aw{display:flex;align-items:center;gap:12px;padding:8px 14px 8px 10px;background:#fff;border:1px solid #E0D8EA;border-left:3px solid #F7C948;border-radius:8px;text-decoration:none !important;color:#3f2155 !important;transition:border-color .15s;}
+.rf-pdp-awards .rf-aw:hover{border-color:#F7C948;}
+.rf-pdp-awards .rf-aw__img{width:72px;height:56px;object-fit:contain;flex:0 0 auto;margin:-6px 0;display:block;}
+.rf-pdp-awards .rf-aw__t{flex:1 1 auto;min-width:0;line-height:1.25;text-align:left;}
+.rf-pdp-awards .rf-aw__t b{display:block;font-size:13.5px;font-weight:800;color:#3f2155 !important;}
+.rf-pdp-awards .rf-aw__t span{display:block;font-size:11.5px;font-weight:600;color:#7F68A0 !important;margin-top:2px;}
+.rf-pdp-awards .rf-aw__arrow{color:#F7C948 !important;font-weight:900;font-size:14px;flex:0 0 auto;}
+</style>
+<div class="rf-pdp-awards">
+{%- for rf_award in rf_awards -%}
+  {%- assign rf_link = rf_award.link.value | default: '/pages/rem-fit-awards-page' -%}
+  <a class="rf-aw" href="{{ rf_link }}">
+    {%- if rf_award.badge.value -%}
+    <img class="rf-aw__img" src="{{ rf_award.badge.value | image_url: width: 220 }}" alt="{{ rf_award.title.value | escape }} - {{ rf_award.awarding_body.value | escape }}" width="72" height="56" loading="lazy">
+    {%- endif -%}
+    <span class="rf-aw__t"><b>{{ rf_award.title.value }}</b><span>{{ rf_award.awarding_body.value }}</span></span>
+    <span class="rf-aw__arrow" aria-hidden="true">&rarr;</span>
+  </a>
+{%- endfor -%}
+</div>
+{%- endif -%}

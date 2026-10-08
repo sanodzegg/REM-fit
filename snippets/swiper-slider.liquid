@@ -37,15 +37,12 @@
       {% assign product-name = 'product-name' | append: i %}
       {% assign product-handle = 'product-handle' | append: i %}
       {% assign product-image = 'product-image' | append: i %}
-      {% assign slider_product = [template_name].metafields.slider[product-handle].value %}
-      {% if [template_name].metafields.slider[product-name].value != blank
-        and [template_name].metafields.slider[product-handle].value != blank
-        and [template_name].metafields.slider[product-image].value != blank
-      %}
+      {% assign slider_product = self[template_name].metafields.slider[product-handle].value %}
+      {% if self[template_name].metafields.slider[product-name].value != blank and self[template_name].metafields.slider[product-handle].value != blank and self[template_name].metafields.slider[product-image].value != blank %}
         <li class="goods-item">
           <a class="goods-link" href="/products/{{  slider_product.handle }}">
             <div class="goods-imagewrap">
-              {{ [template_name].metafields.slider[product-image].value | img_url: 'grande' | img_tag }}
+              {{ self[template_name].metafields.slider[product-image].value | img_url: 'grande' | img_tag }}
             </div>
             {% if slider_product.compare_at_price_min > 0 and settings.tagSale %}
               <span class="tag tag--sale discount-label">
@@ -61,7 +58,7 @@
             {% else %}
               <span class="sale-empty"></span>
             {% endif %}
-            <h3 class="goods-title">{{ [template_name].metafields.slider[product-name].value }}</h3>
+            <h3 class="goods-title">{{ self[template_name].metafields.slider[product-name].value }}</h3>
           </a>
         </li>
       {% endif %}
@@ -104,26 +101,19 @@
       {% assign product-handle = 'product-handle' | append: i %}
       {% assign product-image = 'product-image' | append: i %}
       {% assign product-desc = 'product-desc' | append: i %}
-      {% assign header_product = [template_name].metafields.header[product-handle].value %}
-      {% if [template_name].metafields.header[product-name].value != blank
-        and [template_name].metafields.header[product-handle].value != blank
-        and [template_name].metafields.header[product-image].value != blank
-      %}
+      {% assign header_product = self[template_name].metafields.header[product-handle].value %}
+      {% if self[template_name].metafields.header[product-name].value != blank and self[template_name].metafields.header[product-handle].value != blank and self[template_name].metafields.header[product-image].value != blank %}
         <li class="goods-item">
           <a class="goods-link" href="/products/{{  header_product.handle }}">
             <div class="goods-imagewrap">
-              {{
-                [template_name].metafields.header[product-image].value
-                | img_url: 'grande'
-                | img_tag: 'Product Image', width: 1200, height: 800
-              }}
+              {{ self[template_name].metafields.header[product-image].value | img_url: 'grande' | img_tag: 'Product Image', width: 1200, height: 800 }}
             </div>
           </a>
           <div class="desktop-contitem">
             <a class="desk-prod-title" href="/products/{{  header_product.handle }}">
-              {{ [template_name].metafields.header[product-name].value }}
+              {{ self[template_name].metafields.header[product-name].value }}
             </a>
-            <h4 class="desk-prod-metaf">{{ [template_name].metafields.header[product-desc].value }}</h4>
+            <h4 class="desk-prod-metaf">{{ self[template_name].metafields.header[product-desc].value }}</h4>
             {% if header_product.compare_at_price %}
               <span class="sale-tag-discount"
                 >From £{{ header_product.price | divided_by: 100.00 }} (
@@ -159,4 +149,61 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
-{% endcomment %}
+{% endcomment %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% assign slider_product = [template_name].metafields.slider[product-handle].value
+    %}"
+  to: "{% assign slider_product = self[template_name].metafields.slider[product-handle].value
+    %}"
+  position: 1827..1916
+- from: |-
+    {% if [template_name].metafields.slider[product-name].value != blank
+            and [template_name].metafields.slider[product-handle].value != blank
+            and [template_name].metafields.slider[product-image].value != blank
+          %}
+  to: "{% if self[template_name].metafields.slider[product-name].value != blank and
+    self[template_name].metafields.slider[product-handle].value != blank and self[template_name].metafields.slider[product-image].value
+    != blank %}"
+  position: 1923..2143
+- from: "{{ [template_name].metafields.slider[product-image].value | img_url: 'grande'
+    | img_tag }}"
+  to: "{{ self[template_name].metafields.slider[product-image].value | img_url: 'grande'
+    | img_tag }}"
+  position: 2311..2405
+- from: "{{ [template_name].metafields.slider[product-name].value }}"
+  to: "{{ self[template_name].metafields.slider[product-name].value }}"
+  position: 3012..3075
+- from: "{% assign header_product = [template_name].metafields.header[product-handle].value
+    %}"
+  to: "{% assign header_product = self[template_name].metafields.header[product-handle].value
+    %}"
+  position: 4083..4172
+- from: |-
+    {% if [template_name].metafields.header[product-name].value != blank
+            and [template_name].metafields.header[product-handle].value != blank
+            and [template_name].metafields.header[product-image].value != blank
+          %}
+  to: "{% if self[template_name].metafields.header[product-name].value != blank and
+    self[template_name].metafields.header[product-handle].value != blank and self[template_name].metafields.header[product-image].value
+    != blank %}"
+  position: 4179..4399
+- from: |-
+    {{
+                    [template_name].metafields.header[product-image].value
+                    | img_url: 'grande'
+                    | img_tag: 'Product Image', width: 1200, height: 800
+                  }}
+  to: "{{ self[template_name].metafields.header[product-image].value | img_url: 'grande'
+    | img_tag: 'Product Image', width: 1200, height: 800 }}"
+  position: 4567..4704
+- from: "{{ [template_name].metafields.header[product-name].value }}"
+  to: "{{ self[template_name].metafields.header[product-name].value }}"
+  position: 4880..4943
+- from: "{{ [template_name].metafields.header[product-desc].value }}"
+  to: "{{ self[template_name].metafields.header[product-desc].value }}"
+  position: 5001..5064
+{%- endcomment -%}

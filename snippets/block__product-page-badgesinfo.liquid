@@ -1,3 +1,11 @@
 <div class="pdp-badges-sectext">
 {{block.settings.badges-html}}	
+{%- unless block.settings.badges-html contains 'rf-pdp-awards' -%}
+{%- render 'rf-awards-strip', product: product -%}
+{%- endunless -%}
 </div>
+{%- comment -%} Awards strip alignment: the theme indents .pdp-badges-sectext by 14px (for the tick list); pull the strip back flush with the assurance tiles / ATC, and tighten the top gap when the strip is the only content. {%- endcomment -%}
+<style>
+.pdp-badges-sectext .rf-pdp-awards{margin-left:-14px;width:calc(100% + 14px);}
+.pdp-badges-sectext:has(> .rf-pdp-awards):not(:has(ul)){margin-top:12px;}
+</style>

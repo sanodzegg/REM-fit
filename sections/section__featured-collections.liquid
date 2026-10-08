@@ -15,7 +15,7 @@
 {% else %}
 {% for i in (1..4) %}
 <div class="col-{{mobile}} col-md-3 card--holder">
-{% render 'product-card-fake', i:i' %}
+{% render 'product-card-fake', i: i %}
 </div>
 {% endfor %}
 {%endfor%}
@@ -207,4 +207,13 @@
       }
     ]
   }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'product-card-fake', i:i' %}"
+  to: "{% render 'product-card-fake', i: i %}"
+  position: 619..657
+{%- endcomment -%}

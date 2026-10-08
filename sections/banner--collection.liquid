@@ -42,7 +42,7 @@ endif %}
 {% if settings.swiperCollectionBanner  %}
     {% assign banner-collection = settings.swiperCollectionBanner %}  
      {% if banner-collection != blank %}   
-  		{% if [template.name].metafields.slider.product-image1 != blank or [template.name].metafields.slider.product-image2 != blank or [template.name].metafields.slider.product-image3 != blank or [template.name].metafields.slider.product-image4 != blank or [template.name].metafields.slider.product-image5 != blank or [template.name].metafields.slider.product-image6 != blank or [template.name].metafields.slider.product-image7 != blank or [template.name].metafields.slider.product-image8 != blank%}
+  		{% if self[template.name].metafields.slider.product-image1 != blank or self[template.name].metafields.slider.product-image2 != blank or self[template.name].metafields.slider.product-image3 != blank or self[template.name].metafields.slider.product-image4 != blank or self[template.name].metafields.slider.product-image5 != blank or self[template.name].metafields.slider.product-image6 != blank or self[template.name].metafields.slider.product-image7 != blank or self[template.name].metafields.slider.product-image8 != blank %}
        		{% render 'swiper-slider',template_name:template.name %}
   		{% endif %}
      {% endif %} 
@@ -337,4 +337,21 @@ endif %}
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% if [template.name].metafields.slider.product-image1 != blank or [template.name].metafields.slider.product-image2
+    != blank or [template.name].metafields.slider.product-image3 != blank or [template.name].metafields.slider.product-image4
+    != blank or [template.name].metafields.slider.product-image5 != blank or [template.name].metafields.slider.product-image6
+    != blank or [template.name].metafields.slider.product-image7 != blank or [template.name].metafields.slider.product-image8
+    != blank%}"
+  to: "{% if self[template.name].metafields.slider.product-image1 != blank or self[template.name].metafields.slider.product-image2
+    != blank or self[template.name].metafields.slider.product-image3 != blank or self[template.name].metafields.slider.product-image4
+    != blank or self[template.name].metafields.slider.product-image5 != blank or self[template.name].metafields.slider.product-image6
+    != blank or self[template.name].metafields.slider.product-image7 != blank or self[template.name].metafields.slider.product-image8
+    != blank %}"
+  position: 1483..2008
+{%- endcomment -%}

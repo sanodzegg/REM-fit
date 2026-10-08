@@ -181,7 +181,7 @@
               <a class="card__img--container minicart__image" href="{{ item.url | within: collections.all }}">
                 <div class="card__img--ratio">
                   <div class="card__img">
-                    {% render 'image', src: item, alt: item.title | escape , size: 'medium' %}
+                    {% render 'image', src: item, alt: item.title, size: 'medium' %}
                   </div>
                 </div>
               </a>
@@ -723,3 +723,13 @@ document.addEventListener('booster:cart:update', (e)=>{
 ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'image', src: item, alt: item.title | escape , size: 'medium' %}"
+  to: "{% render 'image', src: item, alt: item.title, size: 'medium' %}"
+  position: 9238..9302
+{% endcomment %}

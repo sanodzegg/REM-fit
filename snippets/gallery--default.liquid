@@ -77,10 +77,10 @@
         {% endcase %}
     {% endfor %}
  </div>
-  {% if slide_count > 1 %}
+{% if slide_count > 1 %}
   <button data-bstr-slider-button="-" class="slider__button customarrow-btn" data-bstr-slider-for="{{section.id}}"><i class="uil uil-angle-left-b"></i></button>
   <button data-bstr-slider-button="+" class="slider__button slider__button--next customarrow-btn" data-bstr-slider-for="{{section.id}}"><i class="uil uil-angle-right-b"></i></button>
-  {% endif %}
+{% endif %}
 {% comment %}
 {% if product.compare_at_price_min > 0 and settings.tagSale %}
     {% if product.price_varies %}
