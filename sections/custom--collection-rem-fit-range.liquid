@@ -101,6 +101,13 @@
     transform: none;
   }
 }
+/* six cards: fit all six on one row on desktop */
+@media screen and (min-width: 1024px) {
+  .rem-fit-collection-range-wrapper .rem-fit-collection-products-wrapper:has(> :nth-child(6)) {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+  }
+}
 {% endstylesheet %}
 
 {% schema %}
@@ -148,7 +155,7 @@
     },
     {
       "type": "product",
-      "limit": 5,
+      "limit": 6,
       "name": "Product",
       "settings": [
         {
