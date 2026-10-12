@@ -71,6 +71,8 @@
           "type": "shopify://apps/dividebuy-spread-the-cost/blocks/dividebuyproduct/3ea5bc0e-1a15-490b-b431-d3ea9a2cd3da",
           "disabled": true,
           "settings": {
+            "integration_type": "legacy",
+            "widget_service_api_key": "",
             "finproms_text": "or_from",
             "include_cart_total": false,
             "alignment": "left",
@@ -225,6 +227,7 @@
       "block_order": [
         "d539e51f-bbf5-4129-a5cf-2698c787856e"
       ],
+      "disabled": true,
       "settings": {}
     },
     "1650397646a3939c91": {
