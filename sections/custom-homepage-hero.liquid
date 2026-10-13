@@ -1,8 +1,4 @@
 {%- liquid
-  assign image = section.settings.image | default: section.settings.image_mobile
-  assign image_mobile = section.settings.image_mobile | default: image
-  assign image_alt = section.settings.image_alt | default: image.alt
-
   assign heading_font = section.settings.heading_font
   assign body_font = section.settings.body_font
   assign body_font_bold = body_font | font_modify: 'weight', 'bold'
@@ -15,10 +11,34 @@
   endif
 
   assign image_widths = '375,550,750,960,1100,1440,1920,2400' | split: ','
-  assign card_block = section.blocks | where: 'type', 'pictured' | first
-  assign run_group = ''
-  assign run_markup = ''
-  assign media_badges = ''
+
+  # Each slide block after the first starts a new slide. Blocks above the first slide block join the first slide.
+  assign slide_starts = '0'
+  assign has_slide = false
+  for block in section.blocks
+    if block.type == 'slide'
+      if has_slide
+        assign slide_starts = slide_starts | append: ',' | append: forloop.index0
+      endif
+      assign has_slide = true
+    endif
+  endfor
+  assign slide_starts = slide_starts | split: ','
+  assign slide_total = slide_starts.size
+
+  assign is_slider = false
+  assign show_controls = false
+  assign controls_width = 0
+  if slide_total > 1
+    assign is_slider = true
+    if section.settings.show_controls
+      assign show_controls = true
+      assign controls_width = slide_total | times: 24 | plus: 8
+      if section.settings.autoplay
+        assign controls_width = controls_width | plus: 32
+      endif
+    endif
+  endif
 -%}
 
 {%- capture icon_arrow -%}
@@ -31,6 +51,18 @@
 
 {%- capture icon_star -%}
   <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+{%- endcapture -%}
+
+{%- capture icon_chevron -%}
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+{%- endcapture -%}
+
+{%- capture icon_pause -%}
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+{%- endcapture -%}
+
+{%- capture icon_play -%}
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.8-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z"/></svg>
 {%- endcapture -%}
 
 {%- style -%}
@@ -51,229 +83,352 @@
   }
 {%- endstyle -%}
 
-<div
-  class="custom-hero custom-hero--media-{{ section.settings.image_position }} custom-hero--stack-{{ section.settings.stacked_image_size }}"
-  style="--hero-height: {{ section.settings.desktop_height }}px; --hero-panel-bg: {{ section.settings.panel_background }}; --hero-media-bg: {{ section.settings.media_background }};"
+<custom-hero-slider
+  class="custom-hero custom-hero--media-{{ section.settings.image_position }} custom-hero--stack-{{ section.settings.stacked_image_size }} custom-hero--transition-{{ section.settings.transition }}{% if show_controls %} custom-hero--controls{% endif %}"
+  style="--hero-height: {{ section.settings.desktop_height }}px; --hero-panel-bg: {{ section.settings.panel_background }}; --hero-media-bg: {{ section.settings.media_background }}; --hero-controls-bg: {{ section.settings.controls_background }}; --hero-controls-color: {{ section.settings.controls_color }}; --hero-controls-width: {{ controls_width }}px;"
+  {% if is_slider %}
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Highlights"
+    {% if section.settings.autoplay %}
+      data-autoplay="{{ section.settings.autoplay_speed }}"
+    {% endif %}
+  {% endif %}
 >
-  <div class="custom-hero__panel">
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'pictured' -%}
-        {%- continue -%}
-      {%- endif -%}
-
+  <div class="custom-hero__slides">
+    {%- for slide_start in slide_starts -%}
       {%- liquid
-        case block.type
-          when 'button'
-            assign group = 'actions'
-          when 'rating', 'badge'
-            assign group = 'trust'
-          else
-            assign group = ''
-        endcase
+        assign slide_index = forloop.index0
+        assign block_start = slide_start | plus: 0
+        if forloop.last
+          assign block_count = section.blocks.size | minus: block_start
+        else
+          assign block_count = slide_starts[forloop.index] | plus: 0 | minus: block_start
+        endif
+
+        assign slide = nil
+        assign card_block = nil
+        assign run_group = ''
+        assign run_markup = ''
+        assign media_badges = ''
+
+        assign slide_loading = loading
+        assign slide_fetchpriority = fetchpriority
+        if slide_index > 0
+          assign slide_loading = 'lazy'
+          assign slide_fetchpriority = 'auto'
+        endif
       -%}
-      {%- if group != run_group -%}
+
+      {%- capture panel_markup -%}
+        {%- for block in section.blocks offset: block_start limit: block_count -%}
+          {%- case block.type -%}
+            {%- when 'slide' -%}
+              {%- assign slide = block -%}
+              {%- continue -%}
+            {%- when 'pictured' -%}
+              {%- unless card_block -%}
+                {%- assign card_block = block -%}
+              {%- endunless -%}
+              {%- continue -%}
+          {%- endcase -%}
+
+          {%- liquid
+            case block.type
+              when 'button'
+                assign group = 'actions'
+              when 'rating', 'badge', 'small_print'
+                assign group = 'trust'
+              else
+                assign group = ''
+            endcase
+          -%}
+          {%- if group != run_group -%}
+            {%- if run_group != blank -%}
+              <div class="custom-hero__{{ run_group }}">{{ run_markup }}</div>
+            {%- else -%}
+              {{ run_markup }}
+            {%- endif -%}
+            {%- assign run_markup = '' -%}
+            {%- assign run_group = group -%}
+          {%- endif -%}
+
+          {%- capture block_markup -%}
+          {%- case block.type -%}
+            {%- when 'eyebrow' -%}
+              {%- if block.settings.text != blank -%}
+                <p
+                  class="custom-hero__eyebrow custom-hero__eyebrow--{{ block.settings.style }}"
+                  style="--eyebrow-color: {{ block.settings.color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  {{- block.settings.text | escape -}}
+                </p>
+              {%- endif -%}
+
+            {%- when 'heading' -%}
+              {%- if block.settings.heading != blank or block.settings.accent != blank -%}
+                {%- liquid
+                  assign heading_tag = block.settings.heading_tag
+                  if slide_index > 0
+                    assign heading_tag = 'h2'
+                  endif
+                -%}
+                <{{ heading_tag }}
+                  class="custom-hero__heading{% unless block.settings.accent_new_line %} custom-hero__heading--accent-inline{% endunless %}"
+                  style="--heading-size: {{ block.settings.size }}; --heading-color: {{ block.settings.color }}; --heading-accent: {{ block.settings.accent_color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  {{- block.settings.heading | escape -}}
+                  {%- if block.settings.accent != blank %}
+                    <span class="custom-hero__heading-accent">{{ block.settings.accent | escape }}</span>
+                  {%- endif -%}
+                </{{ heading_tag }}>
+              {%- endif -%}
+
+            {%- when 'text' -%}
+              {%- if block.settings.text != blank -%}
+                <p class="custom-hero__text" style="--text-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
+                  {{- block.settings.text -}}
+                </p>
+              {%- endif -%}
+
+            {%- when 'button' -%}
+              {%- if block.settings.label != blank -%}
+                <a
+                  {% if block.settings.link != blank %}
+                    href="{{ block.settings.link }}"
+                  {% endif %}
+                  class="custom-hero__button custom-hero__button--{{ block.settings.style }} custom-hero__button--{{ block.settings.shape }}"
+                  style="--button-color: {{ block.settings.button_color }}; --button-label: {{ block.settings.label_color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.icon == 'checklist' -%}{{ icon_checklist }}{%- endif -%}
+                  <span>{{ block.settings.label | escape }}</span>
+                  {%- if block.settings.icon == 'arrow' -%}{{ icon_arrow }}{%- endif -%}
+                </a>
+              {%- endif -%}
+
+            {%- when 'rating' -%}
+              {%- assign score = block.settings.score | at_least: 0 | at_most: 5 -%}
+              <div
+                class="custom-hero__rating"
+                style="--rating-label: {{ block.settings.label_color }}; --rating-text: {{ block.settings.text_color }}; --rating-star: {{ block.settings.star_color }}; --rating-star-empty: {{ block.settings.star_empty_color }}; --rating-icon: {{ block.settings.star_icon_color }};"
+                {{ block.shopify_attributes }}
+              >
+                <div class="custom-hero__rating-score">
+                  {%- if block.settings.label != blank -%}
+                    <span class="custom-hero__rating-label">{{ block.settings.label | escape }}</span>
+                  {%- endif -%}
+                  <span class="custom-hero__stars" role="img" aria-label="Rated {{ score }} out of 5">
+                    {%- for i in (1..5) -%}
+                      {%- assign fill = score | minus: forloop.index0 | at_least: 0 | at_most: 1 | times: 100 | round -%}
+                      <span class="custom-hero__star" style="--fill: {{ fill }}%;">{{ icon_star }}</span>
+                    {%- endfor -%}
+                  </span>
+                </div>
+
+                {%- if block.settings.text != blank -%}
+                  {%- capture rating_text -%}
+                    <span class="custom-hero__rating-text-full">{{ block.settings.text | escape }}</span>
+                    {%- if block.settings.text_mobile != blank -%}
+                      <span class="custom-hero__rating-text-short">{{ block.settings.text_mobile | escape }}</span>
+                    {%- endif -%}
+                  {%- endcapture -%}
+                  {%- capture rating_class -%}
+                    custom-hero__rating-text{% if block.settings.text_mobile != blank %} custom-hero__rating-text--has-short{% endif %}
+                  {%- endcapture -%}
+                  {%- if block.settings.link != blank -%}
+                    <a
+                      class="{{ rating_class }}"
+                      href="{{ block.settings.link }}"
+                      {% if block.settings.link contains '://' %}
+                        target="_blank" rel="noopener"
+                      {% endif %}
+                    >
+                      {{- rating_text -}}
+                    </a>
+                  {%- else -%}
+                    <span class="{{ rating_class }}">{{ rating_text }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+
+            {%- when 'badge' -%}
+              {%- if block.settings.image != blank -%}
+                {%- assign badge = block.settings.image -%}
+                {%- capture badge_markup -%}
+                  {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{%- endif -%}
+                  <img
+                    src="{{ badge | image_url: height: 160 }}"
+                    srcset="{{ badge | image_url: height: 80 }} 1x, {{ badge | image_url: height: 160 }} 2x, {{ badge | image_url: height: 240 }} 3x"
+                    alt="{{ block.settings.alt | default: badge.alt | escape }}"
+                    width="{{ badge.width }}"
+                    height="{{ badge.height }}"
+                    loading="{{ slide_loading }}"
+                  >
+                  {%- if block.settings.link != blank -%}</a>{%- endif -%}
+                {%- endcapture -%}
+
+                <div class="custom-hero__badge custom-hero__badge--mobile-{{ block.settings.mobile_placement }}" {{ block.shopify_attributes }}>
+                  {{- badge_markup -}}
+                </div>
+
+                {%- if block.settings.mobile_placement == 'image' -%}
+                  {%- capture media_badges -%}{{ media_badges }}{{ badge_markup }}{%- endcapture -%}
+                {%- endif -%}
+              {%- endif -%}
+
+            {%- when 'small_print' -%}
+              {%- if block.settings.text != blank -%}
+                <p class="custom-hero__small-print" style="--small-print-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
+                  {{- block.settings.text -}}
+                </p>
+              {%- endif -%}
+          {%- endcase -%}
+          {%- endcapture -%}
+          {%- assign run_markup = run_markup | append: block_markup -%}
+        {%- endfor -%}
+
         {%- if run_group != blank -%}
           <div class="custom-hero__{{ run_group }}">{{ run_markup }}</div>
         {%- else -%}
           {{ run_markup }}
         {%- endif -%}
-        {%- assign run_markup = '' -%}
-        {%- assign run_group = group -%}
-      {%- endif -%}
-
-      {%- capture block_markup -%}
-      {%- case block.type -%}
-        {%- when 'heading' -%}
-          {%- if block.settings.heading != blank or block.settings.accent != blank -%}
-            <{{ block.settings.heading_tag }}
-              class="custom-hero__heading"
-              style="--heading-size: {{ block.settings.size }}; --heading-color: {{ block.settings.color }}; --heading-accent: {{ block.settings.accent_color }};"
-              {{ block.shopify_attributes }}
-            >
-              {{- block.settings.heading | escape -}}
-              {%- if block.settings.accent != blank %}
-                <span class="custom-hero__heading-accent">{{ block.settings.accent | escape }}</span>
-              {%- endif -%}
-            </{{ block.settings.heading_tag }}>
-          {%- endif -%}
-
-        {%- when 'text' -%}
-          {%- if block.settings.text != blank -%}
-            <p class="custom-hero__text" style="--text-color: {{ block.settings.color }};" {{ block.shopify_attributes }}>
-              {{- block.settings.text -}}
-            </p>
-          {%- endif -%}
-
-        {%- when 'button' -%}
-          {%- if block.settings.label != blank -%}
-            <a
-              {% if block.settings.link != blank %}
-                href="{{ block.settings.link }}"
-              {% endif %}
-              class="custom-hero__button custom-hero__button--{{ block.settings.style }}"
-              style="--button-color: {{ block.settings.button_color }}; --button-label: {{ block.settings.label_color }};"
-              {{ block.shopify_attributes }}
-            >
-              {%- if block.settings.icon == 'checklist' -%}{{ icon_checklist }}{%- endif -%}
-              <span>{{ block.settings.label | escape }}</span>
-              {%- if block.settings.icon == 'arrow' -%}{{ icon_arrow }}{%- endif -%}
-            </a>
-          {%- endif -%}
-
-        {%- when 'rating' -%}
-          {%- assign score = block.settings.score | at_least: 0 | at_most: 5 -%}
-          <div
-            class="custom-hero__rating"
-            style="--rating-label: {{ block.settings.label_color }}; --rating-text: {{ block.settings.text_color }}; --rating-star: {{ block.settings.star_color }}; --rating-star-empty: {{ block.settings.star_empty_color }}; --rating-icon: {{ block.settings.star_icon_color }};"
-            {{ block.shopify_attributes }}
-          >
-            <div class="custom-hero__rating-score">
-              {%- if block.settings.label != blank -%}
-                <span class="custom-hero__rating-label">{{ block.settings.label | escape }}</span>
-              {%- endif -%}
-              <span class="custom-hero__stars" role="img" aria-label="Rated {{ score }} out of 5">
-                {%- for i in (1..5) -%}
-                  {%- assign fill = score | minus: forloop.index0 | at_least: 0 | at_most: 1 | times: 100 | round -%}
-                  <span class="custom-hero__star" style="--fill: {{ fill }}%;">{{ icon_star }}</span>
-                {%- endfor -%}
-              </span>
-            </div>
-
-            {%- if block.settings.text != blank -%}
-              {%- capture rating_text -%}
-                <span class="custom-hero__rating-text-full">{{ block.settings.text | escape }}</span>
-                {%- if block.settings.text_mobile != blank -%}
-                  <span class="custom-hero__rating-text-short">{{ block.settings.text_mobile | escape }}</span>
-                {%- endif -%}
-              {%- endcapture -%}
-              {%- capture rating_class -%}
-                custom-hero__rating-text{% if block.settings.text_mobile != blank %} custom-hero__rating-text--has-short{% endif %}
-              {%- endcapture -%}
-              {%- if block.settings.link != blank -%}
-                <a
-                  class="{{ rating_class }}"
-                  href="{{ block.settings.link }}"
-                  {% if block.settings.link contains '://' %}
-                    target="_blank" rel="noopener"
-                  {% endif %}
-                >
-                  {{- rating_text -}}
-                </a>
-              {%- else -%}
-                <span class="{{ rating_class }}">{{ rating_text }}</span>
-              {%- endif -%}
-            {%- endif -%}
-          </div>
-
-        {%- when 'badge' -%}
-          {%- if block.settings.image != blank -%}
-            {%- assign badge = block.settings.image -%}
-            {%- capture badge_markup -%}
-              {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{%- endif -%}
-              <img
-                src="{{ badge | image_url: height: 160 }}"
-                srcset="{{ badge | image_url: height: 80 }} 1x, {{ badge | image_url: height: 160 }} 2x, {{ badge | image_url: height: 240 }} 3x"
-                alt="{{ block.settings.alt | default: badge.alt | escape }}"
-                width="{{ badge.width }}"
-                height="{{ badge.height }}"
-                loading="{{ loading }}"
-              >
-              {%- if block.settings.link != blank -%}</a>{%- endif -%}
-            {%- endcapture -%}
-
-            <div class="custom-hero__badge custom-hero__badge--mobile-{{ block.settings.mobile_placement }}" {{ block.shopify_attributes }}>
-              {{- badge_markup -}}
-            </div>
-
-            {%- if block.settings.mobile_placement == 'image' -%}
-              {%- capture media_badges -%}{{ media_badges }}{{ badge_markup }}{%- endcapture -%}
-            {%- endif -%}
-          {%- endif -%}
-      {%- endcase -%}
       {%- endcapture -%}
-      {%- assign run_markup = run_markup | append: block_markup -%}
-    {%- endfor -%}
 
-    {%- if run_group != blank -%}
-      <div class="custom-hero__{{ run_group }}">{{ run_markup }}</div>
-    {%- else -%}
-      {{ run_markup }}
-    {%- endif -%}
-  </div>
-
-  <div class="custom-hero__media">
-    {%- if image != blank -%}
-      <picture>
-        {%- if section.settings.image_mobile != blank and section.settings.image != blank -%}
-          <source
-            media="(max-width: 989px)"
-            sizes="100vw"
-            srcset="
-              {%- for width in image_widths -%}
-                {%- assign w = width | plus: 0 -%}
-                {%- if image_mobile.width > w -%}{{ image_mobile | image_url: width: w }} {{ w }}w, {% endif -%}
-              {%- endfor -%}
-              {{- image_mobile | image_url: width: image_mobile.width }} {{ image_mobile.width }}w"
-          >
-        {%- endif -%}
-        <img
-          class="custom-hero__image"
-          src="{{ image | image_url: width: 1440 }}"
-          srcset="
-            {%- for width in image_widths -%}
-              {%- assign w = width | plus: 0 -%}
-              {%- if image.width > w -%}{{ image | image_url: width: w }} {{ w }}w, {% endif -%}
-            {%- endfor -%}
-            {{- image | image_url: width: image.width }} {{ image.width }}w"
-          sizes="(min-width: 990px) 50vw, 100vw"
-          alt="{{ image_alt | escape }}"
-          width="{{ image.width }}"
-          height="{{ image.height }}"
-          loading="{{ loading }}"
-          fetchpriority="{{ fetchpriority }}"
-          style="--focal: {{ image.presentation.focal_point }}; --focal-mobile: {{ image_mobile.presentation.focal_point }};"
-        >
-      </picture>
-    {%- else -%}
-      {{ 'lifestyle-1' | placeholder_svg_tag: 'custom-hero__placeholder' }}
-    {%- endif -%}
-
-    {%- if media_badges != blank -%}
-      <div class="custom-hero__media-badges">{{ media_badges }}</div>
-    {%- endif -%}
-
-    {%- if card_block -%}
       {%- liquid
-        assign card_product = card_block.settings.product
-        assign card_title = card_block.settings.title | default: card_product.title
-        assign card_link = card_block.settings.link | default: card_product.url
+        assign image = slide.settings.image | default: slide.settings.image_mobile
+        assign image_mobile = slide.settings.image_mobile | default: image
+        assign image_alt = slide.settings.image_alt | default: image.alt
       -%}
-      {%- if card_title != blank -%}
-        <a
-          {% if card_link != blank %}
-            href="{{ card_link }}"
+
+      <div
+        class="custom-hero__slide{% if slide_index == 0 %} is-active{% endif %}"
+        {% if is_slider %}
+          role="group"
+          aria-roledescription="slide"
+          aria-label="{{ slide_index | plus: 1 }} of {{ slide_total }}"
+          {% if slide_index > 0 %}
+            inert
           {% endif %}
-          class="custom-hero__card"
-          style="--card-bg: {{ card_block.settings.background }}; --card-label: {{ card_block.settings.label_color }}; --card-title: {{ card_block.settings.title_color }}; --card-arrow-bg: {{ card_block.settings.arrow_background }}; --card-arrow: {{ card_block.settings.arrow_color }};"
-          {{ card_block.shopify_attributes }}
-        >
-          <span class="custom-hero__card-copy">
-            {%- if card_block.settings.label != blank -%}
-              <span class="custom-hero__card-label">{{ card_block.settings.label | escape }}</span>
+        {% endif %}
+        {{ slide.shopify_attributes }}
+      >
+        <div class="custom-hero__panel">
+          {{- panel_markup -}}
+        </div>
+
+        <div class="custom-hero__media">
+          {%- if image != blank -%}
+            <picture>
+              {%- if slide.settings.image_mobile != blank and slide.settings.image != blank -%}
+                <source
+                  media="(max-width: 989px)"
+                  sizes="100vw"
+                  srcset="
+                    {%- for width in image_widths -%}
+                      {%- assign w = width | plus: 0 -%}
+                      {%- if image_mobile.width > w -%}{{ image_mobile | image_url: width: w }} {{ w }}w, {% endif -%}
+                    {%- endfor -%}
+                    {{- image_mobile | image_url: width: image_mobile.width }} {{ image_mobile.width }}w"
+                >
+              {%- endif -%}
+              <img
+                class="custom-hero__image"
+                src="{{ image | image_url: width: 1440 }}"
+                srcset="
+                  {%- for width in image_widths -%}
+                    {%- assign w = width | plus: 0 -%}
+                    {%- if image.width > w -%}{{ image | image_url: width: w }} {{ w }}w, {% endif -%}
+                  {%- endfor -%}
+                  {{- image | image_url: width: image.width }} {{ image.width }}w"
+                sizes="(min-width: 990px) 50vw, 100vw"
+                alt="{{ image_alt | escape }}"
+                width="{{ image.width }}"
+                height="{{ image.height }}"
+                loading="{{ slide_loading }}"
+                fetchpriority="{{ slide_fetchpriority }}"
+                style="--focal: {{ image.presentation.focal_point }}; --focal-mobile: {{ image_mobile.presentation.focal_point }};"
+              >
+            </picture>
+          {%- else -%}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'custom-hero__placeholder' }}
+          {%- endif -%}
+
+          {%- if media_badges != blank -%}
+            <div class="custom-hero__media-badges">{{ media_badges }}</div>
+          {%- endif -%}
+
+          {%- if card_block -%}
+            {%- liquid
+              assign card_product = card_block.settings.product
+              assign card_title = card_block.settings.title | default: card_product.title
+              assign card_link = card_block.settings.link | default: card_product.url
+            -%}
+            {%- if card_title != blank -%}
+              <a
+                {% if card_link != blank %}
+                  href="{{ card_link }}"
+                {% endif %}
+                class="custom-hero__card"
+                style="--card-bg: {{ card_block.settings.background }}; --card-label: {{ card_block.settings.label_color }}; --card-title: {{ card_block.settings.title_color }}; --card-arrow-bg: {{ card_block.settings.arrow_background }}; --card-arrow: {{ card_block.settings.arrow_color }};"
+                {{ card_block.shopify_attributes }}
+              >
+                <span class="custom-hero__card-copy">
+                  {%- if card_block.settings.label != blank -%}
+                    <span class="custom-hero__card-label">{{ card_block.settings.label | escape }}</span>
+                  {%- endif -%}
+                  <span class="custom-hero__card-title">{{ card_title | escape }}</span>
+                </span>
+                <span class="custom-hero__card-arrow">{{ icon_arrow }}</span>
+              </a>
             {%- endif -%}
-            <span class="custom-hero__card-title">{{ card_title | escape }}</span>
-          </span>
-          <span class="custom-hero__card-arrow">{{ icon_arrow }}</span>
-        </a>
-      {%- endif -%}
-    {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
   </div>
-</div>
+
+  {%- if show_controls -%}
+    <div class="custom-hero__controls">
+      <button type="button" class="custom-hero__control custom-hero__control--prev" aria-label="Previous slide" data-hero-prev>
+        {{- icon_chevron -}}
+      </button>
+      <div class="custom-hero__dots">
+        {%- for i in (1..slide_total) -%}
+          <button
+            type="button"
+            class="custom-hero__dot"
+            aria-label="Show slide {{ i }} of {{ slide_total }}"
+            {% if forloop.first %}
+              aria-current="true"
+            {% endif %}
+            data-hero-dot
+          >
+            <span></span>
+          </button>
+        {%- endfor -%}
+      </div>
+      <button type="button" class="custom-hero__control custom-hero__control--next" aria-label="Next slide" data-hero-next>
+        {{- icon_chevron -}}
+      </button>
+      {%- if section.settings.autoplay -%}
+        <button type="button" class="custom-hero__control custom-hero__control--pause" aria-label="Pause slideshow" data-hero-pause>
+          {{- icon_pause -}}
+          {{- icon_play -}}
+        </button>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</custom-hero-slider>
 
 {% stylesheet %}
   .custom-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    --hero-duration: 700ms;
+    --hero-direction: 1;
+    position: relative;
+    display: block;
     font-family: var(--hero-font-body);
     font-weight: var(--hero-font-body-weight);
     font-style: var(--hero-font-body-style);
@@ -290,13 +445,94 @@
     color: inherit;
   }
 
+  .custom-hero__slides {
+    display: grid;
+    overflow: hidden;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .custom-hero__slide {
+    grid-area: 1 / 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+    visibility: hidden;
+  }
+
+  .custom-hero__slide.is-active,
+  .custom-hero__slide.is-leaving {
+    visibility: visible;
+  }
+
+  .custom-hero__slide.is-active {
+    z-index: 1;
+  }
+
+  .custom-hero--transition-slide .custom-hero__slide.is-entering {
+    animation: custom-hero-slide-in var(--hero-duration) cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  .custom-hero--transition-slide .custom-hero__slide.is-leaving {
+    animation: custom-hero-slide-out var(--hero-duration) cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  .custom-hero--transition-fade .custom-hero__slide.is-entering {
+    animation: custom-hero-fade-in var(--hero-duration) ease;
+  }
+
+  @keyframes custom-hero-slide-in {
+    from {
+      transform: translateX(calc(var(--hero-direction) * 100%));
+    }
+  }
+
+  @keyframes custom-hero-slide-out {
+    to {
+      transform: translateX(calc(var(--hero-direction) * -100%));
+    }
+  }
+
+  @keyframes custom-hero-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
   .custom-hero__panel {
     container-type: inline-size;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 20px;
     padding: 28px 20px;
     background: var(--hero-panel-bg);
+  }
+
+  .custom-hero__eyebrow {
+    align-self: flex-start;
+    margin: 0;
+    font-size: 12px;
+    font-weight: var(--hero-font-body-bold-weight);
+    line-height: 1.2;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--eyebrow-color);
+  }
+
+  .custom-hero__eyebrow--outline,
+  .custom-hero__eyebrow--solid {
+    padding: 5px 10px;
+    border: 1.5px solid var(--eyebrow-color);
+    border-radius: 4px;
+  }
+
+  .custom-hero__eyebrow--solid {
+    background: var(--eyebrow-color);
+    color: var(--hero-panel-bg);
+  }
+
+  .custom-hero__eyebrow + .custom-hero__heading {
+    margin-top: -8px;
   }
 
   .custom-hero__heading {
@@ -316,6 +552,10 @@
     color: var(--heading-accent);
   }
 
+  .custom-hero__heading--accent-inline .custom-hero__heading-accent {
+    display: inline;
+  }
+
   .custom-hero__text {
     margin: 0;
     max-width: 520px;
@@ -329,14 +569,18 @@
   }
 
   .custom-hero .custom-hero__text a,
-  .custom-hero .custom-hero__text a:hover {
+  .custom-hero .custom-hero__text a:hover,
+  .custom-hero .custom-hero__small-print a,
+  .custom-hero .custom-hero__small-print a:hover {
     color: inherit;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
   .custom-hero__text strong,
-  .custom-hero__text b {
+  .custom-hero__text b,
+  .custom-hero__small-print strong,
+  .custom-hero__small-print b {
     font-weight: var(--hero-font-body-bold-weight);
   }
 
@@ -364,6 +608,10 @@
     text-align: center;
     text-decoration: none;
     transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .custom-hero__button--pill {
+    border-radius: 999px;
   }
 
   .custom-hero .custom-hero__button:hover {
@@ -477,6 +725,13 @@
     height: 48px;
   }
 
+  .custom-hero__small-print {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--small-print-color);
+  }
+
   .custom-hero__media {
     position: relative;
     overflow: hidden;
@@ -575,6 +830,107 @@
     transform: translateX(2px);
   }
 
+  .custom-hero--controls .custom-hero__card {
+    max-width: calc(100% - 32px - var(--hero-controls-width));
+  }
+
+  .custom-hero__controls {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 999px;
+    background: var(--hero-controls-bg);
+    color: var(--hero-controls-color);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+  }
+
+  .custom-hero__dots {
+    display: flex;
+  }
+
+  .custom-hero .custom-hero__control,
+  .custom-hero .custom-hero__dot {
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    box-shadow: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .custom-hero .custom-hero__control {
+    width: 32px;
+    height: 32px;
+    transition: background-color 0.2s ease;
+  }
+
+  .custom-hero .custom-hero__control:hover {
+    background: color-mix(in srgb, var(--hero-controls-color) 10%, transparent);
+  }
+
+  .custom-hero .custom-hero__dot {
+    width: 24px;
+    height: 32px;
+  }
+
+  .custom-hero__control:focus-visible,
+  .custom-hero__dot:focus-visible {
+    outline: 2px solid var(--hero-controls-color);
+    outline-offset: 0;
+  }
+
+  .custom-hero__control svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .custom-hero__control--prev svg {
+    transform: scaleX(-1);
+  }
+
+  .custom-hero__control--pause svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .custom-hero__control--pause svg + svg,
+  .custom-hero__control--pause.is-paused svg:first-child {
+    display: none;
+  }
+
+  .custom-hero__control--pause.is-paused svg + svg {
+    display: block;
+  }
+
+  .custom-hero__dot span {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--hero-controls-color) 30%, transparent);
+    transition: width 0.2s ease, background-color 0.2s ease;
+  }
+
+  .custom-hero__dot:hover span {
+    background: color-mix(in srgb, var(--hero-controls-color) 60%, transparent);
+  }
+
+  .custom-hero__dot[aria-current='true'] span {
+    width: 18px;
+    background: var(--hero-controls-color);
+  }
+
   @media (max-width: 524px) {
     .custom-hero__button {
       flex-basis: 100%;
@@ -601,11 +957,21 @@
     .custom-hero__rating-text-short {
       display: inline;
     }
+
+    .custom-hero .custom-hero__control--prev,
+    .custom-hero .custom-hero__control--next {
+      display: none;
+    }
   }
 
   @media (max-width: 989px) {
-    .custom-hero__rating {
+    .custom-hero__rating,
+    .custom-hero__small-print {
       flex-basis: 100%;
+    }
+
+    .custom-hero__small-print {
+      text-align: center;
     }
 
     .custom-hero__badge--mobile-image,
@@ -613,7 +979,7 @@
       display: none;
     }
 
-    .custom-hero__trust:not(:has(.custom-hero__rating, .custom-hero__badge--mobile-row)) {
+    .custom-hero__trust:not(:has(.custom-hero__rating, .custom-hero__badge--mobile-row, .custom-hero__small-print)) {
       display: none;
     }
   }
@@ -622,6 +988,14 @@
     .custom-hero__panel {
       gap: 24px;
       padding: 48px 40px;
+    }
+
+    .custom-hero__eyebrow {
+      font-size: 13px;
+    }
+
+    .custom-hero__eyebrow + .custom-hero__heading {
+      margin-top: -10px;
     }
 
     .custom-hero__heading {
@@ -671,17 +1045,26 @@
       left: 20px;
       bottom: 20px;
     }
+
+    .custom-hero--controls .custom-hero__card {
+      max-width: calc(100% - 116px - var(--hero-controls-width));
+    }
+
+    .custom-hero__controls {
+      right: 20px;
+      bottom: 20px;
+    }
   }
 
   @media (min-width: 990px) {
-    .custom-hero {
+    .custom-hero__slide {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: auto;
       min-height: var(--hero-height);
     }
 
     .custom-hero__panel {
       --hero-pad-y: clamp(24px, (var(--hero-height) - 480px) / 3, 64px);
-      justify-content: center;
       gap: 30px;
       padding: var(--hero-pad-y) clamp(32px, 4.45vw, 64px) var(--hero-pad-y) clamp(40px, 5.56vw, 80px);
     }
@@ -693,6 +1076,19 @@
 
     .custom-hero--media-left .custom-hero__media {
       order: -1;
+    }
+
+    .custom-hero__eyebrow {
+      font-size: 14px;
+    }
+
+    .custom-hero__eyebrow--outline,
+    .custom-hero__eyebrow--solid {
+      padding: 6px 12px;
+    }
+
+    .custom-hero__eyebrow + .custom-hero__heading {
+      margin-top: -14px;
     }
 
     .custom-hero__heading {
@@ -754,6 +1150,10 @@
       height: clamp(44px, 3.9vw, 56px);
     }
 
+    .custom-hero__small-print {
+      font-size: 14px;
+    }
+
     .custom-hero__media {
       aspect-ratio: auto;
     }
@@ -790,6 +1190,19 @@
       height: 36px;
     }
 
+    .custom-hero--controls .custom-hero__card {
+      max-width: calc(100% - 144px - var(--hero-controls-width));
+    }
+
+    .custom-hero__controls {
+      right: 32px;
+      bottom: 32px;
+    }
+
+    .custom-hero--media-left .custom-hero__controls {
+      right: calc(50% + 32px);
+    }
+
     @container (max-width: 479px) {
       .custom-hero__button {
         flex: 1 1 auto;
@@ -807,12 +1220,163 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .custom-hero {
+      --hero-duration: 0ms;
+    }
+
+    .custom-hero .custom-hero__slide {
+      animation: none;
+    }
+
     .custom-hero__button,
-    .custom-hero__card-arrow {
+    .custom-hero__card-arrow,
+    .custom-hero .custom-hero__control,
+    .custom-hero__dot span {
       transition: none;
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('custom-hero-slider')) {
+    customElements.define(
+      'custom-hero-slider',
+      class extends HTMLElement {
+        connectedCallback() {
+          this.slides = Array.from(this.querySelectorAll('.custom-hero__slide'));
+          if (this.slides.length < 2) return;
+
+          this.index = 0;
+          this.track = this.querySelector('.custom-hero__slides');
+          this.dots = Array.from(this.querySelectorAll('[data-hero-dot]'));
+          this.pauseButton = this.querySelector('[data-hero-pause]');
+          this.delay = Number(this.dataset.autoplay) * 1000 || 0;
+          this.userPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          this.holds = new Set(document.hidden ? ['hidden'] : []);
+          this.abort = new AbortController();
+          const { signal } = this.abort;
+
+          this.querySelector('[data-hero-prev]')?.addEventListener('click', () => this.go(this.index - 1, -1), { signal });
+          this.querySelector('[data-hero-next]')?.addEventListener('click', () => this.go(this.index + 1, 1), { signal });
+          this.dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => this.go(i, i > this.index ? 1 : -1), { signal });
+          });
+          this.pauseButton?.addEventListener(
+            'click',
+            () => {
+              this.userPaused = !this.userPaused;
+              this.update();
+            },
+            { signal }
+          );
+
+          this.addEventListener('focusin', (event) => event.target.matches(':focus-visible') && this.hold('focus', true), { signal });
+          this.addEventListener('focusout', (event) => !this.contains(event.relatedTarget) && this.hold('focus', false), { signal });
+          document.addEventListener('visibilitychange', () => this.hold('hidden', document.hidden), { signal });
+
+          this.track.addEventListener(
+            'pointerdown',
+            (event) => {
+              this.swipeStart = event.pointerType === 'mouse' ? null : [event.clientX, event.clientY];
+            },
+            { signal }
+          );
+          this.track.addEventListener('pointercancel', () => (this.swipeStart = null), { signal });
+          this.track.addEventListener(
+            'pointerup',
+            (event) => {
+              if (!this.swipeStart) return;
+              const dx = event.clientX - this.swipeStart[0];
+              const dy = event.clientY - this.swipeStart[1];
+              this.swipeStart = null;
+              if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+              const direction = dx < 0 ? 1 : -1;
+              this.go(this.index + direction, direction);
+            },
+            { signal }
+          );
+
+          document.addEventListener(
+            'shopify:block:select',
+            (event) => {
+              const slide = event.target.closest?.('.custom-hero__slide');
+              if (!slide || !this.contains(slide)) return;
+              const to = this.slides.indexOf(slide);
+              this.go(to, to > this.index ? 1 : -1);
+              this.hold('editor', true);
+            },
+            { signal }
+          );
+          document.addEventListener(
+            'shopify:block:deselect',
+            (event) => this.contains(event.target) && this.hold('editor', false),
+            { signal }
+          );
+
+          this.update();
+        }
+
+        disconnectedCallback() {
+          this.abort?.abort();
+          clearTimeout(this.timer);
+          clearTimeout(this.cleanup);
+        }
+
+        go(to, direction) {
+          to = (to + this.slides.length) % this.slides.length;
+          if (to === this.index) return;
+
+          const leaving = this.slides[this.index];
+          const entering = this.slides[to];
+          clearTimeout(this.cleanup);
+          this.slides.forEach((slide) => slide.classList.remove('is-entering', 'is-leaving'));
+          this.style.setProperty('--hero-direction', direction);
+          leaving.classList.replace('is-active', 'is-leaving');
+          entering.classList.add('is-active', 'is-entering');
+          this.cleanup = setTimeout(() => {
+            leaving.classList.remove('is-leaving');
+            entering.classList.remove('is-entering');
+          }, parseFloat(getComputedStyle(this).getPropertyValue('--hero-duration')) || 0);
+
+          this.index = to;
+          this.update();
+        }
+
+        update() {
+          this.slides.forEach((slide, i) => slide.toggleAttribute('inert', i !== this.index));
+          this.dots.forEach((dot, i) => {
+            if (i === this.index) {
+              dot.setAttribute('aria-current', 'true');
+            } else {
+              dot.removeAttribute('aria-current');
+            }
+          });
+          if (this.pauseButton) {
+            this.pauseButton.classList.toggle('is-paused', this.userPaused);
+            this.pauseButton.setAttribute('aria-label', this.userPaused ? 'Play slideshow' : 'Pause slideshow');
+          }
+          this.track.setAttribute('aria-live', this.delay && !this.userPaused ? 'off' : 'polite');
+          this.schedule();
+        }
+
+        hold(reason, active) {
+          if (active) {
+            this.holds.add(reason);
+          } else {
+            this.holds.delete(reason);
+          }
+          this.schedule();
+        }
+
+        schedule() {
+          clearTimeout(this.timer);
+          if (!this.delay || this.userPaused || this.holds.size) return;
+          this.timer = setTimeout(() => this.go(this.index + 1, 1), this.delay);
+        }
+      }
+    );
+  }
+{% endjavascript %}
 
 {% schema %}
 {
@@ -822,25 +1386,60 @@
   "settings": [
     {
       "type": "header",
-      "content": "Image"
+      "content": "Slideshow"
     },
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image",
-      "info": "Set a focal point on the image to control how it crops."
+      "type": "paragraph",
+      "content": "Each Slide block starts a new slide. The blocks under it, up to the next Slide block, make up that slide."
     },
     {
-      "type": "image_picker",
-      "id": "image_mobile",
-      "label": "Mobile and tablet image",
-      "info": "Optional. Uses the image above when empty."
+      "type": "select",
+      "id": "transition",
+      "label": "Transition",
+      "options": [
+        { "value": "slide", "label": "Slide" },
+        { "value": "fade", "label": "Fade" }
+      ],
+      "default": "slide"
     },
     {
-      "type": "text",
-      "id": "image_alt",
-      "label": "Image alt text",
-      "info": "Describes the image for screen readers. Uses the image's own alt text when empty."
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Change slides automatically",
+      "default": true,
+      "info": "Visitors can stop it with the pause button in the slider controls. Starts paused for visitors who have reduced motion turned on."
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Time per slide",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "default": 6,
+      "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "Show slider controls",
+      "default": true,
+      "info": "Arrows, dots and a pause button. Without them, visitors can't pause the slideshow or pick a slide, apart from swiping on touch screens."
+    },
+    {
+      "type": "color",
+      "id": "controls_background",
+      "label": "Controls background",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_controls }}"
+    },
+    {
+      "type": "color",
+      "id": "controls_color",
+      "label": "Controls color",
+      "default": "#3B2252",
+      "visible_if": "{{ section.settings.show_controls }}"
     },
     {
       "type": "header",
@@ -915,9 +1514,76 @@
   ],
   "blocks": [
     {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Starts a new slide. The blocks under it, up to the next Slide block, are its content."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Slide name",
+          "info": "Only shown in the editor, to tell slides apart."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Set a focal point on the image to control how it crops."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile and tablet image",
+          "info": "Optional. Uses the image above when empty."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "info": "Describes the image for screen readers. Uses the image's own alt text when empty."
+        }
+      ]
+    },
+    {
+      "type": "eyebrow",
+      "name": "Label",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "A short tag, like \"Selling fast\". Place it above the heading."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Selling fast"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "options": [
+            { "value": "outline", "label": "Outline" },
+            { "value": "solid", "label": "Solid" },
+            { "value": "plain", "label": "Text only" }
+          ],
+          "default": "outline"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#F5A04B",
+          "info": "On the solid style, the text uses the content background color."
+        }
+      ]
+    },
+    {
       "type": "heading",
       "name": "Heading",
-      "limit": 1,
       "settings": [
         {
           "type": "text",
@@ -928,9 +1594,15 @@
         {
           "type": "text",
           "id": "accent",
-          "label": "Highlighted line",
+          "label": "Highlighted text",
           "default": "10% off",
-          "info": "Shown on its own line in the highlight color."
+          "info": "Follows the heading, in the highlight color."
+        },
+        {
+          "type": "checkbox",
+          "id": "accent_new_line",
+          "label": "Start highlighted text on a new line",
+          "default": true
         },
         {
           "type": "select",
@@ -941,7 +1613,7 @@
             { "value": "h2", "label": "H2" }
           ],
           "default": "h1",
-          "info": "Keep one H1 per page."
+          "info": "Keep one H1 per page. Slides after the first always use H2."
         },
         {
           "type": "range",
@@ -1013,6 +1685,16 @@
         },
         {
           "type": "select",
+          "id": "shape",
+          "label": "Shape",
+          "options": [
+            { "value": "rounded", "label": "Rounded" },
+            { "value": "pill", "label": "Pill" }
+          ],
+          "default": "rounded"
+        },
+        {
+          "type": "select",
           "id": "icon",
           "label": "Icon",
           "options": [
@@ -1040,7 +1722,6 @@
     {
       "type": "rating",
       "name": "Review rating",
-      "limit": 1,
       "settings": [
         {
           "type": "text",
@@ -1108,7 +1789,6 @@
     {
       "type": "badge",
       "name": "Award badge",
-      "limit": 4,
       "settings": [
         {
           "type": "image_picker",
@@ -1140,13 +1820,34 @@
       ]
     },
     {
-      "type": "pictured",
-      "name": "Pictured product",
-      "limit": 1,
+      "type": "small_print",
+      "name": "Small print",
       "settings": [
         {
           "type": "paragraph",
-          "content": "A card over the bottom corner of the image."
+          "content": "Shares a row with a review rating or award badges placed next to it."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "100-night trial · 15-year guarantee · free delivery"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Text color",
+          "default": "#A897BF"
+        }
+      ]
+    },
+    {
+      "type": "pictured",
+      "name": "Pictured product",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "A card over the bottom corner of this slide's image."
         },
         {
           "type": "text",
@@ -1208,36 +1909,121 @@
     {
       "name": "Homepage hero",
       "blocks": [
-        { "type": "heading" },
-        { "type": "text" },
-        { "type": "button" },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Trust-led"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "Award-winning sleep, built for the next 15 years.",
+            "accent": "",
+            "size": 56
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "100-night trial · 15-year guarantee · free delivery — on every award-winning REM-Fit mattress."
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "shape": "pill"
+          }
+        },
         {
           "type": "button",
           "settings": {
             "label": "Find my mattress",
             "style": "outline",
-            "icon": "checklist",
+            "shape": "pill",
+            "icon": "none",
             "button_color": "#FFFFFF",
             "label_color": "#FFFFFF"
           }
         },
         { "type": "rating" },
+        { "type": "badge" },
+        { "type": "badge" },
+        { "type": "badge" },
         {
-          "type": "badge",
+          "type": "small_print",
           "settings": {
-            "mobile_placement": "hidden"
+            "text": "In partnership with the British Heart Foundation",
+            "color": "#D9CFEE"
           }
         },
         {
-          "type": "badge",
+          "type": "slide",
           "settings": {
-            "mobile_placement": "image"
+            "title": "Bundle value"
           }
         },
         {
-          "type": "pictured",
+          "type": "heading",
           "settings": {
-            "title": "REM-Fit 4000 Ortho Elite"
+            "heading": "Complete the bedroom.",
+            "accent": "Save up to £200.",
+            "accent_new_line": false,
+            "accent_color": "#F5A04B",
+            "size": 56
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "£200 off any divan base — free headboard included — or £150 off any bed frame, when ordered with your mattress."
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "label": "Build your bundle",
+            "shape": "pill"
+          }
+        },
+        {
+          "type": "small_print",
+          "settings": {
+            "text": "Savings applied automatically at checkout · 100-night trial · 15-year guarantee · free delivery"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Scarcity"
+          }
+        },
+        { "type": "eyebrow" },
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "Current stock is selling out.",
+            "accent": "",
+            "size": 56
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "This batch is going faster than we can ship — and the next arrival isn't until late November. Order now for delivery ahead of the rush."
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "label": "Shop in-stock mattresses",
+            "shape": "pill"
+          }
+        },
+        {
+          "type": "small_print",
+          "settings": {
+            "text": "100-night trial · 15-year guarantee · free delivery · stock shown per product"
           }
         }
       ]
