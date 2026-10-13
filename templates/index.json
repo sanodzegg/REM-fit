@@ -168,7 +168,7 @@
         "heading_Kq7Tzp": {
           "type": "heading",
           "settings": {
-            "heading": "October sale",
+            "heading": "October sale ends tonight!",
             "accent": "10% off",
             "accent_new_line": true,
             "heading_tag": "h1",
@@ -180,7 +180,7 @@
         "text_Vn3Rbx": {
           "type": "text",
           "settings": {
-            "text": "Limited time offer. Save 10% on every award-winning REM-Fit mattress.",
+            "text": "Ends 23:59. <strong>Save 10%</strong> off every award-winning REM-Fit mattress.",
             "color": "#e4daee"
           }
         },
