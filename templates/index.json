@@ -387,11 +387,10 @@
         },
         "pictured_Ls5Nde": {
           "type": "pictured",
-          "disabled": true,
           "settings": {
             "label": "Pictured",
-            "product": "rem-fit-4000-ortho-elite-hybrid-mattress",
-            "title": "REM-Fit 4000 Ortho Elite",
+            "product": "padded-luxury-divan-bed-modern-headboard",
+            "title": "Luxury Divan Base & Modern Headboard",
             "link": "",
             "background": "#ffffff",
             "label_color": "#5e5468",
