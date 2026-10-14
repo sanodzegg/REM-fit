@@ -13077,6 +13077,11 @@ span.saving-badge img {
   display: flex;
   justify-content: center;
 }
+/* Let columns shrink below their 20%/25% basis so 6+ items share the row evenly */
+.nav__submenu--mega .nav__submenu__row > .nav__link__holder--mega {
+  flex-shrink: 1;
+  min-width: 0;
+}
 .page__header--desktop
   .nav__link__holder
   .nav__submenu
