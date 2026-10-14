@@ -157,75 +157,19 @@
     "hero": {
       "type": "custom-homepage-hero",
       "blocks": {
-        "slide_BMy8ht": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "title": "test",
-            "image": "shopify://shop_images/5000-DIVAN-COUPLE-HOLDING-MATTRESS-01D.jpg",
-            "image_alt": ""
-          }
-        },
-        "heading_pwBdkj": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "Award-winning sleep, built for the next 15 years.",
-            "accent": "",
-            "accent_new_line": true,
-            "heading_tag": "h1",
-            "size": 44,
-            "color": "#ffffff",
-            "accent_color": "#f0602a"
-          }
-        },
-        "text_nWzzVH": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "&nbsp;100-night trial · 15-year guarantee · free delivery. Save&nbsp;<strong>£200</strong>&nbsp;when you add a divan base (free headboard included), or&nbsp;<strong>£150</strong>&nbsp;with any bed frame.&nbsp;",
-            "color": "#e4daee"
-          }
-        },
-        "button_Pw8Lmc": {
-          "type": "button",
-          "disabled": true,
-          "settings": {
-            "label": "Shop mattresses",
-            "link": "shopify://collections/rem-fit-hybrid-mattresses",
-            "style": "solid",
-            "shape": "rounded",
-            "icon": "arrow",
-            "button_color": "#ffffff",
-            "label_color": "#3b2252"
-          }
-        },
-        "button_6jpThr": {
-          "type": "button",
-          "disabled": true,
-          "settings": {
-            "label": "Find my mattress",
-            "link": "https://form.typeform.com/to/ABP9gLq0",
-            "style": "outline",
-            "shape": "rounded",
-            "icon": "checklist",
-            "button_color": "#ffffff",
-            "label_color": "#ffffff"
-          }
-        },
         "slide_Hq4Vnd": {
           "type": "slide",
           "settings": {
             "title": "October sale",
-            "image": "shopify://shop_images/ortho-rotate-rotating-mattress_4.jpg",
+            "image": "shopify://shop_images/5000-DIVAN-COUPLE-HOLDING-MATTRESS-01B-web.jpg",
             "image_alt": "A couple relaxes in bed on a gray upholstered platform bed with white bedding and a visible mattress. The room is bright and modern with a white rug, bedside lamp, wall art, and a plant."
           }
         },
         "heading_Kq7Tzp": {
           "type": "heading",
           "settings": {
-            "heading": "Award-winning sleep, built for the next 15 years.",
-            "accent": "",
+            "heading": "Award-winning sleep, built for the",
+            "accent": "next 15 years.",
             "accent_new_line": true,
             "heading_tag": "h1",
             "size": 66,
@@ -306,6 +250,111 @@
             "mobile_placement": "row"
           }
         },
+        "slide_bAh9XV": {
+          "type": "slide",
+          "settings": {
+            "title": "Current Stock",
+            "image": "shopify://shop_images/ORTHO-JUMPING-BLUE-ROOM.jpg",
+            "image_alt": ""
+          }
+        },
+        "heading_LYwECn": {
+          "type": "heading",
+          "settings": {
+            "heading": "Current stock",
+            "accent": "is selling out.",
+            "accent_new_line": true,
+            "heading_tag": "h1",
+            "size": 66,
+            "color": "#ffffff",
+            "accent_color": "#f0602a"
+          }
+        },
+        "text_gwbUJ9": {
+          "type": "text",
+          "settings": {
+            "text": "&nbsp;<strong>This batch is going faster than we can ship - and the next arrival isn't until late November. Order now for delivery ahead of the rush.</strong>&nbsp;",
+            "color": "#e4daee"
+          }
+        },
+        "button_qGCUTY": {
+          "type": "button",
+          "settings": {
+            "label": "Shop in-stock-mattresses",
+            "link": "shopify://collections/rem-fit-hybrid-mattresses",
+            "style": "solid",
+            "shape": "rounded",
+            "icon": "arrow",
+            "button_color": "#ffffff",
+            "label_color": "#3b2252"
+          }
+        },
+        "small_print_KgN9U7": {
+          "type": "small_print",
+          "settings": {
+            "text": "&nbsp;100-night trial · 15-year guarantee · free delivery&nbsp;",
+            "color": "#a897bf"
+          }
+        },
+        "slide_BMy8ht": {
+          "type": "slide",
+          "settings": {
+            "title": "Bed bundle",
+            "image": "shopify://shop_images/Modern-base-Grey-Drawers-closedcopy_6df28655-157e-4263-9f77-a46d60f7a447.jpg",
+            "image_alt": ""
+          }
+        },
+        "heading_pwBdkj": {
+          "type": "heading",
+          "settings": {
+            "heading": "Complete the bedroom. ",
+            "accent": "Save up to £200.",
+            "accent_new_line": true,
+            "heading_tag": "h1",
+            "size": 66,
+            "color": "#ffffff",
+            "accent_color": "#f0602a"
+          }
+        },
+        "text_nWzzVH": {
+          "type": "text",
+          "settings": {
+            "text": "&nbsp;<strong>£200 off any divan base - free headboard included - or £150 off any bed frame, when ordered with your mattress.</strong>&nbsp;",
+            "color": "#e4daee"
+          }
+        },
+        "button_Pw8Lmc": {
+          "type": "button",
+          "settings": {
+            "label": "Shop divan bases",
+            "link": "shopify://collections/divan-beds",
+            "style": "solid",
+            "shape": "rounded",
+            "icon": "arrow",
+            "button_color": "#ffffff",
+            "label_color": "#3b2252"
+          }
+        },
+        "small_print_CXznBz": {
+          "type": "small_print",
+          "settings": {
+            "text": "&nbsp;<strong>Savings applied automatically at checkout&nbsp;</strong>",
+            "color": "#a897bf"
+          }
+        },
+        "button_6jpThr": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "label": "Find my mattress",
+            "link": "https://form.typeform.com/to/ABP9gLq0",
+            "style": "outline",
+            "shape": "rounded",
+            "icon": "checklist",
+            "button_color": "#ffffff",
+            "label_color": "#ffffff"
+          }
+        },
         "pictured_Ls5Nde": {
           "type": "pictured",
           "disabled": true,
@@ -323,11 +372,6 @@
         }
       },
       "block_order": [
-        "slide_BMy8ht",
-        "heading_pwBdkj",
-        "text_nWzzVH",
-        "button_Pw8Lmc",
-        "button_6jpThr",
         "slide_Hq4Vnd",
         "heading_Kq7Tzp",
         "text_Vn3Rbx",
@@ -337,12 +381,23 @@
         "badge_Rm4Wkn",
         "badge_Jc9Xvb",
         "badge_eRixN6",
+        "slide_bAh9XV",
+        "heading_LYwECn",
+        "text_gwbUJ9",
+        "button_qGCUTY",
+        "small_print_KgN9U7",
+        "slide_BMy8ht",
+        "heading_pwBdkj",
+        "text_nWzzVH",
+        "button_Pw8Lmc",
+        "small_print_CXznBz",
+        "button_6jpThr",
         "pictured_Ls5Nde"
       ],
       "settings": {
-        "transition": "slide",
+        "transition": "fade",
         "autoplay": true,
-        "autoplay_speed": 6,
+        "autoplay_speed": 5,
         "show_controls": true,
         "controls_background": "#ffffff",
         "controls_color": "#3b2252",
