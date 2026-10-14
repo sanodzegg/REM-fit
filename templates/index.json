@@ -168,11 +168,11 @@
         "heading_Kq7Tzp": {
           "type": "heading",
           "settings": {
-            "heading": "Award-winning sleep, built for the",
-            "accent": "next 15 years.",
+            "heading": "Award-winning sleep,",
+            "accent": "built for 15 years.",
             "accent_new_line": true,
             "heading_tag": "h1",
-            "size": 66,
+            "size": 62,
             "color": "#ffffff",
             "accent_color": "#f0602a"
           }
@@ -180,7 +180,7 @@
         "text_Vn3Rbx": {
           "type": "text",
           "settings": {
-            "text": "&nbsp;100-night trial · 15-year guarantee · free delivery. Save&nbsp;<strong>£200</strong>&nbsp;when you add a divan base (free headboard included), or&nbsp;<strong>£150</strong>&nbsp;with any bed frame.&nbsp;",
+            "text": "100-night trial · 15-year guarantee · free delivery - on every mattress.&nbsp;",
             "color": "#e4daee"
           }
         },
@@ -265,7 +265,7 @@
             "accent": "is selling out.",
             "accent_new_line": true,
             "heading_tag": "h1",
-            "size": 66,
+            "size": 62,
             "color": "#ffffff",
             "accent_color": "#f0602a"
           }
@@ -326,7 +326,7 @@
             "accent": "Save up to £200.",
             "accent_new_line": true,
             "heading_tag": "h1",
-            "size": 66,
+            "size": 62,
             "color": "#ffffff",
             "accent_color": "#f0602a"
           }
