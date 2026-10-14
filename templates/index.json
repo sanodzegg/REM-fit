@@ -168,11 +168,11 @@
         "heading_Kq7Tzp": {
           "type": "heading",
           "settings": {
-            "heading": "October sale ends tonight!",
-            "accent": "10% off",
+            "heading": "Award-winning sleep, built for the next 15 years.",
+            "accent": "",
             "accent_new_line": true,
             "heading_tag": "h1",
-            "size": 84,
+            "size": 44,
             "color": "#ffffff",
             "accent_color": "#f0602a"
           }
@@ -180,7 +180,7 @@
         "text_Vn3Rbx": {
           "type": "text",
           "settings": {
-            "text": "Ends 23:59. <strong>Save 10%</strong> off every award-winning REM-Fit mattress.",
+            "text": "&nbsp;100-night trial · 15-year guarantee · free delivery. Save&nbsp;<strong>£200</strong>&nbsp;when you add a divan base (free headboard included), or&nbsp;<strong>£150</strong>&nbsp;with any bed frame.&nbsp;",
             "color": "#e4daee"
           }
         },
