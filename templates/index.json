@@ -157,6 +157,62 @@
     "hero": {
       "type": "custom-homepage-hero",
       "blocks": {
+        "slide_BMy8ht": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "title": "test",
+            "image": "shopify://shop_images/5000-DIVAN-COUPLE-HOLDING-MATTRESS-01D.jpg",
+            "image_alt": ""
+          }
+        },
+        "heading_pwBdkj": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Award-winning sleep, built for the next 15 years.",
+            "accent": "",
+            "accent_new_line": true,
+            "heading_tag": "h1",
+            "size": 44,
+            "color": "#ffffff",
+            "accent_color": "#f0602a"
+          }
+        },
+        "text_nWzzVH": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "&nbsp;100-night trial · 15-year guarantee · free delivery. Save&nbsp;<strong>£200</strong>&nbsp;when you add a divan base (free headboard included), or&nbsp;<strong>£150</strong>&nbsp;with any bed frame.&nbsp;",
+            "color": "#e4daee"
+          }
+        },
+        "button_Pw8Lmc": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "label": "Shop mattresses",
+            "link": "shopify://collections/rem-fit-hybrid-mattresses",
+            "style": "solid",
+            "shape": "rounded",
+            "icon": "arrow",
+            "button_color": "#ffffff",
+            "label_color": "#3b2252"
+          }
+        },
+        "button_6jpThr": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "label": "Find my mattress",
+            "link": "https://form.typeform.com/to/ABP9gLq0",
+            "style": "outline",
+            "shape": "rounded",
+            "icon": "checklist",
+            "button_color": "#ffffff",
+            "label_color": "#ffffff"
+          }
+        },
         "slide_Hq4Vnd": {
           "type": "slide",
           "settings": {
@@ -184,7 +240,7 @@
             "color": "#e4daee"
           }
         },
-        "button_Pw8Lmc": {
+        "button_tHamKi": {
           "type": "button",
           "settings": {
             "label": "Shop mattresses",
@@ -267,10 +323,15 @@
         }
       },
       "block_order": [
+        "slide_BMy8ht",
+        "heading_pwBdkj",
+        "text_nWzzVH",
+        "button_Pw8Lmc",
+        "button_6jpThr",
         "slide_Hq4Vnd",
         "heading_Kq7Tzp",
         "text_Vn3Rbx",
-        "button_Pw8Lmc",
+        "button_tHamKi",
         "button_Hd2Qsj",
         "rating_Zt6Ygf",
         "badge_Rm4Wkn",
