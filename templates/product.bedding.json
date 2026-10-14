@@ -296,6 +296,7 @@
         "3e1f9f0e-fb8e-48b9-ae1f-0d3c447a67eb",
         "418c277e-688e-4305-bde4-9e82fabd26c7"
       ],
+      "disabled": true,
       "settings": {
         "displayFor": "display--both",
         "layout": "default",
@@ -465,6 +466,7 @@
         "1650388627609c816c-0",
         "1650388627609c816c-1"
       ],
+      "disabled": true,
       "settings": {
         "displayFor": "display--both",
         "layout": "default",
@@ -522,6 +524,7 @@
         "1651582311d128089b-0",
         "1651582311d128089b-1"
       ],
+      "disabled": true,
       "settings": {
         "displayFor": "display--both",
         "layout": "default",
@@ -771,6 +774,7 @@
     },
     "ss_featured_collection_7_g4qwxh": {
       "type": "ss-featured-collection-7",
+      "disabled": true,
       "settings": {
         "collection": "all-mattresses",
         "collection_show": 9,
