@@ -198,6 +198,7 @@
         },
         "button_Hd2Qsj": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "label": "Find my mattress",
             "link": "https://form.typeform.com/to/ABP9gLq0",
