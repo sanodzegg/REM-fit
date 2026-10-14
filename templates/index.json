@@ -273,7 +273,7 @@
         "text_gwbUJ9": {
           "type": "text",
           "settings": {
-            "text": "&nbsp;<strong>This batch is going faster than we can ship - and the next arrival isn't until late November. Order now for delivery ahead of the rush.</strong>&nbsp;",
+            "text": "<strong>This batch is going faster than we can ship - and the next arrival isn't until late November. Order now for delivery ahead of the rush.</strong>&nbsp;",
             "color": "#e4daee"
           }
         },
@@ -287,6 +287,21 @@
             "icon": "arrow",
             "button_color": "#ffffff",
             "label_color": "#3b2252"
+          }
+        },
+        "rating_BPWLQX": {
+          "type": "rating",
+          "settings": {
+            "label": "Excellent",
+            "score": 4.2,
+            "text": "4.2 out of 5 from 2,745+ Trustpilot reviews",
+            "text_mobile": "2,745+ reviews",
+            "link": "https://www.trustpilot.com/review/shop.rem-fit.co.uk",
+            "label_color": "#ffffff",
+            "text_color": "#ffffff",
+            "star_color": "#00b67a",
+            "star_empty_color": "#8a7a9c",
+            "star_icon_color": "#ffffff"
           }
         },
         "small_print_KgN9U7": {
@@ -319,7 +334,7 @@
         "text_nWzzVH": {
           "type": "text",
           "settings": {
-            "text": "&nbsp;<strong>£200 off any divan base - free headboard included - or £150 off any bed frame, when ordered with your mattress.</strong>&nbsp;",
+            "text": "<strong>£200 off any divan base - free headboard included - or £150 off any bed frame, when ordered with your mattress.</strong>&nbsp;",
             "color": "#e4daee"
           }
         },
@@ -333,6 +348,21 @@
             "icon": "arrow",
             "button_color": "#ffffff",
             "label_color": "#3b2252"
+          }
+        },
+        "rating_3J6hDf": {
+          "type": "rating",
+          "settings": {
+            "label": "Excellent",
+            "score": 4.2,
+            "text": "4.2 out of 5 from 2,745+ Trustpilot reviews",
+            "text_mobile": "2,745+ reviews",
+            "link": "https://www.trustpilot.com/review/shop.rem-fit.co.uk",
+            "label_color": "#ffffff",
+            "text_color": "#ffffff",
+            "star_color": "#00b67a",
+            "star_empty_color": "#8a7a9c",
+            "star_icon_color": "#ffffff"
           }
         },
         "small_print_CXznBz": {
@@ -385,11 +415,13 @@
         "heading_LYwECn",
         "text_gwbUJ9",
         "button_qGCUTY",
+        "rating_BPWLQX",
         "small_print_KgN9U7",
         "slide_BMy8ht",
         "heading_pwBdkj",
         "text_nWzzVH",
         "button_Pw8Lmc",
+        "rating_3J6hDf",
         "small_print_CXznBz",
         "button_6jpThr",
         "pictured_Ls5Nde"
