@@ -1333,10 +1333,12 @@
           this.style.setProperty('--hero-direction', direction);
           leaving.classList.replace('is-active', 'is-leaving');
           entering.classList.add('is-active', 'is-entering');
+          // Read the computed animation-duration, which is always in seconds. The live stylesheet is minified,
+          // which rewrites --hero-duration from 700ms to .7s, so parsing the variable gave a 0.7ms timer.
           this.cleanup = setTimeout(() => {
             leaving.classList.remove('is-leaving');
             entering.classList.remove('is-entering');
-          }, parseFloat(getComputedStyle(this).getPropertyValue('--hero-duration')) || 0);
+          }, parseFloat(getComputedStyle(entering).animationDuration) * 1000 || 0);
 
           this.index = to;
           this.update();
