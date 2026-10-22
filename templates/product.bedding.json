@@ -38,6 +38,19 @@
             "customContent": "<div class=\"protectors-white-space-top\"></div>\n<!-- TrustBox widget - Micro Combo -->\n<div class=\"trustpilot-widget\" data-locale=\"en-GB\" data-template-id=\"5419b6ffb0d04a076446a9af\" data-businessunit-id=\"57c53e850000ff000594131a\" data-style-height=\"40px\" data-style-width=\"100%\" data-theme=\"light\">\n  <a href=\"https://uk.trustpilot.com/review/shop.rem-fit.co.uk\" target=\"_blank\" rel=\"noopener\">Trustpilot</a>\n</div>\n<style>\n.tp-widget-wrapper{\ntext-align:left;\n}\n</style>\n<!-- End TrustBox widget -->\n<div class=\"protectors-white-space-bottom\"></div>\n<style>\n@media only screen and (max-width: 767px){\n.protectors-white-space-top{\nmargin-bottom:16px;\n}\n.protectors-white-space-bottom{\nmargin-bottom:24px;\n}\n}\n</style>"
           }
         },
+        "video_aXMXT9": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/video_d01c15bf.mp4",
+            "controls": false,
+            "autoplay": true,
+            "loop": true,
+            "heading": "",
+            "text": "",
+            "link": "",
+            "link_url": ""
+          }
+        },
         "c7a2155b-b433-4af9-a666-6f7a6e1c2d59": {
           "type": "productPageDescription",
           "settings": {
@@ -124,6 +137,7 @@
       "block_order": [
         "ppTitle",
         "d609b8d4-23a2-4f34-b547-d0c2c728417a",
+        "video_aXMXT9",
         "c7a2155b-b433-4af9-a666-6f7a6e1c2d59",
         "c49f9243-947d-42b3-9f7f-f3b80e6a92c6",
         "ppPrice",
