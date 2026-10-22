@@ -281,10 +281,8 @@
         {% endif %}
       {% endfor %}
 
-      {% if gallery_videos_top != blank %}
-        <div class="product-videos-vertical product-videos-vertical--top">
-          {{ gallery_videos_top }}
-        </div>
+      {% if sorted_media_collection.size == 0 %}
+        {% assign gallery_videos_bottom = gallery_videos_top | append: gallery_videos_bottom %}
       {% endif %}
 
       {% for media in sorted_media_collection %}
@@ -334,6 +332,12 @@
                 videoContainer.innerHTML = videoHtml;
               }
             </script>
+          </div>
+        {% endif %}
+
+        {% if forloop.first and gallery_videos_top != blank %}
+          <div class="product-videos-vertical product-videos-vertical--top">
+            {{ gallery_videos_top }}
           </div>
         {% endif %}
       {% endfor %}
@@ -1841,11 +1845,11 @@ document.addEventListener("DOMContentLoaded", function () {
             "id": "position",
             "label": "Position in gallery",
             "options": [
-              { "value": "top", "label": "Before images" },
-              { "value": "bottom", "label": "After images" }
+              { "value": "top", "label": "After main image" },
+              { "value": "bottom", "label": "After all images" }
             ],
             "default": "bottom",
-            "info": "On mobile, videos show above the product accordions, with \"Before images\" videos first"
+            "info": "On mobile, videos show above the product accordions, with \"After main image\" videos first"
           },
           {
             "type": "header",
