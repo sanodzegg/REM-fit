@@ -30,7 +30,7 @@
 
   #colorcode {}
 
-  #product-videos-vertical {
+  .product-videos-vertical {
     display: flex;
     flex-wrap: wrap;
     gap: {{section.settings.galleryImageGap}}px;
@@ -46,9 +46,22 @@
     display: block;
     width: 100%;
     height: auto;
+    max-height: var(--video-max-height-mobile, none);
     object-fit: cover;
     border-radius: 16px;
     background-color: #CABBB6;
+  }
+
+  @media (min-width: 769px) {
+    .product-video-item video {
+      max-height: var(--video-max-height-tablet, none);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .product-video-item video {
+      max-height: var(--video-max-height-desktop, none);
+    }
   }
 
   .product-video-item__title {
@@ -213,6 +226,67 @@
       {% assign unique_media_collection = media_collection | uniq %}
       {% assign sorted_media_collection = unique_media_collection | sort: 'position' %}
 
+      {%- comment -%} Gallery video blocks, split by their position setting {%- endcomment -%}
+      {% assign gallery_videos_top = '' %}
+      {% assign gallery_videos_bottom = '' %}
+      {% for block in section.blocks %}
+        {% if block.type == 'video' %}
+          {% if block.settings.autoplay %}
+            {% assign isMuted = true %}
+          {% else %}
+            {% assign isMuted = false %}
+          {% endif %}
+          {% capture gallery_video %}
+            <div
+              class="product-video-item"
+              style="
+                {%- if block.settings.max_height_mobile > 0 -%}--video-max-height-mobile: {{ block.settings.max_height_mobile }}px;{%- endif -%}
+                {%- if block.settings.max_height_tablet > 0 -%}--video-max-height-tablet: {{ block.settings.max_height_tablet }}px;{%- endif -%}
+                {%- if block.settings.max_height_desktop > 0 -%}--video-max-height-desktop: {{ block.settings.max_height_desktop }}px;{%- endif -%}
+              "
+              {{ block.shopify_attributes }}
+            >
+              {% if block.settings.video != blank %}
+                <video
+                  src="{{ block.settings.video.sources[1].url }}"
+                  playsinline
+                  preload="metadata"
+                  {% if block.settings.autoplay %}autoplay{% endif %}
+                  {% if block.settings.loop %}loop{% endif %}
+                  {% if block.settings.controls %}controls{% endif %}
+                  {% if isMuted %}muted{% endif %}
+                ></video>
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+              {% endif %}
+
+              {% if block.settings.heading != blank %}
+                <h3 class="product-video-item__title">{{ block.settings.heading }}</h3>
+              {% endif %}
+
+              {% if block.settings.text != blank %}
+                <p class="product-video-item__text">{{ block.settings.text }}</p>
+              {% endif %}
+
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link_url }}" class="product-video-item__link">{{ block.settings.link }}</a>
+              {% endif %}
+            </div>
+          {% endcapture %}
+          {% if block.settings.position == 'top' %}
+            {% assign gallery_videos_top = gallery_videos_top | append: gallery_video %}
+          {% else %}
+            {% assign gallery_videos_bottom = gallery_videos_bottom | append: gallery_video %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {% if gallery_videos_top != blank %}
+        <div class="product-videos-vertical product-videos-vertical--top">
+          {{ gallery_videos_top }}
+        </div>
+      {% endif %}
+
       {% for media in sorted_media_collection %}
         {% if media.media_type == 'image' or media.media_type == blank %}
           <div
@@ -264,44 +338,11 @@
         {% endif %}
       {% endfor %}
 
-      <div id="product-videos-vertical">
-        {% for block in section.blocks %}
-          {% if block.type == 'video' %}
-            {% if block.settings.autoplay %}
-              {% assign isMuted = true %}
-            {% else %}
-              {% assign isMuted = false %}
-            {% endif %}
-            <div class="product-video-item" {{ block.shopify_attributes }}>
-              {% if block.settings.video != blank %}
-                <video
-                  src="{{ block.settings.video.sources[1].url }}"
-                  playsinline
-                  preload="metadata"
-                  {% if block.settings.autoplay %}autoplay{% endif %}
-                  {% if block.settings.loop %}loop{% endif %}
-                  {% if block.settings.controls %}controls{% endif %}
-                  {% if isMuted %}muted{% endif %}
-                ></video>
-              {% else %}
-                {{ 'image' | placeholder_svg_tag: 'placeholder' }}
-              {% endif %}
-
-              {% if block.settings.heading != blank %}
-                <h3 class="product-video-item__title">{{ block.settings.heading }}</h3>
-              {% endif %}
-
-              {% if block.settings.text != blank %}
-                <p class="product-video-item__text">{{ block.settings.text }}</p>
-              {% endif %}
-
-              {% if block.settings.link != blank %}
-                <a href="{{ block.settings.link_url }}" class="product-video-item__link">{{ block.settings.link }}</a>
-              {% endif %}
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
+      {% if gallery_videos_bottom != blank %}
+        <div class="product-videos-vertical product-videos-vertical--bottom">
+          {{ gallery_videos_bottom }}
+        </div>
+      {% endif %}
     </div>
   {% endcase %}
   {%- comment -%}
@@ -598,12 +639,15 @@ parentGroups.forEach(group => {
 
 // Mobile: move the gallery videos above the first accordion group
 (function () {
-  const videos = document.getElementById('product-videos-vertical');
-  if (!videos) return;
+  const videoGroups = document.querySelectorAll('.product-videos-vertical');
+  if (!videoGroups.length) return;
 
-  // Remember the original desktop position inside the gallery
-  const anchor = document.createComment('product-videos-anchor');
-  videos.parentNode.insertBefore(anchor, videos);
+  // Remember each group's original desktop position inside the gallery
+  const anchors = Array.from(videoGroups, (videos) => {
+    const anchor = document.createComment('product-videos-anchor');
+    videos.parentNode.insertBefore(anchor, videos);
+    return anchor;
+  });
 
   const mq = window.matchMedia('(max-width: 768px)');
 
@@ -612,11 +656,17 @@ parentGroups.forEach(group => {
       const firstGroup =
         document.querySelector('details#accordion-group-product') ||
         document.querySelector('.product-accordion-group');
-      if (firstGroup && firstGroup.previousElementSibling !== videos) {
+      if (!firstGroup) return;
+      // Top group first, then bottom group, both directly above the accordion
+      videoGroups.forEach((videos) => {
         firstGroup.parentNode.insertBefore(videos, firstGroup);
-      }
-    } else if (anchor.nextSibling !== videos) {
-      anchor.parentNode.insertBefore(videos, anchor.nextSibling);
+      });
+    } else {
+      videoGroups.forEach((videos, i) => {
+        if (anchors[i].nextSibling !== videos) {
+          anchors[i].parentNode.insertBefore(videos, anchors[i].nextSibling);
+        }
+      });
     }
   }
 
@@ -1785,6 +1835,55 @@ document.addEventListener("DOMContentLoaded", function () {
             "type": "video",
             "id": "video",
             "label": "Video"
+          },
+          {
+            "type": "select",
+            "id": "position",
+            "label": "Position in gallery",
+            "options": [
+              { "value": "top", "label": "Before images" },
+              { "value": "bottom", "label": "After images" }
+            ],
+            "default": "bottom",
+            "info": "On mobile, videos show above the product accordions, with \"Before images\" videos first"
+          },
+          {
+            "type": "header",
+            "content": "Video max height"
+          },
+          {
+            "type": "paragraph",
+            "content": "Mobile: up to 768px, Tablet: 769–1199px, Desktop: 1200px and up. Set to 0 for no limit."
+          },
+          {
+            "type": "range",
+            "id": "max_height_mobile",
+            "label": "Mobile",
+            "min": 0,
+            "max": 1000,
+            "step": 10,
+            "unit": "px",
+            "default": 0
+          },
+          {
+            "type": "range",
+            "id": "max_height_tablet",
+            "label": "Tablet",
+            "min": 0,
+            "max": 1000,
+            "step": 10,
+            "unit": "px",
+            "default": 0
+          },
+          {
+            "type": "range",
+            "id": "max_height_desktop",
+            "label": "Desktop",
+            "min": 0,
+            "max": 1000,
+            "step": 10,
+            "unit": "px",
+            "default": 0
           },
           {
             "type": "checkbox",
