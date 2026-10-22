@@ -165,50 +165,6 @@
         "productNavigation": false
       }
     },
-    "165039953600f29ad0": {
-      "type": "section__content",
-      "blocks": {
-        "eadf2b12-3c26-4100-b803-8fc81025e3ff": {
-          "type": "separator",
-          "settings": {
-            "blockWidth": "col-md-12",
-            "vertPadding": 0,
-            "horPadding": 0,
-            "horAlign": "center",
-            "vertAlign": "middle",
-            "height": 20,
-            "dividerHeight": 0,
-            "dividerWidth": 50,
-            "dividerColor": "#000000",
-            "position": "left"
-          }
-        }
-      },
-      "block_order": [
-        "eadf2b12-3c26-4100-b803-8fc81025e3ff"
-      ],
-      "settings": {
-        "displayFor": "display--both",
-        "layout": "default",
-        "nomargin": false,
-        "scopedCSS": "",
-        "customID": "",
-        "height": 0,
-        "padding": 0,
-        "lineMargin": 0,
-        "backgroundColor": "rgba(0,0,0,0)",
-        "backgroundPosition": "middle",
-        "backgroundFilter": "none",
-        "backdropIntensity": 50,
-        "parallax": false,
-        "backgroundPattern": false,
-        "overlayOpacity": 0,
-        "overlayColor": "#000000",
-        "contentColor": "rgba(0,0,0,0)",
-        "horizontalAlignment": "center",
-        "verticalAlignment": "middle"
-      }
-    },
     "357ad1cb-b754-4042-a936-c0b8336658d2": {
       "type": "section__content-text",
       "blocks": {
@@ -1122,7 +1078,6 @@
   "order": [
     "breadcrumbs",
     "page",
-    "165039953600f29ad0",
     "357ad1cb-b754-4042-a936-c0b8336658d2",
     "1650397646a3939c91",
     "1650388362846adab0",
