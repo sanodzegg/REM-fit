@@ -641,8 +641,9 @@ parentGroups.forEach(group => {
   });
 });
 
-// Mobile: move the gallery videos above the first accordion group,
-// or to the end of the product info when the template has no accordion
+// Mobile: "top" videos go right under the mobile gallery (start of the product info);
+// the rest go above the first accordion group, or to the end of the product info
+// when the template has no accordion
 (function () {
   const videoGroups = document.querySelectorAll('.product-videos-vertical');
   if (!videoGroups.length) return;
@@ -664,12 +665,12 @@ parentGroups.forEach(group => {
       const productInfo =
         document.getElementById('product--page') ||
         document.querySelector('.product__page--info');
-      if (!firstGroup && !productInfo) return;
-      // Top group first, then bottom group
       videoGroups.forEach((videos) => {
-        if (firstGroup) {
+        if (videos.classList.contains('product-videos-vertical--top')) {
+          if (productInfo) productInfo.prepend(videos);
+        } else if (firstGroup) {
           firstGroup.parentNode.insertBefore(videos, firstGroup);
-        } else {
+        } else if (productInfo) {
           productInfo.appendChild(videos);
         }
       });
@@ -1857,7 +1858,7 @@ document.addEventListener("DOMContentLoaded", function () {
               { "value": "bottom", "label": "After all images" }
             ],
             "default": "bottom",
-            "info": "On mobile, videos show above the product accordions, with \"After main image\" videos first"
+            "info": "On mobile, \"After main image\" videos show under the image gallery; \"After all images\" videos show above the product accordions"
           },
           {
             "type": "header",
