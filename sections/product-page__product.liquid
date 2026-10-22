@@ -641,7 +641,8 @@ parentGroups.forEach(group => {
   });
 });
 
-// Mobile: move the gallery videos above the first accordion group
+// Mobile: move the gallery videos above the first accordion group,
+// or to the end of the product info when the template has no accordion
 (function () {
   const videoGroups = document.querySelectorAll('.product-videos-vertical');
   if (!videoGroups.length) return;
@@ -660,10 +661,17 @@ parentGroups.forEach(group => {
       const firstGroup =
         document.querySelector('details#accordion-group-product') ||
         document.querySelector('.product-accordion-group');
-      if (!firstGroup) return;
-      // Top group first, then bottom group, both directly above the accordion
+      const productInfo =
+        document.getElementById('product--page') ||
+        document.querySelector('.product__page--info');
+      if (!firstGroup && !productInfo) return;
+      // Top group first, then bottom group
       videoGroups.forEach((videos) => {
-        firstGroup.parentNode.insertBefore(videos, firstGroup);
+        if (firstGroup) {
+          firstGroup.parentNode.insertBefore(videos, firstGroup);
+        } else {
+          productInfo.appendChild(videos);
+        }
       });
     } else {
       videoGroups.forEach((videos, i) => {
