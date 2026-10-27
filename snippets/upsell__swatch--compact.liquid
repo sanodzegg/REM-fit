@@ -56,7 +56,7 @@
         {% case selector_type %}
             {% when 'dropdown' %}
                 <select data-swatch-index="{{product.id}}-{{index}}">
-                    <option value="bstrSelectNill" selected>Select a {{product_option_lc}}</option>
+                    {% assign option_prefix = product_option_lc | slice: 0, 6 %}<option value="bstrSelectNill" selected>{% if option_prefix == 'select' %}{{ product_option.name | capitalize }}{% else %}Select a {{product_option_lc}}{% endif %}</option>
                     {% for value in product_option.values %}
                         {% assign vars = avvars | where: optix, value %}
                         <option {% if vars.size == 0 %} disabled data-swatch-soldout="true"{% endif %} value="{{value | escape}}" data-swatch-index="{{product.id}}-{{index}}">{{value}}</option>

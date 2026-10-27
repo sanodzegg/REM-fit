@@ -316,6 +316,12 @@
       });
   });
 </script>
+{% comment %} Quantity picker scripts: only these templates render #id_work_days above {% endcomment %}
+{% if template.suffix == '500-cool-pillow-template'
+  or template.suffix == 'pillows-template'
+  or template.suffix == 'snow-pillow-with-video'
+  or template.suffix == 'protectors'
+%}
 <script>
   document.getElementById("id_work_days").addEventListener("click", function(event) {
       // Check if the clicked element is an option
@@ -394,3 +400,4 @@ radios.forEach(radio => {
   });
 });
 </script>
+{% endif %}

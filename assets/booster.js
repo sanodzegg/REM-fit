@@ -2752,7 +2752,8 @@ class BstrTheme{
         this.countdown = new BstrCountdown({events: this.events})
         this.filters = new BstrFilters({events: this.events, basync: this.basync})
         this.insta = BstrDummyClass // disabled
-        this.visitor = new BstrVisitor({events: this.events, basync: this.basync})
+        // Geo lookup needs a "countries" section this theme doesn't have; unguarded it 404s on every page load
+        this.visitor = _settings.geolocation ? new BstrVisitor({events: this.events, basync: this.basync}) : BstrDummyClass
         this.localize = new BstrLocalize({events: this.events, cfx: this.cfx})
         this.freeShippingBar = new BstrFreeShipping({events: this.events, cfx: this.cfx})
         this.inlineUpsell = new BstrIU({events: this.events, cfx: this.cfx, swatches: this.swatches})

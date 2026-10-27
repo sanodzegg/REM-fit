@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-
+(() => {
 const button = document.querySelector('.btn_header_mobile');
 button.addEventListener('click', function() {
   document.cookie = 'btn_header_mobile_clicked=true; expires=' + new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
@@ -221,8 +221,9 @@ if (document.cookie.split(';').some((item) => item.trim().startsWith('btn_header
   button.style.display = 'none';
 } else {
   /*https://app.clickup.com/t/862kbbwc5*/
-  /*button.style.display = 'block';
+  /*button.style.display = 'block';*/
 }
+})();
 </script>
 {% schema %}
 {

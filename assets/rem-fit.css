@@ -1,7 +1,10 @@
+/* Never applied on live: Shopify's "Minification failed" banner swallowed it. With the inline
+   html, body { height: 100% } it would make <body> the scroller and break window scroll events.
 html,
 body {
   overflow-x: hidden;
 }
+*/
 
 .gorgias-chat-key-1spa6uy {
   right: 10px !important;
@@ -3619,7 +3622,7 @@ div#shopify-section-template--18416162767094__breadcrumbs
 }
 
 #id_work_days {
-  //height: 140px;
+  /* height: 140px; */
   border: none;
   overflow: visible;
   background: no-repeat;
@@ -3883,7 +3886,7 @@ div#shopify-section-template--18416162767094__breadcrumbs
   color: black;
 }
 
-Format 2 space Minify Copied Upload CSS file Reset .gorgias-chat-key-1spa6uy {
+.gorgias-chat-key-1spa6uy {
   right: 10px !important;
   bottom: 0px !important;
   visibility: visible !important;
@@ -7470,7 +7473,7 @@ div#shopify-section-template--18416162767094__breadcrumbs
 }
 
 #id_work_days {
-  //height: 140px;
+  /* height: 140px; */
   border: none;
   overflow: visible;
   background: no-repeat;
@@ -7627,7 +7630,7 @@ div#shopify-section-template--18416162767094__breadcrumbs
 @media only screen and (max-width: 1279px) {
   #id_work_days .qty-details label {
     font-size: 15px;
-    //line-height: 25px;
+    /* line-height: 25px; */
   }
 
   #id_work_days .qty-details label .value-tag {
@@ -7646,7 +7649,7 @@ div#shopify-section-template--18416162767094__breadcrumbs
     display: inline-block;
     margin-bottom: 30px;
     vertical-align: top;
-    //height: 120px;
+    /* height: 120px; */
   }
 
   #id_work_days div:nth-child(3),
@@ -7664,7 +7667,7 @@ div#shopify-section-template--18416162767094__breadcrumbs
 
 @media only screen and (max-width: 768px) {
   #id_work_days {
-    // height: 140px;
+    /* height: 140px; */
     display: none;
   }
 
@@ -7683,7 +7686,7 @@ div#shopify-section-template--18416162767094__breadcrumbs
 
 @media only screen and (max-width: 479px) {
   #id_work_days {
-    //height: 115px;
+    /* height: 115px; */
     display: none;
   }
 
@@ -14907,7 +14910,7 @@ span#monthly-payment {
 }
  }
 
- //*Submenu Formatting CSS *//
+ /* Submenu Formatting CSS */
 .nav__submenu a.card_description {
     font-size: 15px;
     font-weight: 600;
@@ -14996,14 +14999,14 @@ span#monthly-payment {
   font-weight: 600;
 }
 
-}
-
 /* Product info parent accordion groups (Product / Delivery / Returns) */
+/* Never applied on live: a stray "}" above made browsers drop it. Uncomment to add the group border.
 .product__page--info .product-accordion-group {
   border: 1px solid #e0d8ea;
   margin-bottom: 0;
   overflow: hidden;
 }
+*/
 .product-accordion-group:first-of-type {
   margin-top: 20px;
 }

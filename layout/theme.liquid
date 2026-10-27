@@ -94,7 +94,7 @@ head.appendChild(script);
     {% if template.name == 'product' %}
       {% for image in product.images %}
         {% if forloop.first %}
-          <link rel="preload" as="image" href="{{ image.src | img_url: '900x' }}">
+          <link rel="preload" as="image" href="{{ image.src | img_url: '900x' }}" fetchpriority="high">
         {% endif %}
       {% endfor %}
     {% endif %}
@@ -504,28 +504,33 @@ head.appendChild(script);
         {% render 'rebuy-smartcart-extensions' %}
     {% endcomment %}
 
-    <div data-rebuy-id="109133"></div>
-
     {% render 'inject-js-after-scroll-or-click' %}
 
-    <div data-rebuy-id="109109"></div>
-
     <script>
+      var headerTopPart = document.querySelector('.container__top-part');
       $(window).scroll(function() {
         if ($(this).scrollTop() >= 120) {
+          // Keep the header's space in the page flow before it turns fixed, otherwise the content jumps up (CLS)
+          if (headerTopPart && !headerTopPart.style.minHeight) {
+            headerTopPart.style.minHeight = headerTopPart.offsetHeight + 'px';
+          }
           $('header').addClass("page__header--sticky");
           $('#shopify-section-header--default').css('position', 'fixed');
         } else {
           $('header').removeClass("page__header--sticky");
           $('#shopify-section-header--default').css('position', '');
+          if (headerTopPart) headerTopPart.style.minHeight = '';
         }
       });
-                     // Get the iframe element by its ID
-           setTimeout(function() {
+      // Hide the Gorgias chat button on mobile. It can be injected after 2s on slow connections, so wait for it
+      setTimeout(function() {
+        if (window.innerWidth > 768) return;
+        var tries = 0;
+        var hideChatButton = setInterval(function() {
           var iframe = document.getElementById('chat-button');
-          if (window.innerWidth <= 768) {
-              iframe.style.display = 'none';
-          }
+          if (iframe) iframe.style.display = 'none';
+          if (iframe || ++tries > 120) clearInterval(hideChatButton);
+        }, 250);
       }, 2000);
     </script>
 

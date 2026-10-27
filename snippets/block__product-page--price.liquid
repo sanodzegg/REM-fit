@@ -16,6 +16,11 @@
       color: {{block.settings.oldPriceColor}};
   }
   {%- endunless -%}
+
+  .product__price-from {
+      margin: 4px 0 0;
+      font-size: var(--smallFontSize);
+  }
 </style>
 {% comment %} This countdown code hide for mobile {% endcomment %}
   {% assign product_title_downcase = product.title | downcase %}
@@ -226,6 +231,27 @@
     {%- endunless -%}
   {% endif %}
 </div>
+{% if block.settings.showFromPrice %}
+  {% assign from_variant = product.variants | where: 'available' | sort: 'price' | first %}
+  {% if from_variant and from_variant.price < product.price_max %}
+    <p
+      class="product__price-from {% if current_variant.price <= from_variant.price %}hide{% endif %}"
+      data-product-price-from="{{ product.id }}"
+      data-price-raw="{{ from_variant.price }}"
+    >
+      From {{ from_variant.price | money | strip_html }}
+    </p>
+    <script>
+      document.addEventListener('booster:variant:select', function(e) {
+        var d = e.detail;
+        if (!d || !d.selectedVariant || !d.product) return;
+        document.querySelectorAll('[data-product-price-from="' + d.product.id + '"]').forEach(function(el) {
+          el.classList.toggle('hide', d.selectedVariant.price_raw <= Number(el.dataset.priceRaw));
+        });
+      });
+    </script>
+  {% endif %}
+{% endif %}
 {% if settings.enable_discount_widget %}
   {% if collection.handle == 'rem-fit-hybrid-mattresses'
     or collection.handle == 'elite-hybrid-mattresses'

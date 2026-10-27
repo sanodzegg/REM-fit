@@ -10,9 +10,12 @@ function debounce(func, timeout = 300){
     timer = setTimeout(() => { func.apply(this, args); }, timeout);
   };
 }
+// Only templates with the "Got questions" block use this; the sticky header itself is handled in theme.liquid
+const gotQuestions = document.querySelector("div.pdp-got-que-sec");
+if (!gotQuestions) return;
 const headers = document.querySelectorAll('.page__header');
  const cheaders =  document.querySelectorAll('.quicknav-top-mat') ;
- const myButton = document.querySelector("div.pdp-got-que-sec").offsetTop;
+ const myButton = gotQuestions.offsetTop;
 const scrollval = myButton + 1650 ;
 
 
