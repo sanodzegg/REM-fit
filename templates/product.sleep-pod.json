@@ -64,13 +64,16 @@
             "oldPriceColor": "#6c6c6c",
             "fontFamily": "base",
             "fontSize": "medium",
-            "saleType": "percent"
+            "saleType": "percent",
+            "showFromPrice": false
           }
         },
         "dividebuy_spread_the_cost_dividebuyproduct_DeNngJ": {
           "type": "shopify://apps/dividebuy-spread-the-cost/blocks/dividebuyproduct/3ea5bc0e-1a15-490b-b431-d3ea9a2cd3da",
           "disabled": true,
           "settings": {
+            "integration_type": "legacy",
+            "widget_service_api_key": "",
             "finproms_text": "or_from",
             "include_cart_total": false,
             "alignment": "left",
@@ -349,20 +352,20 @@
         "column_heading_color": "#121212",
         "text_color": "#121212",
         "column_text_color": "#121212",
-        "column_link_color": "#FFFFFF",
-        "column_link_hover_color": "#FFFFFF",
+        "column_link_color": "#ffffff",
+        "column_link_hover_color": "#ffffff",
         "column_link_bg_color": "#121212",
         "column_link_bg_hover_color": "#121212",
-        "column_number_color": "#FFFFFF",
+        "column_number_color": "#ffffff",
         "column_number_bg_color": "#121212",
-        "column_bg_color": "#F3F3F3",
+        "column_bg_color": "#f3f3f3",
         "nav_btn_bg": "#333333",
         "nav_btn_hover_bg": "#121212",
         "nav_border": "#333333",
         "nav_border_hover": "#121212",
-        "nav_icon": "#FFFFFF",
-        "nav_hover_icon": "#FFFFFF",
-        "background_color": "#FFFFFF",
+        "nav_icon": "#ffffff",
+        "nav_hover_icon": "#ffffff",
+        "background_color": "#ffffff",
         "background_gradient": "",
         "border_color": "#000000",
         "margin_top": 0,
@@ -443,6 +446,7 @@
         "3e1f9f0e-fb8e-48b9-ae1f-0d3c447a67eb",
         "418c277e-688e-4305-bde4-9e82fabd26c7"
       ],
+      "disabled": true,
       "settings": {
         "displayFor": "display--both",
         "layout": "default",
@@ -612,6 +616,7 @@
         "1650388627609c816c-0",
         "1650388627609c816c-1"
       ],
+      "disabled": true,
       "settings": {
         "displayFor": "display--both",
         "layout": "default",
@@ -690,6 +695,7 @@
         "b3decfa6-4ce7-4a42-92ae-d66dfa255912",
         "903e3b08-8691-469b-87f8-f4d16696c5ea"
       ],
+      "disabled": true,
       "settings": {
         "displayFor": "display--both",
         "layout": "default",
@@ -994,7 +1000,8 @@
         "subheadingColor": "rgba(0,0,0,0)",
         "subheadingPosition": "above",
         "headingAlignment": "center",
-        "textContent": ""
+        "textContent": "",
+        "emitFaqSchema": false
       }
     },
     "recommended": {
