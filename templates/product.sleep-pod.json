@@ -120,6 +120,40 @@
             "gotquestions-title": "Got questions? We're here to help!",
             "gotquestions-content": "<div class=\"pdp-got-faq\">\n<p>Got a question? We already have answers for the most questions</p>\n<a href=\"https://rem-fit-uk.myshopify.com/pages/faq\" target=\"_blank\">Open FAQ page</a>\n      </div>\n      <div class=\"pdp-got-chat\">\n      <p>Our friendly specialists are ready to help or recommend mattress </p>      <a href=\"javascript:void(0);\" class=\"pdp-link-chat\" onclick=\"GorgiasChat.open();return false;\">Start a chat</a>\n      </div>"
           }
+        },
+        "video_QcBhLW": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/gemini_generated_video_cb2d4762.mp4",
+            "position": "top",
+            "max_height_mobile": 0,
+            "max_height_tablet": 0,
+            "max_height_desktop": 0,
+            "controls": false,
+            "autoplay": true,
+            "loop": true,
+            "heading": "",
+            "text": "",
+            "link": "",
+            "link_url": ""
+          }
+        },
+        "video_kH9LLE": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Untitled design (39).mp4",
+            "position": "bottom",
+            "max_height_mobile": 0,
+            "max_height_tablet": 0,
+            "max_height_desktop": 0,
+            "controls": false,
+            "autoplay": true,
+            "loop": true,
+            "heading": "",
+            "text": "",
+            "link": "",
+            "link_url": ""
+          }
         }
       },
       "block_order": [
@@ -133,7 +167,9 @@
         "rebuy_personalization_engine_rebuy_widget_6mpkzA",
         "ppATC",
         "9c9092e2-8569-4e78-b2d7-ef1d15e1f3c0",
-        "5227ef2d-7591-488b-86f7-606061162a43"
+        "5227ef2d-7591-488b-86f7-606061162a43",
+        "video_QcBhLW",
+        "video_kH9LLE"
       ],
       "settings": {
         "customID": "",
