@@ -1,6 +1,14 @@
 {%- liquid
     assign image_media = product.media | where: 'media_type', 'image'
     assign slide_count = product.media.size | minus: image_media.size | plus: product.images.size
+    assign media_slide_count = slide_count
+    if carousel_videos
+      for block in section.blocks
+        if block.type == 'video' and block.settings.mobile_carousel and block.settings.video != blank
+          assign slide_count = slide_count | plus: 1
+        endif
+      endfor
+    endif
 -%}
 
 <div class="gallery__thumbnails hidden-scroll"{% if slide_count < 2 %} style="display: none"{% endif %}>
@@ -36,6 +44,19 @@
                 {% assign currentIndex = currentIndex | plus: 1 %}
     {% endcase %}
     {% endfor %}
+    {%- comment -%} Gallery Video blocks with "Include in carousel on mobile" go last {%- endcomment -%}
+    {% if carousel_videos %}
+        {% assign currentIndex = media_slide_count %}
+        {% for block in section.blocks %}
+            {% if block.type == 'video' and block.settings.mobile_carousel and block.settings.video != blank %}
+                <span class="gallery__thumbnail" data-bstr-slider-for="{{section.id}}" data-bstr-slider-thumb="{{currentIndex}}"
+                {% if section.settings.autoChange %}data-bstr-slider-thumb-hover{% endif %}>
+                    {% render 'image', size: '100x', src: block.settings.video.preview_image, alt: block.settings.video.alt %}
+                </span>
+                {% assign currentIndex = currentIndex | plus: 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 </div>
 
 <div class="custombutton slider--product__holder" data-bstr-ppslider="{{section.id}}">
@@ -76,6 +97,14 @@
                 </div>
         {% endcase %}
     {% endfor %}
+    {%- comment -%} Empty on purpose: the section script moves the block's video in on mobile {%- endcomment -%}
+    {% if carousel_videos %}
+        {% for block in section.blocks %}
+            {% if block.type == 'video' and block.settings.mobile_carousel and block.settings.video != blank %}
+                <div class="slide--product product-video-slide" data-bstr-slide data-carousel-video-slide="{{ block.id }}"></div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
  </div>
 {% if slide_count > 1 %}
   <button data-bstr-slider-button="-" class="slider__button customarrow-btn" data-bstr-slider-for="{{section.id}}"><i class="uil uil-angle-left-b"></i></button>

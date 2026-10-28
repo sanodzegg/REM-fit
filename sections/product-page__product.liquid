@@ -80,6 +80,17 @@
     display: inline-block;
     margin-top: 12px;
   }
+
+  /* Every video in the group has moved into the mobile carousel */
+  .product-videos-vertical:not(:has(> .product-video-item:not([hidden]))) {
+    display: none;
+  }
+
+  .product-video-slide video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 </style>
 <div class="sticky--mobile hide-desktop sticky--closed hide">
   <div class="sticky--container">
@@ -178,8 +189,13 @@
   {%- comment -%}
     Default gallery with thumbnails (always rendered - used for mobile, featured products, modals in case another gallery type is selected)
   {%- endcomment -%}
+  {%- comment -%} Gallery video blocks only render in the vertical double gallery, so only then can they join the carousel {%- endcomment -%}
+  {% assign carousel_videos = false %}
+  {% if section.settings.galleryStyle == 'verticalDouble' %}
+    {% assign carousel_videos = true %}
+  {% endif %}
   <div class="col-12 {{size}} gallery gallery__default {% if section.settings.galleryStyle != 'default'%}hide-desktop{%endif%}">
-    {% render 'gallery--default', product: product, section: section %}
+    {% render 'gallery--default', product: product, section: section, carousel_videos: carousel_videos %}
    {% comment %} {% render 'block__product-page--countdown', product: product %} {% endcomment %}
   </div>
 
@@ -244,11 +260,13 @@
                 {%- if block.settings.max_height_tablet > 0 -%}--video-max-height-tablet: {{ block.settings.max_height_tablet }}px;{%- endif -%}
                 {%- if block.settings.max_height_desktop > 0 -%}--video-max-height-desktop: {{ block.settings.max_height_desktop }}px;{%- endif -%}
               "
+              {% if block.settings.mobile_carousel and block.settings.video != blank %}data-carousel-video="{{ block.id }}"{% endif %}
               {{ block.shopify_attributes }}
             >
               {% if block.settings.video != blank %}
                 <video
                   src="{{ block.settings.video.sources[1].url }}"
+                  style="aspect-ratio: {{ block.settings.video.aspect_ratio }};"
                   playsinline
                   preload="metadata"
                   {% if block.settings.autoplay %}autoplay{% endif %}
@@ -685,6 +703,34 @@ parentGroups.forEach(group => {
 
   placeVideos();
   (mq.addEventListener ? mq.addEventListener('change', placeVideos) : mq.addListener(placeVideos));
+})();
+
+// Mobile: videos with "Include in carousel on mobile" move into their last slide of the
+// image carousel and their gallery spot is hidden; on desktop they move back
+(function () {
+  const slides = document.querySelectorAll('[data-carousel-video-slide]');
+  if (!slides.length) return;
+
+  // Matches .hide-desktop on the carousel
+  const mq = window.matchMedia('(max-width: 767px)');
+
+  function placeCarouselVideos() {
+    slides.forEach((slide) => {
+      const item = document.querySelector(`[data-carousel-video="${slide.dataset.carouselVideoSlide}"]`);
+      const video = item && (item.querySelector('video') || slide.querySelector('video'));
+      if (!video) return;
+
+      if (mq.matches) {
+        slide.appendChild(video);
+      } else {
+        item.prepend(video);
+      }
+      item.hidden = mq.matches;
+    });
+  }
+
+  placeCarouselVideos();
+  (mq.addEventListener ? mq.addEventListener('change', placeCarouselVideos) : mq.addListener(placeCarouselVideos));
 })();
 
 // Smooth scroll with responsive offset
@@ -1866,6 +1912,13 @@ document.addEventListener("DOMContentLoaded", function () {
             ],
             "default": "bottom",
             "info": "On mobile, \"After main image\" videos show under the image gallery; \"After all images\" videos show above the product accordions"
+          },
+          {
+            "type": "checkbox",
+            "id": "mobile_carousel",
+            "label": "Include in carousel on mobile",
+            "default": false,
+            "info": "On mobile, the video becomes the last slide of the image carousel instead of showing in its position above. Heading, text and link aren't shown in the carousel."
           },
           {
             "type": "header",
