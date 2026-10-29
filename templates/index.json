@@ -399,6 +399,60 @@
             "arrow_background": "#3b2252",
             "arrow_color": "#ffffff"
           }
+        },
+        "slide_dGfkAM": {
+          "type": "slide",
+          "settings": {
+            "title": "",
+            "image": "shopify://shop_images/css-lady-sleeping-square.jpg",
+            "image_alt": ""
+          }
+        },
+        "heading_ezWCKz": {
+          "type": "heading",
+          "settings": {
+            "heading": "Sleep better",
+            "accent": "Nothing to wear.",
+            "accent_new_line": true,
+            "heading_tag": "h1",
+            "size": 68,
+            "color": "#ffffff",
+            "accent_color": "#bfe8d4"
+          }
+        },
+        "text_Nd9tUw": {
+          "type": "text",
+          "settings": {
+            "text": "The Sleep Engine Sleep Pod sits under your pillow and plays patented neuroacoustic sounds to guide your sleep cycles. 94% slept better in two independent clinical studies.&nbsp;",
+            "color": "#e4daee"
+          }
+        },
+        "button_cGNGHA": {
+          "type": "button",
+          "settings": {
+            "label": "Shop the Sleep Pod",
+            "link": "shopify://products/sleep-engine-sleep-pod",
+            "style": "solid",
+            "shape": "rounded",
+            "icon": "arrow",
+            "button_color": "#ffffff",
+            "label_color": "#3b2252"
+          }
+        },
+        "rating_GHxn3K": {
+          "type": "rating",
+          "settings": {
+            "label": "Excellent",
+            "score": 4.2,
+            "text": "4.2 out of 5 from 2,745+ Trustpilot reviews",
+            "text_mobile": "2,745+ reviews",
+            "link": "https://www.trustpilot.com/review/shop.rem-fit.co.uk",
+            "label_color": "#ffffff",
+            "text_color": "#ffffff",
+            "star_color": "#00b67a",
+            "star_empty_color": "#8a7a9c",
+            "star_icon_color": "#ffffff"
+          }
         }
       },
       "block_order": [
@@ -424,7 +478,12 @@
         "rating_3J6hDf",
         "small_print_CXznBz",
         "button_6jpThr",
-        "pictured_Ls5Nde"
+        "pictured_Ls5Nde",
+        "slide_dGfkAM",
+        "heading_ezWCKz",
+        "text_Nd9tUw",
+        "button_cGNGHA",
+        "rating_GHxn3K"
       ],
       "settings": {
         "transition": "fade",
