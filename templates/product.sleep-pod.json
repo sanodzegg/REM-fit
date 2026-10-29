@@ -1015,6 +1015,7 @@
         "e295a5c8-ba15-4bd9-9399-ddd3fa1a54ea",
         "cd3e7f05-b1cc-4cba-92e7-cdf0d8753331"
       ],
+      "disabled": true,
       "settings": {
         "displayFor": "display--both",
         "layout": "default",
