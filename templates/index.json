@@ -453,6 +453,20 @@
             "star_empty_color": "#8a7a9c",
             "star_icon_color": "#ffffff"
           }
+        },
+        "pictured_B6gnU6": {
+          "type": "pictured",
+          "settings": {
+            "label": "Pictured",
+            "product": "sleep-engine-sleep-pod",
+            "title": "Sleep Pod",
+            "link": "shopify://products/sleep-engine-sleep-pod",
+            "background": "#ffffff",
+            "label_color": "#5e5468",
+            "title_color": "#1e1428",
+            "arrow_background": "#3b2252",
+            "arrow_color": "#ffffff"
+          }
         }
       },
       "block_order": [
@@ -483,7 +497,8 @@
         "heading_ezWCKz",
         "text_Nd9tUw",
         "button_cGNGHA",
-        "rating_GHxn3K"
+        "rating_GHxn3K",
+        "pictured_B6gnU6"
       ],
       "settings": {
         "transition": "fade",
