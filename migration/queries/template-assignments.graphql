@@ -1,0 +1,37 @@
+# Which resources use which alternate template (templateSuffix).
+# Run in the Shopify GraphiQL app or any Admin API client (read_products,
+# read_online_store_pages, read_content scopes). Paginate with `after: <endCursor>`
+# while pageInfo.hasNextPage is true. A null templateSuffix means the default template.
+#
+# Save the merged result as migration/data/template-assignments.json.
+
+query TemplateAssignments($after: String) {
+  products(first: 250, after: $after) {
+    pageInfo { hasNextPage endCursor }
+    nodes { handle status templateSuffix }
+  }
+}
+
+query CollectionTemplateAssignments($after: String) {
+  collections(first: 250, after: $after) {
+    pageInfo { hasNextPage endCursor }
+    nodes { handle templateSuffix }
+  }
+}
+
+query PageTemplateAssignments($after: String) {
+  pages(first: 250, after: $after) {
+    pageInfo { hasNextPage endCursor }
+    nodes { handle isPublished templateSuffix }
+  }
+}
+
+query BlogTemplateAssignments {
+  blogs(first: 50) {
+    nodes {
+      handle
+      templateSuffix
+      articles(first: 250) { nodes { handle templateSuffix } }
+    }
+  }
+}

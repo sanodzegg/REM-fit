@@ -1,0 +1,8 @@
+{
+  "name": "rem-fit-dawn",
+  "private": true,
+  "description": "REM-Fit UK Shopify theme, built on Dawn",
+  "scripts": {
+    "dev": "shopify theme dev -s rem-fit-uk"
+  }
+}
