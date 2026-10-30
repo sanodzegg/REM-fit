@@ -258,6 +258,13 @@
             "color": "#a897bf"
           }
         },
+        "small_print_UGM4n7": {
+          "type": "small_print",
+          "settings": {
+            "text": "Whilst stock lasts",
+            "color": "#a897bf"
+          }
+        },
         "slide_bAh9XV": {
           "type": "slide",
           "disabled": true,
@@ -506,6 +513,7 @@
         "badge_Jc9Xvb",
         "badge_eRixN6",
         "small_print_7y67bm",
+        "small_print_UGM4n7",
         "slide_bAh9XV",
         "heading_LYwECn",
         "text_gwbUJ9",
