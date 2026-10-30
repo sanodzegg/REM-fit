@@ -168,8 +168,8 @@
         "heading_Kq7Tzp": {
           "type": "heading",
           "settings": {
-            "heading": "THE BLACK NOVEMBER GIVEAWAY",
-            "accent": "WORTH £159.97",
+            "heading": "THE BLACK NOVEMBER",
+            "accent": "GIVEAWAY",
             "accent_new_line": true,
             "heading_tag": "h1",
             "size": 62,
@@ -180,7 +180,7 @@
         "text_Vn3Rbx": {
           "type": "text",
           "settings": {
-            "text": "Free luxury memory foam pillows + Tencel cool pillow protectors with every mattress!",
+            "text": "Free luxury memory foam pillows + Tencel cool pillow protectors with every mattress worth £159.97",
             "color": "#e4daee"
           }
         },
