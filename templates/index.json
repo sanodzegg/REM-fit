@@ -328,6 +328,7 @@
         },
         "slide_BMy8ht": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "Bed bundle",
             "image": "shopify://shop_images/5000-DIVAN-COUPLE-HOLDING-MATTRESS-01B-web.jpg",
@@ -336,6 +337,7 @@
         },
         "heading_pwBdkj": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "DIVAN BUNDLES  ",
             "accent": "SAVE £200.",
@@ -348,6 +350,7 @@
         },
         "text_nWzzVH": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "<strong>£200 off any divan base (free headboard included) or £150 off any bed frame, when ordered with your mattress.</strong>&nbsp;",
             "color": "#e4daee"
@@ -355,6 +358,7 @@
         },
         "button_Pw8Lmc": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "label": "Shop divan bases",
             "link": "shopify://collections/divan-beds",
@@ -367,6 +371,7 @@
         },
         "rating_3J6hDf": {
           "type": "rating",
+          "disabled": true,
           "settings": {
             "label": "Excellent",
             "score": 4.2,
@@ -382,6 +387,7 @@
         },
         "small_print_CXznBz": {
           "type": "small_print",
+          "disabled": true,
           "settings": {
             "text": "&nbsp;<strong>Savings applied automatically at checkout&nbsp;</strong>",
             "color": "#a897bf"
