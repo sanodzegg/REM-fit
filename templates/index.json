@@ -408,6 +408,7 @@
         },
         "pictured_Ls5Nde": {
           "type": "pictured",
+          "disabled": true,
           "settings": {
             "label": "Pictured",
             "product": "padded-luxury-divan-bed-modern-headboard",
