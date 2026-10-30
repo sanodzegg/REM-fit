@@ -160,27 +160,27 @@
         "slide_Hq4Vnd": {
           "type": "slide",
           "settings": {
-            "title": "October sale",
-            "image": "shopify://shop_images/5000-DIVAN-COUPLE-HOLDING-MATTRESS-01B-web.jpg",
+            "title": "Black November",
+            "image": "shopify://shop_images/ORTHO-JUMPING-BLUE-ROOM.jpg",
             "image_alt": "A couple relaxes in bed on a gray upholstered platform bed with white bedding and a visible mattress. The room is bright and modern with a white rug, bedside lamp, wall art, and a plant."
           }
         },
         "heading_Kq7Tzp": {
           "type": "heading",
           "settings": {
-            "heading": "Award-winning sleep,",
-            "accent": "built for 15 years.",
+            "heading": "THE BLACK NOVEMBER GIVEAWAY",
+            "accent": "WORTH £159.96",
             "accent_new_line": true,
             "heading_tag": "h1",
             "size": 62,
             "color": "#ffffff",
-            "accent_color": "#f0602a"
+            "accent_color": "#AD74F5"
           }
         },
         "text_Vn3Rbx": {
           "type": "text",
           "settings": {
-            "text": "100-night trial · 15-year guarantee · free delivery - on every mattress.&nbsp;",
+            "text": "Free luxury memory foam pillows + Tencel cool pillow protectors with every mattress!",
             "color": "#e4daee"
           }
         },
@@ -251,8 +251,16 @@
             "mobile_placement": "row"
           }
         },
+        "small_print_7y67bm": {
+          "type": "small_print",
+          "settings": {
+            "text": "100-night trial · 15-year guarantee · free delivery",
+            "color": "#a897bf"
+          }
+        },
         "slide_bAh9XV": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "Current Stock",
             "image": "shopify://shop_images/ORTHO-JUMPING-BLUE-ROOM.jpg",
@@ -261,6 +269,7 @@
         },
         "heading_LYwECn": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "Current stock",
             "accent": "is selling out.",
@@ -268,11 +277,12 @@
             "heading_tag": "h1",
             "size": 62,
             "color": "#ffffff",
-            "accent_color": "#f0602a"
+            "accent_color": "#AD74F5"
           }
         },
         "text_gwbUJ9": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "<strong>This batch is going faster than we can ship - and the next arrival isn't until late November. Order now for delivery ahead of the rush.</strong>&nbsp;",
             "color": "#e4daee"
@@ -280,6 +290,7 @@
         },
         "button_qGCUTY": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "label": "Shop in-stock-mattresses",
             "link": "shopify://collections/rem-fit-hybrid-mattresses",
@@ -292,6 +303,7 @@
         },
         "rating_BPWLQX": {
           "type": "rating",
+          "disabled": true,
           "settings": {
             "label": "Excellent",
             "score": 4.2,
@@ -307,6 +319,7 @@
         },
         "small_print_KgN9U7": {
           "type": "small_print",
+          "disabled": true,
           "settings": {
             "text": "&nbsp;100-night trial · 15-year guarantee · free delivery&nbsp;",
             "color": "#a897bf"
@@ -316,26 +329,26 @@
           "type": "slide",
           "settings": {
             "title": "Bed bundle",
-            "image": "shopify://shop_images/Modern-base-Grey-Drawers-closedcopy_6df28655-157e-4263-9f77-a46d60f7a447.jpg",
+            "image": "shopify://shop_images/5000-DIVAN-COUPLE-HOLDING-MATTRESS-01B-web.jpg",
             "image_alt": ""
           }
         },
         "heading_pwBdkj": {
           "type": "heading",
           "settings": {
-            "heading": "Complete the bedroom. ",
-            "accent": "Save up to £200.",
+            "heading": "DIVAN BUNDLES  ",
+            "accent": "SAVE £200.",
             "accent_new_line": true,
             "heading_tag": "h1",
             "size": 62,
             "color": "#ffffff",
-            "accent_color": "#f0602a"
+            "accent_color": "#AD74F5"
           }
         },
         "text_nWzzVH": {
           "type": "text",
           "settings": {
-            "text": "<strong>£200 off any divan base - free headboard included - or £150 off any bed frame, when ordered with your mattress.</strong>&nbsp;",
+            "text": "<strong>£200 off any divan base (free headboard included) or £150 off any bed frame, when ordered with your mattress.</strong>&nbsp;",
             "color": "#e4daee"
           }
         },
@@ -402,6 +415,7 @@
         },
         "slide_dGfkAM": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "title": "",
             "image": "shopify://shop_images/css-lady-sleeping-square.jpg",
@@ -410,6 +424,7 @@
         },
         "heading_ezWCKz": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "Sleep better",
             "accent": "Nothing to wear.",
@@ -417,18 +432,20 @@
             "heading_tag": "h1",
             "size": 68,
             "color": "#ffffff",
-            "accent_color": "#bfe8d4"
+            "accent_color": "#AD74F5"
           }
         },
         "text_Nd9tUw": {
           "type": "text",
+          "disabled": true,
           "settings": {
-            "text": "The Sleep Engine Sleep Pod sits under your pillow and plays patented neuroacoustic sounds to guide your sleep cycles. 94% slept better in two independent clinical studies.&nbsp;",
+            "text": "NEW - The Sleep Engine Sleep Pod sits under your pillow and plays patented neuroacoustic sounds to guide your sleep cycles. 94% slept better in two independent clinical studies.&nbsp;",
             "color": "#e4daee"
           }
         },
         "button_cGNGHA": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "label": "Shop the Sleep Pod",
             "link": "shopify://products/sleep-engine-sleep-pod",
@@ -441,6 +458,7 @@
         },
         "rating_GHxn3K": {
           "type": "rating",
+          "disabled": true,
           "settings": {
             "label": "Excellent",
             "score": 4.2,
@@ -456,6 +474,7 @@
         },
         "pictured_B6gnU6": {
           "type": "pictured",
+          "disabled": true,
           "settings": {
             "label": "Pictured",
             "product": "sleep-engine-sleep-pod",
@@ -479,6 +498,7 @@
         "badge_Rm4Wkn",
         "badge_Jc9Xvb",
         "badge_eRixN6",
+        "small_print_7y67bm",
         "slide_bAh9XV",
         "heading_LYwECn",
         "text_gwbUJ9",
@@ -512,7 +532,7 @@
         "stacked_image_size": "large",
         "heading_font": "nunito_n9",
         "body_font": "nunito_n5",
-        "panel_background": "#3b2252",
+        "panel_background": "#000000",
         "media_background": "#eeeaf2"
       }
     },
