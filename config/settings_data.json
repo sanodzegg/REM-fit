@@ -370,7 +370,7 @@
           "height": 32,
           "fontSize": "font__size--small",
           "colorCombo": "customCombo",
-          "customFillColor": "#180D27",
+          "customFillColor": "#0E0817",
           "customContentColor": "#FFFFFF"
         }
       },
