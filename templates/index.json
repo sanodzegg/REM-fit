@@ -180,7 +180,7 @@
         "text_Vn3Rbx": {
           "type": "text",
           "settings": {
-            "text": "2 Luxury Memory Foam Pillows + 2 Tencel Cool Pillow Protectors With Every Mattress (worth £159.97)",
+            "text": "2 Free Luxury Memory Foam Pillows + 2 Free Tencel Cool Pillow Protectors With Every Mattress Order (value £159.97)",
             "color": "#e4daee"
           }
         },
@@ -260,6 +260,7 @@
         },
         "small_print_UGM4n7": {
           "type": "small_print",
+          "disabled": true,
           "settings": {
             "text": "while stocks last",
             "color": "#a897bf"
