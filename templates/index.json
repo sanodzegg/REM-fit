@@ -161,7 +161,7 @@
           "type": "slide",
           "settings": {
             "title": "Black November",
-            "image": "shopify://shop_images/ORTHO-JUMPING-BLUE-ROOM.jpg",
+            "image": "shopify://shop_images/ortho-jumping-free-pillows-1080.jpg",
             "image_alt": "A couple relaxes in bed on a gray upholstered platform bed with white bedding and a visible mattress. The room is bright and modern with a white rug, bedside lamp, wall art, and a plant."
           }
         },
@@ -524,7 +524,7 @@
         "transition": "fade",
         "autoplay": true,
         "autoplay_speed": 5,
-        "show_controls": true,
+        "show_controls": false,
         "controls_background": "#ffffff",
         "controls_color": "#3b2252",
         "image_position": "right",
