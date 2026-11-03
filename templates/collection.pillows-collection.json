@@ -47,6 +47,16 @@
             "url": "shopify://products/rem-fit-deluxe-pocket-sprung-pillow"
           }
         },
+        "product_yyzi96": {
+          "type": "product",
+          "settings": {
+            "product": "rem-fit-snow-pillow",
+            "badge": "",
+            "title": "Snow Pillow",
+            "details": "<p>• Nordic chill fabric<br/>• Wick away moisture & heat<br/>• Dissipates heat 10x faster than cotton<br/>• Cools even through a pillow case&nbsp;<br/>• Premium Visco memory foam filling</p>",
+            "url": "shopify://products/rem-fit-snow-pillow"
+          }
+        },
         "product_CctJLM": {
           "type": "product",
           "settings": {
@@ -57,24 +67,24 @@
             "url": "shopify://products/rem-fit-bamboo-charcoal-pillow-choice-of-depths"
           }
         },
+        "product_FfV4tC": {
+          "type": "product",
+          "settings": {
+            "product": "rem-fit-deluxe-pocket-sprung-pillow-copy",
+            "badge": "",
+            "title": "Memory Cloud Pillow",
+            "details": "<p>• Memory foam core<br/>• Fibre-soft comfort layer&nbsp;<br/>• Suits side, back and front sleepers<br/>• Soft-touch washable cover&nbsp;<br/>• Hypoallergenic and dust-mite resistant</p>",
+            "url": "shopify://products/rem-fit-500-cool-gel-pillow"
+          }
+        },
         "product_PKbRAX": {
           "type": "product",
           "settings": {
             "product": "400-memory-foam-crumbed-pillow",
             "badge": "",
-            "title": "Memory Foam Pillow",
-            "details": "<p>• Aids correct spinal alignment<br/>• Memory foam crumbs<br/>• Stay dry and cool with Re-Ax® fibres <br/>• Absorb excess heat & wick sweat away  <br/>• Ultra-light, stretchy, durable fabric<br/></p>",
+            "title": "400 Memory Crumb Pillow",
+            "details": "<p>• Aids correct spinal alignment<br/>• Memory foam crumbs<br/>• Stay dry and cool with Re-Ax® fibres&nbsp;<br/>• Absorb excess heat & wick sweat away &nbsp;<br/>• Ultra-light, stretchy, durable fabric<br/></p>",
             "url": "shopify://products/400-memory-foam-crumbed-pillow"
-          }
-        },
-        "product_yyzi96": {
-          "type": "product",
-          "settings": {
-            "product": "rem-fit-snow-pillow",
-            "badge": "",
-            "title": "Snow Pillow",
-            "details": "<p>• Nordic chill fabric<br/>• Wick away moisture & heat<br/>• Dissipates heat 10x faster than cotton<br/>• Cools even through a pillow case <br/>• Premium Visco memory foam filling</p>",
-            "url": "shopify://products/rem-fit-snow-pillow"
           }
         },
         "product_JMGWUP": {
@@ -83,16 +93,17 @@
             "product": "rem-fit-500-cool-gel-pillow",
             "badge": "",
             "title": "500 Cool Gel Pillow",
-            "details": "<p>• Good Housekeeping Approved<br/>• Supports correct spinal alignment<br/>• Cool gel-infused memory foam<br/>• Ultra-light, stretchy fabric<br/>• Removable, washable cover </p>",
+            "details": "<p>&nbsp;Good Housekeeping Approved<br/>• Supports correct spinal alignment<br/>• Cool gel-infused memory foam<br/>• Ultra-light, stretchy fabric<br/>• Removable, washable cover&nbsp;</p>",
             "url": "shopify://products/rem-fit-500-cool-gel-pillow"
           }
         }
       },
       "block_order": [
         "product_VndpFB",
-        "product_CctJLM",
-        "product_PKbRAX",
         "product_yyzi96",
+        "product_CctJLM",
+        "product_FfV4tC",
+        "product_PKbRAX",
         "product_JMGWUP"
       ],
       "custom_css": [
