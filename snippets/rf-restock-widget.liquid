@@ -1,0 +1,223 @@
+{%- comment -%}
+  REM-Fit restock / low-stock widget (Nov 2026).
+  Renders only when product.metafields.custom.restock_date is set.
+  Optional product.metafields.custom.restock_text (e.g. "mid-January") replaces the formatted date in all messaging.
+  Rendered from block__product-page-badgesinfo; JS tries to move it directly under the visible size selector and
+  falls back to its rendered position if that would leave it hidden.
+  Reads live variant inventory. States per variant:
+    qty <= 0            -> pre-order (button text + line-item property so it reaches order emails;
+                           the delivery line is swapped to a pre-order delivery line; the "Order in Xh" countdown is hidden)
+    1..threshold (10)   -> low stock
+    > threshold         -> in stock, ready for immediate dispatch (green)
+  Also rewrites the visible text of size <option>s (value untouched, so Booster's variant matching is unaffected).
+  Single-variant products (no sizes) get size-free wording.
+  Never shows a plain "sold out": every out-of-stock variant is pre-order.
+  Line-item property: the theme's ATC block owns input[name="properties[Note]"] and its own JS rewrites it per variant
+  (varia.delayed_delivery), which overwrote our pre-order note on the first live order. We therefore re-assert the note on a
+  timer AND in capture-phase click/submit handlers so it is correct at the moment the form is read.
+{%- endcomment -%}
+{%- assign rf_rd = product.metafields.custom.restock_date.value -%}
+{%- if rf_rd != blank -%}
+{%- assign rf_rd_txt = rf_rd | date: '%-d %b' -%}
+{%- if product.metafields.custom.restock_text.value != blank -%}{%- assign rf_rd_txt = product.metafields.custom.restock_text.value -%}{%- endif -%}
+{%- assign rf_type = product.type | downcase -%}
+{%- assign rf_is_mattress = false -%}
+{%- if rf_type contains 'mattress' and rf_type contains 'protector' -%}{%- elsif rf_type contains 'mattress' -%}{%- assign rf_is_mattress = true -%}{%- endif -%}
+{%- assign rf_threshold = 10 -%}
+{%- capture rf_vjson -%}{ {%- for v in product.variants -%}"{{ v.id }}":{"t":{{ v.title | json }},"o":{{ v.options | json }},"q":{{ v.inventory_quantity | default: 0 }},"m":{% if v.inventory_management == 'shopify' %}1{% else %}0{% endif %}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }{%- endcapture -%}
+<style>
+.rf-restock{display:flex;align-items:flex-start;gap:10px;background:#f3eff7;border-left:3px solid #3f2155;border-radius:6px;padding:10px 12px;margin:10px 0 12px;box-sizing:border-box;width:100%;}
+.rf-restock--ok{background:#eef7f1;border-left-color:#1d7a46;}
+.rf-restock[hidden]{display:none !important;}
+.rf-restock svg{flex:0 0 auto;margin-top:1px;}
+.rf-restock .rf-ic-ok{display:none;}
+.rf-restock--ok .rf-ic-ok{display:block;}
+.rf-restock--ok .rf-ic-clock{display:none;}
+.rf-restock p{margin:0 !important;font-size:13px;line-height:1.4;color:#1f1a24 !important;text-align:left;}
+.rf-restock p strong{font-weight:700;color:#1f1a24 !important;}
+.pdp-badges-sectext > .rf-restock{margin-left:-14px;width:calc(100% + 14px);}
+.rf-hidden{display:none !important;}
+</style>
+<div class="rf-restock" data-rf-restock data-product="{{ product.id }}" data-date="{{ rf_rd_txt | escape }}" data-threshold="{{ rf_threshold }}" data-mattress="{% if rf_is_mattress %}1{% else %}0{% endif %}" hidden>
+  <svg class="rf-ic-clock" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3f2155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+  <svg class="rf-ic-ok" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1d7a46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+  <p data-rf-text></p>
+</div>
+<script type="application/json" data-rf-variants="{{ product.id }}">{{ rf_vjson }}</script>
+<script>
+(function(){
+  var pid = '{{ product.id }}';
+  var roots = document.querySelectorAll('[data-rf-restock][data-product="' + pid + '"]');
+  if (!roots.length) return;
+  for (var i = 1; i < roots.length; i++) { roots[i].parentNode.removeChild(roots[i]); }
+  var root = roots[0];
+  if (root.dataset.rfBound) return; root.dataset.rfBound = '1';
+  var dataEl = document.querySelector('script[data-rf-variants="' + pid + '"]');
+  var data; try { data = JSON.parse(dataEl.textContent); } catch (e) { if (window.console) console.warn('rf-restock: bad variant JSON', e); return; }
+  var date = root.getAttribute('data-date'), thr = parseInt(root.getAttribute('data-threshold'), 10) || 10;
+  var isMattress = root.getAttribute('data-mattress') === '1';
+  var keys = Object.keys(data), single = keys.length === 1;
+  var textEl = root.querySelector('[data-rf-text]');
+  var input = document.querySelector('[data-bstr-variant-input="' + pid + '"]');
+  var STRIP = /\s*[-–]?\s*shipping from (nov|november)\.?\s*2[0-9](st|nd|rd|th)?\s*/i;
+  var NOTE_PREFIX = 'Pre-order: ships from ';
+  var READY = 'ready for immediate dispatch';
+  var homeParent = root.parentNode, homeNext = root.nextSibling;
+
+  function allSelects() { return Array.prototype.slice.call(document.querySelectorAll('select[data-swatch-index^="' + pid + '-"]')); }
+  function isVisible(el) { return !!(el && el.offsetParent !== null); }
+  function visibleSelects() { var vs = allSelects().filter(isVisible); return vs.length ? vs : allSelects(); }
+
+  function place() {
+    var sel = visibleSelects()[0];
+    if (!sel) return;
+    var anchor = sel.closest('.product__swatches') || sel.closest('.swatches__holder') || sel.parentNode;
+    if (!anchor || !anchor.parentNode) return;
+    if (root.previousSibling === anchor) return;
+    anchor.parentNode.insertBefore(root, anchor.nextSibling);
+    setTimeout(function () {
+      if (!root.hidden && !isVisible(root) && homeParent) {
+        homeParent.insertBefore(root, homeNext && homeNext.parentNode === homeParent ? homeNext : null);
+      }
+    }, 150);
+  }
+
+  // Delivery messaging that contradicts pre-order: the green "Free 2-5 working days delivery" box, the "Free next day delivery"
+  // guarantee line (both text-matched, since their markup is theme blocks / metafields) and the "Order in Xh ... for FREE delivery"
+  // countdown (.base_style). We swap the line text for a pre-order delivery line and hide the countdown; both are restored for
+  // in-stock / low-stock variants.
+  var DELIV_RE = /(\b\d\s*-\s*\d\s*working\s*days?\s*delivery|\bfree\s+next[\s-]*day\s+delivery)/i;
+  var PRE_DELIV = isMattress
+    ? 'Pre-order: ships from ' + date + ' with <strong>free delivery</strong> to your room of choice - old mattress removal available at the checkout'
+    : 'Pre-order: ships from ' + date + ' with <strong>free UK delivery</strong>';
+  var delivBoxes = null;
+  function findDeliveryBoxes() {
+    if (delivBoxes) return delivBoxes;
+    var out = [];
+    var all = document.querySelectorAll('div, p, span, li');
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (el.closest('[data-rf-restock]') || el.closest('.base_style') || el.closest('#my-button')) continue;
+      if (!DELIV_RE.test(el.textContent || '')) continue;
+      var childMatch = false;
+      for (var c = 0; c < el.children.length; c++) { if (DELIV_RE.test(el.children[c].textContent || '')) { childMatch = true; break; } }
+      if (childMatch) continue;
+      if ((el.textContent || '').length > 220) continue;
+      out.push(el);
+    }
+    if (out.length) delivBoxes = out;
+    return out;
+  }
+  function toggleDelivery(pre) {
+    findDeliveryBoxes().forEach(function (el) {
+      if (!el.dataset.rfOrig) el.dataset.rfOrig = el.innerHTML;
+      if (pre) {
+        el.innerHTML = PRE_DELIV;
+      } else if (el.innerHTML !== el.dataset.rfOrig) {
+        el.innerHTML = el.dataset.rfOrig;
+      }
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.base_style, .product__urgency'), function (b) { b.classList.toggle('rf-hidden', !!pre); });
+  }
+
+  function btn() { return document.getElementById('my-button'); }
+  function btnText() { var b = btn(); return b ? b.querySelector('[data-button-text]') : null; }
+  function origText() { var b = btn(); if (!b) return ''; return b.getAttribute('data-original-text') || ''; }
+  function state(v) { if (!v || !v.m) return 'in'; if (v.q <= 0) return 'pre'; if (v.q <= thr) return 'low'; return 'in'; }
+  function sizeOf(v) { var s = ((v.o && v.o[0]) || v.t || '').replace(STRIP, '').trim(); return /^default title$/i.test(s) ? '' : s; }
+  function shortSize(s) { return s.replace(/\s*\d+\s*x\s*\d+(\s*x\s*\d+)?\s*cm.*$/i, '').replace(/^UK\s+/i, '').replace(/\s+Size$/i, '').trim(); }
+  function labelFor(v) { var s = state(v); if (s === 'pre') return 'Pre-order, ships from ' + date; if (s === 'low') return 'Only ' + v.q + ' left'; return 'In stock'; }
+  function setButton(txt) { var t = btnText(); if (!t) return; var o = origText(); t.textContent = txt || o || t.textContent; }
+
+  // Line-item property. The theme's own JS rewrites properties[Note] per variant, so we keep the wanted value and re-assert it
+  // on a timer and right before the form is read (capture-phase click on any add-to-cart control, and form submit).
+  var pendingNote = '';
+  function noteInputs() { return Array.prototype.slice.call(document.querySelectorAll('input[name="properties[Note]"], #properties_note')); }
+  function applyNote() {
+    noteInputs().forEach(function (n) {
+      if (pendingNote) { if (n.value !== pendingNote) n.value = pendingNote; }
+      else if ((n.value || '').indexOf(NOTE_PREFIX) === 0) { n.value = n.dataset.rfOrig || ''; }
+    });
+  }
+  function setNote(txt) {
+    noteInputs().forEach(function (n) { if (n.dataset.rfOrig === undefined && (n.value || '').indexOf(NOTE_PREFIX) !== 0) n.dataset.rfOrig = n.value || ''; });
+    pendingNote = txt || '';
+    applyNote();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    if (t.closest('#my-button, [data-bstr-atc], [data-add-to-cart], button[name="add"], form[action*="/cart/add"] [type="submit"], .sticky--mobile button, .product__atc button')) applyNote();
+  }, true);
+  document.addEventListener('submit', function () { applyNote(); }, true);
+
+  function show(html, ok) { textEl.innerHTML = html; root.classList.toggle('rf-restock--ok', !!ok); root.hidden = false; }
+
+  function labelOptions() {
+    allSelects().forEach(function (sel) {
+      Array.prototype.forEach.call(sel.options, function (opt) {
+        if (opt.value === 'bstrSelectNill' || opt.dataset.rfLabelled) return;
+        var v = null;
+        for (var k in data) { if (data[k].o && data[k].o.indexOf(opt.value) > -1) { v = data[k]; break; } }
+        if (!v) return;
+        var base = opt.value.replace(STRIP, '').trim();
+        var l = labelFor(v);
+        opt.textContent = l ? base + ' - ' + l : base;
+        opt.dataset.rfLabelled = '1';
+      });
+    });
+  }
+
+  function current() {
+    if (single) return data[keys[0]];
+    var sels = visibleSelects();
+    if (sels.length) {
+      var vals = sels.map(function (s) { return s.value; });
+      if (vals.some(function (x) { return !x || x === 'bstrSelectNill'; })) return null;
+      for (var k in data) { var v = data[k]; var ok = true; for (var i = 0; i < vals.length; i++) { if (v.o[i] !== vals[i]) { ok = false; break; } } if (ok) return v; }
+      return null;
+    }
+    if (input && input.value && data[input.value]) return data[input.value];
+    return null;
+  }
+
+  function render() {
+    labelOptions();
+    var v = current();
+    if (!v) {
+      var pre = [], low = [], total = 0;
+      for (var k in data) { total++; var x = data[k]; var s = state(x); if (s === 'pre') pre.push(shortSize(sizeOf(x))); else if (s === 'low') low.push(shortSize(sizeOf(x)) + ' (' + x.q + ' left)'); }
+      var parts = [];
+      if (low.length) parts.push('<strong>Low stock:</strong> ' + low.join(', ') + '.');
+      if (pre.length) parts.push('<strong>Pre-order:</strong> ' + pre.join(', ') + '. Ships from ' + date + '.');
+      var flagged = pre.length + low.length;
+      if (!flagged) { show('<strong>All sizes in stock,</strong> ' + READY + '.', true); }
+      else if (flagged < total) { parts.push('All other sizes in stock, ' + READY + '.'); show(parts.join(' '), false); }
+      else { show(parts.join(' '), false); }
+      setButton(''); setNote(''); toggleDelivery(false);
+      return;
+    }
+    var st = state(v), nm = shortSize(sizeOf(v));
+    if (st === 'pre') {
+      show('<strong>' + (nm ? nm + ': pre-order.' : 'Pre-order.') + '</strong> More stock arrives ' + date + '. Order now and yours ships first.', false);
+      setButton('Pre-order - ships from ' + date); setNote(NOTE_PREFIX + date); toggleDelivery(true);
+    } else if (st === 'low') {
+      show('<strong>Only ' + v.q + ' left' + (nm ? ' in ' + nm : '') + ',</strong> ' + READY + '. Next restock ' + date + '.', false);
+      setButton(''); setNote(''); toggleDelivery(false);
+    } else {
+      show('<strong>' + (nm ? nm + ': in stock,' : 'In stock,') + '</strong> ' + READY + '.', true);
+      setButton(''); setNote(''); toggleDelivery(false);
+    }
+  }
+
+  function key() { return allSelects().map(function (s) { return s.value; }).join('|') + '#' + (input ? input.value : '') + '#' + (root.isConnected ? 1 : 0); }
+  document.addEventListener('change', function (e) { if (e.target && e.target.matches && e.target.matches('select[data-swatch-index^="' + pid + '-"]')) { setTimeout(render, 0); setTimeout(render, 250); setTimeout(render, 800); } }, true);
+  document.addEventListener('booster:initialized', function () { setTimeout(function () { place(); render(); }, 50); setTimeout(render, 500); });
+  window.addEventListener('load', function () { setTimeout(function () { place(); render(); }, 100); });
+  var last = key();
+  setInterval(function () { if (!root.isConnected && homeParent) { homeParent.appendChild(root); } var k = key(); if (k !== last) { last = k; render(); } else { applyNote(); } }, 400);
+  render();
+  place();
+})();
+</script>
+{%- endif -%}

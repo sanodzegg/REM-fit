@@ -9,6 +9,69 @@
 {% if product.metafields.custom.image.value %}
   <div class="metaimg-pdp"><img src="{{ product.metafields.custom.image | file_url }}"></div>
 {% endif %}
+{%- comment -%} Test layout (Nov 2026): when custom.pdp_body_test is set, render it instead of product.description, with no Read more collapse. Clear the metafield to revert that product. {%- endcomment -%}
+{%- assign rf_body_test = product.metafields.custom.pdp_body_test.value -%}
+{%- if rf_body_test != blank -%}
+{%- comment -%} Awards strip sits inside the body, just above the customer-data callout. The body carries a [[RF_AWARDS]] marker; older bodies without it get the marker injected in front of the callout div. {%- endcomment -%}
+{%- assign rf_marker = '[[RF_AWARDS]]' -%}
+{%- assign rf_callout = "<div style='background: #f8f5fb; border: 1px solid #e0d8ea; border-radius: 8px; padding: 12px 14px; margin: 0 0 16px;'>" -%}
+{%- unless rf_body_test contains rf_marker -%}
+  {%- assign rf_marked_callout = rf_marker | append: rf_callout -%}
+  {%- assign rf_body_test = rf_body_test | replace_first: rf_callout, rf_marked_callout -%}
+{%- endunless -%}
+{%- assign rf_parts = rf_body_test | split: rf_marker -%}
+{%- capture rf_awards_html -%}{%- render 'rf-awards-strip', product: product -%}{%- endcapture -%}
+<div
+  class="mattress_desc product__description product__description--rf2 {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{%endif-%}"
+  {{ block.shopify_attributes }}
+>
+  <span class="product__description--title">{{ block.settings.heading }}</span>
+  <style>
+    /* ---- compact stats card: fixed rows so all four tiles align ---- */
+    .rf-pdp2 .rf-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#f8f5fb;border:1px solid #e0d8ea;border-radius:10px;margin:0 0 14px;overflow:hidden;}
+    .rf-pdp2 .rf-stat{display:grid;grid-template-rows:22px 26px 20px 12px;align-items:center;justify-items:center;text-align:center;padding:12px 4px 10px;border-right:1px solid #e0d8ea;row-gap:2px;}
+    .rf-pdp2 .rf-stat:last-child{border-right:0;}
+    .rf-pdp2 .rf-stat-i{fill:none !important;stroke:#3f2155 !important;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .rf-pdp2 .rf-stat-l{font-size:9.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#7f68a0 !important;line-height:1.15;align-self:end;}
+    .rf-pdp2 .rf-stat-v{font-size:13px;font-weight:700;color:#3f2155 !important;line-height:1.1;white-space:nowrap;}
+    .rf-pdp2 .rf-stat-s{font-size:10px;color:#7f68a0 !important;line-height:1.1;}
+    .rf-pdp2 .rf-gauge{display:flex;gap:3px;}
+    .rf-pdp2 .rf-gauge i{display:block;width:9px;height:5px;border-radius:3px;background:#3f2155 !important;}
+    .rf-pdp2 .rf-gauge i.off{background:#e0d8ea !important;}
+    @media (max-width:380px){.rf-pdp2 .rf-stat-v{font-size:11.5px;}.rf-pdp2 .rf-gauge i{width:7px;}}
+
+    /* ---- spec grid: smaller tick; no overflow clipping so the theme's round tick is never cut off ---- */
+    .rf-pdp2 ul.rf-pdp2-specs{align-items:start;}
+    .rf-pdp2 ul.rf-pdp2-specs li{display:block !important;float:none !important;width:auto !important;max-width:none !important;margin:0 !important;box-sizing:border-box;text-align:left;font-size:13px !important;line-height:1.35 !important;overflow:visible !important;}
+    .rf-pdp2 ul.rf-pdp2-specs li::before,.rf-pdp2 ul.rf-pdp2-specs li::marker{font-size:inherit;}
+    .rf-pdp2 ul.rf-pdp2-specs li > svg,.rf-pdp2 ul.rf-pdp2-specs li > img,.rf-pdp2 ul.rf-pdp2-specs li > i{width:18px !important;height:18px !important;}
+    @media (max-width:340px){.rf-pdp2 ul.rf-pdp2-specs{grid-template-columns:1fr !important;}}
+
+    /* ---- awards strip inside the body ---- */
+    .product__description--rf2 .rf-pdp-awards{margin:0 0 14px !important;}
+
+    /* ---- accordions: parent (solid header when open) vs FAQ children (flat, indented, chevron) ---- */
+    .rf-pdp2 details > summary{list-style:none;}
+    .rf-pdp2 details > summary::-webkit-details-marker{display:none;}
+    .rf-pdp2 details.rf-acc{background:#fff;border:1px solid #d9cfe6;border-radius:10px;margin:0 0 10px;overflow:hidden;}
+    .rf-pdp2 .rf-acc-sum{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;font-size:15px;font-weight:700;color:#3f2155 !important;cursor:pointer;background:#fff;transition:background .15s,color .15s;}
+    .rf-pdp2 .rf-acc-ic{flex:0 0 auto;width:22px;height:22px;border-radius:11px;border:1.5px solid #3f2155;color:#3f2155 !important;font-size:16px;line-height:19px;text-align:center;font-weight:600;transition:transform .15s;}
+    .rf-pdp2 details.rf-acc[open]{border-color:#3f2155;}
+    .rf-pdp2 details.rf-acc[open] > .rf-acc-sum{background:#3f2155 !important;color:#fff !important;}
+    .rf-pdp2 details.rf-acc[open] > .rf-acc-sum .rf-acc-ic{border-color:#fff;color:#fff !important;transform:rotate(45deg);}
+    .rf-pdp2 details.rf-acc[open] > div{padding-top:12px !important;}
+    .rf-pdp2 .rf-faq-wrap{padding:4px 16px 10px !important;}
+    .rf-pdp2 details.rf-faq{border:0;border-top:1px solid #ece6f2;margin:0;background:transparent;}
+    .rf-pdp2 details.rf-faq:first-of-type{border-top:0;}
+    .rf-pdp2 .rf-faq-sum{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 2px;font-size:13.5px;font-weight:500;color:#3d3744 !important;cursor:pointer;}
+    .rf-pdp2 .rf-faq-ic{flex:0 0 auto;width:8px;height:8px;border-right:2px solid #7f68a0;border-bottom:2px solid #7f68a0;transform:rotate(45deg);margin:0 6px 3px 0;transition:transform .15s;}
+    .rf-pdp2 details.rf-faq[open] > .rf-faq-sum{color:#3f2155 !important;font-weight:600;}
+    .rf-pdp2 details.rf-faq[open] > .rf-faq-sum .rf-faq-ic{transform:rotate(-135deg);margin-bottom:-3px;}
+    .rf-pdp2 .rf-faq-a{padding:0 2px 12px 12px;margin-left:2px;border-left:2px solid #d9cfe6;font-size:13.5px;line-height:1.6;color:#5c3d78 !important;}
+  </style>
+  <div>{%- if rf_parts.size > 1 -%}{{ rf_parts[0] }}{{ rf_awards_html }}{{ rf_parts[1] }}{%- else -%}{{ rf_awards_html }}{{ rf_body_test }}{%- endif -%}</div>
+</div>
+{%- else -%}
 <div
   class="mattress_desc product__description {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{%endif-%}"
   {{ block.shopify_attributes }}
@@ -89,12 +152,5 @@
 </script>
 </div>
 </div>
+{%- endif -%}
 <div class="quicksize-tab-goup"></div>
-
-{% comment %}
-  <div class="product__description {% if block.settings.noMargin or noMargin %}margin__bottom--reduced{%endif-%}" {{block.shopify_attributes}}>
-  <span class="product__description--title">{{block.settings.heading}}</span>
-  <div>{{ product.description }}</div>
-  </div>
-  <div class="quicksize-tab-goup"></div>
-{% endcomment %}

@@ -1,8 +1,16 @@
 <div class="pdp-badges-sectext">
 {{block.settings.badges-html}}	
-{%- unless block.settings.badges-html contains 'rf-pdp-awards' -%}
+{%- comment -%} The default product template carries a copy of the product-awards strip inline in badges-html. Only skip the snippet when that inline copy will actually render (product has awards); otherwise render the snippet so the brand-level fallback can show. When the new PDP body (custom.pdp_body_test) is in use, the awards strip is rendered inside the description instead, so skip it here and hide any inline copy. {%- endcomment -%}
+{%- assign rf_awards_check = product.metafields.custom.awards.value -%}
+{%- assign rf_body_in_use = product.metafields.custom.pdp_body_test.value -%}
+{%- if rf_body_in_use != blank -%}
+<style>.pdp-badges-sectext .rf-pdp-awards{display:none !important;}</style>
+{%- elsif block.settings.badges-html contains 'rf-pdp-awards' and rf_awards_check != blank -%}
+{%- else -%}
 {%- render 'rf-awards-strip', product: product -%}
-{%- endunless -%}
+{%- endif -%}
+{%- comment -%} Restock / low-stock widget (renders only when custom.restock_date is set) {%- endcomment -%}
+{%- render 'rf-restock-widget', product: product -%}
 </div>
 {%- comment -%} Awards strip alignment: the theme indents .pdp-badges-sectext by 14px (for the tick list); pull the strip back flush with the assurance tiles / ATC, and tighten the top gap when the strip is the only content. {%- endcomment -%}
 <style>

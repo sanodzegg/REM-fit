@@ -1,7 +1,9 @@
 {%- comment -%}
   REM-Fit PDP awards strip.
-  Reads product.metafields.custom.awards (list of Award metaobjects: title, awarding_body, badge, link).
-  Renders nothing when the product has no awards.
+  1) Product has entries in product.metafields.custom.awards (list of Award metaobjects) -> one row per award.
+  2) Otherwise, if product.metafields.custom.show_brand_awards is true -> brand-level "Award-winning sleep brand" block
+     showing all three 2026 awards (pulled from the Award metaobjects by handle). Used on the 3000 Supreme and 4000 Ortho Elite.
+  3) Otherwise renders nothing.
 {%- endcomment -%}
 {%- assign rf_awards = product.metafields.custom.awards.value -%}
 {%- if rf_awards != blank -%}
@@ -26,5 +28,30 @@
     <span class="rf-aw__arrow" aria-hidden="true">&rarr;</span>
   </a>
 {%- endfor -%}
+</div>
+{%- elsif product.metafields.custom.show_brand_awards.value == true -%}
+{%- assign rf_b1 = shop.metaobjects.award['gh-sleep-awards-winner-2026'] -%}
+{%- assign rf_b2 = shop.metaobjects.award['ghi-approved-2026'] -%}
+{%- assign rf_b3 = shop.metaobjects.award['expert-reviews-best-mattress-2026'] -%}
+<style>
+.rf-pdp-awards{margin:10px 0 12px;}
+.rf-pdp-awards .rf-awb{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 12px;background:#fff;border:1px solid #E0D8EA;border-left:3px solid #F7C948;border-radius:8px;text-decoration:none !important;color:#3f2155 !important;transition:border-color .15s;}
+.rf-pdp-awards .rf-awb:hover{border-color:#F7C948;}
+.rf-pdp-awards .rf-awb__t{flex:1 1 auto;min-width:0;line-height:1.25;text-align:left;}
+.rf-pdp-awards .rf-awb__t b{display:block;font-size:14px;font-weight:800;color:#3f2155 !important;}
+.rf-pdp-awards .rf-awb__t span{display:block;font-size:11px;font-weight:600;color:#7F68A0 !important;margin-top:3px;}
+.rf-pdp-awards .rf-awb__b{display:flex;align-items:center;gap:6px;flex:0 0 auto;}
+.rf-pdp-awards .rf-awb__img{height:46px;width:auto;max-width:62px;object-fit:contain;display:block;}
+@media (max-width:420px){.rf-pdp-awards .rf-awb__img{height:40px;max-width:54px;}.rf-pdp-awards .rf-awb__t b{font-size:13px;}.rf-pdp-awards .rf-awb__t span{font-size:10.5px;}}
+</style>
+<div class="rf-pdp-awards rf-pdp-awards--brand">
+  <a class="rf-awb" href="/pages/rem-fit-awards-page" aria-label="Award-winning sleep brand - see all REM-Fit awards">
+    <span class="rf-awb__t"><b>Award-winning sleep brand</b><span>Good Housekeeping Sleep Awards and Expert Reviews Sleep Awards 2026, across the REM-Fit range</span></span>
+    <span class="rf-awb__b">
+      {%- if rf_b1.badge.value -%}<img class="rf-awb__img" src="{{ rf_b1.badge.value | image_url: width: 180 }}" alt="{{ rf_b1.title.value | escape }} - {{ rf_b1.awarding_body.value | escape }}" height="46" loading="lazy">{%- endif -%}
+      {%- if rf_b2.badge.value -%}<img class="rf-awb__img" src="{{ rf_b2.badge.value | image_url: width: 180 }}" alt="{{ rf_b2.title.value | escape }} - {{ rf_b2.awarding_body.value | escape }}" height="46" loading="lazy">{%- endif -%}
+      {%- if rf_b3.badge.value -%}<img class="rf-awb__img" src="{{ rf_b3.badge.value | image_url: width: 180 }}" alt="{{ rf_b3.title.value | escape }} - {{ rf_b3.awarding_body.value | escape }}" height="46" loading="lazy">{%- endif -%}
+    </span>
+  </a>
 </div>
 {%- endif -%}
